@@ -6,10 +6,13 @@ options:
   xcodeVersion: "15.0"
   generateEmptyDirectories: true
 
+configFiles:
+  Debug: GlycoTrack/Config/GlycoTrack.xcconfig
+  Release: GlycoTrack/Config/GlycoTrack.xcconfig
+
 settings:
   base:
     SWIFT_VERSION: "5.9"
-    DEVELOPMENT_TEAM: ""
     CODE_SIGN_STYLE: Automatic
 
 targets:

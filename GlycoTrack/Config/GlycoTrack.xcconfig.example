@@ -1,0 +1,6 @@
+// GlycoTrack.xcconfig
+// Copy this file to GlycoTrack.xcconfig (same directory) and fill in your real values.
+// GlycoTrack.xcconfig is gitignored — never commit it.
+
+CLAUDE_API_KEY = your-claude-api-key-here
+DEVELOPMENT_TEAM = your-apple-team-id-here
