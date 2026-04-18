@@ -1,0 +1,70 @@
+name: GlycoTrack
+options:
+  bundleIdPrefix: com.glycotrack
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+
+targets:
+  GlycoTrack:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: GlycoTrack
+    resources:
+      - GlycoTrack/Resources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.glycotrack.app
+        INFOPLIST_FILE: GlycoTrack/Info.plist
+        TARGETED_DEVICE_FAMILY: "1"
+        ENABLE_BITCODE: NO
+        CODE_SIGN_ENTITLEMENTS: GlycoTrack/GlycoTrack.entitlements
+    entitlements:
+      path: GlycoTrack/GlycoTrack.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.glycotrack.shared
+        com.apple.developer.usernotifications.time-sensitive: true
+    dependencies:
+      - target: GlycoTrackWidget
+
+  GlycoTrackWidget:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: GlycoTrackWidget
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.glycotrack.app.widget
+        INFOPLIST_FILE: GlycoTrackWidget/Info.plist
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGN_ENTITLEMENTS: GlycoTrackWidget/GlycoTrackWidget.entitlements
+    entitlements:
+      path: GlycoTrackWidget/GlycoTrackWidget.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.glycotrack.shared
+
+  GlycoTrackTests:
+    type: bundle.unit-test
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - Tests/GIEngineCoreTests
+      - Tests/CLEngineCoreTests
+    dependencies:
+      - target: GlycoTrack
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.glycotrack.tests
+        INFOPLIST_FILE: ""
