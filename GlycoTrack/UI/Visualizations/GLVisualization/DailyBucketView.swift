@@ -125,7 +125,6 @@ struct BubbleLayout: View {
                     height: radius * 2
                 )
 
-                var resolvedColor = context.resolve(group.color.opacity(0.85))
                 context.fill(Path(ellipseIn: rect), with: .color(group.color.opacity(0.85)))
 
                 if radius > 20 {
@@ -135,7 +134,6 @@ struct BubbleLayout: View {
                         at: center
                     )
                 }
-                let _ = resolvedColor
             }
         }
     }
