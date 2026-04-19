@@ -1,179 +1,3395 @@
 [
-  {"name": "white rice", "carbs": 28.6, "sfa": 0.07, "tfa": 0.0, "fiber": 0.0, "pufa": 0.1, "mufa": 0.07},
-  {"name": "brown rice", "carbs": 23.0, "sfa": 0.19, "tfa": 0.0, "fiber": 0.3, "pufa": 0.35, "mufa": 0.32},
-  {"name": "basmati rice", "carbs": 25.2, "sfa": 0.07, "tfa": 0.0, "fiber": 0.2, "pufa": 0.1, "mufa": 0.07},
-  {"name": "jasmine rice", "carbs": 27.9, "sfa": 0.07, "tfa": 0.0, "fiber": 0.2, "pufa": 0.1, "mufa": 0.07},
-  {"name": "white bread", "carbs": 49.0, "sfa": 0.58, "tfa": 0.18, "fiber": 0.5, "pufa": 1.26, "mufa": 0.61},
-  {"name": "whole wheat bread", "carbs": 41.0, "sfa": 0.49, "tfa": 0.0, "fiber": 1.5, "pufa": 1.04, "mufa": 0.52},
-  {"name": "sourdough bread", "carbs": 47.0, "sfa": 0.28, "tfa": 0.0, "fiber": 0.8, "pufa": 0.52, "mufa": 0.27},
-  {"name": "rye bread", "carbs": 48.0, "sfa": 0.22, "tfa": 0.0, "fiber": 1.7, "pufa": 0.46, "mufa": 0.24},
-  {"name": "pita bread", "carbs": 55.7, "sfa": 0.28, "tfa": 0.0, "fiber": 0.4, "pufa": 0.63, "mufa": 0.17},
-  {"name": "bagel", "carbs": 53.0, "sfa": 0.24, "tfa": 0.18, "fiber": 0.4, "pufa": 0.78, "mufa": 0.34},
-  {"name": "croissant", "carbs": 46.0, "sfa": 12.0, "tfa": 0.38, "fiber": 0.3, "pufa": 1.7, "mufa": 7.94},
-  {"name": "white pasta", "carbs": 25.1, "sfa": 0.12, "tfa": 0.0, "fiber": 0.2, "pufa": 0.24, "mufa": 0.1},
-  {"name": "whole wheat pasta", "carbs": 22.8, "sfa": 0.19, "tfa": 0.0, "fiber": 1.1, "pufa": 0.37, "mufa": 0.18},
-  {"name": "oatmeal", "carbs": 12.0, "sfa": 0.37, "tfa": 0.0, "fiber": 1.0, "pufa": 0.76, "mufa": 0.54},
-  {"name": "instant oatmeal", "carbs": 66.0, "sfa": 0.71, "tfa": 0.0, "fiber": 1.5, "pufa": 1.47, "mufa": 1.05},
-  {"name": "cornflakes", "carbs": 84.0, "sfa": 0.12, "tfa": 0.0, "fiber": 0.5, "pufa": 0.26, "mufa": 0.08},
-  {"name": "granola", "carbs": 60.0, "sfa": 2.19, "tfa": 0.0, "fiber": 1.5, "pufa": 2.75, "mufa": 2.07},
-  {"name": "white potato", "carbs": 17.0, "sfa": 0.03, "tfa": 0.0, "fiber": 0.5, "pufa": 0.06, "mufa": 0.0},
-  {"name": "sweet potato", "carbs": 20.1, "sfa": 0.02, "tfa": 0.0, "fiber": 0.5, "pufa": 0.03, "mufa": 0.0},
-  {"name": "french fries", "carbs": 35.0, "sfa": 2.32, "tfa": 0.13, "fiber": 0.5, "pufa": 4.62, "mufa": 4.58},
-  {"name": "potato chips", "carbs": 52.0, "sfa": 3.11, "tfa": 0.06, "fiber": 0.5, "pufa": 5.54, "mufa": 3.49},
-  {"name": "apple", "carbs": 13.8, "sfa": 0.03, "tfa": 0.0, "fiber": 0.4, "pufa": 0.05, "mufa": 0.01},
-  {"name": "banana", "carbs": 23.0, "sfa": 0.11, "tfa": 0.0, "fiber": 0.3, "pufa": 0.05, "mufa": 0.04},
-  {"name": "orange", "carbs": 11.8, "sfa": 0.02, "tfa": 0.0, "fiber": 0.2, "pufa": 0.03, "mufa": 0.01},
-  {"name": "orange juice", "carbs": 10.4, "sfa": 0.05, "tfa": 0.0, "fiber": 0.1, "pufa": 0.07, "mufa": 0.05},
-  {"name": "grapes", "carbs": 17.2, "sfa": 0.05, "tfa": 0.0, "fiber": 0.1, "pufa": 0.04, "mufa": 0.01},
-  {"name": "watermelon", "carbs": 7.6, "sfa": 0.02, "tfa": 0.0, "fiber": 0.0, "pufa": 0.05, "mufa": 0.02},
-  {"name": "strawberries", "carbs": 7.7, "sfa": 0.02, "tfa": 0.0, "fiber": 0.6, "pufa": 0.08, "mufa": 0.04},
-  {"name": "blueberries", "carbs": 14.5, "sfa": 0.03, "tfa": 0.0, "fiber": 0.4, "pufa": 0.1, "mufa": 0.1},
-  {"name": "raspberries", "carbs": 11.9, "sfa": 0.02, "tfa": 0.0, "fiber": 2.5, "pufa": 0.16, "mufa": 0.04},
-  {"name": "mango", "carbs": 15.0, "sfa": 0.07, "tfa": 0.0, "fiber": 0.2, "pufa": 0.04, "mufa": 0.06},
-  {"name": "cherries", "carbs": 16.0, "sfa": 0.09, "tfa": 0.0, "fiber": 0.3, "pufa": 0.09, "mufa": 0.06},
-  {"name": "pear", "carbs": 15.2, "sfa": 0.01, "tfa": 0.0, "fiber": 0.7, "pufa": 0.05, "mufa": 0.04},
-  {"name": "raisins", "carbs": 79.2, "sfa": 0.12, "tfa": 0.0, "fiber": 1.4, "pufa": 0.1, "mufa": 0.08},
-  {"name": "whole milk", "carbs": 4.8, "sfa": 1.98, "tfa": 0.1, "fiber": 0.0, "pufa": 0.13, "mufa": 0.78},
-  {"name": "skim milk", "carbs": 5.0, "sfa": 0.08, "tfa": 0.0, "fiber": 0.0, "pufa": 0.01, "mufa": 0.02},
-  {"name": "soy milk", "carbs": 3.0, "sfa": 0.21, "tfa": 0.0, "fiber": 0.0, "pufa": 0.88, "mufa": 0.27},
-  {"name": "plain yogurt", "carbs": 6.0, "sfa": 1.06, "tfa": 0.05, "fiber": 0.0, "pufa": 0.04, "mufa": 0.37},
-  {"name": "greek yogurt", "carbs": 3.6, "sfa": 0.67, "tfa": 0.0, "fiber": 0.0, "pufa": 0.03, "mufa": 0.23},
-  {"name": "ice cream", "carbs": 24.0, "sfa": 6.28, "tfa": 0.29, "fiber": 0.0, "pufa": 0.38, "mufa": 2.12},
-  {"name": "lentils", "carbs": 20.0, "sfa": 0.05, "tfa": 0.0, "fiber": 1.5, "pufa": 0.19, "mufa": 0.07},
-  {"name": "chickpeas", "carbs": 27.4, "sfa": 0.16, "tfa": 0.0, "fiber": 3.0, "pufa": 0.93, "mufa": 0.55},
-  {"name": "black beans", "carbs": 23.7, "sfa": 0.07, "tfa": 0.0, "fiber": 3.0, "pufa": 0.19, "mufa": 0.04},
-  {"name": "kidney beans", "carbs": 22.8, "sfa": 0.07, "tfa": 0.0, "fiber": 2.5, "pufa": 0.19, "mufa": 0.04},
-  {"name": "baked beans", "carbs": 17.0, "sfa": 0.06, "tfa": 0.0, "fiber": 2.5, "pufa": 0.12, "mufa": 0.04},
-  {"name": "soybeans", "carbs": 9.9, "sfa": 1.07, "tfa": 0.0, "fiber": 3.0, "pufa": 4.14, "mufa": 1.61},
-  {"name": "tofu", "carbs": 1.9, "sfa": 0.52, "tfa": 0.0, "fiber": 0.2, "pufa": 2.11, "mufa": 0.79},
-  {"name": "tempeh", "carbs": 9.4, "sfa": 1.04, "tfa": 0.0, "fiber": 0.5, "pufa": 4.02, "mufa": 1.55},
-  {"name": "peas", "carbs": 14.5, "sfa": 0.07, "tfa": 0.0, "fiber": 2.5, "pufa": 0.22, "mufa": 0.06},
-  {"name": "eggs", "carbs": 1.1, "sfa": 3.23, "tfa": 0.04, "fiber": 0.0, "pufa": 1.92, "mufa": 3.81},
-  {"name": "chicken breast", "carbs": 0.0, "sfa": 0.66, "tfa": 0.01, "fiber": 0.0, "pufa": 0.55, "mufa": 0.66},
-  {"name": "beef", "carbs": 0.0, "sfa": 8.22, "tfa": 1.15, "fiber": 0.0, "pufa": 0.52, "mufa": 7.61},
-  {"name": "pork", "carbs": 0.0, "sfa": 5.03, "tfa": 0.1, "fiber": 0.0, "pufa": 1.58, "mufa": 5.06},
-  {"name": "bacon", "carbs": 1.4, "sfa": 8.71, "tfa": 0.14, "fiber": 0.0, "pufa": 3.6, "mufa": 10.0},
-  {"name": "salmon", "carbs": 0.0, "sfa": 3.15, "tfa": 0.09, "fiber": 0.0, "pufa": 3.72, "mufa": 3.73},
-  {"name": "tuna", "carbs": 0.0, "sfa": 0.27, "tfa": 0.0, "fiber": 0.0, "pufa": 0.96, "mufa": 0.14},
-  {"name": "shrimp", "carbs": 0.9, "sfa": 0.28, "tfa": 0.0, "fiber": 0.0, "pufa": 0.49, "mufa": 0.14},
-  {"name": "nuts", "carbs": 19.7, "sfa": 5.18, "tfa": 0.01, "fiber": 2.5, "pufa": 19.03, "mufa": 12.57},
-  {"name": "almonds", "carbs": 21.6, "sfa": 3.8, "tfa": 0.0, "fiber": 4.5, "pufa": 12.32, "mufa": 32.15},
-  {"name": "walnuts", "carbs": 13.7, "sfa": 6.13, "tfa": 0.0, "fiber": 2.0, "pufa": 47.17, "mufa": 8.93},
-  {"name": "cashews", "carbs": 30.2, "sfa": 9.15, "tfa": 0.0, "fiber": 1.0, "pufa": 7.84, "mufa": 24.07},
-  {"name": "peanuts", "carbs": 16.1, "sfa": 6.28, "tfa": 0.0, "fiber": 2.5, "pufa": 15.69, "mufa": 24.43},
-  {"name": "pecans", "carbs": 13.9, "sfa": 6.18, "tfa": 0.0, "fiber": 2.5, "pufa": 20.63, "mufa": 40.8},
-  {"name": "pistachios", "carbs": 27.9, "sfa": 5.56, "tfa": 0.0, "fiber": 3.5, "pufa": 13.52, "mufa": 23.26},
-  {"name": "macadamia nuts", "carbs": 13.8, "sfa": 12.06, "tfa": 0.0, "fiber": 3.5, "pufa": 1.5, "mufa": 59.28},
-  {"name": "peanut butter", "carbs": 20.1, "sfa": 8.78, "tfa": 0.04, "fiber": 2.0, "pufa": 11.73, "mufa": 22.61},
-  {"name": "almond butter", "carbs": 18.8, "sfa": 4.54, "tfa": 0.0, "fiber": 3.5, "pufa": 12.1, "mufa": 34.16},
-  {"name": "hummus", "carbs": 14.3, "sfa": 0.62, "tfa": 0.0, "fiber": 3.5, "pufa": 4.22, "mufa": 4.41},
-  {"name": "butter", "carbs": 0.06, "sfa": 51.37, "tfa": 3.28, "fiber": 0.0, "pufa": 3.01, "mufa": 21.02},
-  {"name": "olive oil", "carbs": 0.0, "sfa": 13.81, "tfa": 0.0, "fiber": 0.0, "pufa": 10.52, "mufa": 72.96},
-  {"name": "avocado", "carbs": 8.5, "sfa": 2.13, "tfa": 0.0, "fiber": 2.5, "pufa": 1.82, "mufa": 9.8},
-  {"name": "vegetable oil", "carbs": 0.0, "sfa": 13.0, "tfa": 0.0, "fiber": 0.0, "pufa": 57.74, "mufa": 23.26},
-  {"name": "coconut oil", "carbs": 0.0, "sfa": 82.49, "tfa": 0.0, "fiber": 0.0, "pufa": 1.7, "mufa": 6.33},
-  {"name": "canola oil", "carbs": 0.0, "sfa": 7.37, "tfa": 0.39, "fiber": 0.0, "pufa": 28.14, "mufa": 63.28},
-  {"name": "sunflower oil", "carbs": 0.0, "sfa": 10.27, "tfa": 0.0, "fiber": 0.0, "pufa": 65.7, "mufa": 19.53},
-  {"name": "corn oil", "carbs": 0.0, "sfa": 12.95, "tfa": 0.0, "fiber": 0.0, "pufa": 54.68, "mufa": 27.58},
-  {"name": "soybean oil", "carbs": 0.0, "sfa": 15.65, "tfa": 0.0, "fiber": 0.0, "pufa": 57.74, "mufa": 22.78},
-  {"name": "palm oil", "carbs": 0.0, "sfa": 49.3, "tfa": 0.0, "fiber": 0.0, "pufa": 9.3, "mufa": 37.0},
-  {"name": "margarine", "carbs": 0.7, "sfa": 18.04, "tfa": 6.24, "fiber": 0.0, "pufa": 19.56, "mufa": 39.17},
-  {"name": "lard", "carbs": 0.0, "sfa": 39.2, "tfa": 1.35, "fiber": 0.0, "pufa": 11.2, "mufa": 45.1},
-  {"name": "ghee", "carbs": 0.0, "sfa": 51.37, "tfa": 2.96, "fiber": 0.0, "pufa": 3.69, "mufa": 21.02},
-  {"name": "cheese", "carbs": 1.3, "sfa": 18.87, "tfa": 0.66, "fiber": 0.0, "pufa": 0.8, "mufa": 7.44},
-  {"name": "cheddar cheese", "carbs": 1.3, "sfa": 18.87, "tfa": 0.66, "fiber": 0.0, "pufa": 0.8, "mufa": 7.44},
-  {"name": "mozzarella", "carbs": 2.2, "sfa": 9.72, "tfa": 0.35, "fiber": 0.0, "pufa": 0.58, "mufa": 4.24},
-  {"name": "parmesan", "carbs": 3.2, "sfa": 18.71, "tfa": 0.0, "fiber": 0.0, "pufa": 0.55, "mufa": 7.35},
-  {"name": "feta cheese", "carbs": 4.1, "sfa": 14.95, "tfa": 0.52, "fiber": 0.0, "pufa": 0.59, "mufa": 5.48},
-  {"name": "cream cheese", "carbs": 4.1, "sfa": 18.24, "tfa": 0.64, "fiber": 0.0, "pufa": 0.93, "mufa": 6.74},
-  {"name": "cottage cheese", "carbs": 3.4, "sfa": 1.07, "tfa": 0.04, "fiber": 0.0, "pufa": 0.08, "mufa": 0.43},
-  {"name": "broccoli", "carbs": 7.0, "sfa": 0.04, "tfa": 0.0, "fiber": 1.0, "pufa": 0.11, "mufa": 0.01},
-  {"name": "spinach", "carbs": 3.6, "sfa": 0.06, "tfa": 0.0, "fiber": 0.8, "pufa": 0.16, "mufa": 0.01},
-  {"name": "kale", "carbs": 8.8, "sfa": 0.09, "tfa": 0.0, "fiber": 1.5, "pufa": 0.34, "mufa": 0.07},
-  {"name": "lettuce", "carbs": 2.9, "sfa": 0.02, "tfa": 0.0, "fiber": 0.5, "pufa": 0.06, "mufa": 0.0},
-  {"name": "tomato", "carbs": 3.9, "sfa": 0.03, "tfa": 0.0, "fiber": 0.3, "pufa": 0.08, "mufa": 0.04},
-  {"name": "carrot", "carbs": 9.6, "sfa": 0.03, "tfa": 0.0, "fiber": 0.7, "pufa": 0.1, "mufa": 0.01},
-  {"name": "cucumber", "carbs": 3.6, "sfa": 0.01, "tfa": 0.0, "fiber": 0.2, "pufa": 0.02, "mufa": 0.0},
-  {"name": "bell pepper", "carbs": 6.0, "sfa": 0.02, "tfa": 0.0, "fiber": 0.5, "pufa": 0.08, "mufa": 0.01},
-  {"name": "onion", "carbs": 9.3, "sfa": 0.02, "tfa": 0.0, "fiber": 0.5, "pufa": 0.02, "mufa": 0.01},
-  {"name": "garlic", "carbs": 33.1, "sfa": 0.09, "tfa": 0.0, "fiber": 0.6, "pufa": 0.25, "mufa": 0.0},
-  {"name": "mushrooms", "carbs": 3.3, "sfa": 0.03, "tfa": 0.0, "fiber": 0.5, "pufa": 0.15, "mufa": 0.0},
-  {"name": "asparagus", "carbs": 3.9, "sfa": 0.06, "tfa": 0.0, "fiber": 0.7, "pufa": 0.14, "mufa": 0.0},
-  {"name": "green beans", "carbs": 7.9, "sfa": 0.04, "tfa": 0.0, "fiber": 1.0, "pufa": 0.1, "mufa": 0.0},
-  {"name": "celery", "carbs": 3.0, "sfa": 0.05, "tfa": 0.0, "fiber": 0.7, "pufa": 0.1, "mufa": 0.03},
-  {"name": "cauliflower", "carbs": 5.0, "sfa": 0.06, "tfa": 0.0, "fiber": 0.8, "pufa": 0.12, "mufa": 0.01},
-  {"name": "zucchini", "carbs": 3.1, "sfa": 0.04, "tfa": 0.0, "fiber": 0.5, "pufa": 0.08, "mufa": 0.01},
-  {"name": "eggplant", "carbs": 5.9, "sfa": 0.04, "tfa": 0.0, "fiber": 1.5, "pufa": 0.08, "mufa": 0.01},
-  {"name": "cabbage", "carbs": 5.8, "sfa": 0.03, "tfa": 0.0, "fiber": 0.6, "pufa": 0.05, "mufa": 0.01},
-  {"name": "chocolate cake", "carbs": 51.0, "sfa": 5.15, "tfa": 0.26, "fiber": 0.5, "pufa": 1.25, "mufa": 3.67},
-  {"name": "chocolate", "carbs": 59.4, "sfa": 18.76, "tfa": 0.0, "fiber": 1.0, "pufa": 0.91, "mufa": 5.87},
-  {"name": "dark chocolate 70%", "carbs": 45.9, "sfa": 19.61, "tfa": 0.0, "fiber": 4.0, "pufa": 1.17, "mufa": 10.05},
-  {"name": "cookies", "carbs": 63.0, "sfa": 7.51, "tfa": 0.36, "fiber": 0.5, "pufa": 2.67, "mufa": 5.98},
-  {"name": "doughnut", "carbs": 45.0, "sfa": 5.8, "tfa": 1.22, "fiber": 0.3, "pufa": 3.34, "mufa": 6.29},
-  {"name": "muffin", "carbs": 46.0, "sfa": 2.53, "tfa": 0.15, "fiber": 0.5, "pufa": 0.84, "mufa": 2.7},
-  {"name": "pizza", "carbs": 33.0, "sfa": 4.79, "tfa": 0.14, "fiber": 0.5, "pufa": 1.62, "mufa": 3.44},
-  {"name": "hamburger", "carbs": 24.0, "sfa": 6.78, "tfa": 0.76, "fiber": 0.5, "pufa": 2.48, "mufa": 6.79},
-  {"name": "hot dog", "carbs": 18.6, "sfa": 6.31, "tfa": 0.31, "fiber": 0.3, "pufa": 2.0, "mufa": 5.65},
-  {"name": "pancakes", "carbs": 38.0, "sfa": 2.47, "tfa": 0.12, "fiber": 0.3, "pufa": 0.73, "mufa": 1.88},
-  {"name": "waffles", "carbs": 33.0, "sfa": 2.77, "tfa": 0.15, "fiber": 0.3, "pufa": 1.0, "mufa": 2.33},
-  {"name": "oat milk", "carbs": 6.5, "sfa": 0.2, "tfa": 0.0, "fiber": 0.5, "pufa": 0.5, "mufa": 0.8},
-  {"name": "almond milk", "carbs": 1.5, "sfa": 0.08, "tfa": 0.0, "fiber": 0.0, "pufa": 0.44, "mufa": 0.77},
-  {"name": "coconut milk", "carbs": 6.0, "sfa": 19.99, "tfa": 0.0, "fiber": 0.0, "pufa": 0.27, "mufa": 0.85},
-  {"name": "quinoa", "carbs": 21.3, "sfa": 0.23, "tfa": 0.0, "fiber": 1.5, "pufa": 1.08, "mufa": 0.53},
-  {"name": "barley", "carbs": 28.2, "sfa": 0.18, "tfa": 0.0, "fiber": 2.0, "pufa": 0.28, "mufa": 0.1},
-  {"name": "couscous", "carbs": 23.2, "sfa": 0.07, "tfa": 0.0, "fiber": 0.5, "pufa": 0.12, "mufa": 0.04},
-  {"name": "corn", "carbs": 19.0, "sfa": 0.18, "tfa": 0.0, "fiber": 0.7, "pufa": 0.62, "mufa": 0.21},
-  {"name": "popcorn", "carbs": 74.0, "sfa": 1.61, "tfa": 0.0, "fiber": 3.5, "pufa": 3.24, "mufa": 1.59},
-  {"name": "chia seeds", "carbs": 42.1, "sfa": 3.33, "tfa": 0.0, "fiber": 34.4, "pufa": 23.67, "mufa": 2.31},
-  {"name": "flaxseeds", "carbs": 28.9, "sfa": 3.66, "tfa": 0.0, "fiber": 20.0, "pufa": 28.73, "mufa": 7.53},
-  {"name": "sunflower seeds", "carbs": 20.0, "sfa": 4.46, "tfa": 0.0, "fiber": 2.5, "pufa": 32.07, "mufa": 18.53},
-  {"name": "pumpkin seeds", "carbs": 10.7, "sfa": 8.54, "tfa": 0.0, "fiber": 1.5, "pufa": 20.95, "mufa": 16.24},
-  {"name": "tahini", "carbs": 26.2, "sfa": 9.81, "tfa": 0.0, "fiber": 2.5, "pufa": 29.37, "mufa": 21.2},
-  {"name": "sour cream", "carbs": 3.6, "sfa": 7.85, "tfa": 0.27, "fiber": 0.0, "pufa": 0.46, "mufa": 2.76},
-  {"name": "heavy cream", "carbs": 2.8, "sfa": 23.03, "tfa": 0.96, "fiber": 0.0, "pufa": 1.2, "mufa": 8.63},
-  {"name": "mayonnaise", "carbs": 0.6, "sfa": 8.62, "tfa": 0.36, "fiber": 0.0, "pufa": 24.05, "mufa": 22.2},
-  {"name": "ranch dressing", "carbs": 5.3, "sfa": 2.99, "tfa": 0.1, "fiber": 0.0, "pufa": 7.66, "mufa": 8.08},
-  {"name": "turkey", "carbs": 0.0, "sfa": 1.67, "tfa": 0.07, "fiber": 0.0, "pufa": 0.84, "mufa": 1.06},
-  {"name": "lamb", "carbs": 0.0, "sfa": 9.89, "tfa": 1.04, "fiber": 0.0, "pufa": 0.87, "mufa": 7.26},
-  {"name": "sardines", "carbs": 0.0, "sfa": 1.55, "tfa": 0.0, "fiber": 0.0, "pufa": 3.99, "mufa": 2.2},
-  {"name": "mackerel", "carbs": 0.0, "sfa": 3.3, "tfa": 0.09, "fiber": 0.0, "pufa": 5.32, "mufa": 4.79},
-  {"name": "anchovies", "carbs": 0.0, "sfa": 2.2, "tfa": 0.09, "fiber": 0.0, "pufa": 2.93, "mufa": 2.73},
-  {"name": "tiramisu", "carbs": 33.7, "sfa": 10.2, "tfa": 0.3, "fiber": 0.0, "pufa": 1.0, "mufa": 4.8},
-  {"name": "cheesecake", "carbs": 32.0, "sfa": 14.0, "tfa": 0.5, "fiber": 0.0, "pufa": 1.3, "mufa": 6.5},
-  {"name": "brownies", "carbs": 52.0, "sfa": 8.5, "tfa": 0.4, "fiber": 0.5, "pufa": 1.8, "mufa": 4.2},
-  {"name": "protein bar", "carbs": 40.0, "sfa": 3.0, "tfa": 0.0, "fiber": 2.0, "pufa": 2.0, "mufa": 3.0},
-  {"name": "protein powder", "carbs": 7.5, "sfa": 0.68, "tfa": 0.0, "fiber": 0.0, "pufa": 0.25, "mufa": 0.22},
-  {"name": "white sugar", "carbs": 99.9, "sfa": 0.0, "tfa": 0.0, "fiber": 0.0, "pufa": 0.0, "mufa": 0.0},
-  {"name": "honey", "carbs": 82.4, "sfa": 0.0, "tfa": 0.0, "fiber": 0.0, "pufa": 0.0, "mufa": 0.0},
-  {"name": "maple syrup", "carbs": 67.0, "sfa": 0.04, "tfa": 0.0, "fiber": 0.0, "pufa": 0.01, "mufa": 0.0},
-  {"name": "cola", "carbs": 10.6, "sfa": 0.0, "tfa": 0.0, "fiber": 0.0, "pufa": 0.0, "mufa": 0.0},
-  {"name": "beer", "carbs": 3.6, "sfa": 0.0, "tfa": 0.0, "fiber": 0.0, "pufa": 0.0, "mufa": 0.0},
-  {"name": "red wine", "carbs": 2.6, "sfa": 0.0, "tfa": 0.0, "fiber": 0.0, "pufa": 0.0, "mufa": 0.0},
-  {"name": "white wine", "carbs": 2.6, "sfa": 0.0, "tfa": 0.0, "fiber": 0.0, "pufa": 0.0, "mufa": 0.0},
-  {"name": "coffee", "carbs": 0.0, "sfa": 0.01, "tfa": 0.0, "fiber": 0.0, "pufa": 0.01, "mufa": 0.0},
-  {"name": "tea", "carbs": 0.2, "sfa": 0.0, "tfa": 0.0, "fiber": 0.0, "pufa": 0.0, "mufa": 0.0},
-  {"name": "fried chicken", "carbs": 8.0, "sfa": 4.15, "tfa": 0.19, "fiber": 0.0, "pufa": 4.4, "mufa": 6.34},
-  {"name": "egg noodles", "carbs": 24.0, "sfa": 0.24, "tfa": 0.0, "fiber": 0.3, "pufa": 0.28, "mufa": 0.2},
-  {"name": "rice noodles", "carbs": 25.2, "sfa": 0.07, "tfa": 0.0, "fiber": 0.2, "pufa": 0.1, "mufa": 0.07},
-  {"name": "tortilla", "carbs": 48.0, "sfa": 2.38, "tfa": 0.07, "fiber": 1.0, "pufa": 1.45, "mufa": 1.58},
-  {"name": "granola bar", "carbs": 65.0, "sfa": 3.0, "tfa": 0.0, "fiber": 2.0, "pufa": 2.5, "mufa": 2.3},
-  {"name": "trail mix", "carbs": 35.0, "sfa": 4.0, "tfa": 0.0, "fiber": 3.0, "pufa": 10.0, "mufa": 9.0},
-  {"name": "edamame", "carbs": 8.9, "sfa": 0.43, "tfa": 0.0, "fiber": 2.5, "pufa": 1.63, "mufa": 0.64},
-  {"name": "kimchi", "carbs": 2.4, "sfa": 0.03, "tfa": 0.0, "fiber": 1.5, "pufa": 0.07, "mufa": 0.01},
-  {"name": "sauerkraut", "carbs": 4.3, "sfa": 0.01, "tfa": 0.0, "fiber": 1.5, "pufa": 0.02, "mufa": 0.01},
-  {"name": "miso soup", "carbs": 3.3, "sfa": 0.1, "tfa": 0.0, "fiber": 0.5, "pufa": 0.3, "mufa": 0.1},
-  {"name": "falafel", "carbs": 31.8, "sfa": 0.7, "tfa": 0.0, "fiber": 3.0, "pufa": 2.94, "mufa": 2.78},
-  {"name": "gyro", "carbs": 26.0, "sfa": 6.0, "tfa": 0.3, "fiber": 0.5, "pufa": 1.5, "mufa": 5.0},
-  {"name": "dumplings", "carbs": 28.0, "sfa": 1.5, "tfa": 0.0, "fiber": 0.5, "pufa": 1.0, "mufa": 1.5},
-  {"name": "spring rolls", "carbs": 22.0, "sfa": 0.8, "tfa": 0.0, "fiber": 1.0, "pufa": 1.2, "mufa": 1.5},
-  {"name": "pad thai", "carbs": 22.0, "sfa": 2.0, "tfa": 0.0, "fiber": 0.5, "pufa": 3.0, "mufa": 2.5},
-  {"name": "ramen", "carbs": 25.0, "sfa": 3.5, "tfa": 0.1, "fiber": 0.5, "pufa": 1.5, "mufa": 3.0},
-  {"name": "lasagna", "carbs": 18.0, "sfa": 4.5, "tfa": 0.2, "fiber": 0.5, "pufa": 1.0, "mufa": 3.0},
-  {"name": "macaroni and cheese", "carbs": 23.0, "sfa": 5.5, "tfa": 0.2, "fiber": 0.5, "pufa": 1.0, "mufa": 3.0},
-  {"name": "lentil soup", "carbs": 12.0, "sfa": 0.3, "tfa": 0.0, "fiber": 2.5, "pufa": 0.5, "mufa": 0.6},
-  {"name": "chicken soup", "carbs": 4.0, "sfa": 0.5, "tfa": 0.0, "fiber": 0.3, "pufa": 0.3, "mufa": 0.5},
-  {"name": "tomato soup", "carbs": 9.0, "sfa": 0.6, "tfa": 0.0, "fiber": 0.5, "pufa": 0.3, "mufa": 0.5},
-  {"name": "oat bran", "carbs": 58.1, "sfa": 0.94, "tfa": 0.0, "fiber": 9.0, "pufa": 2.47, "mufa": 1.31},
-  {"name": "psyllium husk", "carbs": 80.0, "sfa": 0.0, "tfa": 0.0, "fiber": 71.0, "pufa": 0.0, "mufa": 0.0},
-  {"name": "nutritional yeast", "carbs": 42.0, "sfa": 0.38, "tfa": 0.0, "fiber": 18.0, "pufa": 0.45, "mufa": 0.41}
+  {
+    "name": "white rice",
+    "carbs": 28.6,
+    "sfa": 0.07,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.1,
+    "mufa": 0.07
+  },
+  {
+    "name": "brown rice",
+    "carbs": 23.0,
+    "sfa": 0.19,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.35,
+    "mufa": 0.32
+  },
+  {
+    "name": "basmati rice",
+    "carbs": 25.2,
+    "sfa": 0.07,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.1,
+    "mufa": 0.07
+  },
+  {
+    "name": "jasmine rice",
+    "carbs": 27.9,
+    "sfa": 0.07,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.1,
+    "mufa": 0.07
+  },
+  {
+    "name": "white bread",
+    "carbs": 49.0,
+    "sfa": 0.58,
+    "tfa": 0.18,
+    "fiber": 0.5,
+    "pufa": 1.26,
+    "mufa": 0.61
+  },
+  {
+    "name": "whole wheat bread",
+    "carbs": 41.0,
+    "sfa": 0.49,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.04,
+    "mufa": 0.52
+  },
+  {
+    "name": "sourdough bread",
+    "carbs": 47.0,
+    "sfa": 0.28,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 0.52,
+    "mufa": 0.27
+  },
+  {
+    "name": "rye bread",
+    "carbs": 48.0,
+    "sfa": 0.22,
+    "tfa": 0.0,
+    "fiber": 1.7,
+    "pufa": 0.46,
+    "mufa": 0.24
+  },
+  {
+    "name": "pita bread",
+    "carbs": 55.7,
+    "sfa": 0.28,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.63,
+    "mufa": 0.17
+  },
+  {
+    "name": "bagel",
+    "carbs": 53.0,
+    "sfa": 0.24,
+    "tfa": 0.18,
+    "fiber": 0.4,
+    "pufa": 0.78,
+    "mufa": 0.34
+  },
+  {
+    "name": "croissant",
+    "carbs": 46.0,
+    "sfa": 12.0,
+    "tfa": 0.38,
+    "fiber": 0.3,
+    "pufa": 1.7,
+    "mufa": 7.94
+  },
+  {
+    "name": "white pasta",
+    "carbs": 25.1,
+    "sfa": 0.12,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.24,
+    "mufa": 0.1
+  },
+  {
+    "name": "whole wheat pasta",
+    "carbs": 22.8,
+    "sfa": 0.19,
+    "tfa": 0.0,
+    "fiber": 1.1,
+    "pufa": 0.37,
+    "mufa": 0.18
+  },
+  {
+    "name": "oatmeal",
+    "carbs": 12.0,
+    "sfa": 0.37,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.76,
+    "mufa": 0.54
+  },
+  {
+    "name": "instant oatmeal",
+    "carbs": 66.0,
+    "sfa": 0.71,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.47,
+    "mufa": 1.05
+  },
+  {
+    "name": "cornflakes",
+    "carbs": 84.0,
+    "sfa": 0.12,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.26,
+    "mufa": 0.08
+  },
+  {
+    "name": "granola",
+    "carbs": 60.0,
+    "sfa": 2.19,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 2.75,
+    "mufa": 2.07
+  },
+  {
+    "name": "white potato",
+    "carbs": 17.0,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.06,
+    "mufa": 0.0
+  },
+  {
+    "name": "sweet potato",
+    "carbs": 20.1,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.03,
+    "mufa": 0.0
+  },
+  {
+    "name": "french fries",
+    "carbs": 35.0,
+    "sfa": 2.32,
+    "tfa": 0.13,
+    "fiber": 0.5,
+    "pufa": 4.62,
+    "mufa": 4.58
+  },
+  {
+    "name": "potato chips",
+    "carbs": 52.0,
+    "sfa": 3.11,
+    "tfa": 0.06,
+    "fiber": 0.5,
+    "pufa": 5.54,
+    "mufa": 3.49
+  },
+  {
+    "name": "apple",
+    "carbs": 13.8,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.05,
+    "mufa": 0.01
+  },
+  {
+    "name": "banana",
+    "carbs": 23.0,
+    "sfa": 0.11,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.05,
+    "mufa": 0.04
+  },
+  {
+    "name": "orange",
+    "carbs": 11.8,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.03,
+    "mufa": 0.01
+  },
+  {
+    "name": "orange juice",
+    "carbs": 10.4,
+    "sfa": 0.05,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.07,
+    "mufa": 0.05
+  },
+  {
+    "name": "grapes",
+    "carbs": 17.2,
+    "sfa": 0.05,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.04,
+    "mufa": 0.01
+  },
+  {
+    "name": "watermelon",
+    "carbs": 7.6,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.05,
+    "mufa": 0.02
+  },
+  {
+    "name": "strawberries",
+    "carbs": 7.7,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.6,
+    "pufa": 0.08,
+    "mufa": 0.04
+  },
+  {
+    "name": "blueberries",
+    "carbs": 14.5,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.1,
+    "mufa": 0.1
+  },
+  {
+    "name": "raspberries",
+    "carbs": 11.9,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.16,
+    "mufa": 0.04
+  },
+  {
+    "name": "mango",
+    "carbs": 15.0,
+    "sfa": 0.07,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.04,
+    "mufa": 0.06
+  },
+  {
+    "name": "cherries",
+    "carbs": 16.0,
+    "sfa": 0.09,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.09,
+    "mufa": 0.06
+  },
+  {
+    "name": "pear",
+    "carbs": 15.2,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.7,
+    "pufa": 0.05,
+    "mufa": 0.04
+  },
+  {
+    "name": "raisins",
+    "carbs": 79.2,
+    "sfa": 0.12,
+    "tfa": 0.0,
+    "fiber": 1.4,
+    "pufa": 0.1,
+    "mufa": 0.08
+  },
+  {
+    "name": "whole milk",
+    "carbs": 4.8,
+    "sfa": 1.98,
+    "tfa": 0.1,
+    "fiber": 0.0,
+    "pufa": 0.13,
+    "mufa": 0.78
+  },
+  {
+    "name": "skim milk",
+    "carbs": 5.0,
+    "sfa": 0.08,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.02
+  },
+  {
+    "name": "soy milk",
+    "carbs": 3.0,
+    "sfa": 0.21,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.88,
+    "mufa": 0.27
+  },
+  {
+    "name": "plain yogurt",
+    "carbs": 6.0,
+    "sfa": 1.06,
+    "tfa": 0.05,
+    "fiber": 0.0,
+    "pufa": 0.04,
+    "mufa": 0.37
+  },
+  {
+    "name": "greek yogurt",
+    "carbs": 3.6,
+    "sfa": 0.67,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.03,
+    "mufa": 0.23
+  },
+  {
+    "name": "ice cream",
+    "carbs": 24.0,
+    "sfa": 6.28,
+    "tfa": 0.29,
+    "fiber": 0.0,
+    "pufa": 0.38,
+    "mufa": 2.12
+  },
+  {
+    "name": "lentils",
+    "carbs": 20.0,
+    "sfa": 0.05,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.19,
+    "mufa": 0.07
+  },
+  {
+    "name": "chickpeas",
+    "carbs": 27.4,
+    "sfa": 0.16,
+    "tfa": 0.0,
+    "fiber": 3.0,
+    "pufa": 0.93,
+    "mufa": 0.55
+  },
+  {
+    "name": "black beans",
+    "carbs": 23.7,
+    "sfa": 0.07,
+    "tfa": 0.0,
+    "fiber": 3.0,
+    "pufa": 0.19,
+    "mufa": 0.04
+  },
+  {
+    "name": "kidney beans",
+    "carbs": 22.8,
+    "sfa": 0.07,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.19,
+    "mufa": 0.04
+  },
+  {
+    "name": "baked beans",
+    "carbs": 17.0,
+    "sfa": 0.06,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.12,
+    "mufa": 0.04
+  },
+  {
+    "name": "soybeans",
+    "carbs": 9.9,
+    "sfa": 1.07,
+    "tfa": 0.0,
+    "fiber": 3.0,
+    "pufa": 4.14,
+    "mufa": 1.61
+  },
+  {
+    "name": "tofu",
+    "carbs": 1.9,
+    "sfa": 0.52,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 2.11,
+    "mufa": 0.79
+  },
+  {
+    "name": "tempeh",
+    "carbs": 9.4,
+    "sfa": 1.04,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 4.02,
+    "mufa": 1.55
+  },
+  {
+    "name": "peas",
+    "carbs": 14.5,
+    "sfa": 0.07,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.22,
+    "mufa": 0.06
+  },
+  {
+    "name": "eggs",
+    "carbs": 1.1,
+    "sfa": 3.23,
+    "tfa": 0.04,
+    "fiber": 0.0,
+    "pufa": 1.92,
+    "mufa": 3.81
+  },
+  {
+    "name": "chicken breast",
+    "carbs": 0.0,
+    "sfa": 0.66,
+    "tfa": 0.01,
+    "fiber": 0.0,
+    "pufa": 0.55,
+    "mufa": 0.66
+  },
+  {
+    "name": "beef",
+    "carbs": 0.0,
+    "sfa": 8.22,
+    "tfa": 1.15,
+    "fiber": 0.0,
+    "pufa": 0.52,
+    "mufa": 7.61
+  },
+  {
+    "name": "pork",
+    "carbs": 0.0,
+    "sfa": 5.03,
+    "tfa": 0.1,
+    "fiber": 0.0,
+    "pufa": 1.58,
+    "mufa": 5.06
+  },
+  {
+    "name": "bacon",
+    "carbs": 1.4,
+    "sfa": 8.71,
+    "tfa": 0.14,
+    "fiber": 0.0,
+    "pufa": 3.6,
+    "mufa": 10.0
+  },
+  {
+    "name": "salmon",
+    "carbs": 0.0,
+    "sfa": 3.15,
+    "tfa": 0.09,
+    "fiber": 0.0,
+    "pufa": 3.72,
+    "mufa": 3.73
+  },
+  {
+    "name": "tuna",
+    "carbs": 0.0,
+    "sfa": 0.27,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.96,
+    "mufa": 0.14
+  },
+  {
+    "name": "shrimp",
+    "carbs": 0.9,
+    "sfa": 0.28,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.49,
+    "mufa": 0.14
+  },
+  {
+    "name": "nuts",
+    "carbs": 19.7,
+    "sfa": 5.18,
+    "tfa": 0.01,
+    "fiber": 2.5,
+    "pufa": 19.03,
+    "mufa": 12.57
+  },
+  {
+    "name": "almonds",
+    "carbs": 21.6,
+    "sfa": 3.8,
+    "tfa": 0.0,
+    "fiber": 4.5,
+    "pufa": 12.32,
+    "mufa": 32.15
+  },
+  {
+    "name": "walnuts",
+    "carbs": 13.7,
+    "sfa": 6.13,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 47.17,
+    "mufa": 8.93
+  },
+  {
+    "name": "cashews",
+    "carbs": 30.2,
+    "sfa": 9.15,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 7.84,
+    "mufa": 24.07
+  },
+  {
+    "name": "peanuts",
+    "carbs": 16.1,
+    "sfa": 6.28,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 15.69,
+    "mufa": 24.43
+  },
+  {
+    "name": "pecans",
+    "carbs": 13.9,
+    "sfa": 6.18,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 20.63,
+    "mufa": 40.8
+  },
+  {
+    "name": "pistachios",
+    "carbs": 27.9,
+    "sfa": 5.56,
+    "tfa": 0.0,
+    "fiber": 3.5,
+    "pufa": 13.52,
+    "mufa": 23.26
+  },
+  {
+    "name": "macadamia nuts",
+    "carbs": 13.8,
+    "sfa": 12.06,
+    "tfa": 0.0,
+    "fiber": 3.5,
+    "pufa": 1.5,
+    "mufa": 59.28
+  },
+  {
+    "name": "peanut butter",
+    "carbs": 20.1,
+    "sfa": 8.78,
+    "tfa": 0.04,
+    "fiber": 2.0,
+    "pufa": 11.73,
+    "mufa": 22.61
+  },
+  {
+    "name": "almond butter",
+    "carbs": 18.8,
+    "sfa": 4.54,
+    "tfa": 0.0,
+    "fiber": 3.5,
+    "pufa": 12.1,
+    "mufa": 34.16
+  },
+  {
+    "name": "hummus",
+    "carbs": 14.3,
+    "sfa": 0.62,
+    "tfa": 0.0,
+    "fiber": 3.5,
+    "pufa": 4.22,
+    "mufa": 4.41
+  },
+  {
+    "name": "butter",
+    "carbs": 0.06,
+    "sfa": 51.37,
+    "tfa": 3.28,
+    "fiber": 0.0,
+    "pufa": 3.01,
+    "mufa": 21.02
+  },
+  {
+    "name": "olive oil",
+    "carbs": 0.0,
+    "sfa": 13.81,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 10.52,
+    "mufa": 72.96
+  },
+  {
+    "name": "avocado",
+    "carbs": 8.5,
+    "sfa": 2.13,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 1.82,
+    "mufa": 9.8
+  },
+  {
+    "name": "vegetable oil",
+    "carbs": 0.0,
+    "sfa": 13.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 57.74,
+    "mufa": 23.26
+  },
+  {
+    "name": "coconut oil",
+    "carbs": 0.0,
+    "sfa": 82.49,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 1.7,
+    "mufa": 6.33
+  },
+  {
+    "name": "canola oil",
+    "carbs": 0.0,
+    "sfa": 7.37,
+    "tfa": 0.39,
+    "fiber": 0.0,
+    "pufa": 28.14,
+    "mufa": 63.28
+  },
+  {
+    "name": "sunflower oil",
+    "carbs": 0.0,
+    "sfa": 10.27,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 65.7,
+    "mufa": 19.53
+  },
+  {
+    "name": "corn oil",
+    "carbs": 0.0,
+    "sfa": 12.95,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 54.68,
+    "mufa": 27.58
+  },
+  {
+    "name": "soybean oil",
+    "carbs": 0.0,
+    "sfa": 15.65,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 57.74,
+    "mufa": 22.78
+  },
+  {
+    "name": "palm oil",
+    "carbs": 0.0,
+    "sfa": 49.3,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 9.3,
+    "mufa": 37.0
+  },
+  {
+    "name": "margarine",
+    "carbs": 0.7,
+    "sfa": 18.04,
+    "tfa": 6.24,
+    "fiber": 0.0,
+    "pufa": 19.56,
+    "mufa": 39.17
+  },
+  {
+    "name": "lard",
+    "carbs": 0.0,
+    "sfa": 39.2,
+    "tfa": 1.35,
+    "fiber": 0.0,
+    "pufa": 11.2,
+    "mufa": 45.1
+  },
+  {
+    "name": "ghee",
+    "carbs": 0.0,
+    "sfa": 51.37,
+    "tfa": 2.96,
+    "fiber": 0.0,
+    "pufa": 3.69,
+    "mufa": 21.02
+  },
+  {
+    "name": "cheese",
+    "carbs": 1.3,
+    "sfa": 18.87,
+    "tfa": 0.66,
+    "fiber": 0.0,
+    "pufa": 0.8,
+    "mufa": 7.44
+  },
+  {
+    "name": "cheddar cheese",
+    "carbs": 1.3,
+    "sfa": 18.87,
+    "tfa": 0.66,
+    "fiber": 0.0,
+    "pufa": 0.8,
+    "mufa": 7.44
+  },
+  {
+    "name": "mozzarella",
+    "carbs": 2.2,
+    "sfa": 9.72,
+    "tfa": 0.35,
+    "fiber": 0.0,
+    "pufa": 0.58,
+    "mufa": 4.24
+  },
+  {
+    "name": "parmesan",
+    "carbs": 3.2,
+    "sfa": 18.71,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.55,
+    "mufa": 7.35
+  },
+  {
+    "name": "feta cheese",
+    "carbs": 4.1,
+    "sfa": 14.95,
+    "tfa": 0.52,
+    "fiber": 0.0,
+    "pufa": 0.59,
+    "mufa": 5.48
+  },
+  {
+    "name": "cream cheese",
+    "carbs": 4.1,
+    "sfa": 18.24,
+    "tfa": 0.64,
+    "fiber": 0.0,
+    "pufa": 0.93,
+    "mufa": 6.74
+  },
+  {
+    "name": "cottage cheese",
+    "carbs": 3.4,
+    "sfa": 1.07,
+    "tfa": 0.04,
+    "fiber": 0.0,
+    "pufa": 0.08,
+    "mufa": 0.43
+  },
+  {
+    "name": "broccoli",
+    "carbs": 7.0,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.11,
+    "mufa": 0.01
+  },
+  {
+    "name": "spinach",
+    "carbs": 3.6,
+    "sfa": 0.06,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 0.16,
+    "mufa": 0.01
+  },
+  {
+    "name": "kale",
+    "carbs": 8.8,
+    "sfa": 0.09,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.34,
+    "mufa": 0.07
+  },
+  {
+    "name": "lettuce",
+    "carbs": 2.9,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.06,
+    "mufa": 0.0
+  },
+  {
+    "name": "tomato",
+    "carbs": 3.9,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.08,
+    "mufa": 0.04
+  },
+  {
+    "name": "carrot",
+    "carbs": 9.6,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 0.7,
+    "pufa": 0.1,
+    "mufa": 0.01
+  },
+  {
+    "name": "cucumber",
+    "carbs": 3.6,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.02,
+    "mufa": 0.0
+  },
+  {
+    "name": "bell pepper",
+    "carbs": 6.0,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.08,
+    "mufa": 0.01
+  },
+  {
+    "name": "onion",
+    "carbs": 9.3,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.02,
+    "mufa": 0.01
+  },
+  {
+    "name": "garlic",
+    "carbs": 33.1,
+    "sfa": 0.09,
+    "tfa": 0.0,
+    "fiber": 0.6,
+    "pufa": 0.25,
+    "mufa": 0.0
+  },
+  {
+    "name": "mushrooms",
+    "carbs": 3.3,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.15,
+    "mufa": 0.0
+  },
+  {
+    "name": "asparagus",
+    "carbs": 3.9,
+    "sfa": 0.06,
+    "tfa": 0.0,
+    "fiber": 0.7,
+    "pufa": 0.14,
+    "mufa": 0.0
+  },
+  {
+    "name": "green beans",
+    "carbs": 7.9,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.1,
+    "mufa": 0.0
+  },
+  {
+    "name": "celery",
+    "carbs": 3.0,
+    "sfa": 0.05,
+    "tfa": 0.0,
+    "fiber": 0.7,
+    "pufa": 0.1,
+    "mufa": 0.03
+  },
+  {
+    "name": "cauliflower",
+    "carbs": 5.0,
+    "sfa": 0.06,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 0.12,
+    "mufa": 0.01
+  },
+  {
+    "name": "zucchini",
+    "carbs": 3.1,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.08,
+    "mufa": 0.01
+  },
+  {
+    "name": "eggplant",
+    "carbs": 5.9,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.08,
+    "mufa": 0.01
+  },
+  {
+    "name": "cabbage",
+    "carbs": 5.8,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 0.6,
+    "pufa": 0.05,
+    "mufa": 0.01
+  },
+  {
+    "name": "chocolate cake",
+    "carbs": 51.0,
+    "sfa": 5.15,
+    "tfa": 0.26,
+    "fiber": 0.5,
+    "pufa": 1.25,
+    "mufa": 3.67
+  },
+  {
+    "name": "chocolate",
+    "carbs": 59.4,
+    "sfa": 18.76,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.91,
+    "mufa": 5.87
+  },
+  {
+    "name": "dark chocolate 70%",
+    "carbs": 45.9,
+    "sfa": 19.61,
+    "tfa": 0.0,
+    "fiber": 4.0,
+    "pufa": 1.17,
+    "mufa": 10.05
+  },
+  {
+    "name": "cookies",
+    "carbs": 63.0,
+    "sfa": 7.51,
+    "tfa": 0.36,
+    "fiber": 0.5,
+    "pufa": 2.67,
+    "mufa": 5.98
+  },
+  {
+    "name": "doughnut",
+    "carbs": 45.0,
+    "sfa": 5.8,
+    "tfa": 1.22,
+    "fiber": 0.3,
+    "pufa": 3.34,
+    "mufa": 6.29
+  },
+  {
+    "name": "muffin",
+    "carbs": 46.0,
+    "sfa": 2.53,
+    "tfa": 0.15,
+    "fiber": 0.5,
+    "pufa": 0.84,
+    "mufa": 2.7
+  },
+  {
+    "name": "pizza",
+    "carbs": 33.0,
+    "sfa": 4.79,
+    "tfa": 0.14,
+    "fiber": 0.5,
+    "pufa": 1.62,
+    "mufa": 3.44
+  },
+  {
+    "name": "hamburger",
+    "carbs": 24.0,
+    "sfa": 6.78,
+    "tfa": 0.76,
+    "fiber": 0.5,
+    "pufa": 2.48,
+    "mufa": 6.79
+  },
+  {
+    "name": "hot dog",
+    "carbs": 18.6,
+    "sfa": 6.31,
+    "tfa": 0.31,
+    "fiber": 0.3,
+    "pufa": 2.0,
+    "mufa": 5.65
+  },
+  {
+    "name": "pancakes",
+    "carbs": 38.0,
+    "sfa": 2.47,
+    "tfa": 0.12,
+    "fiber": 0.3,
+    "pufa": 0.73,
+    "mufa": 1.88
+  },
+  {
+    "name": "waffles",
+    "carbs": 33.0,
+    "sfa": 2.77,
+    "tfa": 0.15,
+    "fiber": 0.3,
+    "pufa": 1.0,
+    "mufa": 2.33
+  },
+  {
+    "name": "oat milk",
+    "carbs": 6.5,
+    "sfa": 0.2,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.5,
+    "mufa": 0.8
+  },
+  {
+    "name": "almond milk",
+    "carbs": 1.5,
+    "sfa": 0.08,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.44,
+    "mufa": 0.77
+  },
+  {
+    "name": "coconut milk",
+    "carbs": 6.0,
+    "sfa": 19.99,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.27,
+    "mufa": 0.85
+  },
+  {
+    "name": "quinoa",
+    "carbs": 21.3,
+    "sfa": 0.23,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.08,
+    "mufa": 0.53
+  },
+  {
+    "name": "barley",
+    "carbs": 28.2,
+    "sfa": 0.18,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 0.28,
+    "mufa": 0.1
+  },
+  {
+    "name": "couscous",
+    "carbs": 23.2,
+    "sfa": 0.07,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.12,
+    "mufa": 0.04
+  },
+  {
+    "name": "corn",
+    "carbs": 19.0,
+    "sfa": 0.18,
+    "tfa": 0.0,
+    "fiber": 0.7,
+    "pufa": 0.62,
+    "mufa": 0.21
+  },
+  {
+    "name": "popcorn",
+    "carbs": 74.0,
+    "sfa": 1.61,
+    "tfa": 0.0,
+    "fiber": 3.5,
+    "pufa": 3.24,
+    "mufa": 1.59
+  },
+  {
+    "name": "chia seeds",
+    "carbs": 42.1,
+    "sfa": 3.33,
+    "tfa": 0.0,
+    "fiber": 34.4,
+    "pufa": 23.67,
+    "mufa": 2.31
+  },
+  {
+    "name": "flaxseeds",
+    "carbs": 28.9,
+    "sfa": 3.66,
+    "tfa": 0.0,
+    "fiber": 20.0,
+    "pufa": 28.73,
+    "mufa": 7.53
+  },
+  {
+    "name": "sunflower seeds",
+    "carbs": 20.0,
+    "sfa": 4.46,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 32.07,
+    "mufa": 18.53
+  },
+  {
+    "name": "pumpkin seeds",
+    "carbs": 10.7,
+    "sfa": 8.54,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 20.95,
+    "mufa": 16.24
+  },
+  {
+    "name": "tahini",
+    "carbs": 26.2,
+    "sfa": 9.81,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 29.37,
+    "mufa": 21.2
+  },
+  {
+    "name": "sour cream",
+    "carbs": 3.6,
+    "sfa": 7.85,
+    "tfa": 0.27,
+    "fiber": 0.0,
+    "pufa": 0.46,
+    "mufa": 2.76
+  },
+  {
+    "name": "heavy cream",
+    "carbs": 2.8,
+    "sfa": 23.03,
+    "tfa": 0.96,
+    "fiber": 0.0,
+    "pufa": 1.2,
+    "mufa": 8.63
+  },
+  {
+    "name": "mayonnaise",
+    "carbs": 0.6,
+    "sfa": 8.62,
+    "tfa": 0.36,
+    "fiber": 0.0,
+    "pufa": 24.05,
+    "mufa": 22.2
+  },
+  {
+    "name": "ranch dressing",
+    "carbs": 5.3,
+    "sfa": 2.99,
+    "tfa": 0.1,
+    "fiber": 0.0,
+    "pufa": 7.66,
+    "mufa": 8.08
+  },
+  {
+    "name": "turkey",
+    "carbs": 0.0,
+    "sfa": 1.67,
+    "tfa": 0.07,
+    "fiber": 0.0,
+    "pufa": 0.84,
+    "mufa": 1.06
+  },
+  {
+    "name": "lamb",
+    "carbs": 0.0,
+    "sfa": 9.89,
+    "tfa": 1.04,
+    "fiber": 0.0,
+    "pufa": 0.87,
+    "mufa": 7.26
+  },
+  {
+    "name": "sardines",
+    "carbs": 0.0,
+    "sfa": 1.55,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 3.99,
+    "mufa": 2.2
+  },
+  {
+    "name": "mackerel",
+    "carbs": 0.0,
+    "sfa": 3.3,
+    "tfa": 0.09,
+    "fiber": 0.0,
+    "pufa": 5.32,
+    "mufa": 4.79
+  },
+  {
+    "name": "anchovies",
+    "carbs": 0.0,
+    "sfa": 2.2,
+    "tfa": 0.09,
+    "fiber": 0.0,
+    "pufa": 2.93,
+    "mufa": 2.73
+  },
+  {
+    "name": "tiramisu",
+    "carbs": 33.7,
+    "sfa": 10.2,
+    "tfa": 0.3,
+    "fiber": 0.0,
+    "pufa": 1.0,
+    "mufa": 4.8
+  },
+  {
+    "name": "cheesecake",
+    "carbs": 32.0,
+    "sfa": 14.0,
+    "tfa": 0.5,
+    "fiber": 0.0,
+    "pufa": 1.3,
+    "mufa": 6.5
+  },
+  {
+    "name": "brownies",
+    "carbs": 52.0,
+    "sfa": 8.5,
+    "tfa": 0.4,
+    "fiber": 0.5,
+    "pufa": 1.8,
+    "mufa": 4.2
+  },
+  {
+    "name": "protein bar",
+    "carbs": 40.0,
+    "sfa": 3.0,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 2.0,
+    "mufa": 3.0
+  },
+  {
+    "name": "protein powder",
+    "carbs": 7.5,
+    "sfa": 0.68,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.25,
+    "mufa": 0.22
+  },
+  {
+    "name": "white sugar",
+    "carbs": 99.9,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "honey",
+    "carbs": 82.4,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "maple syrup",
+    "carbs": 67.0,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.0
+  },
+  {
+    "name": "cola",
+    "carbs": 10.6,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "beer",
+    "carbs": 3.6,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "red wine",
+    "carbs": 2.6,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "white wine",
+    "carbs": 2.6,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "coffee",
+    "carbs": 0.0,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.0
+  },
+  {
+    "name": "tea",
+    "carbs": 0.2,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "fried chicken",
+    "carbs": 8.0,
+    "sfa": 4.15,
+    "tfa": 0.19,
+    "fiber": 0.0,
+    "pufa": 4.4,
+    "mufa": 6.34
+  },
+  {
+    "name": "egg noodles",
+    "carbs": 24.0,
+    "sfa": 0.24,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.28,
+    "mufa": 0.2
+  },
+  {
+    "name": "rice noodles",
+    "carbs": 25.2,
+    "sfa": 0.07,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.1,
+    "mufa": 0.07
+  },
+  {
+    "name": "tortilla",
+    "carbs": 48.0,
+    "sfa": 2.38,
+    "tfa": 0.07,
+    "fiber": 1.0,
+    "pufa": 1.45,
+    "mufa": 1.58
+  },
+  {
+    "name": "granola bar",
+    "carbs": 65.0,
+    "sfa": 3.0,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 2.5,
+    "mufa": 2.3
+  },
+  {
+    "name": "trail mix",
+    "carbs": 35.0,
+    "sfa": 4.0,
+    "tfa": 0.0,
+    "fiber": 3.0,
+    "pufa": 10.0,
+    "mufa": 9.0
+  },
+  {
+    "name": "edamame",
+    "carbs": 8.9,
+    "sfa": 0.43,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 1.63,
+    "mufa": 0.64
+  },
+  {
+    "name": "kimchi",
+    "carbs": 2.4,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.07,
+    "mufa": 0.01
+  },
+  {
+    "name": "sauerkraut",
+    "carbs": 4.3,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.02,
+    "mufa": 0.01
+  },
+  {
+    "name": "miso soup",
+    "carbs": 3.3,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.3,
+    "mufa": 0.1
+  },
+  {
+    "name": "falafel",
+    "carbs": 31.8,
+    "sfa": 0.7,
+    "tfa": 0.0,
+    "fiber": 3.0,
+    "pufa": 2.94,
+    "mufa": 2.78
+  },
+  {
+    "name": "gyro",
+    "carbs": 26.0,
+    "sfa": 6.0,
+    "tfa": 0.3,
+    "fiber": 0.5,
+    "pufa": 1.5,
+    "mufa": 5.0
+  },
+  {
+    "name": "dumplings",
+    "carbs": 28.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 1.0,
+    "mufa": 1.5
+  },
+  {
+    "name": "spring rolls",
+    "carbs": 22.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 1.2,
+    "mufa": 1.5
+  },
+  {
+    "name": "pad thai",
+    "carbs": 22.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 3.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "ramen",
+    "carbs": 25.0,
+    "sfa": 3.5,
+    "tfa": 0.1,
+    "fiber": 0.5,
+    "pufa": 1.5,
+    "mufa": 3.0
+  },
+  {
+    "name": "lasagna",
+    "carbs": 18.0,
+    "sfa": 4.5,
+    "tfa": 0.2,
+    "fiber": 0.5,
+    "pufa": 1.0,
+    "mufa": 3.0
+  },
+  {
+    "name": "macaroni and cheese",
+    "carbs": 23.0,
+    "sfa": 5.5,
+    "tfa": 0.2,
+    "fiber": 0.5,
+    "pufa": 1.0,
+    "mufa": 3.0
+  },
+  {
+    "name": "lentil soup",
+    "carbs": 12.0,
+    "sfa": 0.3,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.5,
+    "mufa": 0.6
+  },
+  {
+    "name": "chicken soup",
+    "carbs": 4.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.3,
+    "mufa": 0.5
+  },
+  {
+    "name": "tomato soup",
+    "carbs": 9.0,
+    "sfa": 0.6,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.3,
+    "mufa": 0.5
+  },
+  {
+    "name": "oat bran",
+    "carbs": 58.1,
+    "sfa": 0.94,
+    "tfa": 0.0,
+    "fiber": 9.0,
+    "pufa": 2.47,
+    "mufa": 1.31
+  },
+  {
+    "name": "psyllium husk",
+    "carbs": 80.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 71.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "nutritional yeast",
+    "carbs": 42.0,
+    "sfa": 0.38,
+    "tfa": 0.0,
+    "fiber": 18.0,
+    "pufa": 0.45,
+    "mufa": 0.41
+  },
+  {
+    "name": "sushi rice",
+    "carbs": 33.5,
+    "sfa": 0.08,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.12,
+    "mufa": 0.09
+  },
+  {
+    "name": "pumpernickel bread",
+    "carbs": 47.0,
+    "sfa": 0.22,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.62,
+    "mufa": 0.32
+  },
+  {
+    "name": "muesli",
+    "carbs": 67.0,
+    "sfa": 1.14,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 2.21,
+    "mufa": 2.01
+  },
+  {
+    "name": "bran flakes",
+    "carbs": 74.0,
+    "sfa": 0.23,
+    "tfa": 0.0,
+    "fiber": 3.8,
+    "pufa": 0.55,
+    "mufa": 0.27
+  },
+  {
+    "name": "rice krispies",
+    "carbs": 87.0,
+    "sfa": 0.12,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.25,
+    "mufa": 0.13
+  },
+  {
+    "name": "special k",
+    "carbs": 79.0,
+    "sfa": 0.21,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.43,
+    "mufa": 0.27
+  },
+  {
+    "name": "cheerios",
+    "carbs": 73.0,
+    "sfa": 0.33,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.63,
+    "mufa": 0.37
+  },
+  {
+    "name": "crackers",
+    "carbs": 72.0,
+    "sfa": 1.67,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 1.85,
+    "mufa": 2.45
+  },
+  {
+    "name": "pretzels",
+    "carbs": 79.0,
+    "sfa": 0.32,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.95,
+    "mufa": 0.89
+  },
+  {
+    "name": "rice cakes",
+    "carbs": 82.0,
+    "sfa": 0.13,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.29,
+    "mufa": 0.23
+  },
+  {
+    "name": "tortilla chips",
+    "carbs": 64.0,
+    "sfa": 2.01,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 2.88,
+    "mufa": 5.04
+  },
+  {
+    "name": "fried rice",
+    "carbs": 27.0,
+    "sfa": 0.87,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.98,
+    "mufa": 0.98
+  },
+  {
+    "name": "buckwheat",
+    "carbs": 71.5,
+    "sfa": 0.33,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.96,
+    "mufa": 0.43
+  },
+  {
+    "name": "millet",
+    "carbs": 72.8,
+    "sfa": 0.17,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.73,
+    "mufa": 0.27
+  },
+  {
+    "name": "brown bread",
+    "carbs": 47.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 1.2,
+    "pufa": 1.0,
+    "mufa": 0.56
+  },
+  {
+    "name": "crumpets",
+    "carbs": 46.9,
+    "sfa": 0.25,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.45,
+    "mufa": 0.21
+  },
+  {
+    "name": "english muffin",
+    "carbs": 47.0,
+    "sfa": 0.33,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.65,
+    "mufa": 0.4
+  },
+  {
+    "name": "flatbread",
+    "carbs": 57.6,
+    "sfa": 0.44,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.62,
+    "mufa": 0.44
+  },
+  {
+    "name": "corn bread",
+    "carbs": 47.0,
+    "sfa": 1.56,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 1.5,
+    "mufa": 1.21
+  },
+  {
+    "name": "banana bread",
+    "carbs": 51.0,
+    "sfa": 2.14,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 1.34,
+    "mufa": 2.11
+  },
+  {
+    "name": "zucchini bread",
+    "carbs": 48.0,
+    "sfa": 1.22,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 1.78,
+    "mufa": 1.64
+  },
+  {
+    "name": "corn tortilla",
+    "carbs": 52.6,
+    "sfa": 0.29,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.47,
+    "mufa": 0.28
+  },
+  {
+    "name": "ravioli",
+    "carbs": 14.5,
+    "sfa": 0.78,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.58,
+    "mufa": 0.43
+  },
+  {
+    "name": "gnocchi",
+    "carbs": 31.3,
+    "sfa": 0.22,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.08,
+    "mufa": 0.08
+  },
+  {
+    "name": "polenta",
+    "carbs": 73.3,
+    "sfa": 0.24,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.61,
+    "mufa": 0.36
+  },
+  {
+    "name": "grits",
+    "carbs": 73.3,
+    "sfa": 0.14,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.34,
+    "mufa": 0.16
+  },
+  {
+    "name": "congee",
+    "carbs": 9.0,
+    "sfa": 0.06,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.08,
+    "mufa": 0.06
+  },
+  {
+    "name": "pho",
+    "carbs": 8.5,
+    "sfa": 0.45,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.22,
+    "mufa": 0.32
+  },
+  {
+    "name": "biryani",
+    "carbs": 20.0,
+    "sfa": 1.21,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.98,
+    "mufa": 1.42
+  },
+  {
+    "name": "pilaf",
+    "carbs": 21.5,
+    "sfa": 0.98,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.45,
+    "mufa": 0.67
+  },
+  {
+    "name": "injera",
+    "carbs": 44.0,
+    "sfa": 0.17,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.45,
+    "mufa": 0.21
+  },
+  {
+    "name": "chapati",
+    "carbs": 47.0,
+    "sfa": 1.34,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.98,
+    "mufa": 0.78
+  },
+  {
+    "name": "paratha",
+    "carbs": 43.0,
+    "sfa": 2.45,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 1.45,
+    "mufa": 2.12
+  },
+  {
+    "name": "idli",
+    "carbs": 18.0,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.14,
+    "mufa": 0.08
+  },
+  {
+    "name": "dosa",
+    "carbs": 31.0,
+    "sfa": 0.34,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.45,
+    "mufa": 0.28
+  },
+  {
+    "name": "uttapam",
+    "carbs": 20.0,
+    "sfa": 0.22,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.28,
+    "mufa": 0.17
+  },
+  {
+    "name": "upma",
+    "carbs": 22.0,
+    "sfa": 0.98,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.87,
+    "mufa": 0.72
+  },
+  {
+    "name": "tostada",
+    "carbs": 44.0,
+    "sfa": 1.23,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 1.12,
+    "mufa": 1.45
+  },
+  {
+    "name": "pupusa",
+    "carbs": 37.5,
+    "sfa": 1.45,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.98,
+    "mufa": 1.23
+  },
+  {
+    "name": "rice flour",
+    "carbs": 80.1,
+    "sfa": 0.15,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.42,
+    "mufa": 0.27
+  },
+  {
+    "name": "almond flour",
+    "carbs": 20.4,
+    "sfa": 3.38,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 12.14,
+    "mufa": 30.9
+  },
+  {
+    "name": "coconut flour",
+    "carbs": 57.2,
+    "sfa": 7.14,
+    "tfa": 0.0,
+    "fiber": 10.4,
+    "pufa": 0.42,
+    "mufa": 0.58
+  },
+  {
+    "name": "chickpea flour",
+    "carbs": 57.8,
+    "sfa": 0.48,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.76,
+    "mufa": 1.1
+  },
+  {
+    "name": "oat flour",
+    "carbs": 65.7,
+    "sfa": 0.78,
+    "tfa": 0.0,
+    "fiber": 3.5,
+    "pufa": 1.61,
+    "mufa": 1.16
+  },
+  {
+    "name": "buckwheat flour",
+    "carbs": 71.5,
+    "sfa": 0.33,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.96,
+    "mufa": 0.43
+  },
+  {
+    "name": "spelt flour",
+    "carbs": 70.0,
+    "sfa": 0.36,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.77,
+    "mufa": 0.29
+  },
+  {
+    "name": "whole wheat flour",
+    "carbs": 71.2,
+    "sfa": 0.25,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 0.88,
+    "mufa": 0.24
+  },
+  {
+    "name": "white flour",
+    "carbs": 76.3,
+    "sfa": 0.15,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.41,
+    "mufa": 0.12
+  },
+  {
+    "name": "bread flour",
+    "carbs": 72.5,
+    "sfa": 0.18,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.47,
+    "mufa": 0.15
+  },
+  {
+    "name": "self-raising flour",
+    "carbs": 75.0,
+    "sfa": 0.15,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.41,
+    "mufa": 0.12
+  },
+  {
+    "name": "gluten free flour",
+    "carbs": 80.0,
+    "sfa": 0.12,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.24,
+    "mufa": 0.14
+  },
+  {
+    "name": "arrowroot",
+    "carbs": 88.2,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.05,
+    "mufa": 0.02
+  },
+  {
+    "name": "cornstarch",
+    "carbs": 91.3,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.04,
+    "mufa": 0.03
+  },
+  {
+    "name": "tapioca starch",
+    "carbs": 94.2,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.02
+  },
+  {
+    "name": "potato starch",
+    "carbs": 83.1,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.02,
+    "mufa": 0.01
+  },
+  {
+    "name": "apple juice",
+    "carbs": 11.3,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.02,
+    "mufa": 0.01
+  },
+  {
+    "name": "pineapple",
+    "carbs": 13.1,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.05,
+    "mufa": 0.02
+  },
+  {
+    "name": "peach",
+    "carbs": 10.0,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.07,
+    "mufa": 0.09
+  },
+  {
+    "name": "plum",
+    "carbs": 11.4,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.04,
+    "mufa": 0.12
+  },
+  {
+    "name": "grapefruit",
+    "carbs": 10.7,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.07,
+    "mufa": 0.03
+  },
+  {
+    "name": "kiwi",
+    "carbs": 14.7,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.09,
+    "mufa": 0.06
+  },
+  {
+    "name": "papaya",
+    "carbs": 11.0,
+    "sfa": 0.08,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.04,
+    "mufa": 0.06
+  },
+  {
+    "name": "dates",
+    "carbs": 75.0,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.04,
+    "mufa": 0.03
+  },
+  {
+    "name": "dried apricots",
+    "carbs": 62.6,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 1.3,
+    "pufa": 0.12,
+    "mufa": 0.08
+  },
+  {
+    "name": "prunes",
+    "carbs": 63.9,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.05,
+    "mufa": 0.07
+  },
+  {
+    "name": "lychee",
+    "carbs": 16.5,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.05,
+    "mufa": 0.05
+  },
+  {
+    "name": "longan",
+    "carbs": 15.1,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.02,
+    "mufa": 0.02
+  },
+  {
+    "name": "jackfruit",
+    "carbs": 23.3,
+    "sfa": 0.08,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.08,
+    "mufa": 0.08
+  },
+  {
+    "name": "fig",
+    "carbs": 19.2,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.08,
+    "mufa": 0.08
+  },
+  {
+    "name": "apricot",
+    "carbs": 11.1,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.08,
+    "mufa": 0.1
+  },
+  {
+    "name": "passion fruit",
+    "carbs": 23.4,
+    "sfa": 0.06,
+    "tfa": 0.0,
+    "fiber": 1.9,
+    "pufa": 0.41,
+    "mufa": 0.05
+  },
+  {
+    "name": "guava",
+    "carbs": 14.3,
+    "sfa": 0.27,
+    "tfa": 0.0,
+    "fiber": 0.9,
+    "pufa": 0.3,
+    "mufa": 0.11
+  },
+  {
+    "name": "pomegranate",
+    "carbs": 18.7,
+    "sfa": 0.09,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.09,
+    "mufa": 0.09
+  },
+  {
+    "name": "apple sauce",
+    "carbs": 13.3,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.02,
+    "mufa": 0.01
+  },
+  {
+    "name": "jam",
+    "carbs": 65.0,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.02,
+    "mufa": 0.02
+  },
+  {
+    "name": "fruit roll up",
+    "carbs": 85.0,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.02,
+    "mufa": 0.01
+  },
+  {
+    "name": "smoothie",
+    "carbs": 14.5,
+    "sfa": 0.06,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.06,
+    "mufa": 0.04
+  },
+  {
+    "name": "coconut water",
+    "carbs": 3.7,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "sports drink",
+    "carbs": 6.3,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "lemonade",
+    "carbs": 10.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "energy drink",
+    "carbs": 11.2,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "kombucha",
+    "carbs": 7.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "protein shake",
+    "carbs": 15.0,
+    "sfa": 0.62,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.22,
+    "mufa": 0.19
+  },
+  {
+    "name": "water",
+    "carbs": 0.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "flavored yogurt",
+    "carbs": 17.6,
+    "sfa": 1.09,
+    "tfa": 0.03,
+    "fiber": 0.0,
+    "pufa": 0.05,
+    "mufa": 0.3
+  },
+  {
+    "name": "buttermilk",
+    "carbs": 4.8,
+    "sfa": 0.64,
+    "tfa": 0.01,
+    "fiber": 0.0,
+    "pufa": 0.04,
+    "mufa": 0.17
+  },
+  {
+    "name": "ricotta",
+    "carbs": 3.0,
+    "sfa": 6.76,
+    "tfa": 0.31,
+    "fiber": 0.0,
+    "pufa": 0.26,
+    "mufa": 1.97
+  },
+  {
+    "name": "frozen yogurt",
+    "carbs": 25.0,
+    "sfa": 1.98,
+    "tfa": 0.1,
+    "fiber": 0.0,
+    "pufa": 0.07,
+    "mufa": 0.56
+  },
+  {
+    "name": "gelato",
+    "carbs": 26.0,
+    "sfa": 3.72,
+    "tfa": 0.2,
+    "fiber": 0.0,
+    "pufa": 0.18,
+    "mufa": 1.08
+  },
+  {
+    "name": "custard",
+    "carbs": 17.0,
+    "sfa": 2.42,
+    "tfa": 0.1,
+    "fiber": 0.0,
+    "pufa": 0.16,
+    "mufa": 0.72
+  },
+  {
+    "name": "pinto beans",
+    "carbs": 22.7,
+    "sfa": 0.08,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.17,
+    "mufa": 0.08
+  },
+  {
+    "name": "navy beans",
+    "carbs": 24.0,
+    "sfa": 0.07,
+    "tfa": 0.0,
+    "fiber": 1.8,
+    "pufa": 0.15,
+    "mufa": 0.07
+  },
+  {
+    "name": "split peas",
+    "carbs": 21.1,
+    "sfa": 0.05,
+    "tfa": 0.0,
+    "fiber": 2.1,
+    "pufa": 0.11,
+    "mufa": 0.05
+  },
+  {
+    "name": "black-eyed peas",
+    "carbs": 20.8,
+    "sfa": 0.08,
+    "tfa": 0.0,
+    "fiber": 1.2,
+    "pufa": 0.15,
+    "mufa": 0.08
+  },
+  {
+    "name": "mung beans",
+    "carbs": 19.2,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 0.7,
+    "pufa": 0.13,
+    "mufa": 0.06
+  },
+  {
+    "name": "adzuki beans",
+    "carbs": 25.0,
+    "sfa": 0.06,
+    "tfa": 0.0,
+    "fiber": 1.3,
+    "pufa": 0.07,
+    "mufa": 0.03
+  },
+  {
+    "name": "broad beans",
+    "carbs": 20.0,
+    "sfa": 0.09,
+    "tfa": 0.0,
+    "fiber": 2.3,
+    "pufa": 0.27,
+    "mufa": 0.13
+  },
+  {
+    "name": "lima beans",
+    "carbs": 20.9,
+    "sfa": 0.12,
+    "tfa": 0.0,
+    "fiber": 1.3,
+    "pufa": 0.24,
+    "mufa": 0.09
+  },
+  {
+    "name": "lupin beans",
+    "carbs": 9.9,
+    "sfa": 0.38,
+    "tfa": 0.0,
+    "fiber": 2.2,
+    "pufa": 1.87,
+    "mufa": 0.48
+  },
+  {
+    "name": "pumpkin",
+    "carbs": 7.0,
+    "sfa": 0.05,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "parsnip",
+    "carbs": 18.0,
+    "sfa": 0.05,
+    "tfa": 0.0,
+    "fiber": 1.6,
+    "pufa": 0.02,
+    "mufa": 0.05
+  },
+  {
+    "name": "turnip",
+    "carbs": 6.4,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "beetroot",
+    "carbs": 10.0,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.06,
+    "mufa": 0.04
+  },
+  {
+    "name": "plantain",
+    "carbs": 31.9,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.04,
+    "mufa": 0.03
+  },
+  {
+    "name": "cassava",
+    "carbs": 38.1,
+    "sfa": 0.07,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.05,
+    "mufa": 0.07
+  },
+  {
+    "name": "taro",
+    "carbs": 26.5,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.04,
+    "mufa": 0.01
+  },
+  {
+    "name": "breadfruit",
+    "carbs": 27.1,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.03,
+    "mufa": 0.03
+  },
+  {
+    "name": "ketchup",
+    "carbs": 26.1,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.06,
+    "mufa": 0.04
+  },
+  {
+    "name": "bbq sauce",
+    "carbs": 30.0,
+    "sfa": 0.05,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.08,
+    "mufa": 0.07
+  },
+  {
+    "name": "mustard",
+    "carbs": 5.8,
+    "sfa": 0.22,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 0.77,
+    "mufa": 0.35
+  },
+  {
+    "name": "soy sauce",
+    "carbs": 8.9,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.13,
+    "mufa": 0.07
+  },
+  {
+    "name": "vinegar",
+    "carbs": 0.9,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "salsa",
+    "carbs": 5.1,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.04,
+    "mufa": 0.02
+  },
+  {
+    "name": "guacamole",
+    "carbs": 8.5,
+    "sfa": 1.39,
+    "tfa": 0.0,
+    "fiber": 1.7,
+    "pufa": 1.05,
+    "mufa": 5.56
+  },
+  {
+    "name": "caesar dressing",
+    "carbs": 5.8,
+    "sfa": 3.83,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 4.88,
+    "mufa": 4.43
+  },
+  {
+    "name": "balsamic vinegar",
+    "carbs": 17.0,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "tahini sauce",
+    "carbs": 26.4,
+    "sfa": 3.63,
+    "tfa": 0.0,
+    "fiber": 0.7,
+    "pufa": 21.2,
+    "mufa": 17.0
+  },
+  {
+    "name": "tzatziki",
+    "carbs": 4.3,
+    "sfa": 0.63,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.06,
+    "mufa": 0.17
+  },
+  {
+    "name": "sriracha",
+    "carbs": 8.5,
+    "sfa": 0.07,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.19,
+    "mufa": 0.13
+  },
+  {
+    "name": "teriyaki sauce",
+    "carbs": 16.0,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.11,
+    "mufa": 0.06
+  },
+  {
+    "name": "hoisin sauce",
+    "carbs": 38.6,
+    "sfa": 0.11,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.38,
+    "mufa": 0.47
+  },
+  {
+    "name": "fish sauce",
+    "carbs": 3.6,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "oyster sauce",
+    "carbs": 17.0,
+    "sfa": 0.02,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.02,
+    "mufa": 0.02
+  },
+  {
+    "name": "caesar salad",
+    "carbs": 5.8,
+    "sfa": 2.21,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 2.88,
+    "mufa": 2.45
+  },
+  {
+    "name": "green salad",
+    "carbs": 2.9,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 0.6,
+    "pufa": 0.08,
+    "mufa": 0.03
+  },
+  {
+    "name": "coleslaw",
+    "carbs": 12.3,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 1.23,
+    "mufa": 1.45
+  },
+  {
+    "name": "potato salad",
+    "carbs": 14.5,
+    "sfa": 0.78,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 1.34,
+    "mufa": 0.98
+  },
+  {
+    "name": "fruit salad",
+    "carbs": 14.3,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.04,
+    "mufa": 0.03
+  },
+  {
+    "name": "tacos",
+    "carbs": 26.0,
+    "sfa": 2.45,
+    "tfa": 0.1,
+    "fiber": 0.4,
+    "pufa": 1.34,
+    "mufa": 2.12
+  },
+  {
+    "name": "burrito",
+    "carbs": 26.0,
+    "sfa": 2.12,
+    "tfa": 0.1,
+    "fiber": 0.5,
+    "pufa": 1.23,
+    "mufa": 1.89
+  },
+  {
+    "name": "sushi",
+    "carbs": 27.5,
+    "sfa": 0.34,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.56,
+    "mufa": 0.23
+  },
+  {
+    "name": "samosa",
+    "carbs": 28.6,
+    "sfa": 3.34,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 1.98,
+    "mufa": 3.45
+  },
+  {
+    "name": "bibimbap",
+    "carbs": 21.0,
+    "sfa": 0.89,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.98,
+    "mufa": 1.12
+  },
+  {
+    "name": "shawarma",
+    "carbs": 16.0,
+    "sfa": 2.23,
+    "tfa": 0.1,
+    "fiber": 0.3,
+    "pufa": 1.12,
+    "mufa": 2.45
+  },
+  {
+    "name": "grilled fish",
+    "carbs": 0.0,
+    "sfa": 1.56,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 2.34,
+    "mufa": 2.12
+  },
+  {
+    "name": "duck",
+    "carbs": 0.0,
+    "sfa": 4.17,
+    "tfa": 0.1,
+    "fiber": 0.0,
+    "pufa": 1.36,
+    "mufa": 6.07
+  },
+  {
+    "name": "venison",
+    "carbs": 0.0,
+    "sfa": 0.47,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.24,
+    "mufa": 0.37
+  },
+  {
+    "name": "bison",
+    "carbs": 0.0,
+    "sfa": 0.72,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.16,
+    "mufa": 0.26
+  },
+  {
+    "name": "liverwurst",
+    "carbs": 2.0,
+    "sfa": 7.23,
+    "tfa": 0.1,
+    "fiber": 0.0,
+    "pufa": 1.41,
+    "mufa": 5.46
+  },
+  {
+    "name": "salami",
+    "carbs": 0.6,
+    "sfa": 11.4,
+    "tfa": 0.3,
+    "fiber": 0.0,
+    "pufa": 2.57,
+    "mufa": 7.07
+  },
+  {
+    "name": "pepperoni",
+    "carbs": 0.8,
+    "sfa": 12.4,
+    "tfa": 0.5,
+    "fiber": 0.0,
+    "pufa": 2.48,
+    "mufa": 8.01
+  },
+  {
+    "name": "spam",
+    "carbs": 4.6,
+    "sfa": 6.81,
+    "tfa": 0.2,
+    "fiber": 0.0,
+    "pufa": 1.98,
+    "mufa": 8.61
+  },
+  {
+    "name": "herring",
+    "carbs": 0.0,
+    "sfa": 2.37,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 3.28,
+    "mufa": 5.25
+  },
+  {
+    "name": "lobster",
+    "carbs": 0.0,
+    "sfa": 0.22,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.5,
+    "mufa": 0.28
+  },
+  {
+    "name": "crab",
+    "carbs": 0.0,
+    "sfa": 0.16,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.29,
+    "mufa": 0.13
+  },
+  {
+    "name": "scallops",
+    "carbs": 3.2,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.28,
+    "mufa": 0.1
+  },
+  {
+    "name": "clams",
+    "carbs": 3.6,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.25,
+    "mufa": 0.09
+  },
+  {
+    "name": "calamari",
+    "carbs": 3.0,
+    "sfa": 0.44,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.54,
+    "mufa": 0.3
+  },
+  {
+    "name": "octopus",
+    "carbs": 3.7,
+    "sfa": 0.3,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.45,
+    "mufa": 0.28
+  },
+  {
+    "name": "sashimi",
+    "carbs": 0.0,
+    "sfa": 0.98,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 1.45,
+    "mufa": 1.23
+  },
+  {
+    "name": "caviar",
+    "carbs": 4.0,
+    "sfa": 2.84,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 3.61,
+    "mufa": 2.63
+  },
+  {
+    "name": "chicken nuggets",
+    "carbs": 17.0,
+    "sfa": 2.45,
+    "tfa": 0.2,
+    "fiber": 0.3,
+    "pufa": 2.12,
+    "mufa": 3.34
+  },
+  {
+    "name": "fish and chips",
+    "carbs": 25.0,
+    "sfa": 2.23,
+    "tfa": 0.1,
+    "fiber": 0.5,
+    "pufa": 2.34,
+    "mufa": 4.12
+  },
+  {
+    "name": "beef stew",
+    "carbs": 8.0,
+    "sfa": 2.12,
+    "tfa": 0.1,
+    "fiber": 0.4,
+    "pufa": 0.45,
+    "mufa": 1.23
+  },
+  {
+    "name": "minestrone",
+    "carbs": 8.9,
+    "sfa": 0.23,
+    "tfa": 0.0,
+    "fiber": 0.6,
+    "pufa": 0.34,
+    "mufa": 0.45
+  },
+  {
+    "name": "tofu scramble",
+    "carbs": 2.5,
+    "sfa": 0.34,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 1.23,
+    "mufa": 0.45
+  },
+  {
+    "name": "seitan",
+    "carbs": 7.9,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.24,
+    "mufa": 0.15
+  },
+  {
+    "name": "veggie burger",
+    "carbs": 16.5,
+    "sfa": 0.78,
+    "tfa": 0.0,
+    "fiber": 1.2,
+    "pufa": 1.45,
+    "mufa": 1.23
+  },
+  {
+    "name": "french toast",
+    "carbs": 24.0,
+    "sfa": 2.47,
+    "tfa": 0.1,
+    "fiber": 0.3,
+    "pufa": 0.98,
+    "mufa": 1.34
+  },
+  {
+    "name": "crepes",
+    "carbs": 29.0,
+    "sfa": 1.23,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.45,
+    "mufa": 0.78
+  },
+  {
+    "name": "belgian waffle",
+    "carbs": 45.0,
+    "sfa": 2.45,
+    "tfa": 0.1,
+    "fiber": 0.4,
+    "pufa": 0.98,
+    "mufa": 1.34
+  },
+  {
+    "name": "hash browns",
+    "carbs": 22.0,
+    "sfa": 1.34,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 1.23,
+    "mufa": 2.12
+  },
+  {
+    "name": "breakfast sandwich",
+    "carbs": 28.0,
+    "sfa": 3.45,
+    "tfa": 0.2,
+    "fiber": 0.4,
+    "pufa": 1.23,
+    "mufa": 2.34
+  },
+  {
+    "name": "cinnamon roll",
+    "carbs": 52.0,
+    "sfa": 3.78,
+    "tfa": 0.2,
+    "fiber": 0.4,
+    "pufa": 1.12,
+    "mufa": 2.23
+  },
+  {
+    "name": "hemp seeds",
+    "carbs": 8.7,
+    "sfa": 1.22,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 22.75,
+    "mufa": 5.06
+  },
+  {
+    "name": "sesame seeds",
+    "carbs": 23.5,
+    "sfa": 3.07,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 21.77,
+    "mufa": 14.29
+  },
+  {
+    "name": "cashew butter",
+    "carbs": 28.5,
+    "sfa": 8.84,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 7.75,
+    "mufa": 25.63
+  },
+  {
+    "name": "sunflower butter",
+    "carbs": 19.0,
+    "sfa": 4.52,
+    "tfa": 0.0,
+    "fiber": 0.7,
+    "pufa": 36.65,
+    "mufa": 18.37
+  },
+  {
+    "name": "wheat germ",
+    "carbs": 51.8,
+    "sfa": 0.87,
+    "tfa": 0.0,
+    "fiber": 1.4,
+    "pufa": 4.62,
+    "mufa": 0.88
+  },
+  {
+    "name": "bran",
+    "carbs": 64.5,
+    "sfa": 0.58,
+    "tfa": 0.0,
+    "fiber": 2.2,
+    "pufa": 2.01,
+    "mufa": 0.73
+  },
+  {
+    "name": "inulin",
+    "carbs": 90.0,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 85.0,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "spirulina",
+    "carbs": 23.9,
+    "sfa": 1.0,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.83,
+    "mufa": 0.08
+  },
+  {
+    "name": "chlorella",
+    "carbs": 23.2,
+    "sfa": 1.62,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 2.54,
+    "mufa": 0.43
+  },
+  {
+    "name": "collagen powder",
+    "carbs": 0.0,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "coconut sugar",
+    "carbs": 98.5,
+    "sfa": 0.05,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.03,
+    "mufa": 0.02
+  },
+  {
+    "name": "agave nectar",
+    "carbs": 76.0,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "molasses",
+    "carbs": 74.7,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "stevia",
+    "carbs": 0.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "xylitol",
+    "carbs": 100.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "erythritol",
+    "carbs": 100.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "artificial sweetener",
+    "carbs": 0.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "sorbet",
+    "carbs": 30.0,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "brownie",
+    "carbs": 54.0,
+    "sfa": 4.56,
+    "tfa": 0.2,
+    "fiber": 0.5,
+    "pufa": 1.23,
+    "mufa": 2.45
+  },
+  {
+    "name": "eclair",
+    "carbs": 34.0,
+    "sfa": 4.12,
+    "tfa": 0.1,
+    "fiber": 0.2,
+    "pufa": 0.98,
+    "mufa": 1.78
+  },
+  {
+    "name": "scone",
+    "carbs": 52.0,
+    "sfa": 5.23,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.78,
+    "mufa": 1.34
+  },
+  {
+    "name": "candy bar",
+    "carbs": 62.0,
+    "sfa": 9.12,
+    "tfa": 0.3,
+    "fiber": 0.3,
+    "pufa": 0.98,
+    "mufa": 1.45
+  },
+  {
+    "name": "gummy bears",
+    "carbs": 77.0,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "cotton candy",
+    "carbs": 99.0,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "caramel",
+    "carbs": 77.6,
+    "sfa": 2.32,
+    "tfa": 0.1,
+    "fiber": 0.0,
+    "pufa": 0.21,
+    "mufa": 0.64
+  },
+  {
+    "name": "toffee",
+    "carbs": 72.0,
+    "sfa": 7.12,
+    "tfa": 0.3,
+    "fiber": 0.0,
+    "pufa": 0.35,
+    "mufa": 2.15
+  },
+  {
+    "name": "fudge",
+    "carbs": 72.0,
+    "sfa": 8.45,
+    "tfa": 0.2,
+    "fiber": 0.0,
+    "pufa": 0.34,
+    "mufa": 2.45
+  },
+  {
+    "name": "gelatin",
+    "carbs": 94.0,
+    "sfa": 0.01,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.01,
+    "mufa": 0.01
+  },
+  {
+    "name": "pudding",
+    "carbs": 25.0,
+    "sfa": 1.98,
+    "tfa": 0.1,
+    "fiber": 0.0,
+    "pufa": 0.08,
+    "mufa": 0.57
+  },
+  {
+    "name": "creme brulee",
+    "carbs": 20.0,
+    "sfa": 7.12,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.34,
+    "mufa": 2.12
+  },
+  {
+    "name": "panna cotta",
+    "carbs": 15.5,
+    "sfa": 6.45,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.25,
+    "mufa": 1.88
+  },
+  {
+    "name": "baklava",
+    "carbs": 54.0,
+    "sfa": 3.12,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 3.45,
+    "mufa": 8.23
+  },
+  {
+    "name": "halva",
+    "carbs": 62.0,
+    "sfa": 3.34,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 5.67,
+    "mufa": 4.34
+  },
+  {
+    "name": "mochi",
+    "carbs": 45.0,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.08,
+    "mufa": 0.05
+  },
+  {
+    "name": "rice pudding",
+    "carbs": 18.0,
+    "sfa": 0.89,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.09,
+    "mufa": 0.26
+  },
+  {
+    "name": "bread pudding",
+    "carbs": 29.0,
+    "sfa": 2.45,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.89,
+    "mufa": 1.23
+  }
 ]

@@ -79,6 +79,49 @@ final class ClaudeAPIClient {
         let decoded = try JSONDecoder().decode(Resp.self, from: data)
         return decoded.content.compactMap(\.text).joined()
     }
+
+    /// Stream text tokens via SSE. Yields deltas as they arrive from the API.
+    func stream(system: String, userMessage: String, maxTokens: Int = 1024) -> AsyncThrowingStream<String, Error> {
+        struct Msg: Encodable { let role: String; let content: String }
+        struct Req: Encodable { let model: String; let max_tokens: Int; let system: String; let messages: [Msg]; let stream: Bool }
+        struct Event: Decodable { let type: String; let delta: Delta? }
+        struct Delta: Decodable { let type: String?; let text: String? }
+
+        return AsyncThrowingStream { continuation in
+            Task {
+                do {
+                    let req = Req(model: Self.model, max_tokens: maxTokens, system: system,
+                                  messages: [Msg(role: "user", content: userMessage)], stream: true)
+                    var urlReq = URLRequest(url: Self.baseURL)
+                    urlReq.httpMethod = "POST"
+                    urlReq.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                    urlReq.setValue(self.apiKey, forHTTPHeaderField: "x-api-key")
+                    urlReq.setValue(Self.anthropicVersion, forHTTPHeaderField: "anthropic-version")
+                    urlReq.httpBody = try JSONEncoder().encode(req)
+
+                    let (bytes, response) = try await URLSession.shared.bytes(for: urlReq)
+                    guard let http = response as? HTTPURLResponse, http.statusCode == 200 else {
+                        throw URLError(.badServerResponse)
+                    }
+                    for try await line in bytes.lines {
+                        guard line.hasPrefix("data: ") else { continue }
+                        let payload = String(line.dropFirst(6))
+                        guard payload != "[DONE]",
+                              let data = payload.data(using: .utf8),
+                              let event = try? JSONDecoder().decode(Event.self, from: data),
+                              event.type == "content_block_delta",
+                              event.delta?.type == "text_delta",
+                              let text = event.delta?.text
+                        else { continue }
+                        continuation.yield(text)
+                    }
+                    continuation.finish()
+                } catch {
+                    continuation.finish(throwing: error)
+                }
+            }
+        }
+    }
 }
 
 final class TranscriptParser {

@@ -79,6 +79,10 @@ final class FoodLogProcessor: ObservableObject {
                 nutritionalProfile: profile
             )
         }
+
+        NotificationManager.shared.cancelTodayIfSufficientlyLogged(
+            entryCount: logRepo.countToday()
+        )
     }
 
     private func loadGIDatabase() -> [GIRecord] {

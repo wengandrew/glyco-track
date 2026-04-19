@@ -34,7 +34,7 @@ struct MonthlyHeatmapView: View {
 
             // Weekday labels
             HStack(spacing: 0) {
-                ForEach(["M", "T", "W", "T", "F", "S", "S"], id: \.self) { label in
+                ForEach(["M", "Tu", "W", "Th", "F", "Sa", "Su"], id: \.self) { label in
                     Text(label)
                         .font(.caption2)
                         .fontWeight(.medium)

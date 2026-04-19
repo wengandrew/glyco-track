@@ -103,16 +103,56 @@ struct EditEntryView: View {
 
     private func save() {
         guard !foodDescription.isEmpty else { return }
-        let repo = FoodLogRepository(context: context)
-        repo.update(
+
+        let newGrams = resolveGrams()
+        let match = NutritionalRepository(context: context).findBestMatch(for: foodDescription)
+        let profile = match?.profile
+
+        let glResult = GIEngine(database: GIDatabase(records: loadGIDatabase())).computeGL(
+            foodName: foodDescription,
+            quantityGrams: newGrams,
+            carbsPer100g: profile?.carbsPer100g ?? 0
+        )
+        let clResult = CLEngine().computeCL(
+            nutrition: NutritionInput(
+                saturatedFatPer100g: profile?.saturatedFatPer100g ?? 0,
+                transFatPer100g: profile?.transFatPer100g ?? 0,
+                solubleFiberPer100g: profile?.solubleFiberPer100g ?? 0,
+                pufaPer100g: profile?.pufaPer100g ?? 0,
+                mufaPer100g: profile?.mufaPer100g ?? 0
+            ),
+            quantityGrams: newGrams
+        )
+
+        FoodLogRepository(context: context).update(
             entry,
             foodDescription: foodDescription,
             quantity: quantity,
-            quantityGrams: entry.quantityGrams,
-            computedGL: entry.computedGL,
-            computedCL: entry.computedCL
+            quantityGrams: newGrams,
+            computedGL: glResult.gl,
+            computedCL: clResult.cl
         )
         dismiss()
+    }
+
+    // Scale original quantityGrams by the ratio of the new leading number to the old one.
+    private func resolveGrams() -> Double {
+        func leadingDouble(_ text: String) -> Double? {
+            Double(text.trimmingCharacters(in: .whitespaces)
+                .components(separatedBy: .whitespaces).first ?? "")
+        }
+        let oldNum = leadingDouble(entry.quantity) ?? 1.0
+        let newNum = leadingDouble(quantity) ?? oldNum
+        guard oldNum > 0 else { return entry.quantityGrams }
+        return entry.quantityGrams * (newNum / oldNum)
+    }
+
+    private func loadGIDatabase() -> [GIRecord] {
+        guard let url = Bundle.main.url(forResource: "gi_database", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let records = try? JSONDecoder().decode([GIRecord].self, from: data)
+        else { return [] }
+        return records
     }
 }
 

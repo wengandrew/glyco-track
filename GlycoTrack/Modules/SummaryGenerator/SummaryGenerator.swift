@@ -61,16 +61,18 @@ final class SummaryGenerator: ObservableObject {
         let prompt = buildPrompt(entries: entries, context: context)
 
         isLoading = true
+        summary = ""
         defer { isLoading = false }
 
+        let client = ClaudeAPIClient(apiKey: apiKey)
         do {
-            let client = ClaudeAPIClient(apiKey: apiKey)
-            let text = try await client.send(
+            for try await chunk in client.stream(
                 system: Self.systemPrompt,
                 userMessage: prompt,
                 maxTokens: 600
-            )
-            summary = text
+            ) {
+                summary += chunk
+            }
             lastGeneratedAt = Date()
         } catch {
             summary = "Unable to generate summary right now. Please try again later."
