@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605.4" systemVersion="24H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="NO" userDefinedModelVersionIdentifier="">
-    <entity name="FoodLogEntry" representedClassName="FoodLogEntry" codeGenerationType="manual" syncable="YES">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="NO" userDefinedModelVersionIdentifier="">
+    <entity name="FoodLogEntry" representedClassName="FoodLogEntry" syncable="YES">
         <attribute name="computedCL" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="computedGL" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="confidenceScore" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -18,7 +18,7 @@
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="nutritionalProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NutritionalProfile" inverseName="foodLogEntries" inverseEntity="NutritionalProfile"/>
     </entity>
-    <entity name="NutritionalProfile" representedClassName="NutritionalProfile" codeGenerationType="manual" syncable="YES">
+    <entity name="NutritionalProfile" representedClassName="NutritionalProfile" syncable="YES">
         <attribute name="carbsPer100g" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="foodName" attributeType="String" defaultValueString=""/>
         <attribute name="giSource" attributeType="String" defaultValueString=""/>
