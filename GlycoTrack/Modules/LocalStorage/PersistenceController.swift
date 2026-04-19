@@ -7,7 +7,8 @@ final class PersistenceController {
     let container: NSPersistentContainer
 
     private init(inMemory: Bool = false) {
-        container = NSPersistentContainer(name: "GlycoTrack")
+        container = NSPersistentContainer(name: "GlycoTrack",
+                                           managedObjectModel: .glycoTrackModel())
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
         }
