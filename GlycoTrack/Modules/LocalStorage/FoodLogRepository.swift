@@ -37,7 +37,7 @@ final class FoodLogRepository {
         entry.computedGL = computedGL
         entry.computedCL = computedCL
         entry.isEdited = false
-        entry.isDeleted = false
+        entry.isSoftDeleted = false
         entry.nutritionalProfile = nutritionalProfile
         save()
         return entry
@@ -59,7 +59,7 @@ final class FoodLogRepository {
     }
 
     func softDelete(_ entry: FoodLogEntry) {
-        entry.isDeleted = true
+        entry.isSoftDeleted = true
         save()
     }
 
@@ -70,7 +70,7 @@ final class FoodLogRepository {
     func fetch(from start: Date, to end: Date) -> [FoodLogEntry] {
         let request = FoodLogEntry.fetchRequest()
         request.predicate = NSPredicate(
-            format: "timestamp >= %@ AND timestamp <= %@ AND isDeleted == NO",
+            format: "timestamp >= %@ AND timestamp <= %@ AND isSoftDeleted == NO",
             start as NSDate,
             end as NSDate
         )
@@ -80,7 +80,7 @@ final class FoodLogRepository {
 
     func fetchAll() -> [FoodLogEntry] {
         let request = FoodLogEntry.fetchRequest()
-        request.predicate = NSPredicate(format: "isDeleted == NO")
+        request.predicate = NSPredicate(format: "isSoftDeleted == NO")
         request.sortDescriptors = [NSSortDescriptor(key: "timestamp", ascending: false)]
         return (try? context.fetch(request)) ?? []
     }
@@ -89,7 +89,7 @@ final class FoodLogRepository {
         let start = Calendar.current.startOfDay(for: Date())
         let request = FoodLogEntry.fetchRequest()
         request.predicate = NSPredicate(
-            format: "timestamp >= %@ AND isDeleted == NO",
+            format: "timestamp >= %@ AND isSoftDeleted == NO",
             start as NSDate
         )
         return (try? context.count(for: request)) ?? 0
