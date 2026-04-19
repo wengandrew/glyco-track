@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22E261" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="NO" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605.4" systemVersion="24H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="NO" userDefinedModelVersionIdentifier="">
     <entity name="FoodLogEntry" representedClassName="FoodLogEntry" codeGenerationType="manual" syncable="YES">
         <attribute name="computedCL" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="computedGL" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="confidenceScore" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="foodDescription" attributeType="String" defaultValueString=""/>
         <attribute name="foodGroup" attributeType="String" defaultValueString="proteins"/>
-        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isSoftDeleted" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isEdited" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
-        <attribute name="loggedAt" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="loggedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="parsingMethod" attributeType="Integer 16" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="quantity" attributeType="String" defaultValueString="1"/>
         <attribute name="quantityGrams" attributeType="Double" defaultValueString="100.0" usesScalarValueType="YES"/>
         <attribute name="rawTranscript" attributeType="String" defaultValueString=""/>
         <attribute name="referenceFood" optional="YES" attributeType="String"/>
-        <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="nutritionalProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NutritionalProfile" inverseName="foodLogEntries" inverseEntity="NutritionalProfile"/>
     </entity>
     <entity name="NutritionalProfile" representedClassName="NutritionalProfile" codeGenerationType="manual" syncable="YES">
@@ -23,7 +23,7 @@
         <attribute name="foodName" attributeType="String" defaultValueString=""/>
         <attribute name="giSource" attributeType="String" defaultValueString=""/>
         <attribute name="glycemicIndex" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="mufaPer100g" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="nutritionSource" attributeType="String" defaultValueString=""/>
         <attribute name="pufaPer100g" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
