@@ -82,6 +82,6 @@ private func weekPredicate() -> NSPredicate {
     let now = Date()
     let start = cal.date(from: cal.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now))!
     let end = cal.date(byAdding: .weekOfYear, value: 1, to: start)!
-    return NSPredicate(format: "timestamp >= %@ AND timestamp < %@ AND isDeleted == NO",
+    return NSPredicate(format: "timestamp >= %@ AND timestamp < %@ AND isSoftDeleted == NO",
                        start as NSDate, end as NSDate)
 }

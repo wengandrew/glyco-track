@@ -10,7 +10,7 @@ struct MonthTabView: View {
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
-        predicate: NSPredicate(format: "isDeleted == NO"),
+        predicate: NSPredicate(format: "isSoftDeleted == NO"),
         animation: .default
     )
     private var allEntries: FetchedResults<FoodLogEntry>
