@@ -41,10 +41,10 @@ final class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
         center.add(request)
     }
 
-    /// Skip the notification today if the user has already logged enough.
+    /// Cancel today's 8 PM notification once the user has logged ≥3 meals.
     func cancelTodayIfSufficientlyLogged(entryCount: Int) {
-        guard entryCount < 3 else { return }
-        // Fewer than 3 entries — keep the notification scheduled
+        guard entryCount >= 3 else { return }
+        center.removePendingNotificationRequests(withIdentifiers: [dailyCheckIdentifier])
     }
 
     // MARK: - UNUserNotificationCenterDelegate
