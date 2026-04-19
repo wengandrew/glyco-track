@@ -79,28 +79,18 @@ public final class TranscriptParser {
     }
 
     private func extractFoods(from text: String) throws -> [ParsedFood] {
-        // Strip any accidental markdown fences
-        var cleaned = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        if cleaned.hasPrefix("```") {
-            cleaned = cleaned
-                .components(separatedBy: "\n")
-                .dropFirst()
-                .joined(separator: "\n")
-                .replacingOccurrences(of: "```", with: "")
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-        }
-
-        guard let data = cleaned.data(using: .utf8) else {
+        guard let start = text.firstIndex(of: "["),
+              let end = text.lastIndex(of: "]") else {
             throw ParseError.noFoodsFound
         }
-
-        let foods: [ParsedFood]
+        let jsonSlice = String(text[start...end])
+        guard let data = jsonSlice.data(using: .utf8) else {
+            throw ParseError.noFoodsFound
+        }
         do {
-            foods = try JSONDecoder().decode([ParsedFood].self, from: data)
+            return try JSONDecoder().decode([ParsedFood].self, from: data)
         } catch {
             throw ParseError.noFoodsFound
         }
-
-        return foods
     }
 }

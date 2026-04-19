@@ -34,15 +34,14 @@ final class FoodLogProcessor: ObservableObject {
 
         let nutritionalRepo = NutritionalRepository(context: context)
         let logRepo = FoodLogRepository(context: context)
+        let giEngine = GIEngine(database: GIDatabase(records: loadGIDatabase()))
+        let clEngine = CLEngine()
 
         for food in foods {
             let match = nutritionalRepo.findBestMatch(for: food.food)
             let profile = match?.profile
 
             let carbsPer100g = profile?.carbsPer100g ?? 0
-            let giRecords = loadGIDatabase()
-            let giDB = GIDatabase(records: giRecords)
-            let giEngine = GIEngine(database: giDB)
 
             let glResult = giEngine.computeGL(
                 foodName: food.food,
@@ -50,7 +49,6 @@ final class FoodLogProcessor: ObservableObject {
                 carbsPer100g: carbsPer100g
             )
 
-            let clEngine = CLEngine()
             let nutrition = NutritionInput(
                 saturatedFatPer100g: profile?.saturatedFatPer100g ?? 0,
                 transFatPer100g: profile?.transFatPer100g ?? 0,

@@ -27,14 +27,14 @@ final class CLEngineTests: XCTestCase {
     }
 
     func testTransFatFood() {
-        // High trans fat margarine: TFA=6.24, SFA=18.04
-        // CL should be very positive
+        // Partially hydrogenated shortening (old-style): TFA=25.0, SFA=25.0, PUFA=10.0, MUFA=40.0
+        // CL = (25×1.0) + (25×2.0) − (10×0.7) − (40×0.5) = 25+50−7−20 = 48.0 → harmful
         let nutrition = NutritionInput(
-            saturatedFatPer100g: 18.04, transFatPer100g: 6.24,
-            solubleFiberPer100g: 0.0, pufaPer100g: 19.56, mufaPer100g: 39.17
+            saturatedFatPer100g: 25.0, transFatPer100g: 25.0,
+            solubleFiberPer100g: 0.0, pufaPer100g: 10.0, mufaPer100g: 40.0
         )
         let result = engine.computeCL(nutrition: nutrition, quantityGrams: 100)
-        XCTAssertTrue(result.isHarmful, "Margarine with trans fat should be harmful")
+        XCTAssertTrue(result.isHarmful, "Hydrogenated shortening with high trans fat should be harmful")
         XCTAssertGreaterThan(result.tfaContribution, result.sfaContribution * 0.5,
                              "Trans fat contribution should be significant")
     }

@@ -83,7 +83,6 @@ struct GLStatusLabel: View {
     let budget: Double
 
     var body: some View {
-        let level = GLThresholdLevel.from(gl: total)
         Text("\(Int(total)) / \(Int(budget)) GL")
             .font(.subheadline).fontWeight(.semibold)
             .foregroundColor(total > budget ? .red : .primary)

@@ -1,361 +1,5814 @@
 [
-  {"name": "white rice", "gi": 72, "aliases": ["rice", "steamed rice", "cooked rice", "plain rice"]},
-  {"name": "brown rice", "gi": 50, "aliases": ["wholegrain rice", "whole grain rice"]},
-  {"name": "basmati rice", "gi": 57, "aliases": ["basmati"]},
-  {"name": "jasmine rice", "gi": 68, "aliases": ["thai rice"]},
-  {"name": "sushi rice", "gi": 72, "aliases": ["japanese rice"]},
-  {"name": "white bread", "gi": 75, "aliases": ["bread", "sandwich bread", "toast", "white toast", "sliced bread"]},
-  {"name": "whole wheat bread", "gi": 69, "aliases": ["wholegrain bread", "whole grain bread", "wheat bread", "brown bread"]},
-  {"name": "sourdough bread", "gi": 54, "aliases": ["sourdough"]},
-  {"name": "rye bread", "gi": 50, "aliases": ["rye"]},
-  {"name": "pumpernickel bread", "gi": 41, "aliases": ["pumpernickel"]},
-  {"name": "pita bread", "gi": 68, "aliases": ["pita", "pitta"]},
-  {"name": "bagel", "gi": 72, "aliases": ["bagels"]},
-  {"name": "croissant", "gi": 67, "aliases": ["croissants"]},
-  {"name": "white pasta", "gi": 49, "aliases": ["pasta", "spaghetti", "linguine", "penne", "fettuccine", "macaroni"]},
-  {"name": "whole wheat pasta", "gi": 42, "aliases": ["whole grain pasta", "wholemeal pasta"]},
-  {"name": "egg noodles", "gi": 40, "aliases": ["noodles", "egg noodle"]},
-  {"name": "rice noodles", "gi": 53, "aliases": ["rice vermicelli", "glass noodles"]},
-  {"name": "oatmeal", "gi": 55, "aliases": ["oats", "porridge", "rolled oats", "oat porridge", "steel cut oats"]},
-  {"name": "instant oatmeal", "gi": 79, "aliases": ["instant oats", "quick oats"]},
-  {"name": "muesli", "gi": 57, "aliases": []},
-  {"name": "cornflakes", "gi": 81, "aliases": ["corn flakes"]},
-  {"name": "bran flakes", "gi": 74, "aliases": ["bran cereal"]},
-  {"name": "rice krispies", "gi": 82, "aliases": ["rice bubbles"]},
-  {"name": "granola", "gi": 62, "aliases": []},
-  {"name": "special k", "gi": 69, "aliases": []},
-  {"name": "cheerios", "gi": 74, "aliases": []},
-  {"name": "white potato", "gi": 78, "aliases": ["potato", "baked potato", "boiled potato", "mashed potato", "potatoes"]},
-  {"name": "sweet potato", "gi": 63, "aliases": ["yam", "kumara"]},
-  {"name": "french fries", "gi": 75, "aliases": ["fries", "chips", "potato fries"]},
-  {"name": "potato chips", "gi": 56, "aliases": ["crisps", "corn chips"]},
-  {"name": "corn", "gi": 52, "aliases": ["sweet corn", "maize", "corn on the cob"]},
-  {"name": "popcorn", "gi": 72, "aliases": []},
-  {"name": "apple", "gi": 36, "aliases": ["apples", "apple slices"]},
-  {"name": "banana", "gi": 51, "aliases": ["bananas", "ripe banana"]},
-  {"name": "orange", "gi": 43, "aliases": ["oranges", "mandarin", "clementine"]},
-  {"name": "orange juice", "gi": 50, "aliases": ["OJ", "fresh squeezed OJ", "fresh orange juice"]},
-  {"name": "apple juice", "gi": 44, "aliases": []},
-  {"name": "grapes", "gi": 59, "aliases": ["grape"]},
-  {"name": "watermelon", "gi": 72, "aliases": []},
-  {"name": "pineapple", "gi": 59, "aliases": []},
-  {"name": "mango", "gi": 51, "aliases": []},
-  {"name": "strawberries", "gi": 40, "aliases": ["strawberry"]},
-  {"name": "blueberries", "gi": 53, "aliases": ["blueberry"]},
-  {"name": "raspberries", "gi": 32, "aliases": ["raspberry"]},
-  {"name": "cherries", "gi": 22, "aliases": ["cherry"]},
-  {"name": "peach", "gi": 42, "aliases": ["peaches", "nectarine"]},
-  {"name": "pear", "gi": 38, "aliases": ["pears"]},
-  {"name": "plum", "gi": 39, "aliases": ["plums"]},
-  {"name": "grapefruit", "gi": 25, "aliases": []},
-  {"name": "kiwi", "gi": 50, "aliases": ["kiwifruit"]},
-  {"name": "papaya", "gi": 59, "aliases": ["pawpaw"]},
-  {"name": "dates", "gi": 42, "aliases": ["date"]},
-  {"name": "raisins", "gi": 64, "aliases": ["sultanas", "dried grapes"]},
-  {"name": "dried apricots", "gi": 32, "aliases": []},
-  {"name": "prunes", "gi": 29, "aliases": ["dried plums"]},
-  {"name": "whole milk", "gi": 31, "aliases": ["milk", "full fat milk", "full cream milk"]},
-  {"name": "skim milk", "gi": 32, "aliases": ["low fat milk", "fat free milk", "skimmed milk"]},
-  {"name": "soy milk", "gi": 34, "aliases": ["soymilk"]},
-  {"name": "plain yogurt", "gi": 36, "aliases": ["yoghurt", "yogurt", "natural yogurt"]},
-  {"name": "greek yogurt", "gi": 11, "aliases": ["greek yoghurt"]},
-  {"name": "flavored yogurt", "gi": 33, "aliases": ["fruit yogurt"]},
-  {"name": "ice cream", "gi": 51, "aliases": ["vanilla ice cream"]},
-  {"name": "lentils", "gi": 32, "aliases": ["red lentils", "green lentils", "lentil", "dal", "dhal"]},
-  {"name": "chickpeas", "gi": 28, "aliases": ["garbanzo beans", "hummus base"]},
-  {"name": "black beans", "gi": 30, "aliases": ["black bean"]},
-  {"name": "kidney beans", "gi": 29, "aliases": ["red kidney beans"]},
-  {"name": "pinto beans", "gi": 39, "aliases": []},
-  {"name": "navy beans", "gi": 31, "aliases": ["haricot beans"]},
-  {"name": "baked beans", "gi": 40, "aliases": []},
-  {"name": "soybeans", "gi": 15, "aliases": ["edamame", "soy beans"]},
-  {"name": "tofu", "gi": 15, "aliases": ["bean curd", "silken tofu", "firm tofu"]},
-  {"name": "peas", "gi": 51, "aliases": ["green peas", "snow peas", "pea"]},
-  {"name": "eggs", "gi": 0, "aliases": ["egg", "scrambled eggs", "fried egg", "poached egg", "hard boiled egg", "omelette"]},
-  {"name": "chicken breast", "gi": 0, "aliases": ["chicken", "grilled chicken", "roasted chicken"]},
-  {"name": "beef", "gi": 0, "aliases": ["steak", "ground beef", "hamburger", "mince"]},
-  {"name": "pork", "gi": 0, "aliases": ["pork chop", "bacon", "ham"]},
-  {"name": "salmon", "gi": 0, "aliases": ["grilled salmon", "smoked salmon"]},
-  {"name": "tuna", "gi": 0, "aliases": ["canned tuna", "tuna fish"]},
-  {"name": "shrimp", "gi": 0, "aliases": ["prawns", "prawn"]},
-  {"name": "nuts", "gi": 15, "aliases": ["mixed nuts", "almonds", "walnuts", "cashews", "pecans", "peanuts"]},
-  {"name": "peanut butter", "gi": 14, "aliases": []},
-  {"name": "hummus", "gi": 6, "aliases": []},
-  {"name": "butter", "gi": 0, "aliases": []},
-  {"name": "olive oil", "gi": 0, "aliases": []},
-  {"name": "avocado", "gi": 10, "aliases": []},
-  {"name": "cheese", "gi": 0, "aliases": ["cheddar", "mozzarella", "parmesan", "feta", "brie"]},
-  {"name": "broccoli", "gi": 10, "aliases": []},
-  {"name": "spinach", "gi": 15, "aliases": ["baby spinach"]},
-  {"name": "kale", "gi": 10, "aliases": []},
-  {"name": "lettuce", "gi": 15, "aliases": ["salad greens", "romaine", "iceberg lettuce"]},
-  {"name": "tomato", "gi": 15, "aliases": ["tomatoes"]},
-  {"name": "carrot", "gi": 35, "aliases": ["carrots"]},
-  {"name": "cucumber", "gi": 15, "aliases": []},
-  {"name": "zucchini", "gi": 15, "aliases": ["courgette"]},
-  {"name": "bell pepper", "gi": 15, "aliases": ["capsicum", "red pepper", "green pepper"]},
-  {"name": "onion", "gi": 10, "aliases": ["onions", "red onion", "white onion"]},
-  {"name": "garlic", "gi": 10, "aliases": []},
-  {"name": "mushrooms", "gi": 10, "aliases": ["mushroom"]},
-  {"name": "asparagus", "gi": 15, "aliases": []},
-  {"name": "green beans", "gi": 15, "aliases": ["green bean", "string beans"]},
-  {"name": "celery", "gi": 15, "aliases": []},
-  {"name": "cabbage", "gi": 10, "aliases": ["coleslaw"]},
-  {"name": "cauliflower", "gi": 15, "aliases": []},
-  {"name": "eggplant", "gi": 15, "aliases": ["aubergine"]},
-  {"name": "chocolate cake", "gi": 38, "aliases": ["cake"]},
-  {"name": "chocolate", "gi": 40, "aliases": ["dark chocolate", "milk chocolate"]},
-  {"name": "cookies", "gi": 57, "aliases": ["biscuits", "cookie"]},
-  {"name": "doughnut", "gi": 76, "aliases": ["donut", "doughnuts"]},
-  {"name": "muffin", "gi": 62, "aliases": ["blueberry muffin"]},
-  {"name": "white sugar", "gi": 65, "aliases": ["sugar", "table sugar"]},
-  {"name": "honey", "gi": 61, "aliases": []},
-  {"name": "maple syrup", "gi": 54, "aliases": []},
-  {"name": "cola", "gi": 63, "aliases": ["soda", "soft drink", "coke", "pepsi"]},
-  {"name": "sports drink", "gi": 78, "aliases": ["gatorade", "powerade"]},
-  {"name": "beer", "gi": 66, "aliases": []},
-  {"name": "white wine", "gi": 0, "aliases": []},
-  {"name": "red wine", "gi": 0, "aliases": []},
-  {"name": "pizza", "gi": 60, "aliases": []},
-  {"name": "hamburger", "gi": 61, "aliases": ["burger"]},
-  {"name": "hot dog", "gi": 52, "aliases": []},
-  {"name": "pancakes", "gi": 67, "aliases": ["pancake"]},
-  {"name": "waffles", "gi": 76, "aliases": ["waffle"]},
-  {"name": "tortilla", "gi": 52, "aliases": ["corn tortilla", "flour tortilla", "wrap"]},
-  {"name": "couscous", "gi": 65, "aliases": []},
-  {"name": "quinoa", "gi": 53, "aliases": []},
-  {"name": "barley", "gi": 28, "aliases": ["pearl barley"]},
-  {"name": "buckwheat", "gi": 54, "aliases": ["buckwheat noodles", "soba"]},
-  {"name": "millet", "gi": 71, "aliases": []},
-  {"name": "crackers", "gi": 67, "aliases": ["cracker", "wheat crackers", "rice crackers"]},
-  {"name": "pretzels", "gi": 83, "aliases": ["pretzel"]},
-  {"name": "rice cakes", "gi": 82, "aliases": ["rice cake"]},
-  {"name": "tortilla chips", "gi": 63, "aliases": ["nachos"]},
-  {"name": "hummus", "gi": 6, "aliases": []},
-  {"name": "tacos", "gi": 55, "aliases": ["taco"]},
-  {"name": "burrito", "gi": 58, "aliases": []},
-  {"name": "fried rice", "gi": 72, "aliases": []},
-  {"name": "risotto", "gi": 69, "aliases": []},
-  {"name": "sushi", "gi": 55, "aliases": []},
-  {"name": "pumpkin", "gi": 75, "aliases": ["squash", "butternut squash"]},
-  {"name": "parsnip", "gi": 52, "aliases": []},
-  {"name": "turnip", "gi": 62, "aliases": []},
-  {"name": "beetroot", "gi": 64, "aliases": ["beets", "beet"]},
-  {"name": "plantain", "gi": 55, "aliases": []},
-  {"name": "cassava", "gi": 94, "aliases": ["tapioca", "yuca"]},
-  {"name": "taro", "gi": 54, "aliases": []},
-  {"name": "breadfruit", "gi": 68, "aliases": []},
-  {"name": "lychee", "gi": 79, "aliases": []},
-  {"name": "longan", "gi": 79, "aliases": []},
-  {"name": "jackfruit", "gi": 75, "aliases": []},
-  {"name": "fig", "gi": 61, "aliases": ["figs"]},
-  {"name": "apricot", "gi": 57, "aliases": ["apricots"]},
-  {"name": "passion fruit", "gi": 30, "aliases": ["passionfruit"]},
-  {"name": "guava", "gi": 12, "aliases": []},
-  {"name": "pomegranate", "gi": 53, "aliases": []},
-  {"name": "coconut water", "gi": 55, "aliases": []},
-  {"name": "coconut milk", "gi": 41, "aliases": []},
-  {"name": "almond milk", "gi": 25, "aliases": []},
-  {"name": "oat milk", "gi": 69, "aliases": []},
-  {"name": "buttermilk", "gi": 36, "aliases": []},
-  {"name": "cottage cheese", "gi": 10, "aliases": []},
-  {"name": "ricotta", "gi": 27, "aliases": []},
-  {"name": "cream cheese", "gi": 0, "aliases": []},
-  {"name": "sour cream", "gi": 0, "aliases": []},
-  {"name": "heavy cream", "gi": 0, "aliases": ["cream", "whipped cream"]},
-  {"name": "protein bar", "gi": 37, "aliases": ["energy bar", "granola bar"]},
-  {"name": "dark chocolate 70%", "gi": 22, "aliases": ["dark chocolate"]},
-  {"name": "trail mix", "gi": 30, "aliases": []},
-  {"name": "sunflower seeds", "gi": 35, "aliases": []},
-  {"name": "pumpkin seeds", "gi": 25, "aliases": ["pepitas"]},
-  {"name": "chia seeds", "gi": 1, "aliases": []},
-  {"name": "flaxseeds", "gi": 35, "aliases": ["linseed"]},
-  {"name": "hemp seeds", "gi": 20, "aliases": []},
-  {"name": "sesame seeds", "gi": 35, "aliases": []},
-  {"name": "tahini", "gi": 40, "aliases": []},
-  {"name": "almond butter", "gi": 14, "aliases": []},
-  {"name": "cashew butter", "gi": 25, "aliases": []},
-  {"name": "sunflower butter", "gi": 35, "aliases": []},
-  {"name": "tofu scramble", "gi": 15, "aliases": []},
-  {"name": "tempeh", "gi": 15, "aliases": []},
-  {"name": "seitan", "gi": 20, "aliases": []},
-  {"name": "veggie burger", "gi": 50, "aliases": ["plant burger", "black bean burger"]},
-  {"name": "chicken nuggets", "gi": 46, "aliases": []},
-  {"name": "fish and chips", "gi": 54, "aliases": []},
-  {"name": "lasagna", "gi": 47, "aliases": ["lasagne"]},
-  {"name": "macaroni and cheese", "gi": 64, "aliases": ["mac and cheese", "mac cheese"]},
-  {"name": "beef stew", "gi": 44, "aliases": []},
-  {"name": "chicken soup", "gi": 35, "aliases": []},
-  {"name": "minestrone", "gi": 39, "aliases": []},
-  {"name": "lentil soup", "gi": 44, "aliases": []},
-  {"name": "tomato soup", "gi": 45, "aliases": []},
-  {"name": "split peas", "gi": 25, "aliases": ["yellow split peas", "green split peas"]},
-  {"name": "black-eyed peas", "gi": 33, "aliases": ["cowpeas"]},
-  {"name": "mung beans", "gi": 25, "aliases": ["moong dal", "moong"]},
-  {"name": "adzuki beans", "gi": 35, "aliases": []},
-  {"name": "broad beans", "gi": 79, "aliases": ["fava beans"]},
-  {"name": "lima beans", "gi": 32, "aliases": ["butter beans"]},
-  {"name": "lupin beans", "gi": 4, "aliases": []},
-  {"name": "brown bread", "gi": 50, "aliases": []},
-  {"name": "crumpets", "gi": 69, "aliases": []},
-  {"name": "english muffin", "gi": 77, "aliases": []},
-  {"name": "flatbread", "gi": 70, "aliases": ["naan"]},
-  {"name": "corn bread", "gi": 74, "aliases": ["cornbread"]},
-  {"name": "banana bread", "gi": 51, "aliases": []},
-  {"name": "zucchini bread", "gi": 42, "aliases": []},
-  {"name": "apple sauce", "gi": 40, "aliases": ["applesauce"]},
-  {"name": "jam", "gi": 51, "aliases": ["jelly", "marmalade"]},
-  {"name": "ketchup", "gi": 55, "aliases": ["tomato sauce", "catsup"]},
-  {"name": "bbq sauce", "gi": 54, "aliases": ["barbecue sauce"]},
-  {"name": "mayonnaise", "gi": 0, "aliases": []},
-  {"name": "mustard", "gi": 0, "aliases": []},
-  {"name": "soy sauce", "gi": 0, "aliases": []},
-  {"name": "vinegar", "gi": 0, "aliases": []},
-  {"name": "salsa", "gi": 20, "aliases": []},
-  {"name": "guacamole", "gi": 10, "aliases": []},
-  {"name": "caesar salad", "gi": 15, "aliases": []},
-  {"name": "green salad", "gi": 15, "aliases": ["side salad", "garden salad"]},
-  {"name": "coleslaw", "gi": 23, "aliases": []},
-  {"name": "potato salad", "gi": 54, "aliases": []},
-  {"name": "fruit salad", "gi": 55, "aliases": []},
-  {"name": "smoothie", "gi": 40, "aliases": ["fruit smoothie"]},
-  {"name": "protein shake", "gi": 30, "aliases": ["whey protein shake"]},
-  {"name": "coffee", "gi": 0, "aliases": ["black coffee", "espresso"]},
-  {"name": "tea", "gi": 0, "aliases": ["green tea", "black tea", "herbal tea"]},
-  {"name": "water", "gi": 0, "aliases": []},
-  {"name": "kombucha", "gi": 15, "aliases": []},
-  {"name": "sparkling water", "gi": 0, "aliases": ["seltzer", "club soda"]},
-  {"name": "lemonade", "gi": 54, "aliases": []},
-  {"name": "energy drink", "gi": 80, "aliases": ["red bull", "monster"]},
-  {"name": "sorbet", "gi": 65, "aliases": []},
-  {"name": "gelato", "gi": 57, "aliases": []},
-  {"name": "frozen yogurt", "gi": 33, "aliases": ["froyo"]},
-  {"name": "tiramisu", "gi": 50, "aliases": []},
-  {"name": "cheesecake", "gi": 46, "aliases": []},
-  {"name": "brownie", "gi": 50, "aliases": []},
-  {"name": "eclair", "gi": 65, "aliases": []},
-  {"name": "cinnamon roll", "gi": 83, "aliases": ["sticky bun"]},
-  {"name": "scone", "gi": 92, "aliases": []},
-  {"name": "french toast", "gi": 65, "aliases": []},
-  {"name": "crepes", "gi": 65, "aliases": ["crepe"]},
-  {"name": "belgian waffle", "gi": 76, "aliases": []},
-  {"name": "hash browns", "gi": 70, "aliases": []},
-  {"name": "breakfast sandwich", "gi": 55, "aliases": []},
-  {"name": "granola bar", "gi": 61, "aliases": []},
-  {"name": "fruit roll up", "gi": 99, "aliases": []},
-  {"name": "candy bar", "gi": 68, "aliases": ["chocolate bar", "snickers", "mars bar"]},
-  {"name": "gummy bears", "gi": 78, "aliases": ["gummy candy", "jelly beans"]},
-  {"name": "cotton candy", "gi": 100, "aliases": []},
-  {"name": "caramel", "gi": 60, "aliases": []},
-  {"name": "toffee", "gi": 65, "aliases": []},
-  {"name": "fudge", "gi": 65, "aliases": []},
-  {"name": "gelatin", "gi": 0, "aliases": ["jello"]},
-  {"name": "pudding", "gi": 47, "aliases": []},
-  {"name": "custard", "gi": 35, "aliases": []},
-  {"name": "creme brulee", "gi": 50, "aliases": []},
-  {"name": "panna cotta", "gi": 45, "aliases": []},
-  {"name": "baklava", "gi": 57, "aliases": []},
-  {"name": "halva", "gi": 45, "aliases": []},
-  {"name": "mochi", "gi": 86, "aliases": []},
-  {"name": "rice pudding", "gi": 81, "aliases": []},
-  {"name": "bread pudding", "gi": 57, "aliases": []},
-  {"name": "congee", "gi": 78, "aliases": ["rice porridge", "jook"]},
-  {"name": "risotto", "gi": 69, "aliases": []},
-  {"name": "pad thai", "gi": 55, "aliases": []},
-  {"name": "ramen", "gi": 64, "aliases": []},
-  {"name": "pho", "gi": 55, "aliases": []},
-  {"name": "bibimbap", "gi": 68, "aliases": []},
-  {"name": "falafel", "gi": 39, "aliases": []},
-  {"name": "shawarma", "gi": 52, "aliases": ["kebab"]},
-  {"name": "gyro", "gi": 52, "aliases": []},
-  {"name": "samosa", "gi": 55, "aliases": []},
-  {"name": "spring rolls", "gi": 52, "aliases": ["egg rolls"]},
-  {"name": "dumplings", "gi": 52, "aliases": ["dim sum", "gyoza", "potstickers"]},
-  {"name": "ravioli", "gi": 39, "aliases": []},
-  {"name": "gnocchi", "gi": 68, "aliases": []},
-  {"name": "polenta", "gi": 68, "aliases": []},
-  {"name": "grits", "gi": 69, "aliases": []},
-  {"name": "corn tortilla", "gi": 52, "aliases": []},
-  {"name": "tostada", "gi": 59, "aliases": []},
-  {"name": "pupusa", "gi": 53, "aliases": []},
-  {"name": "injera", "gi": 65, "aliases": []},
-  {"name": "chapati", "gi": 52, "aliases": ["roti"]},
-  {"name": "paratha", "gi": 62, "aliases": []},
-  {"name": "idli", "gi": 77, "aliases": []},
-  {"name": "dosa", "gi": 77, "aliases": []},
-  {"name": "uttapam", "gi": 77, "aliases": []},
-  {"name": "upma", "gi": 62, "aliases": []},
-  {"name": "biryani", "gi": 65, "aliases": []},
-  {"name": "pilaf", "gi": 57, "aliases": ["rice pilaf"]},
-  {"name": "fried chicken", "gi": 37, "aliases": []},
-  {"name": "grilled fish", "gi": 0, "aliases": ["baked fish", "cod", "tilapia", "halibut"]},
-  {"name": "lamb", "gi": 0, "aliases": ["lamb chop", "mutton"]},
-  {"name": "turkey", "gi": 0, "aliases": ["turkey breast", "roast turkey"]},
-  {"name": "duck", "gi": 0, "aliases": []},
-  {"name": "venison", "gi": 0, "aliases": []},
-  {"name": "bison", "gi": 0, "aliases": []},
-  {"name": "liverwurst", "gi": 0, "aliases": ["liverwurst"]},
-  {"name": "salami", "gi": 0, "aliases": []},
-  {"name": "pepperoni", "gi": 0, "aliases": []},
-  {"name": "hot dog", "gi": 52, "aliases": ["frankfurter", "wiener"]},
-  {"name": "spam", "gi": 0, "aliases": []},
-  {"name": "sardines", "gi": 0, "aliases": []},
-  {"name": "mackerel", "gi": 0, "aliases": []},
-  {"name": "herring", "gi": 0, "aliases": []},
-  {"name": "anchovies", "gi": 0, "aliases": []},
-  {"name": "lobster", "gi": 0, "aliases": []},
-  {"name": "crab", "gi": 0, "aliases": []},
-  {"name": "scallops", "gi": 0, "aliases": []},
-  {"name": "clams", "gi": 0, "aliases": ["mussels", "oysters"]},
-  {"name": "calamari", "gi": 0, "aliases": ["squid"]},
-  {"name": "octopus", "gi": 0, "aliases": []},
-  {"name": "sashimi", "gi": 0, "aliases": []},
-  {"name": "caviar", "gi": 0, "aliases": []},
-  {"name": "lard", "gi": 0, "aliases": []},
-  {"name": "coconut oil", "gi": 0, "aliases": []},
-  {"name": "vegetable oil", "gi": 0, "aliases": ["canola oil", "sunflower oil", "corn oil", "soybean oil"]},
-  {"name": "margarine", "gi": 0, "aliases": []},
-  {"name": "ghee", "gi": 0, "aliases": []},
-  {"name": "ranch dressing", "gi": 15, "aliases": []},
-  {"name": "caesar dressing", "gi": 10, "aliases": []},
-  {"name": "balsamic vinegar", "gi": 25, "aliases": []},
-  {"name": "tahini sauce", "gi": 40, "aliases": []},
-  {"name": "tzatziki", "gi": 10, "aliases": []},
-  {"name": "sriracha", "gi": 30, "aliases": ["hot sauce"]},
-  {"name": "teriyaki sauce", "gi": 50, "aliases": []},
-  {"name": "hoisin sauce", "gi": 55, "aliases": []},
-  {"name": "fish sauce", "gi": 0, "aliases": []},
-  {"name": "oyster sauce", "gi": 25, "aliases": []},
-  {"name": "coconut sugar", "gi": 54, "aliases": []},
-  {"name": "agave nectar", "gi": 15, "aliases": ["agave syrup"]},
-  {"name": "molasses", "gi": 55, "aliases": []},
-  {"name": "stevia", "gi": 0, "aliases": []},
-  {"name": "xylitol", "gi": 7, "aliases": []},
-  {"name": "erythritol", "gi": 0, "aliases": []},
-  {"name": "artificial sweetener", "gi": 0, "aliases": ["splenda", "aspartame", "saccharin"]},
-  {"name": "protein powder", "gi": 18, "aliases": ["whey protein", "casein protein"]},
-  {"name": "collagen powder", "gi": 0, "aliases": []},
-  {"name": "nutritional yeast", "gi": 25, "aliases": []},
-  {"name": "spirulina", "gi": 15, "aliases": []},
-  {"name": "chlorella", "gi": 15, "aliases": []},
-  {"name": "wheat germ", "gi": 51, "aliases": []},
-  {"name": "bran", "gi": 30, "aliases": ["wheat bran", "oat bran"]},
-  {"name": "psyllium husk", "gi": 10, "aliases": []},
-  {"name": "inulin", "gi": 10, "aliases": []},
-  {"name": "arrowroot", "gi": 65, "aliases": []},
-  {"name": "cornstarch", "gi": 85, "aliases": ["corn flour"]},
-  {"name": "tapioca starch", "gi": 70, "aliases": []},
-  {"name": "potato starch", "gi": 95, "aliases": []},
-  {"name": "rice flour", "gi": 98, "aliases": []},
-  {"name": "almond flour", "gi": 25, "aliases": []},
-  {"name": "coconut flour", "gi": 45, "aliases": []},
-  {"name": "chickpea flour", "gi": 39, "aliases": ["besan", "gram flour"]},
-  {"name": "oat flour", "gi": 55, "aliases": []},
-  {"name": "buckwheat flour", "gi": 54, "aliases": []},
-  {"name": "spelt flour", "gi": 54, "aliases": []},
-  {"name": "whole wheat flour", "gi": 69, "aliases": []},
-  {"name": "white flour", "gi": 85, "aliases": ["all purpose flour", "plain flour"]},
-  {"name": "bread flour", "gi": 75, "aliases": []},
-  {"name": "self-raising flour", "gi": 75, "aliases": []},
-  {"name": "gluten free flour", "gi": 70, "aliases": []}
+  {
+    "name": "white rice",
+    "gi": 72,
+    "aliases": [
+      "rice",
+      "steamed rice",
+      "cooked rice",
+      "plain rice"
+    ]
+  },
+  {
+    "name": "brown rice",
+    "gi": 50,
+    "aliases": [
+      "wholegrain rice",
+      "whole grain rice"
+    ]
+  },
+  {
+    "name": "basmati rice",
+    "gi": 57,
+    "aliases": [
+      "basmati"
+    ]
+  },
+  {
+    "name": "jasmine rice",
+    "gi": 68,
+    "aliases": [
+      "thai rice"
+    ]
+  },
+  {
+    "name": "sushi rice",
+    "gi": 72,
+    "aliases": [
+      "japanese rice"
+    ]
+  },
+  {
+    "name": "white bread",
+    "gi": 75,
+    "aliases": [
+      "bread",
+      "sandwich bread",
+      "toast",
+      "white toast",
+      "sliced bread"
+    ]
+  },
+  {
+    "name": "whole wheat bread",
+    "gi": 69,
+    "aliases": [
+      "wholegrain bread",
+      "whole grain bread",
+      "wheat bread",
+      "brown bread"
+    ]
+  },
+  {
+    "name": "sourdough bread",
+    "gi": 54,
+    "aliases": [
+      "sourdough"
+    ]
+  },
+  {
+    "name": "rye bread",
+    "gi": 50,
+    "aliases": [
+      "rye"
+    ]
+  },
+  {
+    "name": "pumpernickel bread",
+    "gi": 41,
+    "aliases": [
+      "pumpernickel"
+    ]
+  },
+  {
+    "name": "pita bread",
+    "gi": 68,
+    "aliases": [
+      "pita",
+      "pitta"
+    ]
+  },
+  {
+    "name": "bagel",
+    "gi": 72,
+    "aliases": [
+      "bagels"
+    ]
+  },
+  {
+    "name": "croissant",
+    "gi": 67,
+    "aliases": [
+      "croissants"
+    ]
+  },
+  {
+    "name": "white pasta",
+    "gi": 49,
+    "aliases": [
+      "pasta",
+      "spaghetti",
+      "linguine",
+      "penne",
+      "fettuccine",
+      "macaroni"
+    ]
+  },
+  {
+    "name": "whole wheat pasta",
+    "gi": 42,
+    "aliases": [
+      "whole grain pasta",
+      "wholemeal pasta"
+    ]
+  },
+  {
+    "name": "egg noodles",
+    "gi": 40,
+    "aliases": [
+      "noodles",
+      "egg noodle"
+    ]
+  },
+  {
+    "name": "rice noodles",
+    "gi": 53,
+    "aliases": [
+      "rice vermicelli",
+      "glass noodles"
+    ]
+  },
+  {
+    "name": "oatmeal",
+    "gi": 55,
+    "aliases": [
+      "oats",
+      "porridge",
+      "rolled oats",
+      "oat porridge",
+      "steel cut oats"
+    ]
+  },
+  {
+    "name": "instant oatmeal",
+    "gi": 79,
+    "aliases": [
+      "instant oats",
+      "quick oats"
+    ]
+  },
+  {
+    "name": "muesli",
+    "gi": 57,
+    "aliases": []
+  },
+  {
+    "name": "cornflakes",
+    "gi": 81,
+    "aliases": [
+      "corn flakes"
+    ]
+  },
+  {
+    "name": "bran flakes",
+    "gi": 74,
+    "aliases": [
+      "bran cereal"
+    ]
+  },
+  {
+    "name": "rice krispies",
+    "gi": 82,
+    "aliases": [
+      "rice bubbles"
+    ]
+  },
+  {
+    "name": "granola",
+    "gi": 62,
+    "aliases": []
+  },
+  {
+    "name": "special k",
+    "gi": 69,
+    "aliases": []
+  },
+  {
+    "name": "cheerios",
+    "gi": 74,
+    "aliases": []
+  },
+  {
+    "name": "white potato",
+    "gi": 78,
+    "aliases": [
+      "potato",
+      "baked potato",
+      "boiled potato",
+      "mashed potato",
+      "potatoes"
+    ]
+  },
+  {
+    "name": "sweet potato",
+    "gi": 63,
+    "aliases": [
+      "yam",
+      "kumara"
+    ]
+  },
+  {
+    "name": "french fries",
+    "gi": 75,
+    "aliases": [
+      "fries",
+      "chips",
+      "potato fries"
+    ]
+  },
+  {
+    "name": "potato chips",
+    "gi": 56,
+    "aliases": [
+      "crisps",
+      "corn chips"
+    ]
+  },
+  {
+    "name": "corn",
+    "gi": 52,
+    "aliases": [
+      "sweet corn",
+      "maize",
+      "corn on the cob"
+    ]
+  },
+  {
+    "name": "popcorn",
+    "gi": 72,
+    "aliases": []
+  },
+  {
+    "name": "apple",
+    "gi": 36,
+    "aliases": [
+      "apples",
+      "apple slices"
+    ]
+  },
+  {
+    "name": "banana",
+    "gi": 51,
+    "aliases": [
+      "bananas",
+      "ripe banana"
+    ]
+  },
+  {
+    "name": "orange",
+    "gi": 43,
+    "aliases": [
+      "oranges",
+      "mandarin",
+      "clementine"
+    ]
+  },
+  {
+    "name": "orange juice",
+    "gi": 50,
+    "aliases": [
+      "OJ",
+      "fresh squeezed OJ",
+      "fresh orange juice"
+    ]
+  },
+  {
+    "name": "apple juice",
+    "gi": 44,
+    "aliases": []
+  },
+  {
+    "name": "grapes",
+    "gi": 59,
+    "aliases": [
+      "grape"
+    ]
+  },
+  {
+    "name": "watermelon",
+    "gi": 72,
+    "aliases": []
+  },
+  {
+    "name": "pineapple",
+    "gi": 59,
+    "aliases": []
+  },
+  {
+    "name": "mango",
+    "gi": 51,
+    "aliases": []
+  },
+  {
+    "name": "strawberries",
+    "gi": 40,
+    "aliases": [
+      "strawberry"
+    ]
+  },
+  {
+    "name": "blueberries",
+    "gi": 53,
+    "aliases": [
+      "blueberry"
+    ]
+  },
+  {
+    "name": "raspberries",
+    "gi": 32,
+    "aliases": [
+      "raspberry"
+    ]
+  },
+  {
+    "name": "cherries",
+    "gi": 22,
+    "aliases": [
+      "cherry"
+    ]
+  },
+  {
+    "name": "peach",
+    "gi": 42,
+    "aliases": [
+      "peaches",
+      "nectarine"
+    ]
+  },
+  {
+    "name": "pear",
+    "gi": 38,
+    "aliases": [
+      "pears"
+    ]
+  },
+  {
+    "name": "plum",
+    "gi": 39,
+    "aliases": [
+      "plums"
+    ]
+  },
+  {
+    "name": "grapefruit",
+    "gi": 25,
+    "aliases": []
+  },
+  {
+    "name": "kiwi",
+    "gi": 50,
+    "aliases": [
+      "kiwifruit"
+    ]
+  },
+  {
+    "name": "papaya",
+    "gi": 59,
+    "aliases": [
+      "pawpaw"
+    ]
+  },
+  {
+    "name": "dates",
+    "gi": 42,
+    "aliases": [
+      "date"
+    ]
+  },
+  {
+    "name": "raisins",
+    "gi": 64,
+    "aliases": [
+      "sultanas",
+      "dried grapes"
+    ]
+  },
+  {
+    "name": "dried apricots",
+    "gi": 32,
+    "aliases": []
+  },
+  {
+    "name": "prunes",
+    "gi": 29,
+    "aliases": [
+      "dried plums"
+    ]
+  },
+  {
+    "name": "whole milk",
+    "gi": 31,
+    "aliases": [
+      "milk",
+      "full fat milk",
+      "full cream milk"
+    ]
+  },
+  {
+    "name": "skim milk",
+    "gi": 32,
+    "aliases": [
+      "low fat milk",
+      "fat free milk",
+      "skimmed milk"
+    ]
+  },
+  {
+    "name": "soy milk",
+    "gi": 34,
+    "aliases": [
+      "soymilk"
+    ]
+  },
+  {
+    "name": "plain yogurt",
+    "gi": 36,
+    "aliases": [
+      "yoghurt",
+      "yogurt",
+      "natural yogurt"
+    ]
+  },
+  {
+    "name": "greek yogurt",
+    "gi": 11,
+    "aliases": [
+      "greek yoghurt"
+    ]
+  },
+  {
+    "name": "flavored yogurt",
+    "gi": 33,
+    "aliases": [
+      "fruit yogurt"
+    ]
+  },
+  {
+    "name": "ice cream",
+    "gi": 51,
+    "aliases": [
+      "vanilla ice cream"
+    ]
+  },
+  {
+    "name": "lentils",
+    "gi": 32,
+    "aliases": [
+      "red lentils",
+      "green lentils",
+      "lentil",
+      "dal",
+      "dhal"
+    ]
+  },
+  {
+    "name": "chickpeas",
+    "gi": 28,
+    "aliases": [
+      "garbanzo beans",
+      "hummus base"
+    ]
+  },
+  {
+    "name": "black beans",
+    "gi": 30,
+    "aliases": [
+      "black bean"
+    ]
+  },
+  {
+    "name": "kidney beans",
+    "gi": 29,
+    "aliases": [
+      "red kidney beans"
+    ]
+  },
+  {
+    "name": "pinto beans",
+    "gi": 39,
+    "aliases": []
+  },
+  {
+    "name": "navy beans",
+    "gi": 31,
+    "aliases": [
+      "haricot beans"
+    ]
+  },
+  {
+    "name": "baked beans",
+    "gi": 40,
+    "aliases": []
+  },
+  {
+    "name": "soybeans",
+    "gi": 15,
+    "aliases": [
+      "edamame",
+      "soy beans"
+    ]
+  },
+  {
+    "name": "tofu",
+    "gi": 15,
+    "aliases": [
+      "bean curd",
+      "silken tofu",
+      "firm tofu"
+    ]
+  },
+  {
+    "name": "peas",
+    "gi": 51,
+    "aliases": [
+      "green peas",
+      "snow peas",
+      "pea"
+    ]
+  },
+  {
+    "name": "eggs",
+    "gi": 0,
+    "aliases": [
+      "egg",
+      "scrambled eggs",
+      "fried egg",
+      "poached egg",
+      "hard boiled egg",
+      "omelette"
+    ]
+  },
+  {
+    "name": "chicken breast",
+    "gi": 0,
+    "aliases": [
+      "chicken",
+      "grilled chicken",
+      "roasted chicken"
+    ]
+  },
+  {
+    "name": "beef",
+    "gi": 0,
+    "aliases": [
+      "steak",
+      "ground beef",
+      "hamburger",
+      "mince"
+    ]
+  },
+  {
+    "name": "pork",
+    "gi": 0,
+    "aliases": [
+      "pork chop",
+      "bacon",
+      "ham"
+    ]
+  },
+  {
+    "name": "salmon",
+    "gi": 0,
+    "aliases": [
+      "grilled salmon",
+      "smoked salmon"
+    ]
+  },
+  {
+    "name": "tuna",
+    "gi": 0,
+    "aliases": [
+      "canned tuna",
+      "tuna fish"
+    ]
+  },
+  {
+    "name": "shrimp",
+    "gi": 0,
+    "aliases": [
+      "prawns",
+      "prawn"
+    ]
+  },
+  {
+    "name": "nuts",
+    "gi": 15,
+    "aliases": [
+      "mixed nuts",
+      "almonds",
+      "walnuts",
+      "cashews",
+      "pecans",
+      "peanuts"
+    ]
+  },
+  {
+    "name": "peanut butter",
+    "gi": 14,
+    "aliases": []
+  },
+  {
+    "name": "hummus",
+    "gi": 6,
+    "aliases": []
+  },
+  {
+    "name": "butter",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "olive oil",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "avocado",
+    "gi": 10,
+    "aliases": []
+  },
+  {
+    "name": "cheese",
+    "gi": 0,
+    "aliases": [
+      "cheddar",
+      "mozzarella",
+      "parmesan",
+      "feta",
+      "brie"
+    ]
+  },
+  {
+    "name": "broccoli",
+    "gi": 10,
+    "aliases": []
+  },
+  {
+    "name": "spinach",
+    "gi": 15,
+    "aliases": [
+      "baby spinach"
+    ]
+  },
+  {
+    "name": "kale",
+    "gi": 10,
+    "aliases": []
+  },
+  {
+    "name": "lettuce",
+    "gi": 15,
+    "aliases": [
+      "salad greens",
+      "romaine",
+      "iceberg lettuce"
+    ]
+  },
+  {
+    "name": "tomato",
+    "gi": 15,
+    "aliases": [
+      "tomatoes"
+    ]
+  },
+  {
+    "name": "carrot",
+    "gi": 35,
+    "aliases": [
+      "carrots"
+    ]
+  },
+  {
+    "name": "cucumber",
+    "gi": 15,
+    "aliases": []
+  },
+  {
+    "name": "zucchini",
+    "gi": 15,
+    "aliases": [
+      "courgette"
+    ]
+  },
+  {
+    "name": "bell pepper",
+    "gi": 15,
+    "aliases": [
+      "capsicum",
+      "red pepper",
+      "green pepper"
+    ]
+  },
+  {
+    "name": "onion",
+    "gi": 10,
+    "aliases": [
+      "onions",
+      "red onion",
+      "white onion"
+    ]
+  },
+  {
+    "name": "garlic",
+    "gi": 10,
+    "aliases": []
+  },
+  {
+    "name": "mushrooms",
+    "gi": 10,
+    "aliases": [
+      "mushroom"
+    ]
+  },
+  {
+    "name": "asparagus",
+    "gi": 15,
+    "aliases": []
+  },
+  {
+    "name": "green beans",
+    "gi": 15,
+    "aliases": [
+      "green bean",
+      "string beans"
+    ]
+  },
+  {
+    "name": "celery",
+    "gi": 15,
+    "aliases": []
+  },
+  {
+    "name": "cabbage",
+    "gi": 10,
+    "aliases": [
+      "coleslaw"
+    ]
+  },
+  {
+    "name": "cauliflower",
+    "gi": 15,
+    "aliases": []
+  },
+  {
+    "name": "eggplant",
+    "gi": 15,
+    "aliases": [
+      "aubergine"
+    ]
+  },
+  {
+    "name": "chocolate cake",
+    "gi": 38,
+    "aliases": [
+      "cake"
+    ]
+  },
+  {
+    "name": "chocolate",
+    "gi": 40,
+    "aliases": [
+      "dark chocolate",
+      "milk chocolate"
+    ]
+  },
+  {
+    "name": "cookies",
+    "gi": 57,
+    "aliases": [
+      "biscuits",
+      "cookie"
+    ]
+  },
+  {
+    "name": "doughnut",
+    "gi": 76,
+    "aliases": [
+      "donut",
+      "doughnuts"
+    ]
+  },
+  {
+    "name": "muffin",
+    "gi": 62,
+    "aliases": [
+      "blueberry muffin"
+    ]
+  },
+  {
+    "name": "white sugar",
+    "gi": 65,
+    "aliases": [
+      "sugar",
+      "table sugar"
+    ]
+  },
+  {
+    "name": "honey",
+    "gi": 61,
+    "aliases": []
+  },
+  {
+    "name": "maple syrup",
+    "gi": 54,
+    "aliases": []
+  },
+  {
+    "name": "cola",
+    "gi": 63,
+    "aliases": [
+      "soda",
+      "soft drink",
+      "coke",
+      "pepsi"
+    ]
+  },
+  {
+    "name": "sports drink",
+    "gi": 78,
+    "aliases": [
+      "gatorade",
+      "powerade"
+    ]
+  },
+  {
+    "name": "beer",
+    "gi": 66,
+    "aliases": []
+  },
+  {
+    "name": "white wine",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "red wine",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "pizza",
+    "gi": 60,
+    "aliases": []
+  },
+  {
+    "name": "hamburger",
+    "gi": 61,
+    "aliases": [
+      "burger"
+    ]
+  },
+  {
+    "name": "hot dog",
+    "gi": 52,
+    "aliases": []
+  },
+  {
+    "name": "pancakes",
+    "gi": 67,
+    "aliases": [
+      "pancake"
+    ]
+  },
+  {
+    "name": "waffles",
+    "gi": 76,
+    "aliases": [
+      "waffle"
+    ]
+  },
+  {
+    "name": "tortilla",
+    "gi": 52,
+    "aliases": [
+      "corn tortilla",
+      "flour tortilla",
+      "wrap"
+    ]
+  },
+  {
+    "name": "couscous",
+    "gi": 65,
+    "aliases": []
+  },
+  {
+    "name": "quinoa",
+    "gi": 53,
+    "aliases": []
+  },
+  {
+    "name": "barley",
+    "gi": 28,
+    "aliases": [
+      "pearl barley"
+    ]
+  },
+  {
+    "name": "buckwheat",
+    "gi": 54,
+    "aliases": [
+      "buckwheat noodles",
+      "soba"
+    ]
+  },
+  {
+    "name": "millet",
+    "gi": 71,
+    "aliases": []
+  },
+  {
+    "name": "crackers",
+    "gi": 67,
+    "aliases": [
+      "cracker",
+      "wheat crackers",
+      "rice crackers"
+    ]
+  },
+  {
+    "name": "pretzels",
+    "gi": 83,
+    "aliases": [
+      "pretzel"
+    ]
+  },
+  {
+    "name": "rice cakes",
+    "gi": 82,
+    "aliases": [
+      "rice cake"
+    ]
+  },
+  {
+    "name": "tortilla chips",
+    "gi": 63,
+    "aliases": [
+      "nachos"
+    ]
+  },
+  {
+    "name": "tacos",
+    "gi": 55,
+    "aliases": [
+      "taco"
+    ]
+  },
+  {
+    "name": "burrito",
+    "gi": 58,
+    "aliases": []
+  },
+  {
+    "name": "fried rice",
+    "gi": 72,
+    "aliases": []
+  },
+  {
+    "name": "risotto",
+    "gi": 69,
+    "aliases": []
+  },
+  {
+    "name": "sushi",
+    "gi": 55,
+    "aliases": []
+  },
+  {
+    "name": "pumpkin",
+    "gi": 75,
+    "aliases": [
+      "squash",
+      "butternut squash"
+    ]
+  },
+  {
+    "name": "parsnip",
+    "gi": 52,
+    "aliases": []
+  },
+  {
+    "name": "turnip",
+    "gi": 62,
+    "aliases": []
+  },
+  {
+    "name": "beetroot",
+    "gi": 64,
+    "aliases": [
+      "beets",
+      "beet"
+    ]
+  },
+  {
+    "name": "plantain",
+    "gi": 55,
+    "aliases": []
+  },
+  {
+    "name": "cassava",
+    "gi": 94,
+    "aliases": [
+      "tapioca",
+      "yuca"
+    ]
+  },
+  {
+    "name": "taro",
+    "gi": 54,
+    "aliases": []
+  },
+  {
+    "name": "breadfruit",
+    "gi": 68,
+    "aliases": []
+  },
+  {
+    "name": "lychee",
+    "gi": 79,
+    "aliases": []
+  },
+  {
+    "name": "longan",
+    "gi": 79,
+    "aliases": []
+  },
+  {
+    "name": "jackfruit",
+    "gi": 75,
+    "aliases": []
+  },
+  {
+    "name": "fig",
+    "gi": 61,
+    "aliases": [
+      "figs"
+    ]
+  },
+  {
+    "name": "apricot",
+    "gi": 57,
+    "aliases": [
+      "apricots"
+    ]
+  },
+  {
+    "name": "passion fruit",
+    "gi": 30,
+    "aliases": [
+      "passionfruit"
+    ]
+  },
+  {
+    "name": "guava",
+    "gi": 12,
+    "aliases": []
+  },
+  {
+    "name": "pomegranate",
+    "gi": 53,
+    "aliases": []
+  },
+  {
+    "name": "coconut water",
+    "gi": 55,
+    "aliases": []
+  },
+  {
+    "name": "coconut milk",
+    "gi": 41,
+    "aliases": []
+  },
+  {
+    "name": "almond milk",
+    "gi": 25,
+    "aliases": []
+  },
+  {
+    "name": "oat milk",
+    "gi": 69,
+    "aliases": []
+  },
+  {
+    "name": "buttermilk",
+    "gi": 36,
+    "aliases": []
+  },
+  {
+    "name": "cottage cheese",
+    "gi": 10,
+    "aliases": []
+  },
+  {
+    "name": "ricotta",
+    "gi": 27,
+    "aliases": []
+  },
+  {
+    "name": "cream cheese",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "sour cream",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "heavy cream",
+    "gi": 0,
+    "aliases": [
+      "cream",
+      "whipped cream"
+    ]
+  },
+  {
+    "name": "protein bar",
+    "gi": 37,
+    "aliases": [
+      "energy bar",
+      "granola bar"
+    ]
+  },
+  {
+    "name": "dark chocolate 70%",
+    "gi": 22,
+    "aliases": [
+      "dark chocolate"
+    ]
+  },
+  {
+    "name": "trail mix",
+    "gi": 30,
+    "aliases": []
+  },
+  {
+    "name": "sunflower seeds",
+    "gi": 35,
+    "aliases": []
+  },
+  {
+    "name": "pumpkin seeds",
+    "gi": 25,
+    "aliases": [
+      "pepitas"
+    ]
+  },
+  {
+    "name": "chia seeds",
+    "gi": 1,
+    "aliases": []
+  },
+  {
+    "name": "flaxseeds",
+    "gi": 35,
+    "aliases": [
+      "linseed"
+    ]
+  },
+  {
+    "name": "hemp seeds",
+    "gi": 20,
+    "aliases": []
+  },
+  {
+    "name": "sesame seeds",
+    "gi": 35,
+    "aliases": []
+  },
+  {
+    "name": "tahini",
+    "gi": 40,
+    "aliases": []
+  },
+  {
+    "name": "almond butter",
+    "gi": 14,
+    "aliases": []
+  },
+  {
+    "name": "cashew butter",
+    "gi": 25,
+    "aliases": []
+  },
+  {
+    "name": "sunflower butter",
+    "gi": 35,
+    "aliases": []
+  },
+  {
+    "name": "tofu scramble",
+    "gi": 15,
+    "aliases": []
+  },
+  {
+    "name": "tempeh",
+    "gi": 15,
+    "aliases": []
+  },
+  {
+    "name": "seitan",
+    "gi": 20,
+    "aliases": []
+  },
+  {
+    "name": "veggie burger",
+    "gi": 50,
+    "aliases": [
+      "plant burger",
+      "black bean burger"
+    ]
+  },
+  {
+    "name": "chicken nuggets",
+    "gi": 46,
+    "aliases": []
+  },
+  {
+    "name": "fish and chips",
+    "gi": 54,
+    "aliases": []
+  },
+  {
+    "name": "lasagna",
+    "gi": 47,
+    "aliases": [
+      "lasagne"
+    ]
+  },
+  {
+    "name": "macaroni and cheese",
+    "gi": 64,
+    "aliases": [
+      "mac and cheese",
+      "mac cheese"
+    ]
+  },
+  {
+    "name": "beef stew",
+    "gi": 44,
+    "aliases": []
+  },
+  {
+    "name": "chicken soup",
+    "gi": 35,
+    "aliases": []
+  },
+  {
+    "name": "minestrone",
+    "gi": 39,
+    "aliases": []
+  },
+  {
+    "name": "lentil soup",
+    "gi": 44,
+    "aliases": []
+  },
+  {
+    "name": "tomato soup",
+    "gi": 45,
+    "aliases": []
+  },
+  {
+    "name": "split peas",
+    "gi": 25,
+    "aliases": [
+      "yellow split peas",
+      "green split peas"
+    ]
+  },
+  {
+    "name": "black-eyed peas",
+    "gi": 33,
+    "aliases": [
+      "cowpeas"
+    ]
+  },
+  {
+    "name": "mung beans",
+    "gi": 25,
+    "aliases": [
+      "moong dal",
+      "moong"
+    ]
+  },
+  {
+    "name": "adzuki beans",
+    "gi": 35,
+    "aliases": []
+  },
+  {
+    "name": "broad beans",
+    "gi": 79,
+    "aliases": [
+      "fava beans"
+    ]
+  },
+  {
+    "name": "lima beans",
+    "gi": 32,
+    "aliases": [
+      "butter beans"
+    ]
+  },
+  {
+    "name": "lupin beans",
+    "gi": 4,
+    "aliases": []
+  },
+  {
+    "name": "brown bread",
+    "gi": 50,
+    "aliases": []
+  },
+  {
+    "name": "crumpets",
+    "gi": 69,
+    "aliases": []
+  },
+  {
+    "name": "english muffin",
+    "gi": 77,
+    "aliases": []
+  },
+  {
+    "name": "flatbread",
+    "gi": 70,
+    "aliases": [
+      "naan"
+    ]
+  },
+  {
+    "name": "corn bread",
+    "gi": 74,
+    "aliases": [
+      "cornbread"
+    ]
+  },
+  {
+    "name": "banana bread",
+    "gi": 51,
+    "aliases": []
+  },
+  {
+    "name": "zucchini bread",
+    "gi": 42,
+    "aliases": []
+  },
+  {
+    "name": "apple sauce",
+    "gi": 40,
+    "aliases": [
+      "applesauce"
+    ]
+  },
+  {
+    "name": "jam",
+    "gi": 51,
+    "aliases": [
+      "jelly",
+      "marmalade"
+    ]
+  },
+  {
+    "name": "ketchup",
+    "gi": 55,
+    "aliases": [
+      "tomato sauce",
+      "catsup"
+    ]
+  },
+  {
+    "name": "bbq sauce",
+    "gi": 54,
+    "aliases": [
+      "barbecue sauce"
+    ]
+  },
+  {
+    "name": "mayonnaise",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "mustard",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "soy sauce",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "vinegar",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "salsa",
+    "gi": 20,
+    "aliases": []
+  },
+  {
+    "name": "guacamole",
+    "gi": 10,
+    "aliases": []
+  },
+  {
+    "name": "caesar salad",
+    "gi": 15,
+    "aliases": []
+  },
+  {
+    "name": "green salad",
+    "gi": 15,
+    "aliases": [
+      "side salad",
+      "garden salad"
+    ]
+  },
+  {
+    "name": "coleslaw",
+    "gi": 23,
+    "aliases": []
+  },
+  {
+    "name": "potato salad",
+    "gi": 54,
+    "aliases": []
+  },
+  {
+    "name": "fruit salad",
+    "gi": 55,
+    "aliases": []
+  },
+  {
+    "name": "smoothie",
+    "gi": 40,
+    "aliases": [
+      "fruit smoothie"
+    ]
+  },
+  {
+    "name": "protein shake",
+    "gi": 30,
+    "aliases": [
+      "whey protein shake"
+    ]
+  },
+  {
+    "name": "coffee",
+    "gi": 0,
+    "aliases": [
+      "black coffee",
+      "espresso"
+    ]
+  },
+  {
+    "name": "tea",
+    "gi": 0,
+    "aliases": [
+      "green tea",
+      "black tea",
+      "herbal tea"
+    ]
+  },
+  {
+    "name": "water",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "kombucha",
+    "gi": 15,
+    "aliases": []
+  },
+  {
+    "name": "sparkling water",
+    "gi": 0,
+    "aliases": [
+      "seltzer",
+      "club soda"
+    ]
+  },
+  {
+    "name": "lemonade",
+    "gi": 54,
+    "aliases": []
+  },
+  {
+    "name": "energy drink",
+    "gi": 80,
+    "aliases": [
+      "red bull",
+      "monster"
+    ]
+  },
+  {
+    "name": "sorbet",
+    "gi": 65,
+    "aliases": []
+  },
+  {
+    "name": "gelato",
+    "gi": 57,
+    "aliases": []
+  },
+  {
+    "name": "frozen yogurt",
+    "gi": 33,
+    "aliases": [
+      "froyo"
+    ]
+  },
+  {
+    "name": "tiramisu",
+    "gi": 50,
+    "aliases": []
+  },
+  {
+    "name": "cheesecake",
+    "gi": 46,
+    "aliases": []
+  },
+  {
+    "name": "brownie",
+    "gi": 50,
+    "aliases": []
+  },
+  {
+    "name": "eclair",
+    "gi": 65,
+    "aliases": []
+  },
+  {
+    "name": "cinnamon roll",
+    "gi": 83,
+    "aliases": [
+      "sticky bun"
+    ]
+  },
+  {
+    "name": "scone",
+    "gi": 92,
+    "aliases": []
+  },
+  {
+    "name": "french toast",
+    "gi": 65,
+    "aliases": []
+  },
+  {
+    "name": "crepes",
+    "gi": 65,
+    "aliases": [
+      "crepe"
+    ]
+  },
+  {
+    "name": "belgian waffle",
+    "gi": 76,
+    "aliases": []
+  },
+  {
+    "name": "hash browns",
+    "gi": 70,
+    "aliases": []
+  },
+  {
+    "name": "breakfast sandwich",
+    "gi": 55,
+    "aliases": []
+  },
+  {
+    "name": "granola bar",
+    "gi": 61,
+    "aliases": []
+  },
+  {
+    "name": "fruit roll up",
+    "gi": 99,
+    "aliases": []
+  },
+  {
+    "name": "candy bar",
+    "gi": 68,
+    "aliases": [
+      "chocolate bar",
+      "snickers",
+      "mars bar"
+    ]
+  },
+  {
+    "name": "gummy bears",
+    "gi": 78,
+    "aliases": [
+      "gummy candy",
+      "jelly beans"
+    ]
+  },
+  {
+    "name": "cotton candy",
+    "gi": 100,
+    "aliases": []
+  },
+  {
+    "name": "caramel",
+    "gi": 60,
+    "aliases": []
+  },
+  {
+    "name": "toffee",
+    "gi": 65,
+    "aliases": []
+  },
+  {
+    "name": "fudge",
+    "gi": 65,
+    "aliases": []
+  },
+  {
+    "name": "gelatin",
+    "gi": 0,
+    "aliases": [
+      "jello"
+    ]
+  },
+  {
+    "name": "pudding",
+    "gi": 47,
+    "aliases": []
+  },
+  {
+    "name": "custard",
+    "gi": 35,
+    "aliases": []
+  },
+  {
+    "name": "creme brulee",
+    "gi": 50,
+    "aliases": []
+  },
+  {
+    "name": "panna cotta",
+    "gi": 45,
+    "aliases": []
+  },
+  {
+    "name": "baklava",
+    "gi": 57,
+    "aliases": []
+  },
+  {
+    "name": "halva",
+    "gi": 45,
+    "aliases": []
+  },
+  {
+    "name": "mochi",
+    "gi": 86,
+    "aliases": []
+  },
+  {
+    "name": "rice pudding",
+    "gi": 81,
+    "aliases": []
+  },
+  {
+    "name": "bread pudding",
+    "gi": 57,
+    "aliases": []
+  },
+  {
+    "name": "congee",
+    "gi": 78,
+    "aliases": [
+      "rice porridge",
+      "jook"
+    ]
+  },
+  {
+    "name": "pad thai",
+    "gi": 55,
+    "aliases": []
+  },
+  {
+    "name": "ramen",
+    "gi": 64,
+    "aliases": []
+  },
+  {
+    "name": "pho",
+    "gi": 55,
+    "aliases": []
+  },
+  {
+    "name": "bibimbap",
+    "gi": 68,
+    "aliases": []
+  },
+  {
+    "name": "falafel",
+    "gi": 39,
+    "aliases": []
+  },
+  {
+    "name": "shawarma",
+    "gi": 52,
+    "aliases": [
+      "kebab"
+    ]
+  },
+  {
+    "name": "gyro",
+    "gi": 52,
+    "aliases": []
+  },
+  {
+    "name": "samosa",
+    "gi": 55,
+    "aliases": []
+  },
+  {
+    "name": "spring rolls",
+    "gi": 52,
+    "aliases": [
+      "egg rolls"
+    ]
+  },
+  {
+    "name": "dumplings",
+    "gi": 52,
+    "aliases": [
+      "dim sum",
+      "gyoza",
+      "potstickers"
+    ]
+  },
+  {
+    "name": "ravioli",
+    "gi": 39,
+    "aliases": []
+  },
+  {
+    "name": "gnocchi",
+    "gi": 68,
+    "aliases": []
+  },
+  {
+    "name": "polenta",
+    "gi": 68,
+    "aliases": []
+  },
+  {
+    "name": "grits",
+    "gi": 69,
+    "aliases": []
+  },
+  {
+    "name": "corn tortilla",
+    "gi": 52,
+    "aliases": []
+  },
+  {
+    "name": "tostada",
+    "gi": 59,
+    "aliases": []
+  },
+  {
+    "name": "pupusa",
+    "gi": 53,
+    "aliases": []
+  },
+  {
+    "name": "injera",
+    "gi": 65,
+    "aliases": []
+  },
+  {
+    "name": "chapati",
+    "gi": 52,
+    "aliases": [
+      "roti"
+    ]
+  },
+  {
+    "name": "paratha",
+    "gi": 62,
+    "aliases": []
+  },
+  {
+    "name": "idli",
+    "gi": 77,
+    "aliases": []
+  },
+  {
+    "name": "dosa",
+    "gi": 77,
+    "aliases": []
+  },
+  {
+    "name": "uttapam",
+    "gi": 77,
+    "aliases": []
+  },
+  {
+    "name": "upma",
+    "gi": 62,
+    "aliases": []
+  },
+  {
+    "name": "biryani",
+    "gi": 65,
+    "aliases": []
+  },
+  {
+    "name": "pilaf",
+    "gi": 57,
+    "aliases": [
+      "rice pilaf"
+    ]
+  },
+  {
+    "name": "fried chicken",
+    "gi": 37,
+    "aliases": []
+  },
+  {
+    "name": "grilled fish",
+    "gi": 0,
+    "aliases": [
+      "baked fish",
+      "cod",
+      "tilapia",
+      "halibut"
+    ]
+  },
+  {
+    "name": "lamb",
+    "gi": 0,
+    "aliases": [
+      "lamb chop",
+      "mutton"
+    ]
+  },
+  {
+    "name": "turkey",
+    "gi": 0,
+    "aliases": [
+      "turkey breast",
+      "roast turkey"
+    ]
+  },
+  {
+    "name": "duck",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "venison",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "bison",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "liverwurst",
+    "gi": 0,
+    "aliases": [
+      "liverwurst"
+    ]
+  },
+  {
+    "name": "salami",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "pepperoni",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "spam",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "sardines",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "mackerel",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "herring",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "anchovies",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "lobster",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "crab",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "scallops",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "clams",
+    "gi": 0,
+    "aliases": [
+      "mussels",
+      "oysters"
+    ]
+  },
+  {
+    "name": "calamari",
+    "gi": 0,
+    "aliases": [
+      "squid"
+    ]
+  },
+  {
+    "name": "octopus",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "sashimi",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "caviar",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "lard",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "coconut oil",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "vegetable oil",
+    "gi": 0,
+    "aliases": [
+      "canola oil",
+      "sunflower oil",
+      "corn oil",
+      "soybean oil"
+    ]
+  },
+  {
+    "name": "margarine",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "ghee",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "ranch dressing",
+    "gi": 15,
+    "aliases": []
+  },
+  {
+    "name": "caesar dressing",
+    "gi": 10,
+    "aliases": []
+  },
+  {
+    "name": "balsamic vinegar",
+    "gi": 25,
+    "aliases": []
+  },
+  {
+    "name": "tahini sauce",
+    "gi": 40,
+    "aliases": []
+  },
+  {
+    "name": "tzatziki",
+    "gi": 10,
+    "aliases": []
+  },
+  {
+    "name": "sriracha",
+    "gi": 30,
+    "aliases": [
+      "hot sauce"
+    ]
+  },
+  {
+    "name": "teriyaki sauce",
+    "gi": 50,
+    "aliases": []
+  },
+  {
+    "name": "hoisin sauce",
+    "gi": 55,
+    "aliases": []
+  },
+  {
+    "name": "fish sauce",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "oyster sauce",
+    "gi": 25,
+    "aliases": []
+  },
+  {
+    "name": "coconut sugar",
+    "gi": 54,
+    "aliases": []
+  },
+  {
+    "name": "agave nectar",
+    "gi": 15,
+    "aliases": [
+      "agave syrup"
+    ]
+  },
+  {
+    "name": "molasses",
+    "gi": 55,
+    "aliases": []
+  },
+  {
+    "name": "stevia",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "xylitol",
+    "gi": 7,
+    "aliases": []
+  },
+  {
+    "name": "erythritol",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "artificial sweetener",
+    "gi": 0,
+    "aliases": [
+      "splenda",
+      "aspartame",
+      "saccharin"
+    ]
+  },
+  {
+    "name": "protein powder",
+    "gi": 18,
+    "aliases": [
+      "whey protein",
+      "casein protein"
+    ]
+  },
+  {
+    "name": "collagen powder",
+    "gi": 0,
+    "aliases": []
+  },
+  {
+    "name": "nutritional yeast",
+    "gi": 25,
+    "aliases": []
+  },
+  {
+    "name": "spirulina",
+    "gi": 15,
+    "aliases": []
+  },
+  {
+    "name": "chlorella",
+    "gi": 15,
+    "aliases": []
+  },
+  {
+    "name": "wheat germ",
+    "gi": 51,
+    "aliases": []
+  },
+  {
+    "name": "bran",
+    "gi": 30,
+    "aliases": [
+      "wheat bran",
+      "oat bran"
+    ]
+  },
+  {
+    "name": "psyllium husk",
+    "gi": 10,
+    "aliases": []
+  },
+  {
+    "name": "inulin",
+    "gi": 10,
+    "aliases": []
+  },
+  {
+    "name": "arrowroot",
+    "gi": 65,
+    "aliases": []
+  },
+  {
+    "name": "cornstarch",
+    "gi": 85,
+    "aliases": [
+      "corn flour"
+    ]
+  },
+  {
+    "name": "tapioca starch",
+    "gi": 70,
+    "aliases": []
+  },
+  {
+    "name": "potato starch",
+    "gi": 95,
+    "aliases": []
+  },
+  {
+    "name": "rice flour",
+    "gi": 98,
+    "aliases": []
+  },
+  {
+    "name": "almond flour",
+    "gi": 25,
+    "aliases": []
+  },
+  {
+    "name": "coconut flour",
+    "gi": 45,
+    "aliases": []
+  },
+  {
+    "name": "chickpea flour",
+    "gi": 39,
+    "aliases": [
+      "besan",
+      "gram flour"
+    ]
+  },
+  {
+    "name": "oat flour",
+    "gi": 55,
+    "aliases": []
+  },
+  {
+    "name": "buckwheat flour",
+    "gi": 54,
+    "aliases": []
+  },
+  {
+    "name": "spelt flour",
+    "gi": 54,
+    "aliases": []
+  },
+  {
+    "name": "whole wheat flour",
+    "gi": 69,
+    "aliases": []
+  },
+  {
+    "name": "white flour",
+    "gi": 85,
+    "aliases": [
+      "all purpose flour",
+      "plain flour"
+    ]
+  },
+  {
+    "name": "bread flour",
+    "gi": 75,
+    "aliases": []
+  },
+  {
+    "name": "self-raising flour",
+    "gi": 75,
+    "aliases": []
+  },
+  {
+    "name": "gluten free flour",
+    "gi": 70,
+    "aliases": []
+  },
+  {
+    "name": "ciabatta",
+    "gi": 73,
+    "aliases": [
+      "ciabatta bread",
+      "italian bread"
+    ]
+  },
+  {
+    "name": "focaccia",
+    "gi": 60,
+    "aliases": [
+      "focaccia bread"
+    ]
+  },
+  {
+    "name": "naan",
+    "gi": 71,
+    "aliases": [
+      "naan bread",
+      "indian bread",
+      "garlic naan"
+    ]
+  },
+  {
+    "name": "lavash",
+    "gi": 71,
+    "aliases": [
+      "lavash bread",
+      "armenian flatbread"
+    ]
+  },
+  {
+    "name": "flour tortilla",
+    "gi": 30,
+    "aliases": [
+      "wheat tortilla",
+      "soft tortilla",
+      "burrito wrap",
+      "wrap"
+    ]
+  },
+  {
+    "name": "whole wheat tortilla",
+    "gi": 40,
+    "aliases": [
+      "whole grain tortilla",
+      "wheat wrap"
+    ]
+  },
+  {
+    "name": "ezekiel bread",
+    "gi": 36,
+    "aliases": [
+      "sprouted bread",
+      "sprouted grain bread",
+      "flourless bread"
+    ]
+  },
+  {
+    "name": "multigrain bread",
+    "gi": 49,
+    "aliases": [
+      "multi-grain bread",
+      "seven grain bread",
+      "seeded bread"
+    ]
+  },
+  {
+    "name": "spelt bread",
+    "gi": 63,
+    "aliases": [
+      "spelt loaf"
+    ]
+  },
+  {
+    "name": "brioche",
+    "gi": 72,
+    "aliases": [
+      "brioche bun",
+      "brioche roll",
+      "french brioche"
+    ]
+  },
+  {
+    "name": "udon noodles",
+    "gi": 55,
+    "aliases": [
+      "udon",
+      "thick noodles",
+      "japanese udon"
+    ]
+  },
+  {
+    "name": "soba noodles",
+    "gi": 56,
+    "aliases": [
+      "soba",
+      "buckwheat noodles",
+      "japanese soba"
+    ]
+  },
+  {
+    "name": "shirataki noodles",
+    "gi": 0,
+    "aliases": [
+      "konjac noodles",
+      "miracle noodles",
+      "zero carb noodles",
+      "konnyaku noodles"
+    ]
+  },
+  {
+    "name": "cellophane noodles",
+    "gi": 26,
+    "aliases": [
+      "glass noodles",
+      "bean thread noodles",
+      "mung bean noodles",
+      "crystal noodles"
+    ]
+  },
+  {
+    "name": "bulgur",
+    "gi": 47,
+    "aliases": [
+      "bulgur wheat",
+      "burghul",
+      "cracked wheat"
+    ]
+  },
+  {
+    "name": "wheat berries",
+    "gi": 30,
+    "aliases": [
+      "whole wheat kernels",
+      "wheat grains"
+    ]
+  },
+  {
+    "name": "spelt grain",
+    "gi": 54,
+    "aliases": [
+      "spelt",
+      "dinkel wheat"
+    ]
+  },
+  {
+    "name": "teff",
+    "gi": 57,
+    "aliases": [
+      "teff grain",
+      "tef"
+    ]
+  },
+  {
+    "name": "amaranth",
+    "gi": 97,
+    "aliases": [
+      "amaranth grain",
+      "amaranth seeds"
+    ]
+  },
+  {
+    "name": "triticale",
+    "gi": 42,
+    "aliases": [
+      "triticale grain"
+    ]
+  },
+  {
+    "name": "sorghum grain",
+    "gi": 62,
+    "aliases": [
+      "sorghum",
+      "milo grain"
+    ]
+  },
+  {
+    "name": "wild rice",
+    "gi": 57,
+    "aliases": [
+      "wild rice blend",
+      "canadian wild rice"
+    ]
+  },
+  {
+    "name": "black rice",
+    "gi": 42,
+    "aliases": [
+      "forbidden rice",
+      "purple rice",
+      "chinese black rice"
+    ]
+  },
+  {
+    "name": "red rice",
+    "gi": 55,
+    "aliases": [
+      "red cargo rice",
+      "thai red rice"
+    ]
+  },
+  {
+    "name": "glutinous rice",
+    "gi": 98,
+    "aliases": [
+      "sticky rice",
+      "sweet rice",
+      "mochi rice",
+      "glutinous"
+    ]
+  },
+  {
+    "name": "puffed rice",
+    "gi": 82,
+    "aliases": [
+      "rice puffs",
+      "popped rice"
+    ]
+  },
+  {
+    "name": "crispbread",
+    "gi": 64,
+    "aliases": [
+      "scandinavian crispbread",
+      "crispbreads"
+    ]
+  },
+  {
+    "name": "rye crispbread",
+    "gi": 55,
+    "aliases": [
+      "ryecrisp",
+      "wasa cracker",
+      "rye crackers"
+    ]
+  },
+  {
+    "name": "oat bran",
+    "gi": 55,
+    "aliases": [
+      "oat bran cereal",
+      "oat fiber"
+    ]
+  },
+  {
+    "name": "wheat bran",
+    "gi": 30,
+    "aliases": [
+      "unprocessed wheat bran",
+      "miller's bran"
+    ]
+  },
+  {
+    "name": "lo mein",
+    "gi": 50,
+    "aliases": [
+      "chinese noodles",
+      "stir fried noodles",
+      "chinese lo mein"
+    ]
+  },
+  {
+    "name": "chow mein",
+    "gi": 50,
+    "aliases": [
+      "fried noodles",
+      "crispy noodles"
+    ]
+  },
+  {
+    "name": "spaetzle",
+    "gi": 52,
+    "aliases": [
+      "spätzle",
+      "german egg noodles",
+      "german pasta"
+    ]
+  },
+  {
+    "name": "frosted flakes",
+    "gi": 55,
+    "aliases": [
+      "frosties",
+      "sugar frosted flakes",
+      "kellogg's frosted flakes"
+    ]
+  },
+  {
+    "name": "shredded wheat",
+    "gi": 67,
+    "aliases": [
+      "shredded wheat biscuits",
+      "whole wheat biscuits"
+    ]
+  },
+  {
+    "name": "weetabix",
+    "gi": 70,
+    "aliases": [
+      "weet-bix",
+      "wheat biscuit cereal"
+    ]
+  },
+  {
+    "name": "cocoa puffs",
+    "gi": 77,
+    "aliases": [
+      "coco pops",
+      "chocolate puffs cereal",
+      "choco krispies"
+    ]
+  },
+  {
+    "name": "froot loops",
+    "gi": 69,
+    "aliases": [
+      "fruit loops",
+      "rainbow cereal"
+    ]
+  },
+  {
+    "name": "frosted mini wheats",
+    "gi": 58,
+    "aliases": [
+      "mini wheats",
+      "mini-wheats"
+    ]
+  },
+  {
+    "name": "lucky charms",
+    "gi": 77,
+    "aliases": [
+      "lucky charms cereal"
+    ]
+  },
+  {
+    "name": "cinnamon toast crunch",
+    "gi": 80,
+    "aliases": [
+      "cinnamon squares cereal",
+      "cinnamon crunch"
+    ]
+  },
+  {
+    "name": "grape nuts",
+    "gi": 67,
+    "aliases": [
+      "grape-nuts",
+      "post grape nuts"
+    ]
+  },
+  {
+    "name": "all bran",
+    "gi": 30,
+    "aliases": [
+      "all-bran",
+      "all bran buds",
+      "kellogg's all bran"
+    ]
+  },
+  {
+    "name": "fiber one",
+    "gi": 39,
+    "aliases": [
+      "fibre one",
+      "high fiber cereal"
+    ]
+  },
+  {
+    "name": "captain crunch",
+    "gi": 75,
+    "aliases": [
+      "cap'n crunch",
+      "capn crunch"
+    ]
+  },
+  {
+    "name": "raisin bran",
+    "gi": 61,
+    "aliases": [
+      "raisin bran cereal",
+      "bran with raisins"
+    ]
+  },
+  {
+    "name": "puffed wheat",
+    "gi": 80,
+    "aliases": [
+      "puffed wheat cereal",
+      "wheat puffs"
+    ]
+  },
+  {
+    "name": "cocoa krispies",
+    "gi": 77,
+    "aliases": [
+      "coco krispies",
+      "chocolate rice krispies"
+    ]
+  },
+  {
+    "name": "honey bunches of oats",
+    "gi": 60,
+    "aliases": [
+      "HBO cereal"
+    ]
+  },
+  {
+    "name": "cream of wheat",
+    "gi": 66,
+    "aliases": [
+      "farina",
+      "semolina porridge",
+      "wheat cereal"
+    ]
+  },
+  {
+    "name": "kashi golean",
+    "gi": 49,
+    "aliases": [
+      "kashi cereal",
+      "kashi go lean"
+    ]
+  },
+  {
+    "name": "blackberries",
+    "gi": 25,
+    "aliases": [
+      "blackberry",
+      "wild blackberries"
+    ]
+  },
+  {
+    "name": "cranberries",
+    "gi": 45,
+    "aliases": [
+      "cranberry",
+      "fresh cranberries"
+    ]
+  },
+  {
+    "name": "nectarine",
+    "gi": 43,
+    "aliases": [
+      "nectarines",
+      "white nectarine"
+    ]
+  },
+  {
+    "name": "persimmon",
+    "gi": 50,
+    "aliases": [
+      "persimmons",
+      "kaki",
+      "sharon fruit"
+    ]
+  },
+  {
+    "name": "pomelo",
+    "gi": 30,
+    "aliases": [
+      "pomelos",
+      "shaddock",
+      "chinese grapefruit"
+    ]
+  },
+  {
+    "name": "starfruit",
+    "gi": 30,
+    "aliases": [
+      "carambola",
+      "star fruit",
+      "five-corner fruit"
+    ]
+  },
+  {
+    "name": "tangerine",
+    "gi": 30,
+    "aliases": [
+      "tangerines",
+      "clementine",
+      "clementines",
+      "mandarin",
+      "mandarin orange",
+      "satsuma"
+    ]
+  },
+  {
+    "name": "kumquat",
+    "gi": 44,
+    "aliases": [
+      "kumquats",
+      "cumquat"
+    ]
+  },
+  {
+    "name": "mulberries",
+    "gi": 25,
+    "aliases": [
+      "mulberry",
+      "white mulberry",
+      "black mulberry"
+    ]
+  },
+  {
+    "name": "boysenberries",
+    "gi": 25,
+    "aliases": [
+      "boysenberry"
+    ]
+  },
+  {
+    "name": "durian",
+    "gi": 49,
+    "aliases": [
+      "durian fruit",
+      "king of fruits"
+    ]
+  },
+  {
+    "name": "tamarind",
+    "gi": 23,
+    "aliases": [
+      "tamarind paste",
+      "tamarind pulp",
+      "imli"
+    ]
+  },
+  {
+    "name": "elderberries",
+    "gi": 25,
+    "aliases": [
+      "elderberry",
+      "elder berries"
+    ]
+  },
+  {
+    "name": "gooseberries",
+    "gi": 25,
+    "aliases": [
+      "gooseberry",
+      "cape gooseberry"
+    ]
+  },
+  {
+    "name": "currants",
+    "gi": 25,
+    "aliases": [
+      "black currants",
+      "red currants",
+      "blackcurrant",
+      "redcurrant",
+      "white currants"
+    ]
+  },
+  {
+    "name": "dragon fruit",
+    "gi": 48,
+    "aliases": [
+      "dragonfruit",
+      "pitaya",
+      "pitahaya",
+      "red pitaya"
+    ]
+  },
+  {
+    "name": "rambutan",
+    "gi": 49,
+    "aliases": [
+      "rambutan fruit"
+    ]
+  },
+  {
+    "name": "sapodilla",
+    "gi": 40,
+    "aliases": [
+      "chikoo",
+      "sapota",
+      "naseberry"
+    ]
+  },
+  {
+    "name": "cherimoya",
+    "gi": 35,
+    "aliases": [
+      "custard apple",
+      "cherimoya fruit",
+      "annona"
+    ]
+  },
+  {
+    "name": "quince",
+    "gi": 35,
+    "aliases": [
+      "quince fruit"
+    ]
+  },
+  {
+    "name": "honeydew melon",
+    "gi": 65,
+    "aliases": [
+      "honeydew",
+      "honey dew melon"
+    ]
+  },
+  {
+    "name": "cantaloupe",
+    "gi": 65,
+    "aliases": [
+      "rockmelon",
+      "muskmelon",
+      "cantaloup"
+    ]
+  },
+  {
+    "name": "lime",
+    "gi": 20,
+    "aliases": [
+      "limes",
+      "key lime",
+      "persian lime"
+    ]
+  },
+  {
+    "name": "lemon",
+    "gi": 20,
+    "aliases": [
+      "lemons",
+      "meyer lemon",
+      "fresh lemon"
+    ]
+  },
+  {
+    "name": "coconut flesh",
+    "gi": 45,
+    "aliases": [
+      "fresh coconut",
+      "coconut meat",
+      "young coconut"
+    ]
+  },
+  {
+    "name": "plantain chips",
+    "gi": 68,
+    "aliases": [
+      "fried plantain chips",
+      "tostones chips"
+    ]
+  },
+  {
+    "name": "banana chips",
+    "gi": 70,
+    "aliases": [
+      "dried banana chips",
+      "banana crisps"
+    ]
+  },
+  {
+    "name": "dried mango",
+    "gi": 60,
+    "aliases": [
+      "mango strips",
+      "dried mango slices",
+      "mango leather"
+    ]
+  },
+  {
+    "name": "dried figs",
+    "gi": 61,
+    "aliases": [
+      "fig rolls",
+      "dried fig"
+    ]
+  },
+  {
+    "name": "dried cranberries",
+    "gi": 62,
+    "aliases": [
+      "craisins",
+      "sweetened dried cranberries"
+    ]
+  },
+  {
+    "name": "grapefruit juice",
+    "gi": 48,
+    "aliases": [
+      "fresh squeezed grapefruit",
+      "grapefruit drink"
+    ]
+  },
+  {
+    "name": "artichoke",
+    "gi": 15,
+    "aliases": [
+      "artichokes",
+      "globe artichoke",
+      "steamed artichoke"
+    ]
+  },
+  {
+    "name": "bok choy",
+    "gi": 15,
+    "aliases": [
+      "pak choi",
+      "bok choi",
+      "chinese white cabbage"
+    ]
+  },
+  {
+    "name": "brussels sprouts",
+    "gi": 15,
+    "aliases": [
+      "brussel sprouts",
+      "brussels sprout",
+      "sprouts"
+    ]
+  },
+  {
+    "name": "celeriac",
+    "gi": 30,
+    "aliases": [
+      "celery root",
+      "celery knob",
+      "turnip-rooted celery"
+    ]
+  },
+  {
+    "name": "chicory",
+    "gi": 15,
+    "aliases": [
+      "witloof",
+      "belgian endive",
+      "radicchio"
+    ]
+  },
+  {
+    "name": "fennel",
+    "gi": 15,
+    "aliases": [
+      "fennel bulb",
+      "fresh fennel",
+      "florence fennel"
+    ]
+  },
+  {
+    "name": "jicama",
+    "gi": 23,
+    "aliases": [
+      "mexican yam",
+      "mexican turnip",
+      "mexican potato",
+      "yam bean"
+    ]
+  },
+  {
+    "name": "kohlrabi",
+    "gi": 15,
+    "aliases": [
+      "german turnip",
+      "turnip cabbage"
+    ]
+  },
+  {
+    "name": "leek",
+    "gi": 15,
+    "aliases": [
+      "leeks",
+      "fresh leek"
+    ]
+  },
+  {
+    "name": "okra",
+    "gi": 15,
+    "aliases": [
+      "ladies finger",
+      "gumbo vegetable",
+      "bhindi"
+    ]
+  },
+  {
+    "name": "radish",
+    "gi": 15,
+    "aliases": [
+      "radishes",
+      "red radish",
+      "breakfast radish"
+    ]
+  },
+  {
+    "name": "daikon",
+    "gi": 15,
+    "aliases": [
+      "daikon radish",
+      "white radish",
+      "mooli",
+      "chinese radish"
+    ]
+  },
+  {
+    "name": "rutabaga",
+    "gi": 72,
+    "aliases": [
+      "swede",
+      "yellow turnip",
+      "swedish turnip"
+    ]
+  },
+  {
+    "name": "acorn squash",
+    "gi": 75,
+    "aliases": [
+      "acorn squash baked"
+    ]
+  },
+  {
+    "name": "butternut squash",
+    "gi": 74,
+    "aliases": [
+      "butternut pumpkin",
+      "butternut"
+    ]
+  },
+  {
+    "name": "spaghetti squash",
+    "gi": 15,
+    "aliases": [
+      "vegetable spaghetti",
+      "noodle squash"
+    ]
+  },
+  {
+    "name": "collard greens",
+    "gi": 15,
+    "aliases": [
+      "collards",
+      "collard leaves"
+    ]
+  },
+  {
+    "name": "arugula",
+    "gi": 15,
+    "aliases": [
+      "rocket",
+      "roquette",
+      "rucola",
+      "garden rocket"
+    ]
+  },
+  {
+    "name": "watercress",
+    "gi": 15,
+    "aliases": [
+      "water cress"
+    ]
+  },
+  {
+    "name": "lotus root",
+    "gi": 58,
+    "aliases": [
+      "lotus rhizome",
+      "lotus stem",
+      "renkon"
+    ]
+  },
+  {
+    "name": "bamboo shoots",
+    "gi": 25,
+    "aliases": [
+      "bamboo shoot",
+      "canned bamboo shoots"
+    ]
+  },
+  {
+    "name": "bean sprouts",
+    "gi": 25,
+    "aliases": [
+      "mung bean sprouts",
+      "soybean sprouts",
+      "sprouts"
+    ]
+  },
+  {
+    "name": "ginger",
+    "gi": 15,
+    "aliases": [
+      "fresh ginger",
+      "ginger root",
+      "minced ginger"
+    ]
+  },
+  {
+    "name": "shallot",
+    "gi": 15,
+    "aliases": [
+      "shallots",
+      "eschalots",
+      "french shallot"
+    ]
+  },
+  {
+    "name": "scallion",
+    "gi": 15,
+    "aliases": [
+      "green onion",
+      "spring onion",
+      "chives",
+      "green onions"
+    ]
+  },
+  {
+    "name": "parsley",
+    "gi": 15,
+    "aliases": [
+      "fresh parsley",
+      "curly parsley",
+      "flat leaf parsley"
+    ]
+  },
+  {
+    "name": "cilantro",
+    "gi": 15,
+    "aliases": [
+      "coriander",
+      "fresh coriander",
+      "dhania"
+    ]
+  },
+  {
+    "name": "jalapeño",
+    "gi": 15,
+    "aliases": [
+      "jalapeno",
+      "jalapenos",
+      "jalapeños",
+      "fresh jalapeño"
+    ]
+  },
+  {
+    "name": "edamame",
+    "gi": 18,
+    "aliases": [
+      "edamame beans",
+      "fresh soybeans",
+      "mukimame"
+    ]
+  },
+  {
+    "name": "sugar snap peas",
+    "gi": 15,
+    "aliases": [
+      "snap peas",
+      "snap snap peas"
+    ]
+  },
+  {
+    "name": "snow peas",
+    "gi": 15,
+    "aliases": [
+      "mangetout",
+      "chinese pea pods",
+      "mange tout"
+    ]
+  },
+  {
+    "name": "Swiss chard",
+    "gi": 15,
+    "aliases": [
+      "chard",
+      "silverbeet",
+      "rainbow chard",
+      "beta chard"
+    ]
+  },
+  {
+    "name": "broccolini",
+    "gi": 15,
+    "aliases": [
+      "baby broccoli",
+      "tenderstem broccoli",
+      "asparations"
+    ]
+  },
+  {
+    "name": "radicchio",
+    "gi": 15,
+    "aliases": [
+      "red chicory",
+      "italian chicory"
+    ]
+  },
+  {
+    "name": "endive",
+    "gi": 15,
+    "aliases": [
+      "curly endive",
+      "frisée",
+      "escarole"
+    ]
+  },
+  {
+    "name": "cannellini beans",
+    "gi": 31,
+    "aliases": [
+      "white kidney beans",
+      "white cannellini",
+      "italian white beans"
+    ]
+  },
+  {
+    "name": "butter beans",
+    "gi": 36,
+    "aliases": [
+      "large lima beans",
+      "fordhook lima beans"
+    ]
+  },
+  {
+    "name": "red lentils",
+    "gi": 26,
+    "aliases": [
+      "red dal",
+      "masoor dal",
+      "split red lentils"
+    ]
+  },
+  {
+    "name": "green lentils",
+    "gi": 30,
+    "aliases": [
+      "french lentils",
+      "puy lentils",
+      "du puy lentils"
+    ]
+  },
+  {
+    "name": "beluga lentils",
+    "gi": 30,
+    "aliases": [
+      "black lentils",
+      "beluga black lentils"
+    ]
+  },
+  {
+    "name": "refried beans",
+    "gi": 38,
+    "aliases": [
+      "frijoles refritos",
+      "mashed pinto beans"
+    ]
+  },
+  {
+    "name": "cowpeas",
+    "gi": 33,
+    "aliases": [
+      "black-eyed beans",
+      "southern peas",
+      "field peas"
+    ]
+  },
+  {
+    "name": "pigeon peas",
+    "gi": 22,
+    "aliases": [
+      "toor dal",
+      "split pigeon peas",
+      "arhar dal",
+      "gandule beans"
+    ]
+  },
+  {
+    "name": "black bean soup",
+    "gi": 30,
+    "aliases": [
+      "black bean stew"
+    ]
+  },
+  {
+    "name": "lentil pasta",
+    "gi": 27,
+    "aliases": [
+      "red lentil pasta",
+      "lentil spaghetti"
+    ]
+  },
+  {
+    "name": "chickpea pasta",
+    "gi": 35,
+    "aliases": [
+      "legume pasta",
+      "chickpea spaghetti",
+      "bean pasta"
+    ]
+  },
+  {
+    "name": "dal",
+    "gi": 35,
+    "aliases": [
+      "indian lentil soup",
+      "lentil dal",
+      "dhal",
+      "daal"
+    ]
+  },
+  {
+    "name": "dried chickpeas",
+    "gi": 28,
+    "aliases": [
+      "roasted chickpeas",
+      "crunchy chickpeas",
+      "chickpea snacks"
+    ]
+  },
+  {
+    "name": "cheddar",
+    "gi": 0,
+    "aliases": [
+      "cheddar cheese",
+      "sharp cheddar",
+      "aged cheddar"
+    ]
+  },
+  {
+    "name": "mozzarella",
+    "gi": 0,
+    "aliases": [
+      "fresh mozzarella",
+      "buffalo mozzarella",
+      "low moisture mozzarella"
+    ]
+  },
+  {
+    "name": "parmesan",
+    "gi": 0,
+    "aliases": [
+      "parmigiano reggiano",
+      "grated parmesan",
+      "pecorino"
+    ]
+  },
+  {
+    "name": "gouda",
+    "gi": 0,
+    "aliases": [
+      "aged gouda",
+      "smoked gouda",
+      "young gouda"
+    ]
+  },
+  {
+    "name": "blue cheese",
+    "gi": 0,
+    "aliases": [
+      "gorgonzola",
+      "roquefort",
+      "stilton",
+      "danish blue"
+    ]
+  },
+  {
+    "name": "brie",
+    "gi": 0,
+    "aliases": [
+      "camembert",
+      "brie de meaux",
+      "soft ripened cheese"
+    ]
+  },
+  {
+    "name": "feta",
+    "gi": 0,
+    "aliases": [
+      "feta cheese",
+      "greek feta",
+      "crumbled feta"
+    ]
+  },
+  {
+    "name": "provolone",
+    "gi": 0,
+    "aliases": [
+      "provolone cheese",
+      "smoked provolone"
+    ]
+  },
+  {
+    "name": "goat cheese",
+    "gi": 0,
+    "aliases": [
+      "chèvre",
+      "chevre",
+      "goat's cheese",
+      "fresh goat cheese"
+    ]
+  },
+  {
+    "name": "swiss cheese",
+    "gi": 0,
+    "aliases": [
+      "emmental",
+      "gruyere",
+      "emmenthal",
+      "gruyère"
+    ]
+  },
+  {
+    "name": "kefir",
+    "gi": 36,
+    "aliases": [
+      "kefir milk",
+      "fermented milk kefir"
+    ]
+  },
+  {
+    "name": "skyr",
+    "gi": 11,
+    "aliases": [
+      "icelandic yogurt",
+      "icelandic skyr",
+      "quark"
+    ]
+  },
+  {
+    "name": "soy yogurt",
+    "gi": 35,
+    "aliases": [
+      "plant based yogurt",
+      "vegan yogurt",
+      "dairy free yogurt"
+    ]
+  },
+  {
+    "name": "coconut yogurt",
+    "gi": 45,
+    "aliases": [
+      "coconut milk yogurt",
+      "vegan coconut yogurt"
+    ]
+  },
+  {
+    "name": "goat milk",
+    "gi": 27,
+    "aliases": [
+      "goat's milk",
+      "fresh goat milk"
+    ]
+  },
+  {
+    "name": "lactose free milk",
+    "gi": 32,
+    "aliases": [
+      "lactose-free milk",
+      "lactase-treated milk"
+    ]
+  },
+  {
+    "name": "evaporated milk",
+    "gi": 33,
+    "aliases": [
+      "condensed milk unsweetened",
+      "tinned milk"
+    ]
+  },
+  {
+    "name": "condensed milk",
+    "gi": 61,
+    "aliases": [
+      "sweetened condensed milk",
+      "dulce de leche base"
+    ]
+  },
+  {
+    "name": "powdered milk",
+    "gi": 35,
+    "aliases": [
+      "dry milk",
+      "milk powder",
+      "skim milk powder"
+    ]
+  },
+  {
+    "name": "whey protein",
+    "gi": 30,
+    "aliases": [
+      "whey protein powder",
+      "whey",
+      "whey isolate"
+    ]
+  },
+  {
+    "name": "chicken thigh",
+    "gi": 0,
+    "aliases": [
+      "chicken thighs",
+      "dark meat chicken",
+      "boneless chicken thigh"
+    ]
+  },
+  {
+    "name": "chicken wings",
+    "gi": 0,
+    "aliases": [
+      "buffalo wings",
+      "chicken wing",
+      "hot wings"
+    ]
+  },
+  {
+    "name": "chicken drumstick",
+    "gi": 0,
+    "aliases": [
+      "drumsticks",
+      "chicken leg",
+      "chicken legs"
+    ]
+  },
+  {
+    "name": "cod",
+    "gi": 0,
+    "aliases": [
+      "cod fish",
+      "atlantic cod",
+      "pacific cod",
+      "baked cod"
+    ]
+  },
+  {
+    "name": "tilapia",
+    "gi": 0,
+    "aliases": [
+      "tilapia fillet",
+      "nile tilapia"
+    ]
+  },
+  {
+    "name": "trout",
+    "gi": 0,
+    "aliases": [
+      "rainbow trout",
+      "smoked trout",
+      "brook trout"
+    ]
+  },
+  {
+    "name": "halibut",
+    "gi": 0,
+    "aliases": [
+      "pacific halibut",
+      "atlantic halibut"
+    ]
+  },
+  {
+    "name": "mahi mahi",
+    "gi": 0,
+    "aliases": [
+      "dolphinfish",
+      "dorado",
+      "mahi-mahi"
+    ]
+  },
+  {
+    "name": "sea bass",
+    "gi": 0,
+    "aliases": [
+      "striped bass",
+      "black sea bass",
+      "chilean sea bass"
+    ]
+  },
+  {
+    "name": "snapper",
+    "gi": 0,
+    "aliases": [
+      "red snapper",
+      "pink snapper",
+      "Pacific snapper"
+    ]
+  },
+  {
+    "name": "sole",
+    "gi": 0,
+    "aliases": [
+      "dover sole",
+      "lemon sole",
+      "flounder",
+      "flatfish"
+    ]
+  },
+  {
+    "name": "swordfish",
+    "gi": 0,
+    "aliases": [
+      "swordfish steak"
+    ]
+  },
+  {
+    "name": "catfish",
+    "gi": 0,
+    "aliases": [
+      "channel catfish",
+      "fried catfish"
+    ]
+  },
+  {
+    "name": "veal",
+    "gi": 0,
+    "aliases": [
+      "veal cutlet",
+      "veal chop"
+    ]
+  },
+  {
+    "name": "goat meat",
+    "gi": 0,
+    "aliases": [
+      "goat",
+      "chevon",
+      "mutton",
+      "kabrito"
+    ]
+  },
+  {
+    "name": "rabbit",
+    "gi": 0,
+    "aliases": [
+      "rabbit meat",
+      "wild rabbit"
+    ]
+  },
+  {
+    "name": "elk",
+    "gi": 0,
+    "aliases": [
+      "elk meat",
+      "wapiti",
+      "elk steak"
+    ]
+  },
+  {
+    "name": "ostrich",
+    "gi": 0,
+    "aliases": [
+      "ostrich steak",
+      "ostrich fillet"
+    ]
+  },
+  {
+    "name": "quail",
+    "gi": 0,
+    "aliases": [
+      "quail meat",
+      "quail eggs",
+      "roasted quail"
+    ]
+  },
+  {
+    "name": "corned beef",
+    "gi": 0,
+    "aliases": [
+      "corned beef hash",
+      "salt beef"
+    ]
+  },
+  {
+    "name": "prosciutto",
+    "gi": 0,
+    "aliases": [
+      "prosciutto di parma",
+      "parma ham",
+      "italian cured ham"
+    ]
+  },
+  {
+    "name": "pancetta",
+    "gi": 0,
+    "aliases": [
+      "italian bacon",
+      "rolled pancetta"
+    ]
+  },
+  {
+    "name": "chorizo",
+    "gi": 0,
+    "aliases": [
+      "spanish chorizo",
+      "mexican chorizo",
+      "cured chorizo"
+    ]
+  },
+  {
+    "name": "bratwurst",
+    "gi": 0,
+    "aliases": [
+      "brats",
+      "german sausage",
+      "pork bratwurst"
+    ]
+  },
+  {
+    "name": "kielbasa",
+    "gi": 0,
+    "aliases": [
+      "polish sausage",
+      "smoked kielbasa"
+    ]
+  },
+  {
+    "name": "bologna",
+    "gi": 0,
+    "aliases": [
+      "baloney",
+      "luncheon meat",
+      "bologna sausage"
+    ]
+  },
+  {
+    "name": "pastrami",
+    "gi": 0,
+    "aliases": [
+      "smoked pastrami",
+      "deli pastrami"
+    ]
+  },
+  {
+    "name": "prawn",
+    "gi": 0,
+    "aliases": [
+      "prawns",
+      "king prawn",
+      "tiger prawn",
+      "jumbo shrimp"
+    ]
+  },
+  {
+    "name": "mussel",
+    "gi": 0,
+    "aliases": [
+      "mussels",
+      "steamed mussels",
+      "fresh mussels"
+    ]
+  },
+  {
+    "name": "abalone",
+    "gi": 0,
+    "aliases": [
+      "abalone shellfish",
+      "ear shell"
+    ]
+  },
+  {
+    "name": "pistachios",
+    "gi": 15,
+    "aliases": [
+      "pistachio",
+      "pistachio nuts",
+      "shelled pistachios"
+    ]
+  },
+  {
+    "name": "macadamia nuts",
+    "gi": 10,
+    "aliases": [
+      "macadamias",
+      "macadamia"
+    ]
+  },
+  {
+    "name": "brazil nuts",
+    "gi": 10,
+    "aliases": [
+      "para nuts",
+      "cream nuts"
+    ]
+  },
+  {
+    "name": "pine nuts",
+    "gi": 15,
+    "aliases": [
+      "pignoli",
+      "pinenuts",
+      "pignolia"
+    ]
+  },
+  {
+    "name": "hazelnuts",
+    "gi": 15,
+    "aliases": [
+      "filberts",
+      "hazelnut",
+      "cobnut"
+    ]
+  },
+  {
+    "name": "pecans",
+    "gi": 10,
+    "aliases": [
+      "pecan nuts",
+      "pecan",
+      "shelled pecans"
+    ]
+  },
+  {
+    "name": "walnuts",
+    "gi": 15,
+    "aliases": [
+      "walnut",
+      "english walnuts",
+      "black walnuts"
+    ]
+  },
+  {
+    "name": "almonds",
+    "gi": 0,
+    "aliases": [
+      "almond",
+      "sliced almonds",
+      "blanched almonds",
+      "raw almonds"
+    ]
+  },
+  {
+    "name": "cashews",
+    "gi": 22,
+    "aliases": [
+      "cashew nuts",
+      "cashew",
+      "roasted cashews"
+    ]
+  },
+  {
+    "name": "peanuts",
+    "gi": 14,
+    "aliases": [
+      "groundnuts",
+      "roasted peanuts",
+      "boiled peanuts"
+    ]
+  },
+  {
+    "name": "coconut flakes",
+    "gi": 45,
+    "aliases": [
+      "shredded coconut",
+      "desiccated coconut",
+      "toasted coconut"
+    ]
+  },
+  {
+    "name": "poppy seeds",
+    "gi": 20,
+    "aliases": [
+      "poppy seed"
+    ]
+  },
+  {
+    "name": "watermelon seeds",
+    "gi": 25,
+    "aliases": [
+      "roasted watermelon seeds"
+    ]
+  },
+  {
+    "name": "green tea",
+    "gi": 0,
+    "aliases": [
+      "matcha tea",
+      "sencha",
+      "green tea drink"
+    ]
+  },
+  {
+    "name": "black tea",
+    "gi": 0,
+    "aliases": [
+      "english breakfast tea",
+      "tea unsweetened"
+    ]
+  },
+  {
+    "name": "herbal tea",
+    "gi": 0,
+    "aliases": [
+      "chamomile tea",
+      "peppermint tea",
+      "rooibos",
+      "tisane",
+      "herbal infusion"
+    ]
+  },
+  {
+    "name": "hot chocolate",
+    "gi": 35,
+    "aliases": [
+      "hot cocoa",
+      "cocoa drink",
+      "drinking chocolate"
+    ]
+  },
+  {
+    "name": "milk tea",
+    "gi": 38,
+    "aliases": [
+      "bubble tea",
+      "boba tea",
+      "thai milk tea",
+      "hong kong milk tea"
+    ]
+  },
+  {
+    "name": "tomato juice",
+    "gi": 33,
+    "aliases": [
+      "v8 juice",
+      "clamato",
+      "vegetable tomato juice"
+    ]
+  },
+  {
+    "name": "vegetable juice",
+    "gi": 43,
+    "aliases": [
+      "green juice",
+      "mixed vegetable juice",
+      "cold pressed juice"
+    ]
+  },
+  {
+    "name": "grape juice",
+    "gi": 48,
+    "aliases": [
+      "red grape juice",
+      "concord grape juice",
+      "white grape juice"
+    ]
+  },
+  {
+    "name": "cranberry juice",
+    "gi": 56,
+    "aliases": [
+      "cranberry cocktail",
+      "cranberry drink"
+    ]
+  },
+  {
+    "name": "pineapple juice",
+    "gi": 48,
+    "aliases": [
+      "fresh pineapple juice",
+      "canned pineapple juice"
+    ]
+  },
+  {
+    "name": "pomegranate juice",
+    "gi": 53,
+    "aliases": [
+      "pom juice",
+      "fresh pomegranate juice"
+    ]
+  },
+  {
+    "name": "diet soda",
+    "gi": 0,
+    "aliases": [
+      "diet coke",
+      "zero sugar soda",
+      "diet pepsi",
+      "sugar-free soda",
+      "zero calorie soda"
+    ]
+  },
+  {
+    "name": "matcha",
+    "gi": 0,
+    "aliases": [
+      "matcha latte",
+      "matcha powder",
+      "matcha drink"
+    ]
+  },
+  {
+    "name": "chai",
+    "gi": 36,
+    "aliases": [
+      "chai tea",
+      "masala chai",
+      "spiced tea",
+      "chai latte"
+    ]
+  },
+  {
+    "name": "lemon water",
+    "gi": 0,
+    "aliases": [
+      "infused water",
+      "lemon cucumber water",
+      "detox water"
+    ]
+  },
+  {
+    "name": "watermelon juice",
+    "gi": 72,
+    "aliases": [
+      "watermelon agua fresca",
+      "fresh watermelon juice"
+    ]
+  },
+  {
+    "name": "aloe vera juice",
+    "gi": 30,
+    "aliases": [
+      "aloe juice",
+      "aloe vera drink"
+    ]
+  },
+  {
+    "name": "mango juice",
+    "gi": 60,
+    "aliases": [
+      "mango nectar",
+      "mango drink"
+    ]
+  },
+  {
+    "name": "peach juice",
+    "gi": 42,
+    "aliases": [
+      "peach nectar"
+    ]
+  },
+  {
+    "name": "beet juice",
+    "gi": 64,
+    "aliases": [
+      "beetroot juice",
+      "red beet juice"
+    ]
+  },
+  {
+    "name": "carrot juice",
+    "gi": 43,
+    "aliases": [
+      "fresh carrot juice"
+    ]
+  },
+  {
+    "name": "miso paste",
+    "gi": 30,
+    "aliases": [
+      "white miso",
+      "red miso",
+      "miso",
+      "shiro miso"
+    ]
+  },
+  {
+    "name": "gochujang",
+    "gi": 55,
+    "aliases": [
+      "korean red pepper paste",
+      "korean chili paste"
+    ]
+  },
+  {
+    "name": "coconut aminos",
+    "gi": 35,
+    "aliases": [
+      "soy free soy sauce",
+      "coconut sap sauce"
+    ]
+  },
+  {
+    "name": "pesto",
+    "gi": 15,
+    "aliases": [
+      "basil pesto",
+      "pesto sauce",
+      "genovese pesto"
+    ]
+  },
+  {
+    "name": "hollandaise sauce",
+    "gi": 10,
+    "aliases": [
+      "hollandaise"
+    ]
+  },
+  {
+    "name": "blue cheese dressing",
+    "gi": 10,
+    "aliases": [
+      "blue cheese sauce",
+      "bleu cheese dressing"
+    ]
+  },
+  {
+    "name": "thousand island dressing",
+    "gi": 20,
+    "aliases": [
+      "thousand island",
+      "1000 island dressing"
+    ]
+  },
+  {
+    "name": "worcestershire sauce",
+    "gi": 30,
+    "aliases": [
+      "worcestershire",
+      "HP sauce",
+      "steak sauce"
+    ]
+  },
+  {
+    "name": "chipotle sauce",
+    "gi": 15,
+    "aliases": [
+      "chipotles in adobo",
+      "chipotle mayo"
+    ]
+  },
+  {
+    "name": "harissa",
+    "gi": 20,
+    "aliases": [
+      "harissa paste",
+      "north african chili paste",
+      "tunisian harissa"
+    ]
+  },
+  {
+    "name": "mango chutney",
+    "gi": 60,
+    "aliases": [
+      "chutney",
+      "indian chutney",
+      "fruit chutney"
+    ]
+  },
+  {
+    "name": "apple cider vinegar",
+    "gi": 5,
+    "aliases": [
+      "ACV",
+      "raw apple cider vinegar",
+      "cider vinegar"
+    ]
+  },
+  {
+    "name": "hot sauce",
+    "gi": 5,
+    "aliases": [
+      "tabasco",
+      "frank's red hot",
+      "louisiana hot sauce",
+      "cayenne sauce"
+    ]
+  },
+  {
+    "name": "sweet chili sauce",
+    "gi": 40,
+    "aliases": [
+      "thai sweet chili sauce",
+      "sweet chilli sauce"
+    ]
+  },
+  {
+    "name": "plum sauce",
+    "gi": 50,
+    "aliases": [
+      "duck sauce",
+      "asian plum sauce"
+    ]
+  },
+  {
+    "name": "alfredo sauce",
+    "gi": 15,
+    "aliases": [
+      "cream pasta sauce",
+      "parmesan cream sauce"
+    ]
+  },
+  {
+    "name": "marinara sauce",
+    "gi": 35,
+    "aliases": [
+      "tomato sauce",
+      "pasta sauce",
+      "pomodoro sauce"
+    ]
+  },
+  {
+    "name": "angel food cake",
+    "gi": 67,
+    "aliases": [
+      "angel cake",
+      "angel food"
+    ]
+  },
+  {
+    "name": "chocolate lava cake",
+    "gi": 45,
+    "aliases": [
+      "molten chocolate cake",
+      "fondant au chocolat"
+    ]
+  },
+  {
+    "name": "cannoli",
+    "gi": 50,
+    "aliases": [
+      "sicilian cannoli",
+      "italian pastry"
+    ]
+  },
+  {
+    "name": "profiteroles",
+    "gi": 65,
+    "aliases": [
+      "cream puffs",
+      "choux pastry"
+    ]
+  },
+  {
+    "name": "churros",
+    "gi": 62,
+    "aliases": [
+      "spanish churros",
+      "fried dough sticks"
+    ]
+  },
+  {
+    "name": "beignets",
+    "gi": 70,
+    "aliases": [
+      "french doughnuts",
+      "new orleans beignets"
+    ]
+  },
+  {
+    "name": "funnel cake",
+    "gi": 76,
+    "aliases": [
+      "fair food funnel cake",
+      "fried funnel cake"
+    ]
+  },
+  {
+    "name": "macaron",
+    "gi": 55,
+    "aliases": [
+      "french macaron",
+      "macaroon",
+      "french macaroon"
+    ]
+  },
+  {
+    "name": "pavlova",
+    "gi": 60,
+    "aliases": [
+      "new zealand pavlova",
+      "meringue cake"
+    ]
+  },
+  {
+    "name": "mousse",
+    "gi": 40,
+    "aliases": [
+      "chocolate mousse",
+      "french mousse"
+    ]
+  },
+  {
+    "name": "dark chocolate 85%",
+    "gi": 22,
+    "aliases": [
+      "85% dark chocolate",
+      "extra dark chocolate",
+      "very dark chocolate"
+    ]
+  },
+  {
+    "name": "milk chocolate",
+    "gi": 43,
+    "aliases": [
+      "chocolate bar",
+      "hersheys",
+      "milk choc"
+    ]
+  },
+  {
+    "name": "white chocolate",
+    "gi": 44,
+    "aliases": [
+      "white choc",
+      "white chocolate bar"
+    ]
+  },
+  {
+    "name": "candy corn",
+    "gi": 70,
+    "aliases": [
+      "halloween candy"
+    ]
+  },
+  {
+    "name": "jelly beans",
+    "gi": 80,
+    "aliases": [
+      "jellybeans",
+      "jelly belly"
+    ]
+  },
+  {
+    "name": "gummy candy",
+    "gi": 80,
+    "aliases": [
+      "gummy worms",
+      "gummy bears extra",
+      "gummies"
+    ]
+  },
+  {
+    "name": "peanut butter cups",
+    "gi": 33,
+    "aliases": [
+      "reese's",
+      "reese's pieces",
+      "peanut butter chocolate"
+    ]
+  },
+  {
+    "name": "vanilla wafers",
+    "gi": 77,
+    "aliases": [
+      "nilla wafers",
+      "vanilla cookies"
+    ]
+  },
+  {
+    "name": "digestive biscuits",
+    "gi": 59,
+    "aliases": [
+      "mcvitie's",
+      "digestive cookies",
+      "wheat biscuits"
+    ]
+  },
+  {
+    "name": "shortbread",
+    "gi": 64,
+    "aliases": [
+      "shortbread cookies",
+      "butter cookies",
+      "scottish shortbread"
+    ]
+  },
+  {
+    "name": "meringue",
+    "gi": 60,
+    "aliases": [
+      "merengue",
+      "baked meringue",
+      "egg white meringue"
+    ]
+  },
+  {
+    "name": "black forest cake",
+    "gi": 45,
+    "aliases": [
+      "schwarzwälder kirschtorte",
+      "black forest gateau"
+    ]
+  },
+  {
+    "name": "lemon bars",
+    "gi": 55,
+    "aliases": [
+      "lemon squares",
+      "lemon tart bars"
+    ]
+  },
+  {
+    "name": "pecan pie",
+    "gi": 65,
+    "aliases": [
+      "southern pecan pie"
+    ]
+  },
+  {
+    "name": "key lime pie",
+    "gi": 58,
+    "aliases": [
+      "lime pie"
+    ]
+  },
+  {
+    "name": "tres leches",
+    "gi": 55,
+    "aliases": [
+      "tres leches cake",
+      "three milk cake"
+    ]
+  },
+  {
+    "name": "mochi ice cream",
+    "gi": 75,
+    "aliases": [
+      "mochi dessert",
+      "filled mochi"
+    ]
+  },
+  {
+    "name": "animal crackers",
+    "gi": 66,
+    "aliases": [
+      "animal cookies",
+      "barnum's animals"
+    ]
+  },
+  {
+    "name": "graham crackers",
+    "gi": 74,
+    "aliases": [
+      "graham cracker",
+      "honey grahams"
+    ]
+  },
+  {
+    "name": "cheese crackers",
+    "gi": 67,
+    "aliases": [
+      "cheez-its",
+      "goldfish crackers",
+      "cheese snack crackers"
+    ]
+  },
+  {
+    "name": "rice crackers",
+    "gi": 78,
+    "aliases": [
+      "rice snacks",
+      "japanese rice crackers",
+      "arare"
+    ]
+  },
+  {
+    "name": "corn chips",
+    "gi": 42,
+    "aliases": [
+      "fritos",
+      "corn crisps"
+    ]
+  },
+  {
+    "name": "pita chips",
+    "gi": 57,
+    "aliases": [
+      "baked pita chips",
+      "pita crisps"
+    ]
+  },
+  {
+    "name": "seaweed snacks",
+    "gi": 15,
+    "aliases": [
+      "nori snacks",
+      "roasted seaweed",
+      "seaweed crisps"
+    ]
+  },
+  {
+    "name": "melba toast",
+    "gi": 70,
+    "aliases": [
+      "thin toast crackers"
+    ]
+  },
+  {
+    "name": "matzo",
+    "gi": 70,
+    "aliases": [
+      "matzoh",
+      "matzo crackers",
+      "unleavened bread",
+      "matzah"
+    ]
+  },
+  {
+    "name": "pork rinds",
+    "gi": 0,
+    "aliases": [
+      "chicharrones",
+      "pork cracklings",
+      "pork scratchings"
+    ]
+  },
+  {
+    "name": "veggie straws",
+    "gi": 60,
+    "aliases": [
+      "vegetable straws",
+      "veggie chips"
+    ]
+  },
+  {
+    "name": "kale chips",
+    "gi": 15,
+    "aliases": [
+      "baked kale chips",
+      "kale crisps"
+    ]
+  },
+  {
+    "name": "crackers whole grain",
+    "gi": 59,
+    "aliases": [
+      "whole grain crackers",
+      "seeded crackers",
+      "multigrain crackers"
+    ]
+  },
+  {
+    "name": "oat crackers",
+    "gi": 55,
+    "aliases": [
+      "oatcakes",
+      "scottish oatcakes"
+    ]
+  },
+  {
+    "name": "corn cakes",
+    "gi": 70,
+    "aliases": [
+      "corn rice cakes",
+      "popped corn cakes"
+    ]
+  },
+  {
+    "name": "shakshuka",
+    "gi": 35,
+    "aliases": [
+      "shakshouka",
+      "eggs in tomato sauce",
+      "menemen"
+    ]
+  },
+  {
+    "name": "butter chicken",
+    "gi": 36,
+    "aliases": [
+      "murgh makhani",
+      "chicken makhani",
+      "indian butter chicken"
+    ]
+  },
+  {
+    "name": "chicken tikka masala",
+    "gi": 40,
+    "aliases": [
+      "tikka masala",
+      "CTM"
+    ]
+  },
+  {
+    "name": "chana masala",
+    "gi": 28,
+    "aliases": [
+      "chole",
+      "chickpea curry",
+      "chole masala"
+    ]
+  },
+  {
+    "name": "paneer",
+    "gi": 15,
+    "aliases": [
+      "indian cheese",
+      "fresh paneer"
+    ]
+  },
+  {
+    "name": "palak paneer",
+    "gi": 20,
+    "aliases": [
+      "saag paneer",
+      "spinach paneer curry"
+    ]
+  },
+  {
+    "name": "moussaka",
+    "gi": 55,
+    "aliases": [
+      "greek moussaka"
+    ]
+  },
+  {
+    "name": "tabbouleh",
+    "gi": 33,
+    "aliases": [
+      "tabouli",
+      "tabbouleh salad",
+      "bulgur salad"
+    ]
+  },
+  {
+    "name": "fattoush",
+    "gi": 35,
+    "aliases": [
+      "fattoush salad",
+      "arabic bread salad"
+    ]
+  },
+  {
+    "name": "borscht",
+    "gi": 40,
+    "aliases": [
+      "beet soup",
+      "ukrainian borscht",
+      "russian borscht"
+    ]
+  },
+  {
+    "name": "pierogi",
+    "gi": 65,
+    "aliases": [
+      "perogies",
+      "varenyky",
+      "pierogies"
+    ]
+  },
+  {
+    "name": "goulash",
+    "gi": 38,
+    "aliases": [
+      "hungarian goulash",
+      "beef goulash",
+      "beef stew hungarian"
+    ]
+  },
+  {
+    "name": "tagine",
+    "gi": 40,
+    "aliases": [
+      "moroccan tagine",
+      "lamb tagine",
+      "chicken tagine"
+    ]
+  },
+  {
+    "name": "rendang",
+    "gi": 20,
+    "aliases": [
+      "beef rendang",
+      "indonesian rendang"
+    ]
+  },
+  {
+    "name": "nasi goreng",
+    "gi": 52,
+    "aliases": [
+      "indonesian fried rice",
+      "malaysian fried rice"
+    ]
+  },
+  {
+    "name": "laksa",
+    "gi": 46,
+    "aliases": [
+      "noodle soup",
+      "singapore laksa",
+      "penang laksa"
+    ]
+  },
+  {
+    "name": "tom yum",
+    "gi": 30,
+    "aliases": [
+      "tom yum soup",
+      "thai hot and sour soup",
+      "tom yam"
+    ]
+  },
+  {
+    "name": "tom kha",
+    "gi": 30,
+    "aliases": [
+      "tom kha gai",
+      "thai coconut soup",
+      "galangal coconut soup"
+    ]
+  },
+  {
+    "name": "satay",
+    "gi": 20,
+    "aliases": [
+      "chicken satay",
+      "beef satay",
+      "peanut satay",
+      "saté"
+    ]
+  },
+  {
+    "name": "massaman curry",
+    "gi": 48,
+    "aliases": [
+      "massaman",
+      "thai massaman curry",
+      "beef massaman"
+    ]
+  },
+  {
+    "name": "shepherd's pie",
+    "gi": 66,
+    "aliases": [
+      "cottage pie",
+      "mashed potato pie"
+    ]
+  },
+  {
+    "name": "clam chowder",
+    "gi": 38,
+    "aliases": [
+      "new england clam chowder",
+      "seafood chowder",
+      "fish chowder"
+    ]
+  },
+  {
+    "name": "paella",
+    "gi": 60,
+    "aliases": [
+      "spanish paella",
+      "seafood paella",
+      "valencian paella"
+    ]
+  },
+  {
+    "name": "tamale",
+    "gi": 60,
+    "aliases": [
+      "tamales",
+      "corn tamale",
+      "masa tamale"
+    ]
+  },
+  {
+    "name": "pozole",
+    "gi": 40,
+    "aliases": [
+      "posole",
+      "mexican hominy stew"
+    ]
+  },
+  {
+    "name": "enchilada",
+    "gi": 55,
+    "aliases": [
+      "enchiladas",
+      "cheese enchilada",
+      "chicken enchilada"
+    ]
+  },
+  {
+    "name": "chilaquiles",
+    "gi": 62,
+    "aliases": [
+      "mexican tortilla casserole"
+    ]
+  },
+  {
+    "name": "chimichanga",
+    "gi": 65,
+    "aliases": [
+      "deep fried burrito",
+      "crispy burrito"
+    ]
+  },
+  {
+    "name": "banh mi",
+    "gi": 55,
+    "aliases": [
+      "vietnamese sandwich",
+      "bánh mì",
+      "baguette vietnamese"
+    ]
+  },
+  {
+    "name": "wonton",
+    "gi": 55,
+    "aliases": [
+      "wontons",
+      "wonton soup",
+      "pork dumplings"
+    ]
+  },
+  {
+    "name": "dim sum",
+    "gi": 55,
+    "aliases": [
+      "yum cha",
+      "chinese dumplings",
+      "har gow"
+    ]
+  },
+  {
+    "name": "general tso chicken",
+    "gi": 50,
+    "aliases": [
+      "general tso's chicken",
+      "orange chicken",
+      "sesame chicken"
+    ]
+  },
+  {
+    "name": "kung pao chicken",
+    "gi": 35,
+    "aliases": [
+      "gong bao chicken",
+      "kung po chicken"
+    ]
+  },
+  {
+    "name": "sweet and sour pork",
+    "gi": 50,
+    "aliases": [
+      "sweet and sour chicken",
+      "sweet sour pork"
+    ]
+  },
+  {
+    "name": "miso soup",
+    "gi": 15,
+    "aliases": [
+      "japanese miso soup",
+      "tofu miso soup",
+      "wakame miso soup"
+    ]
+  },
+  {
+    "name": "beef bulgogi",
+    "gi": 30,
+    "aliases": [
+      "bulgogi",
+      "korean bbq beef",
+      "korean grilled beef"
+    ]
+  },
+  {
+    "name": "japchae",
+    "gi": 30,
+    "aliases": [
+      "korean glass noodles",
+      "japchae noodles",
+      "stir fried glass noodles"
+    ]
+  },
+  {
+    "name": "kimchi",
+    "gi": 15,
+    "aliases": [
+      "baechu kimchi",
+      "fermented cabbage",
+      "napa kimchi"
+    ]
+  },
+  {
+    "name": "baba ganoush",
+    "gi": 15,
+    "aliases": [
+      "baba ghanoush",
+      "eggplant dip",
+      "mutabbal"
+    ]
+  },
+  {
+    "name": "dolmades",
+    "gi": 35,
+    "aliases": [
+      "stuffed grape leaves",
+      "dolma",
+      "yaprak sarma"
+    ]
+  },
+  {
+    "name": "spanakopita",
+    "gi": 45,
+    "aliases": [
+      "spinach pie",
+      "greek spinach pie",
+      "spinach feta pie"
+    ]
+  },
+  {
+    "name": "souvlaki",
+    "gi": 0,
+    "aliases": [
+      "greek skewers",
+      "pork souvlaki",
+      "chicken souvlaki",
+      "greek kebab"
+    ]
+  },
+  {
+    "name": "yorkshire pudding",
+    "gi": 60,
+    "aliases": [
+      "yorkshire pud",
+      "british yorkshire pudding"
+    ]
+  },
+  {
+    "name": "colcannon",
+    "gi": 70,
+    "aliases": [
+      "irish mashed potato with cabbage",
+      "irish colcannon"
+    ]
+  },
+  {
+    "name": "greek salad",
+    "gi": 15,
+    "aliases": [
+      "horiatiki salad",
+      "village salad",
+      "mediterranean salad"
+    ]
+  },
+  {
+    "name": "nicoise salad",
+    "gi": 15,
+    "aliases": [
+      "niçoise salad",
+      "salade nicoise",
+      "french tuna salad"
+    ]
+  },
+  {
+    "name": "waldorf salad",
+    "gi": 25,
+    "aliases": [
+      "apple walnut salad"
+    ]
+  },
+  {
+    "name": "pasta salad",
+    "gi": 46,
+    "aliases": [
+      "cold pasta salad",
+      "italian pasta salad"
+    ]
+  },
+  {
+    "name": "chicken caesar salad",
+    "gi": 15,
+    "aliases": [
+      "grilled chicken caesar"
+    ]
+  },
+  {
+    "name": "cobb salad",
+    "gi": 15,
+    "aliases": [
+      "california cobb"
+    ]
+  },
+  {
+    "name": "beef stir fry",
+    "gi": 15,
+    "aliases": [
+      "stir fry beef",
+      "chinese beef stir fry"
+    ]
+  },
+  {
+    "name": "chicken stir fry",
+    "gi": 15,
+    "aliases": [
+      "stir fry chicken",
+      "teriyaki stir fry"
+    ]
+  },
+  {
+    "name": "vegetable stir fry",
+    "gi": 15,
+    "aliases": [
+      "mixed vegetable stir fry",
+      "wok vegetables"
+    ]
+  },
+  {
+    "name": "polenta coarse",
+    "gi": 68,
+    "aliases": [
+      "coarse cornmeal",
+      "yellow grits",
+      "southern grits"
+    ]
+  },
+  {
+    "name": "corn tortilla chips",
+    "gi": 63,
+    "aliases": [
+      "nacho chips",
+      "tortilla chips baked"
+    ]
+  },
+  {
+    "name": "pretzel sticks",
+    "gi": 83,
+    "aliases": [
+      "hard pretzels",
+      "salted pretzels",
+      "pretzel rods"
+    ]
+  },
+  {
+    "name": "bread sticks",
+    "gi": 70,
+    "aliases": [
+      "grissini",
+      "italian breadsticks",
+      "breadstick"
+    ]
+  },
+  {
+    "name": "white pita",
+    "gi": 57,
+    "aliases": [
+      "plain pita",
+      "pita pocket"
+    ]
+  },
+  {
+    "name": "brown rice flour",
+    "gi": 65,
+    "aliases": [
+      "whole grain rice flour",
+      "brown rice starch"
+    ]
+  },
+  {
+    "name": "prune juice",
+    "gi": 43,
+    "aliases": [
+      "dried plum juice"
+    ]
+  },
+  {
+    "name": "apricot juice",
+    "gi": 57,
+    "aliases": [
+      "fresh apricot juice",
+      "apricot nectar"
+    ]
+  },
+  {
+    "name": "blood orange",
+    "gi": 40,
+    "aliases": [
+      "blood oranges",
+      "moro orange",
+      "tarocco"
+    ]
+  },
+  {
+    "name": "cara cara orange",
+    "gi": 40,
+    "aliases": [
+      "navel orange",
+      "cara cara"
+    ]
+  },
+  {
+    "name": "ugli fruit",
+    "gi": 30,
+    "aliases": [
+      "uniq fruit",
+      "jamaican tangelo"
+    ]
+  },
+  {
+    "name": "feijoa",
+    "gi": 30,
+    "aliases": [
+      "pineapple guava",
+      "feijoas"
+    ]
+  },
+  {
+    "name": "ackee",
+    "gi": 20,
+    "aliases": [
+      "akee",
+      "ackee fruit"
+    ]
+  },
+  {
+    "name": "breadnut",
+    "gi": 60,
+    "aliases": [
+      "chataigne",
+      "ram breadfruit"
+    ]
+  },
+  {
+    "name": "mamey sapote",
+    "gi": 55,
+    "aliases": [
+      "mamey",
+      "zapote"
+    ]
+  },
+  {
+    "name": "celery root soup",
+    "gi": 30,
+    "aliases": [
+      "celeriac soup",
+      "cream of celeriac"
+    ]
+  },
+  {
+    "name": "purple cabbage",
+    "gi": 15,
+    "aliases": [
+      "red cabbage",
+      "braised red cabbage"
+    ]
+  },
+  {
+    "name": "savoy cabbage",
+    "gi": 15,
+    "aliases": [
+      "curly cabbage",
+      "milan cabbage"
+    ]
+  },
+  {
+    "name": "napa cabbage",
+    "gi": 15,
+    "aliases": [
+      "chinese cabbage napa",
+      "wombok"
+    ]
+  },
+  {
+    "name": "microgreens",
+    "gi": 15,
+    "aliases": [
+      "sprout mix",
+      "baby greens",
+      "micro herbs"
+    ]
+  },
+  {
+    "name": "tomatillo",
+    "gi": 15,
+    "aliases": [
+      "tomatillos",
+      "mexican tomato",
+      "green tomato husk"
+    ]
+  },
+  {
+    "name": "chayote",
+    "gi": 15,
+    "aliases": [
+      "choko",
+      "vegetable pear",
+      "mirliton"
+    ]
+  },
+  {
+    "name": "bitter melon",
+    "gi": 15,
+    "aliases": [
+      "bitter gourd",
+      "karela",
+      "balsam pear"
+    ]
+  },
+  {
+    "name": "drumstick vegetable",
+    "gi": 15,
+    "aliases": [
+      "moringa pods",
+      "murungakkai",
+      "horseradish tree pods"
+    ]
+  },
+  {
+    "name": "lotus seeds",
+    "gi": 55,
+    "aliases": [
+      "lotus nuts",
+      "makhana",
+      "fox nuts"
+    ]
+  },
+  {
+    "name": "nettles",
+    "gi": 15,
+    "aliases": [
+      "stinging nettles",
+      "nettle leaves"
+    ]
+  },
+  {
+    "name": "purslane",
+    "gi": 15,
+    "aliases": [
+      "portulaca",
+      "verdolaga"
+    ]
+  },
+  {
+    "name": "samphire",
+    "gi": 15,
+    "aliases": [
+      "rock samphire",
+      "sea fennel",
+      "marsh samphire"
+    ]
+  },
+  {
+    "name": "ful medames",
+    "gi": 40,
+    "aliases": [
+      "fava bean stew",
+      "egyptian fava beans",
+      "fool mudammas"
+    ]
+  },
+  {
+    "name": "mung bean soup",
+    "gi": 30,
+    "aliases": [
+      "green bean soup",
+      "ginisang monggo"
+    ]
+  },
+  {
+    "name": "soy protein isolate",
+    "gi": 0,
+    "aliases": [
+      "isolated soy protein",
+      "soya protein"
+    ]
+  },
+  {
+    "name": "tempeh bacon",
+    "gi": 20,
+    "aliases": [
+      "marinated tempeh",
+      "smoked tempeh"
+    ]
+  },
+  {
+    "name": "labneh",
+    "gi": 10,
+    "aliases": [
+      "strained yogurt",
+      "yogurt cheese",
+      "labne"
+    ]
+  },
+  {
+    "name": "paneer tikka",
+    "gi": 20,
+    "aliases": [
+      "grilled paneer",
+      "marinated paneer"
+    ]
+  },
+  {
+    "name": "fromage blanc",
+    "gi": 15,
+    "aliases": [
+      "white cheese fresh",
+      "fromage frais"
+    ]
+  },
+  {
+    "name": "halloumi",
+    "gi": 0,
+    "aliases": [
+      "halloumi cheese",
+      "grilling cheese",
+      "cypriot cheese"
+    ]
+  },
+  {
+    "name": "mascarpone",
+    "gi": 0,
+    "aliases": [
+      "italian cream cheese",
+      "mascarpone cheese"
+    ]
+  },
+  {
+    "name": "crème fraîche",
+    "gi": 0,
+    "aliases": [
+      "creme fraiche",
+      "french sour cream"
+    ]
+  },
+  {
+    "name": "double cream",
+    "gi": 0,
+    "aliases": [
+      "heavy double cream",
+      "clotted cream",
+      "whipping cream"
+    ]
+  },
+  {
+    "name": "ahi tuna",
+    "gi": 0,
+    "aliases": [
+      "yellowfin tuna",
+      "bigeye tuna",
+      "bluefin tuna"
+    ]
+  },
+  {
+    "name": "smoked salmon",
+    "gi": 0,
+    "aliases": [
+      "lox",
+      "nova lox",
+      "cold smoked salmon"
+    ]
+  },
+  {
+    "name": "canned salmon",
+    "gi": 0,
+    "aliases": [
+      "tinned salmon",
+      "pink salmon canned"
+    ]
+  },
+  {
+    "name": "canned sardines",
+    "gi": 0,
+    "aliases": [
+      "tinned sardines",
+      "sardines in oil"
+    ]
+  },
+  {
+    "name": "canned tuna",
+    "gi": 0,
+    "aliases": [
+      "tinned tuna",
+      "tuna in water",
+      "tuna in oil"
+    ]
+  },
+  {
+    "name": "fish roe",
+    "gi": 0,
+    "aliases": [
+      "fish eggs",
+      "tobiko",
+      "masago",
+      "ikura"
+    ]
+  },
+  {
+    "name": "beef liver",
+    "gi": 0,
+    "aliases": [
+      "calf liver",
+      "chicken liver",
+      "organ meat"
+    ]
+  },
+  {
+    "name": "bone broth",
+    "gi": 0,
+    "aliases": [
+      "beef bone broth",
+      "chicken bone broth",
+      "collagen broth"
+    ]
+  },
+  {
+    "name": "duck confit",
+    "gi": 0,
+    "aliases": [
+      "confit de canard",
+      "preserved duck"
+    ]
+  },
+  {
+    "name": "lamb chops",
+    "gi": 0,
+    "aliases": [
+      "rack of lamb",
+      "lamb cutlets",
+      "grilled lamb chops"
+    ]
+  },
+  {
+    "name": "pork belly",
+    "gi": 0,
+    "aliases": [
+      "braised pork belly",
+      "roasted pork belly",
+      "samgyeopsal"
+    ]
+  },
+  {
+    "name": "beef ribeye",
+    "gi": 0,
+    "aliases": [
+      "ribeye steak",
+      "rib eye",
+      "prime rib"
+    ]
+  },
+  {
+    "name": "beef tenderloin",
+    "gi": 0,
+    "aliases": [
+      "filet mignon",
+      "tenderloin steak"
+    ]
+  },
+  {
+    "name": "sunflower seed butter",
+    "gi": 35,
+    "aliases": [
+      "sunflower butter",
+      "sunbutter"
+    ]
+  },
+  {
+    "name": "pumpkin seed oil",
+    "gi": 0,
+    "aliases": [
+      "styrian pumpkin seed oil"
+    ]
+  },
+  {
+    "name": "avocado oil",
+    "gi": 0,
+    "aliases": [
+      "cold pressed avocado oil"
+    ]
+  },
+  {
+    "name": "flaxseed oil",
+    "gi": 0,
+    "aliases": [
+      "linseed oil",
+      "flax oil"
+    ]
+  },
+  {
+    "name": "sesame oil",
+    "gi": 0,
+    "aliases": [
+      "toasted sesame oil",
+      "dark sesame oil",
+      "asian sesame oil"
+    ]
+  },
+  {
+    "name": "walnut oil",
+    "gi": 0,
+    "aliases": [
+      "cold pressed walnut oil"
+    ]
+  },
+  {
+    "name": "beef tacos",
+    "gi": 48,
+    "aliases": [
+      "ground beef taco",
+      "taco de carne"
+    ]
+  },
+  {
+    "name": "fish tacos",
+    "gi": 45,
+    "aliases": [
+      "baja fish tacos",
+      "shrimp tacos"
+    ]
+  },
+  {
+    "name": "veggie tacos",
+    "gi": 40,
+    "aliases": [
+      "black bean tacos",
+      "vegetarian tacos"
+    ]
+  },
+  {
+    "name": "breakfast burrito",
+    "gi": 50,
+    "aliases": [
+      "egg burrito",
+      "morning burrito"
+    ]
+  },
+  {
+    "name": "bean burrito",
+    "gi": 52,
+    "aliases": [
+      "refried bean burrito",
+      "veggie burrito"
+    ]
+  },
+  {
+    "name": "ceviche",
+    "gi": 15,
+    "aliases": [
+      "fish ceviche",
+      "seafood ceviche",
+      "peruvian ceviche"
+    ]
+  },
+  {
+    "name": "arroz con pollo",
+    "gi": 58,
+    "aliases": [
+      "chicken with rice",
+      "spanish chicken rice"
+    ]
+  },
+  {
+    "name": "french onion soup",
+    "gi": 40,
+    "aliases": [
+      "soupe à l'oignon",
+      "gratineed onion soup"
+    ]
+  },
+  {
+    "name": "lobster bisque",
+    "gi": 35,
+    "aliases": [
+      "cream of lobster",
+      "shellfish bisque"
+    ]
+  },
+  {
+    "name": "beef bourguignon",
+    "gi": 30,
+    "aliases": [
+      "boeuf bourguignon",
+      "french beef stew"
+    ]
+  },
+  {
+    "name": "coq au vin",
+    "gi": 25,
+    "aliases": [
+      "chicken in wine",
+      "french chicken stew"
+    ]
+  },
+  {
+    "name": "ratatouille",
+    "gi": 15,
+    "aliases": [
+      "provençal vegetable stew",
+      "tian"
+    ]
+  },
+  {
+    "name": "vichyssoise",
+    "gi": 45,
+    "aliases": [
+      "cold potato leek soup",
+      "potato leek soup"
+    ]
+  },
+  {
+    "name": "minestrone soup",
+    "gi": 38,
+    "aliases": [
+      "italian vegetable soup",
+      "classic minestrone"
+    ]
+  },
+  {
+    "name": "lentil stew",
+    "gi": 30,
+    "aliases": [
+      "hearty lentil stew",
+      "moroccan lentil soup"
+    ]
+  },
+  {
+    "name": "pea soup",
+    "gi": 32,
+    "aliases": [
+      "split pea soup",
+      "pea and ham soup",
+      "dutch pea soup"
+    ]
+  },
+  {
+    "name": "corn chowder",
+    "gi": 55,
+    "aliases": [
+      "sweet corn chowder",
+      "potato corn soup"
+    ]
+  },
+  {
+    "name": "gazpacho",
+    "gi": 15,
+    "aliases": [
+      "cold tomato soup",
+      "spanish gazpacho",
+      "cold gazpacho"
+    ]
+  },
+  {
+    "name": "bouillabaisse",
+    "gi": 15,
+    "aliases": [
+      "french fish stew",
+      "provençal fish soup"
+    ]
+  },
+  {
+    "name": "osso buco",
+    "gi": 15,
+    "aliases": [
+      "braised veal shanks",
+      "veal ossobuco"
+    ]
+  },
+  {
+    "name": "beef stroganoff",
+    "gi": 30,
+    "aliases": [
+      "stroganoff",
+      "russian beef stew"
+    ]
+  },
+  {
+    "name": "chicken marsala",
+    "gi": 20,
+    "aliases": [
+      "veal marsala",
+      "marsala chicken"
+    ]
+  },
+  {
+    "name": "eggs benedict",
+    "gi": 55,
+    "aliases": [
+      "benedict",
+      "poached eggs hollandaise"
+    ]
+  },
+  {
+    "name": "frittata",
+    "gi": 15,
+    "aliases": [
+      "italian egg dish",
+      "vegetable frittata",
+      "baked omelette"
+    ]
+  },
+  {
+    "name": "omelette",
+    "gi": 0,
+    "aliases": [
+      "omelet",
+      "folded eggs",
+      "veggie omelet"
+    ]
+  },
+  {
+    "name": "quiche",
+    "gi": 50,
+    "aliases": [
+      "quiche lorraine",
+      "savory tart",
+      "egg pie"
+    ]
+  },
+  {
+    "name": "creamed spinach",
+    "gi": 15,
+    "aliases": [
+      "steakhouse spinach",
+      "cream spinach"
+    ]
+  },
+  {
+    "name": "macaroni salad",
+    "gi": 52,
+    "aliases": [
+      "american macaroni salad",
+      "cold macaroni"
+    ]
+  },
+  {
+    "name": "potato soup",
+    "gi": 65,
+    "aliases": [
+      "cream of potato soup",
+      "baked potato soup",
+      "loaded potato soup"
+    ]
+  },
+  {
+    "name": "corn on the cob",
+    "gi": 52,
+    "aliases": [
+      "sweet corn cob",
+      "boiled corn",
+      "grilled corn"
+    ]
+  },
+  {
+    "name": "brown sugar",
+    "gi": 64,
+    "aliases": [
+      "light brown sugar",
+      "dark brown sugar",
+      "raw sugar"
+    ]
+  },
+  {
+    "name": "powdered sugar",
+    "gi": 68,
+    "aliases": [
+      "icing sugar",
+      "confectioners sugar",
+      "confectioner's sugar"
+    ]
+  },
+  {
+    "name": "date syrup",
+    "gi": 47,
+    "aliases": [
+      "date molasses",
+      "dibs al-tamr"
+    ]
+  },
+  {
+    "name": "rice malt syrup",
+    "gi": 98,
+    "aliases": [
+      "brown rice syrup",
+      "rice syrup",
+      "rice malt"
+    ]
+  },
+  {
+    "name": "corn syrup",
+    "gi": 90,
+    "aliases": [
+      "light corn syrup",
+      "glucose syrup",
+      "karo syrup"
+    ]
+  },
+  {
+    "name": "monk fruit sweetener",
+    "gi": 0,
+    "aliases": [
+      "luo han guo",
+      "monkfruit",
+      "monk fruit extract"
+    ]
+  }
 ]
