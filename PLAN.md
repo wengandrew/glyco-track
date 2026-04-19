@@ -71,17 +71,13 @@ glyco-track/
 3. `project.yml` ✅
 4. `README.md` ✅
 
-### Phase 1: Data Layer ⚠️ PARTIAL
+### Phase 1: Data Layer ✅ COMPLETE
 5. Core Data model (`.xcdatamodeld`) ✅
 6. `PersistenceController.swift` ✅
 7. `FoodLogRepository.swift` ✅
 8. `NutritionalRepository.swift` ✅
-9. `gi_database.json` — **359 entries** (target: ~750) ⚠️ needs expansion
-10. `usda_nutrition.json` — **377 entries** (expanded from 177; covers all 359 GI foods) ⚠️ stretch target ~7793
-
-**Known Phase 1 gaps:**
-- gi_database.json covers common foods but missing ~400 less common ones
-- usda_nutrition.json covers all current GI foods; further expansion is stretch goal
+9. `gi_database.json` — **776 entries** ✅
+10. `usda_nutrition.json` — **377 entries** (expanded from 177; covers all original GI foods) ⚠️ stretch target ~7793
 
 ### Phase 2: Engines ✅ COMPLETE
 11. `GIEngine.swift` + unit tests ✅
@@ -121,7 +117,7 @@ glyco-track/
 All phases complete. Remaining stretch goals only.
 
 **Phase 1 — Database expansion (stretch):**
-- [ ] Expand `gi_database.json` from 359 → ~750 entries
+- ✅ Expanded `gi_database.json` from 359 → 776 entries
 
 **No open bugs.** All previously noted issues fixed:
 - ✅ `EditEntryView`: GL/CL now recalculated on save via GIEngine + CLEngine
@@ -129,6 +125,30 @@ All phases complete. Remaining stretch goals only.
 - ✅ `FoodLogProcessor`: wired to call `cancelTodayIfSufficientlyLogged` after each batch save
 - ✅ `DailyBucketView`: dead `resolvedColor` variable removed
 - ✅ `MonthlyHeatmapView`: weekday labels changed to `["M","Tu","W","Th","F","Sa","Su"]`
+- ✅ `FoodLogProcessor`: GI database and engine created once per call, not per food item
+- ✅ `NutritionalRepository.levenshtein()`: added empty-string guards to prevent fatal Range crash
+- ✅ `GLStatusLabel`: removed unused `level` variable
+- ✅ `VoiceCapture.resetSilenceTimer()`: timer now scheduled on main thread (was audio I/O thread)
+- ✅ `FoodGroupColor.classify()`: fixed `"pea"` substring matching `"peanut"` (misclassified as vegetable)
+- ✅ `TranscriptParser.parse()`: JSON extraction now scans for first `[` / last `]` to handle any fence style
+
+**Known limitations (post-MVP):**
+- `NotificationManager.cancelTodayIfSufficientlyLogged` removes the repeating trigger; future-day notifications only resume when the user opens the app (triggering `scheduleDailyCheck` from `GlycoTrackApp.onAppear`). Users who don't open the app the day after cancelling will miss one notification.
+- `usda_nutrition.json` has 377 entries vs DESIGN target of 7,793. Foods without USDA data fall back to GI-only GL calculation with CL=0. Expansion is a post-MVP stretch goal.
+
+---
+
+## Design vs Implementation Divergences
+
+These are intentional decisions where the implementation differs from DESIGN.md:
+
+| DESIGN.md says | Implementation does | Rationale |
+|---|---|---|
+| GI + USDA DBs bundled as SQLite tables | JSON files seeded into Core Data at first launch | Simpler toolchain; no SQLite schema migration needed; Core Data handles queries |
+| "Build-time script" reconciles both DBs via fuzzy matching | Done at first app launch in `PersistenceController.seedDatabaseIfNeeded()` | No build-time Swift tooling available; runtime seeding is equivalent |
+| Tab 1 labelled "Home" | Tab labelled "Today", nav title "Today" | More descriptive for a daily-logging app |
+| Voice streams audio to Claude in real-time | Apple Speech Recognition produces transcript; Claude parses text | Apple SFSpeechRecognizer runs locally; Claude receives text only, not audio |
+| Widget is strict mic button | Widget shows GL progress bar + mic link; tap deep-links to app | WidgetKit cannot run microphone access; app handles recording |
 
 ---
 

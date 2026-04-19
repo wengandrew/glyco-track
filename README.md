@@ -8,27 +8,44 @@ Voice-first food logging app for iOS. Tracks Glycemic Load (GL) and Cholesterol 
 - Xcode 15+ (on macOS)
 - iOS 16+ device or simulator
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen) for project generation
-- Claude API key
+- Claude API key from [console.anthropic.com](https://console.anthropic.com)
+- Apple Developer account (free or paid) for device testing
 
-### Generate Xcode Project
+### 1. Create your credentials file
 
 ```bash
-brew install xcodegen
+cp GlycoTrack/Config/GlycoTrack.xcconfig.example GlycoTrack/Config/GlycoTrack.xcconfig
+```
+
+Edit `GlycoTrack/Config/GlycoTrack.xcconfig` and fill in:
+
+```
+CLAUDE_API_KEY = sk-ant-...        # your Anthropic API key
+DEVELOPMENT_TEAM = XXXXXXXXXX      # your 10-character Apple Team ID
+```
+
+Your Team ID is in [developer.apple.com](https://developer.apple.com) → Account → Membership, or visible in Xcode → Settings → Accounts after signing in.
+
+This file is gitignored and never committed.
+
+### 2. Generate and open the Xcode project
+
+```bash
+brew install xcodegen   # first time only
 xcodegen generate
 open GlycoTrack.xcodeproj
 ```
 
-### Configure API Key
+### 3. Build and run on device
 
-Set your Claude API key in `GlycoTrack/Info.plist` under `CLAUDE_API_KEY`, or inject via an `.xcconfig`:
+In Xcode:
+1. Connect your iPhone via USB (trust the computer if prompted)
+2. Select your device in the toolbar (not a simulator)
+3. Press **⌘R** to build and run
 
-```
-CLAUDE_API_KEY = your-key-here
-```
+Xcode's Automatic signing will provision the app and create the App Group (`group.com.glycotrack.shared`) on first build. If Xcode asks to register a device or capability, click **Register**.
 
-### App Group
-
-The app and widget share data via App Group `group.com.glycotrack.shared`. Configure this in your Apple Developer account and set `DEVELOPMENT_TEAM` in `project.yml`.
+> **Note:** The App Group is required for the widget to share data with the main app. With a free Apple ID it works for personal device testing (7-day certificate). A paid developer account removes that limit.
 
 ## Architecture
 
@@ -61,7 +78,7 @@ See [DESIGN.md](DESIGN.md) for the full product design document.
 ## Running Tests
 
 ```bash
-swift test
+swift test   # 26 tests, all pass
 ```
 
-Tests cover GL/CL calculations against published nutritional tables and dietary pattern validation.
+Tests cover GL/CL calculations against published nutritional tables and dietary pattern validation (Mediterranean vs. American fast food).
