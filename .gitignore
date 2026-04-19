@@ -29,8 +29,8 @@ Packages/
 Pods/
 Podfile.lock
 
-# Secrets
-*.xcconfig
+# Secrets (GlycoTrack.xcconfig is committed as a stub; put real values in GlycoTrack.local.xcconfig)
+GlycoTrack/Config/GlycoTrack.local.xcconfig
 Secrets.swift
 .env
 

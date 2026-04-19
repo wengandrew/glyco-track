@@ -1,0 +1,11 @@
+// GlycoTrack.xcconfig — committed stub with placeholder values.
+// Override in GlycoTrack.local.xcconfig (gitignored, same directory).
+//
+// To set up:
+//   echo 'CLAUDE_API_KEY = sk-ant-...' >> GlycoTrack/Config/GlycoTrack.local.xcconfig
+//   echo 'DEVELOPMENT_TEAM = XXXXXXXXXX' >> GlycoTrack/Config/GlycoTrack.local.xcconfig
+
+#include? "GlycoTrack.local.xcconfig"
+
+CLAUDE_API_KEY = $(CLAUDE_API_KEY)
+DEVELOPMENT_TEAM = $(DEVELOPMENT_TEAM)
