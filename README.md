@@ -13,11 +13,13 @@ Voice-first food logging app for iOS. Tracks Glycemic Load (GL) and Cholesterol 
 
 ### 1. Create your credentials file
 
+`GlycoTrack/Config/GlycoTrack.xcconfig` is a committed stub — xcodegen always finds it. Put your real values in a local override file (gitignored):
+
 ```bash
-cp GlycoTrack/Config/GlycoTrack.xcconfig.example GlycoTrack/Config/GlycoTrack.xcconfig
+cp GlycoTrack/Config/GlycoTrack.xcconfig.example GlycoTrack/Config/GlycoTrack.local.xcconfig
 ```
 
-Edit `GlycoTrack/Config/GlycoTrack.xcconfig` and fill in:
+Edit `GlycoTrack/Config/GlycoTrack.local.xcconfig` and fill in:
 
 ```
 CLAUDE_API_KEY = sk-ant-...        # your Anthropic API key
@@ -26,7 +28,7 @@ DEVELOPMENT_TEAM = XXXXXXXXXX      # your 10-character Apple Team ID
 
 Your Team ID is in [developer.apple.com](https://developer.apple.com) → Account → Membership, or visible in Xcode → Settings → Accounts after signing in.
 
-This file is gitignored and never committed.
+`GlycoTrack.local.xcconfig` is gitignored and never committed.
 
 ### 2. Generate and open the Xcode project
 

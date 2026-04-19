@@ -37,6 +37,7 @@ targets:
         com.apple.security.application-groups:
           - group.com.glycotrack.shared
         com.apple.developer.usernotifications.time-sensitive: true
+        com.apple.developer.speech-recognition: true
     dependencies:
       - target: GlycoTrackWidget
 
