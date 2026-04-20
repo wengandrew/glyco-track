@@ -87,7 +87,7 @@ struct ScalePlate: View {
             ZStack {
                 Ellipse()
                     .fill(color.opacity(0.1))
-                    .stroke(color.opacity(0.4), lineWidth: 1.5)
+                    .overlay(Ellipse().stroke(color.opacity(0.4), lineWidth: 1.5))
                     .frame(width: 90, height: 36)
 
                 // Mini bubbles
