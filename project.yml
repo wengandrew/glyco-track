@@ -33,10 +33,7 @@ targets:
         CODE_SIGN_ENTITLEMENTS: GlycoTrack/GlycoTrack.entitlements
     entitlements:
       path: GlycoTrack/GlycoTrack.entitlements
-      properties:
-        com.apple.security.application-groups:
-          - group.com.glycotrack.shared
-        com.apple.developer.speech-recognition: true
+      properties: {}
     dependencies:
       - target: GlycoTrackWidget
 
@@ -54,9 +51,7 @@ targets:
         CODE_SIGN_ENTITLEMENTS: GlycoTrackWidget/GlycoTrackWidget.entitlements
     entitlements:
       path: GlycoTrackWidget/GlycoTrackWidget.entitlements
-      properties:
-        com.apple.security.application-groups:
-          - group.com.glycotrack.shared
+      properties: {}
 
   GlycoTrackTests:
     type: bundle.unit-test
