@@ -1,6 +1,5 @@
-// GlycoTrack.xcconfig
-// Copy this file to GlycoTrack.xcconfig (same directory) and fill in your real values.
-// GlycoTrack.xcconfig is gitignored — never commit it.
+// GlycoTrack.local.xcconfig — copy this to GlycoTrack.local.xcconfig and fill in real values.
+// This file is gitignored. GlycoTrack.xcconfig (committed stub) includes it automatically.
 
-CLAUDE_API_KEY = your-claude-api-key-here
-DEVELOPMENT_TEAM = your-apple-team-id-here
+CLAUDE_API_KEY = sk-ant-your-key-here
+DEVELOPMENT_TEAM = XXXXXXXXXX

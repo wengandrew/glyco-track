@@ -6,7 +6,7 @@ struct LogTabView: View {
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: false)],
-        predicate: NSPredicate(format: "isDeleted == NO"),
+        predicate: NSPredicate(format: "isSoftDeleted == NO"),
         animation: .default
     )
     private var entries: FetchedResults<FoodLogEntry>

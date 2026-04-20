@@ -208,6 +208,6 @@ struct StatChip: View {
 private func todayPredicate() -> NSPredicate {
     let start = Calendar.current.startOfDay(for: Date())
     let end = Calendar.current.date(byAdding: .day, value: 1, to: start)!
-    return NSPredicate(format: "timestamp >= %@ AND timestamp < %@ AND isDeleted == NO",
+    return NSPredicate(format: "timestamp >= %@ AND timestamp < %@ AND isSoftDeleted == NO",
                        start as NSDate, end as NSDate)
 }

@@ -16,7 +16,7 @@ struct FoodLogRowView: View {
                         .font(.subheadline)
                         .fontWeight(.medium)
                     Spacer()
-                    Text(entry.timestamp, style: .time)
+                    Text(entry.timestamp ?? Date(), style: .time)
                         .font(.caption2)
                         .foregroundColor(.secondary)
                 }

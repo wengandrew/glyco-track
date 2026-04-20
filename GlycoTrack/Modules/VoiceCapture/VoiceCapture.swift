@@ -68,7 +68,7 @@ final class VoiceCapture: ObservableObject {
 
         inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { [weak self] buffer, _ in
             request.append(buffer)
-            self?.resetSilenceTimer()
+            DispatchQueue.main.async { self?.resetSilenceTimer() }
         }
 
         engine.prepare()

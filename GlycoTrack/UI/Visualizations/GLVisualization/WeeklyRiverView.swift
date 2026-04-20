@@ -47,8 +47,8 @@ struct WeeklyRiverView: View {
 
                     // Bubbles
                     ForEach(entries, id: \.id) { entry in
-                        let col = dayIndex(for: entry.timestamp)
-                        let yFrac = timeOfDayFraction(for: entry.timestamp)
+                        let col = dayIndex(for: entry.timestamp ?? Date())
+                        let yFrac = timeOfDayFraction(for: entry.timestamp ?? Date())
                         let radius = CGFloat(max(8, sqrt(entry.computedGL) * 3.5))
                         let x = colWidth * Double(col) + colWidth / 2
                         let y = geo.size.height * yFrac

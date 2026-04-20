@@ -136,12 +136,12 @@ final class TranscriptParser {
         guard !trimmed.isEmpty else { throw ParseError.emptyTranscript }
 
         let text = try await client.send(system: systemPrompt, userMessage: trimmed, maxTokens: 512)
-        var cleaned = text.trimmingCharacters(in: .whitespacesAndNewlines)
-        if cleaned.hasPrefix("```") {
-            cleaned = cleaned.components(separatedBy: "\n").dropFirst().joined(separator: "\n")
-                .replacingOccurrences(of: "```", with: "").trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let start = text.firstIndex(of: "["),
+              let end = text.lastIndex(of: "]") else {
+            throw ParseError.noFoodsFound
         }
-        guard let data = cleaned.data(using: .utf8),
+        let jsonSlice = String(text[start...end])
+        guard let data = jsonSlice.data(using: .utf8),
               let foods = try? JSONDecoder().decode([ParsedFood].self, from: data)
         else { throw ParseError.noFoodsFound }
         return foods

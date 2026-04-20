@@ -60,7 +60,8 @@ enum FoodGroup: String, CaseIterable {
            name.contains("cucumber") || name.contains("pepper") || name.contains("onion") ||
            name.contains("mushroom") || name.contains("zucchini") || name.contains("vegetable") ||
            name.contains("celery") || name.contains("cabbage") || name.contains("asparagus") ||
-           name.contains("bean") && !name.contains("coffee") || name.contains("pea") {
+           (name.contains("bean") && !name.contains("coffee")) ||
+           (name.contains("pea") && !name.contains("peanut")) {
             return .vegetables
         }
         if name.contains("cake") || name.contains("cookie") || name.contains("donut") ||

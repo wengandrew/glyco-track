@@ -78,7 +78,7 @@ struct MonthlyHeatmapView: View {
             if let date = selectedDate {
                 NavigationView {
                     DailyBucketView(entries: getDayEntries(date))
-                        .navigationTitle(date, displayedComponents: .date)
+                        .navigationTitle(date.formatted(date: .abbreviated, time: .omitted))
                         .navigationBarTitleDisplayMode(.inline)
                         .toolbar {
                             ToolbarItem(placement: .cancellationAction) {

@@ -10,7 +10,7 @@ struct MonthTabView: View {
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
-        predicate: NSPredicate(format: "isDeleted == NO"),
+        predicate: NSPredicate(format: "isSoftDeleted == NO"),
         animation: .default
     )
     private var allEntries: FetchedResults<FoodLogEntry>
@@ -63,14 +63,14 @@ struct MonthTabView: View {
     private var monthEntries: [FoodLogEntry] {
         let cal = Calendar.current
         return allEntries.filter {
-            cal.component(.month, from: $0.timestamp) == cal.component(.month, from: displayedMonth)
-            && cal.component(.year, from: $0.timestamp) == cal.component(.year, from: displayedMonth)
+            cal.component(.month, from: $0.timestamp ?? Date()) == cal.component(.month, from: displayedMonth)
+            && cal.component(.year, from: $0.timestamp ?? Date()) == cal.component(.year, from: displayedMonth)
         }
     }
 
     private func entries(for date: Date) -> [FoodLogEntry] {
         let cal = Calendar.current
-        return allEntries.filter { cal.isDate($0.timestamp, inSameDayAs: date) }
+        return allEntries.filter { cal.isDate($0.timestamp ?? Date(), inSameDayAs: date) }
     }
 }
 
@@ -78,7 +78,7 @@ struct MonthlyStatsView: View {
     let entries: [FoodLogEntry]
 
     private var daysLogged: Int {
-        Set(entries.map { Calendar.current.startOfDay(for: $0.timestamp) }).count
+        Set(entries.map { Calendar.current.startOfDay(for: $0.timestamp ?? Date()) }).count
     }
     private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
     private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
