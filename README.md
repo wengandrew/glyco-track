@@ -5,7 +5,7 @@ Voice-first food logging app for iOS. Tracks Glycemic Load (GL) and Cholesterol 
 ## Setup
 
 ### Requirements
-- Xcode 15+ (on macOS)
+- Xcode 26+ (on macOS 26+) — earlier Xcode versions are not supported (see [Xcode 26 notes](#xcode-26-notes))
 - iOS 16+ device or simulator
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen) for project generation
 - Claude API key from [console.anthropic.com](https://console.anthropic.com)
@@ -42,12 +42,29 @@ open GlycoTrack.xcodeproj
 
 In Xcode:
 1. Connect your iPhone via USB (trust the computer if prompted)
-2. Select your device in the toolbar (not a simulator)
-3. Press **⌘R** to build and run
+2. Go to **Settings → General → VPN & Device Management** on iPhone and trust the developer certificate
+3. Select your device in the toolbar (not a simulator)
+4. Press **⌘R** to build and run
 
-Xcode's Automatic signing will provision the app and create the App Group (`group.com.glycotrack.shared`) on first build. If Xcode asks to register a device or capability, click **Register**.
+### Personal team limitations (free Apple ID)
 
-> **Note:** The App Group is required for the widget to share data with the main app. With a free Apple ID it works for personal device testing (7-day certificate). A paid developer account removes that limit.
+A free Apple ID account can sideload the app but with these restrictions:
+
+| Feature | Status |
+|---------|--------|
+| Widget GL data | Empty — App Groups entitlement removed (requires paid account) |
+| Voice logging | Works — on-device `SFSpeechRecognizer` doesn't need entitlement on iOS 26 |
+| Certificate | Expires after 7 days; reinstall weekly |
+
+To restore full functionality (widget data, server-side speech), enroll in the Apple Developer Program and re-add the `com.apple.security.application-groups` entitlement.
+
+## Xcode 26 notes
+
+Xcode 26 / macOS 26 has a CDMFoundation bug that crashes on any `.xcdatamodel` file. GlycoTrack works around this by defining the Core Data schema programmatically in [`GlycoTrack/Models/GlycoTrackManagedObjectModel.swift`](GlycoTrack/Models/GlycoTrackManagedObjectModel.swift) — there is no `.xcdatamodeld` file in the repo.
+
+Several SwiftUI APIs also changed in Xcode 26:
+- `navigationTitle(_:displayedComponents:)` was removed — replaced with `navigationTitle(date.formatted(...))`
+- `.fill().stroke()` chain requires iOS 17 — replaced with `.fill().overlay(stroke)`
 
 ## Architecture
 
