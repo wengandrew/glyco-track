@@ -96,13 +96,13 @@ final class SummaryGenerator: ObservableObject {
             """
         case .moderate, .rich:
             let foodSummaries = entries.prefix(50).map { entry in
-                let date = DateFormatter.localizedString(from: entry.timestamp, dateStyle: .short, timeStyle: .short)
+                let date = DateFormatter.localizedString(from: entry.timestamp ?? Date(), dateStyle: .short, timeStyle: .short)
                 return "- \(entry.foodDescription) (\(entry.quantity)) | GL: \(String(format: "%.1f", entry.computedGL)) | CL: \(String(format: "%.2f", entry.computedCL)) | \(date)"
             }.joined(separator: "\n")
 
             let totalGL = entries.reduce(0.0) { $0 + $1.computedGL }
             let totalCL = entries.reduce(0.0) { $0 + $1.computedCL }
-            let avgDailyGL = entries.isEmpty ? 0 : totalGL / Double(Set(entries.map { Calendar.current.startOfDay(for: $0.timestamp) }).count)
+            let avgDailyGL = entries.isEmpty ? 0 : totalGL / Double(Set(entries.map { Calendar.current.startOfDay(for: $0.timestamp ?? Date()) }).count)
 
             return """
             Here is the user's recent food log (\(entries.count) entries):
