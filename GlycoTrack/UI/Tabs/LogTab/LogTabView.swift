@@ -87,6 +87,15 @@ struct EditEntryView: View {
                         LabeledContent("Matched to", value: refFood)
                     }
                 }
+
+                if !entry.rawTranscript.isEmpty {
+                    Section("Original Transcript") {
+                        Text(entry.rawTranscript)
+                            .font(.callout)
+                            .foregroundColor(.secondary)
+                            .textSelection(.enabled)
+                    }
+                }
             }
             .navigationTitle("Edit Entry")
             .navigationBarTitleDisplayMode(.inline)
