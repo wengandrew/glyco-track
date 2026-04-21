@@ -87,6 +87,15 @@ struct EditEntryView: View {
                         LabeledContent("Matched to", value: refFood)
                     }
                 }
+
+                if !entry.rawTranscript.isEmpty {
+                    Section("Original Transcript") {
+                        Text(entry.rawTranscript)
+                            .font(.callout)
+                            .foregroundColor(.secondary)
+                            .textSelection(.enabled)
+                    }
+                }
             }
             .navigationTitle("Edit Entry")
             .navigationBarTitleDisplayMode(.inline)
@@ -135,16 +144,45 @@ struct EditEntryView: View {
         dismiss()
     }
 
-    // Scale original quantityGrams by the ratio of the new leading number to the old one.
     private func resolveGrams() -> Double {
-        func leadingDouble(_ text: String) -> Double? {
-            Double(text.trimmingCharacters(in: .whitespaces)
-                .components(separatedBy: .whitespaces).first ?? "")
+        struct Parsed { let number: Double; let unit: String }
+
+        // Handles "300g", "300 g", "2 cups", "1.5  cups" — numeric prefix plus optional unit suffix.
+        func parse(_ text: String) -> Parsed? {
+            let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmed.isEmpty else { return nil }
+            let scanner = Scanner(string: trimmed)
+            guard let num = scanner.scanDouble() else { return nil }
+            let remainder = String(trimmed[scanner.currentIndex...])
+            let unit = remainder.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+            return Parsed(number: num, unit: unit)
         }
-        let oldNum = leadingDouble(entry.quantity) ?? 1.0
-        let newNum = leadingDouble(quantity) ?? oldNum
-        guard oldNum > 0 else { return entry.quantityGrams }
-        return entry.quantityGrams * (newNum / oldNum)
+
+        // Loose plural comparison so "cup" and "cups" match.
+        func normalize(_ unit: String) -> String {
+            unit.hasSuffix("s") ? String(unit.dropLast()) : unit
+        }
+
+        guard let new = parse(quantity) else { return entry.quantityGrams }
+
+        switch new.unit {
+        case "g", "gram", "grams":
+            return new.number
+        case "kg", "kilogram", "kilograms":
+            return new.number * 1000
+        case "oz", "ounce", "ounces":
+            return new.number * 28.349523125
+        case "lb", "lbs", "pound", "pounds":
+            return new.number * 453.59237
+        default:
+            // Non-mass unit (cup, slice, egg, mL, etc.). Only ratio-scale when the unit
+            // is unchanged or the user omitted it — cross-unit scaling (e.g. g → cups)
+            // produces nonsense. mL is volume and requires a per-food density to convert.
+            guard let old = parse(entry.quantity), old.number > 0 else { return entry.quantityGrams }
+            let sameUnit = new.unit.isEmpty || normalize(old.unit) == normalize(new.unit)
+            guard sameUnit else { return entry.quantityGrams }
+            return entry.quantityGrams * (new.number / old.number)
+        }
     }
 
     private func loadGIDatabase() -> [GIRecord] {

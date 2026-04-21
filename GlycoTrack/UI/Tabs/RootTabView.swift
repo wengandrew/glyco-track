@@ -27,6 +27,11 @@ struct RootTabView: View {
                 .tabItem {
                     Label("Summary", systemImage: "text.magnifyingglass")
                 }
+
+            DebugTabView()
+                .tabItem {
+                    Label("Debug", systemImage: "wrench.and.screwdriver")
+                }
         }
     }
 }

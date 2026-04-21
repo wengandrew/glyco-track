@@ -1,0 +1,919 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		041291D466117085F31C91F8 /* FoodLogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0825161931CF783350FA398E /* FoodLogRepository.swift */; };
+		04EF4D81DCAC57B04B475785 /* GlycoTrackWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D37631E30DEC9D009EB19A /* GlycoTrackWidget.swift */; };
+		08B81E947941B77566AF9767 /* GIEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700B603125BA314A19923286 /* GIEngine.swift */; };
+		0D0BF3101ED86D94884B99DF /* QuadrantPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7A560C4BA26D536A7CDCCA /* QuadrantPlotView.swift */; };
+		110044A56CED7B5CD2A92F48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D2709199DB48FFDDC1551 /* AppDelegate.swift */; };
+		1D23C9102CD3454A7EB2DC46 /* MonthlyHeatmapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE14268BE85E30C9C9AD8E6 /* MonthlyHeatmapView.swift */; };
+		1D48FDE7367ECA42973C7886 /* BalanceScaleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00020267E962B5166BFC7910 /* BalanceScaleView.swift */; };
+		26A7AE8A79E5F09A08CC7F4B /* FoodLogEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51938CF5F6DF886635DF3426 /* FoodLogEntry+CoreDataClass.swift */; };
+		2AB15550573722F27840C076 /* GlycoTrackWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C70C082CC09B5E60AF485E04 /* GlycoTrackWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		39209438F3F4D3A3877E271C /* FoodBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = F784EC6E60A6061D2F9143F5 /* FoodBubble.swift */; };
+		478432404A32D39AB16C3824 /* GlycoTrackWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E299D37D943223074C0464 /* GlycoTrackWidgetEntryView.swift */; };
+		541CADD963F1A6CF84ED8EE6 /* SummaryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC65AD31C004BA65B554B9B /* SummaryGenerator.swift */; };
+		54376F4567B22EA7489FADA9 /* WeekTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C81FF29DB0DB6B3386701CC /* WeekTabView.swift */; };
+		605851BDE11851A2BB4A67C2 /* FoodLogRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543CE564CFB84AEB79200F10 /* FoodLogRowView.swift */; };
+		6218DF6B76FCABF02538AFC0 /* GlycoTrackApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A1DA1067A0C7DDF9801DAD /* GlycoTrackApp.swift */; };
+		684DC8143E5EE72D2A5F6895 /* ConfidenceBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A1C047AADFF5FEBE42735D /* ConfidenceBadge.swift */; };
+		7090F21A3809A883F654669C /* GlycoTrack.xcconfig.example in Resources */ = {isa = PBXBuildFile; fileRef = 6A1B66F0A6155C24C35BD9A5 /* GlycoTrack.xcconfig.example */; };
+		719519B850851D9B5DEA8F1C /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D3B3F5C4D80821160E5398 /* PersistenceController.swift */; };
+		804D83DA123CD38186D70EE8 /* CLEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC319390AA669EE258FAD6F /* CLEngine.swift */; };
+		8752ED4DBEBBC618DAC73AE4 /* SummaryTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC98CA71D925406ACDA67295 /* SummaryTabView.swift */; };
+		87E30E1423D23F446A917C62 /* TugOfWarBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E872FBC247922AFD48D894E0 /* TugOfWarBarView.swift */; };
+		8A3D62A8EB05FA59517C1A5D /* GIEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530E5917BF567A086E970F68 /* GIEngineTests.swift */; };
+		8D4D572E5D5FF46BE470D20F /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FAFBFFF587D6C5D88FF7C59 /* NotificationManager.swift */; };
+		8DE167AB3585707279F2E20F /* TranscriptParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3473895D984D30A720E75A /* TranscriptParser.swift */; };
+		9C86560AAEE898D9CDD72E79 /* WeeklyRiverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3189DE380188C47D779FEAD /* WeeklyRiverView.swift */; };
+		A0D08903B4672E77482B3F08 /* MonthTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA271AA762FA671A084415B /* MonthTabView.swift */; };
+		A2F0B85F167633430502507F /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7967B02D3586B1A48FCB7F6A /* RootTabView.swift */; };
+		A36A7351E36BA048DD17325C /* CoreDataIdentifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFFE9E12E7B018C5B61AD03 /* CoreDataIdentifiable.swift */; };
+		A718C8CD3B55F1DC0DFB91BB /* GLThreshold.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89EBF428741DFCAA8D11F55F /* GLThreshold.swift */; };
+		A73D4CC50EA0050C328B3DFB /* NutritionalRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5D15EC2928FF45556CD303 /* NutritionalRepository.swift */; };
+		A97DBA1B9D41A7BADAA1E037 /* HomeTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2306B0E783E13C7D020642 /* HomeTabView.swift */; };
+		A9EF6E86BA2596BFE3A1E5DF /* NutritionalProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4859E2F701A70D2FDD7A83 /* NutritionalProfile+CoreDataClass.swift */; };
+		67A1A1B7B7FD40DEBAF86952 /* DebugTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60638D04BF5E4099B534A8E1 /* DebugTabView.swift */; };
+		AF6E60B55D052923B8D08A9E /* LogTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97313B9C797857A9DBC2F462 /* LogTabView.swift */; };
+		B076FCA27DDFC7ECFBB6F792 /* VoiceCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA784CDE9FCC292E4B80263 /* VoiceCapture.swift */; };
+		CBD927A2BB34C614106D5634 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B61B27E6D6C9ADE92E928E7 /* RecordButton.swift */; };
+		CCCA621986F72D20C972DDD0 /* DailyBucketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED32C7B573F17AEA1BE5A3B /* DailyBucketView.swift */; };
+		CFDD1530C688D117137EF516 /* FoodGroupColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9618DE94E0303C1BEDC92CB7 /* FoodGroupColor.swift */; };
+		DA63E52FA18B99E8347E4BFD /* FoodLogProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3327A014C9B87AE78FAF29B4 /* FoodLogProcessor.swift */; };
+		DF7D2A9B939803522A97A911 /* FoodLogEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D923FFC3F1352123547E74 /* FoodLogEntry+CoreDataProperties.swift */; };
+		EB32167E33EDB53104ED047A /* WaterlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FE2BAD16F926DFCAABF71F /* WaterlineView.swift */; };
+		EFEC5E76D7399178E86EC047 /* CLEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A01D963993C173DCB3FDCA4 /* CLEngineTests.swift */; };
+		F0EFA312B13AFE888D07FC06 /* gi_database.json in Resources */ = {isa = PBXBuildFile; fileRef = F3A6E1677A79798237CFB545 /* gi_database.json */; };
+		FB454231AE125E83DD9D289E /* usda_nutrition.json in Resources */ = {isa = PBXBuildFile; fileRef = 93C58B72C496B16CA9474321 /* usda_nutrition.json */; };
+		FDAF173A39DFC255AD53B092 /* NutritionalProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59395D21FE58801D6329E256 /* NutritionalProfile+CoreDataProperties.swift */; };
+		FFB06BADA9A57D4B77A32E83 /* GlycoTrackManagedObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD13817AA8357C13A945A37D /* GlycoTrackManagedObjectModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1B43972A4304062E9C00EC40 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6BDBBD800BE9D92D9135AEE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3AFDDF331D8AE8CF1C094262;
+			remoteInfo = GlycoTrackWidget;
+		};
+		9E34D9D9057666FBDADBAE7B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6BDBBD800BE9D92D9135AEE3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 22D9D6957CDDE94324DD1301;
+			remoteInfo = GlycoTrack;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E4867AD57822E7272D9E4F34 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2AB15550573722F27840C076 /* GlycoTrackWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		00020267E962B5166BFC7910 /* BalanceScaleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceScaleView.swift; sourceTree = "<group>"; };
+		04E299D37D943223074C0464 /* GlycoTrackWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlycoTrackWidgetEntryView.swift; sourceTree = "<group>"; };
+		057B38EA6BEE010F76E24F96 /* GlycoTrack.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GlycoTrack.xcconfig; sourceTree = "<group>"; };
+		0825161931CF783350FA398E /* FoodLogRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogRepository.swift; sourceTree = "<group>"; };
+		15FE2BAD16F926DFCAABF71F /* WaterlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterlineView.swift; sourceTree = "<group>"; };
+		17D923FFC3F1352123547E74 /* FoodLogEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodLogEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		1C1D2709199DB48FFDDC1551 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		2A08955505DB5680BD34ED5F /* GlycoTrackTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GlycoTrackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A10769B1466E35CD89B88F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		3327A014C9B87AE78FAF29B4 /* FoodLogProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogProcessor.swift; sourceTree = "<group>"; };
+		3ED32C7B573F17AEA1BE5A3B /* DailyBucketView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyBucketView.swift; sourceTree = "<group>"; };
+		3EFFE9E12E7B018C5B61AD03 /* CoreDataIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataIdentifiable.swift; sourceTree = "<group>"; };
+		4C5D15EC2928FF45556CD303 /* NutritionalRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionalRepository.swift; sourceTree = "<group>"; };
+		4C81FF29DB0DB6B3386701CC /* WeekTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekTabView.swift; sourceTree = "<group>"; };
+		51938CF5F6DF886635DF3426 /* FoodLogEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodLogEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
+		530E5917BF567A086E970F68 /* GIEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIEngineTests.swift; sourceTree = "<group>"; };
+		543CE564CFB84AEB79200F10 /* FoodLogRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogRowView.swift; sourceTree = "<group>"; };
+		59395D21FE58801D6329E256 /* NutritionalProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NutritionalProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		6A1B66F0A6155C24C35BD9A5 /* GlycoTrack.xcconfig.example */ = {isa = PBXFileReference; path = GlycoTrack.xcconfig.example; sourceTree = "<group>"; };
+		6CB33E089ABEA3AE532CD71B /* GlycoTrack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GlycoTrack.entitlements; sourceTree = "<group>"; };
+		6CE7293044B6D9D1AFC681B2 /* GlycoTrackWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GlycoTrackWidget.entitlements; sourceTree = "<group>"; };
+		6FAFBFFF587D6C5D88FF7C59 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		700B603125BA314A19923286 /* GIEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIEngine.swift; sourceTree = "<group>"; };
+		73D37631E30DEC9D009EB19A /* GlycoTrackWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlycoTrackWidget.swift; sourceTree = "<group>"; };
+		781609117D8A1D76D625FCF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		7967B02D3586B1A48FCB7F6A /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		7CA784CDE9FCC292E4B80263 /* VoiceCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCapture.swift; sourceTree = "<group>"; };
+		81F322F37F03E9F100F38B95 /* GlycoTrack.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GlycoTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		89EBF428741DFCAA8D11F55F /* GLThreshold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLThreshold.swift; sourceTree = "<group>"; };
+		8B61B27E6D6C9ADE92E928E7 /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
+		8F3473895D984D30A720E75A /* TranscriptParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptParser.swift; sourceTree = "<group>"; };
+		93C58B72C496B16CA9474321 /* usda_nutrition.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = usda_nutrition.json; sourceTree = "<group>"; };
+		9618DE94E0303C1BEDC92CB7 /* FoodGroupColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodGroupColor.swift; sourceTree = "<group>"; };
+		60638D04BF5E4099B534A8E1 /* DebugTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTabView.swift; sourceTree = "<group>"; };
+		97313B9C797857A9DBC2F462 /* LogTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTabView.swift; sourceTree = "<group>"; };
+		9A01D963993C173DCB3FDCA4 /* CLEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLEngineTests.swift; sourceTree = "<group>"; };
+		9EE14268BE85E30C9C9AD8E6 /* MonthlyHeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyHeatmapView.swift; sourceTree = "<group>"; };
+		A1D3B3F5C4D80821160E5398 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		ABC65AD31C004BA65B554B9B /* SummaryGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryGenerator.swift; sourceTree = "<group>"; };
+		B3189DE380188C47D779FEAD /* WeeklyRiverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyRiverView.swift; sourceTree = "<group>"; };
+		B6A1DA1067A0C7DDF9801DAD /* GlycoTrackApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlycoTrackApp.swift; sourceTree = "<group>"; };
+		BF7A560C4BA26D536A7CDCCA /* QuadrantPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadrantPlotView.swift; sourceTree = "<group>"; };
+		C6A1C047AADFF5FEBE42735D /* ConfidenceBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfidenceBadge.swift; sourceTree = "<group>"; };
+		C70C082CC09B5E60AF485E04 /* GlycoTrackWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = GlycoTrackWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA2306B0E783E13C7D020642 /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
+		DA4859E2F701A70D2FDD7A83 /* NutritionalProfile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NutritionalProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DCC319390AA669EE258FAD6F /* CLEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLEngine.swift; sourceTree = "<group>"; };
+		E872FBC247922AFD48D894E0 /* TugOfWarBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TugOfWarBarView.swift; sourceTree = "<group>"; };
+		EC6C50E55067161C1D7654B6 /* GlycoTrack.local.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GlycoTrack.local.xcconfig; sourceTree = "<group>"; };
+		EC98CA71D925406ACDA67295 /* SummaryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryTabView.swift; sourceTree = "<group>"; };
+		F3A6E1677A79798237CFB545 /* gi_database.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = gi_database.json; sourceTree = "<group>"; };
+		F784EC6E60A6061D2F9143F5 /* FoodBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodBubble.swift; sourceTree = "<group>"; };
+		FCA271AA762FA671A084415B /* MonthTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthTabView.swift; sourceTree = "<group>"; };
+		FD13817AA8357C13A945A37D /* GlycoTrackManagedObjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlycoTrackManagedObjectModel.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		011554621AC07C4065FA6C6E /* SummaryTab */ = {
+			isa = PBXGroup;
+			children = (
+				EC98CA71D925406ACDA67295 /* SummaryTabView.swift */,
+			);
+			path = SummaryTab;
+			sourceTree = "<group>";
+		};
+		AE3930CB321247FCB37249F4 /* DebugTab */ = {
+			isa = PBXGroup;
+			children = (
+				60638D04BF5E4099B534A8E1 /* DebugTabView.swift */,
+			);
+			path = DebugTab;
+			sourceTree = "<group>";
+		};
+		04B87E4CF1E807CCC03359EB /* CLEngine */ = {
+			isa = PBXGroup;
+			children = (
+				DCC319390AA669EE258FAD6F /* CLEngine.swift */,
+			);
+			path = CLEngine;
+			sourceTree = "<group>";
+		};
+		08694E0F1CE4E7939273BB57 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3EFFE9E12E7B018C5B61AD03 /* CoreDataIdentifiable.swift */,
+				51938CF5F6DF886635DF3426 /* FoodLogEntry+CoreDataClass.swift */,
+				17D923FFC3F1352123547E74 /* FoodLogEntry+CoreDataProperties.swift */,
+				FD13817AA8357C13A945A37D /* GlycoTrackManagedObjectModel.swift */,
+				DA4859E2F701A70D2FDD7A83 /* NutritionalProfile+CoreDataClass.swift */,
+				59395D21FE58801D6329E256 /* NutritionalProfile+CoreDataProperties.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1A970110B187D9BFAC19AE52 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				F3A6E1677A79798237CFB545 /* gi_database.json */,
+				93C58B72C496B16CA9474321 /* usda_nutrition.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		1CCCB9A2628691F2031B2489 /* CLEngineCoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				9A01D963993C173DCB3FDCA4 /* CLEngineTests.swift */,
+			);
+			name = CLEngineCoreTests;
+			path = Tests/CLEngineCoreTests;
+			sourceTree = "<group>";
+		};
+		26E4F6740B61E7DC36AAF4F5 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				EC6C50E55067161C1D7654B6 /* GlycoTrack.local.xcconfig */,
+				057B38EA6BEE010F76E24F96 /* GlycoTrack.xcconfig */,
+				6A1B66F0A6155C24C35BD9A5 /* GlycoTrack.xcconfig.example */,
+			);
+			name = Config;
+			path = GlycoTrack/Config;
+			sourceTree = "<group>";
+		};
+		28C03B199C5E89F8003EEE65 /* NotificationManager */ = {
+			isa = PBXGroup;
+			children = (
+				6FAFBFFF587D6C5D88FF7C59 /* NotificationManager.swift */,
+			);
+			path = NotificationManager;
+			sourceTree = "<group>";
+		};
+		30039DD6FA24355C9583C606 /* HomeTab */ = {
+			isa = PBXGroup;
+			children = (
+				3327A014C9B87AE78FAF29B4 /* FoodLogProcessor.swift */,
+				DA2306B0E783E13C7D020642 /* HomeTabView.swift */,
+			);
+			path = HomeTab;
+			sourceTree = "<group>";
+		};
+		39823AAD632E9392A52B3E94 = {
+			isa = PBXGroup;
+			children = (
+				1CCCB9A2628691F2031B2489 /* CLEngineCoreTests */,
+				26E4F6740B61E7DC36AAF4F5 /* Config */,
+				56E978AE1632CE32B31B7D01 /* GIEngineCoreTests */,
+				4C011D1A6756146010FF7F6C /* GlycoTrack */,
+				57CEEC2E203299F5EBB31FBB /* GlycoTrackWidget */,
+				4425B4A495DC6820218F68CC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4425B4A495DC6820218F68CC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				81F322F37F03E9F100F38B95 /* GlycoTrack.app */,
+				2A08955505DB5680BD34ED5F /* GlycoTrackTests.xctest */,
+				C70C082CC09B5E60AF485E04 /* GlycoTrackWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4BD3A45289044783C82B6A52 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				1C1D2709199DB48FFDDC1551 /* AppDelegate.swift */,
+				B6A1DA1067A0C7DDF9801DAD /* GlycoTrackApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		4C011D1A6756146010FF7F6C /* GlycoTrack */ = {
+			isa = PBXGroup;
+			children = (
+				6CB33E089ABEA3AE532CD71B /* GlycoTrack.entitlements */,
+				2A10769B1466E35CD89B88F9 /* Info.plist */,
+				4BD3A45289044783C82B6A52 /* App */,
+				26E4F6740B61E7DC36AAF4F5 /* Config */,
+				08694E0F1CE4E7939273BB57 /* Models */,
+				C46E2A104F0EF09219B14077 /* Modules */,
+				1A970110B187D9BFAC19AE52 /* Resources */,
+				4DA67F4063973510ABDD679A /* UI */,
+			);
+			path = GlycoTrack;
+			sourceTree = "<group>";
+		};
+		4DA67F4063973510ABDD679A /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				CBE2129F1A44220991F320A3 /* Components */,
+				978B5D71393B2DAAB2BB1679 /* Tabs */,
+				C43FE1E0D54A2C9224B230B0 /* Theme */,
+				5433CDFEE4D1703C5B3A024F /* Visualizations */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		53B768E866AB79AFE345AB8E /* MonthTab */ = {
+			isa = PBXGroup;
+			children = (
+				FCA271AA762FA671A084415B /* MonthTabView.swift */,
+			);
+			path = MonthTab;
+			sourceTree = "<group>";
+		};
+		5433CDFEE4D1703C5B3A024F /* Visualizations */ = {
+			isa = PBXGroup;
+			children = (
+				BF7A560C4BA26D536A7CDCCA /* QuadrantPlotView.swift */,
+				C978FCA7B0AB262DB4B600E1 /* CLVisualization */,
+				F87E274EE5AB3E12CFC32258 /* GLVisualization */,
+			);
+			path = Visualizations;
+			sourceTree = "<group>";
+		};
+		56E978AE1632CE32B31B7D01 /* GIEngineCoreTests */ = {
+			isa = PBXGroup;
+			children = (
+				530E5917BF567A086E970F68 /* GIEngineTests.swift */,
+			);
+			name = GIEngineCoreTests;
+			path = Tests/GIEngineCoreTests;
+			sourceTree = "<group>";
+		};
+		57CEEC2E203299F5EBB31FBB /* GlycoTrackWidget */ = {
+			isa = PBXGroup;
+			children = (
+				6CE7293044B6D9D1AFC681B2 /* GlycoTrackWidget.entitlements */,
+				73D37631E30DEC9D009EB19A /* GlycoTrackWidget.swift */,
+				04E299D37D943223074C0464 /* GlycoTrackWidgetEntryView.swift */,
+				781609117D8A1D76D625FCF3 /* Info.plist */,
+			);
+			path = GlycoTrackWidget;
+			sourceTree = "<group>";
+		};
+		5B5B97014145D01313A29F3D /* WeekTab */ = {
+			isa = PBXGroup;
+			children = (
+				4C81FF29DB0DB6B3386701CC /* WeekTabView.swift */,
+			);
+			path = WeekTab;
+			sourceTree = "<group>";
+		};
+		7C86535619DB63F407705911 /* SummaryGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				ABC65AD31C004BA65B554B9B /* SummaryGenerator.swift */,
+			);
+			path = SummaryGenerator;
+			sourceTree = "<group>";
+		};
+		7FC8FB7AE2CC0000D95EE7EA /* VoiceCapture */ = {
+			isa = PBXGroup;
+			children = (
+				7CA784CDE9FCC292E4B80263 /* VoiceCapture.swift */,
+			);
+			path = VoiceCapture;
+			sourceTree = "<group>";
+		};
+		8415DC493B77342D6DFCE39D /* TranscriptParser */ = {
+			isa = PBXGroup;
+			children = (
+				8F3473895D984D30A720E75A /* TranscriptParser.swift */,
+			);
+			path = TranscriptParser;
+			sourceTree = "<group>";
+		};
+		85EFEA01B6A4A13122D425E9 /* LogTab */ = {
+			isa = PBXGroup;
+			children = (
+				543CE564CFB84AEB79200F10 /* FoodLogRowView.swift */,
+				97313B9C797857A9DBC2F462 /* LogTabView.swift */,
+			);
+			path = LogTab;
+			sourceTree = "<group>";
+		};
+		96D991C8B162E8A8541D0CFE /* GIEngine */ = {
+			isa = PBXGroup;
+			children = (
+				700B603125BA314A19923286 /* GIEngine.swift */,
+			);
+			path = GIEngine;
+			sourceTree = "<group>";
+		};
+		978B5D71393B2DAAB2BB1679 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				7967B02D3586B1A48FCB7F6A /* RootTabView.swift */,
+				30039DD6FA24355C9583C606 /* HomeTab */,
+				85EFEA01B6A4A13122D425E9 /* LogTab */,
+				53B768E866AB79AFE345AB8E /* MonthTab */,
+				011554621AC07C4065FA6C6E /* SummaryTab */,
+				5B5B97014145D01313A29F3D /* WeekTab */,
+				AE3930CB321247FCB37249F4 /* DebugTab */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		AD0D3FF4826E401D2E54F776 /* LocalStorage */ = {
+			isa = PBXGroup;
+			children = (
+				0825161931CF783350FA398E /* FoodLogRepository.swift */,
+				4C5D15EC2928FF45556CD303 /* NutritionalRepository.swift */,
+				A1D3B3F5C4D80821160E5398 /* PersistenceController.swift */,
+			);
+			path = LocalStorage;
+			sourceTree = "<group>";
+		};
+		C43FE1E0D54A2C9224B230B0 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				9618DE94E0303C1BEDC92CB7 /* FoodGroupColor.swift */,
+				89EBF428741DFCAA8D11F55F /* GLThreshold.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		C46E2A104F0EF09219B14077 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				04B87E4CF1E807CCC03359EB /* CLEngine */,
+				96D991C8B162E8A8541D0CFE /* GIEngine */,
+				AD0D3FF4826E401D2E54F776 /* LocalStorage */,
+				28C03B199C5E89F8003EEE65 /* NotificationManager */,
+				7C86535619DB63F407705911 /* SummaryGenerator */,
+				8415DC493B77342D6DFCE39D /* TranscriptParser */,
+				7FC8FB7AE2CC0000D95EE7EA /* VoiceCapture */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		C978FCA7B0AB262DB4B600E1 /* CLVisualization */ = {
+			isa = PBXGroup;
+			children = (
+				00020267E962B5166BFC7910 /* BalanceScaleView.swift */,
+				E872FBC247922AFD48D894E0 /* TugOfWarBarView.swift */,
+				15FE2BAD16F926DFCAABF71F /* WaterlineView.swift */,
+			);
+			path = CLVisualization;
+			sourceTree = "<group>";
+		};
+		CBE2129F1A44220991F320A3 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C6A1C047AADFF5FEBE42735D /* ConfidenceBadge.swift */,
+				F784EC6E60A6061D2F9143F5 /* FoodBubble.swift */,
+				8B61B27E6D6C9ADE92E928E7 /* RecordButton.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		F87E274EE5AB3E12CFC32258 /* GLVisualization */ = {
+			isa = PBXGroup;
+			children = (
+				3ED32C7B573F17AEA1BE5A3B /* DailyBucketView.swift */,
+				9EE14268BE85E30C9C9AD8E6 /* MonthlyHeatmapView.swift */,
+				B3189DE380188C47D779FEAD /* WeeklyRiverView.swift */,
+			);
+			path = GLVisualization;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		22D9D6957CDDE94324DD1301 /* GlycoTrack */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A30173AABC7082BEC7285C2D /* Build configuration list for PBXNativeTarget "GlycoTrack" */;
+			buildPhases = (
+				9CBD850BE78C8F09CBD56E84 /* Sources */,
+				C8DC7A5DF5EB92C60E923D8A /* Resources */,
+				E4867AD57822E7272D9E4F34 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F8D08E0B696605535FC15641 /* PBXTargetDependency */,
+			);
+			name = GlycoTrack;
+			packageProductDependencies = (
+			);
+			productName = GlycoTrack;
+			productReference = 81F322F37F03E9F100F38B95 /* GlycoTrack.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3AFDDF331D8AE8CF1C094262 /* GlycoTrackWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8495633135E3FD273C42D8AC /* Build configuration list for PBXNativeTarget "GlycoTrackWidget" */;
+			buildPhases = (
+				2AC15833DA0BF422618DF9F2 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GlycoTrackWidget;
+			packageProductDependencies = (
+			);
+			productName = GlycoTrackWidget;
+			productReference = C70C082CC09B5E60AF485E04 /* GlycoTrackWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		5A836D6CC26F31F16F466CDD /* GlycoTrackTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0174D3B9C93652D352C0B5EE /* Build configuration list for PBXNativeTarget "GlycoTrackTests" */;
+			buildPhases = (
+				C52EDD73F981DB29A3B8B6C6 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8BBD427C14E999DDF618105A /* PBXTargetDependency */,
+			);
+			name = GlycoTrackTests;
+			packageProductDependencies = (
+			);
+			productName = GlycoTrackTests;
+			productReference = 2A08955505DB5680BD34ED5F /* GlycoTrackTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6BDBBD800BE9D92D9135AEE3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					22D9D6957CDDE94324DD1301 = {
+						DevelopmentTeam = "$(DEVELOPMENT_TEAM)";
+						ProvisioningStyle = Automatic;
+					};
+					3AFDDF331D8AE8CF1C094262 = {
+						DevelopmentTeam = "$(DEVELOPMENT_TEAM)";
+						ProvisioningStyle = Automatic;
+					};
+					5A836D6CC26F31F16F466CDD = {
+						DevelopmentTeam = "$(DEVELOPMENT_TEAM)";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 9F79141072018FE567B449BC /* Build configuration list for PBXProject "GlycoTrack" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 39823AAD632E9392A52B3E94;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 4425B4A495DC6820218F68CC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				22D9D6957CDDE94324DD1301 /* GlycoTrack */,
+				5A836D6CC26F31F16F466CDD /* GlycoTrackTests */,
+				3AFDDF331D8AE8CF1C094262 /* GlycoTrackWidget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C8DC7A5DF5EB92C60E923D8A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7090F21A3809A883F654669C /* GlycoTrack.xcconfig.example in Resources */,
+				F0EFA312B13AFE888D07FC06 /* gi_database.json in Resources */,
+				FB454231AE125E83DD9D289E /* usda_nutrition.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2AC15833DA0BF422618DF9F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04EF4D81DCAC57B04B475785 /* GlycoTrackWidget.swift in Sources */,
+				478432404A32D39AB16C3824 /* GlycoTrackWidgetEntryView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9CBD850BE78C8F09CBD56E84 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				110044A56CED7B5CD2A92F48 /* AppDelegate.swift in Sources */,
+				1D48FDE7367ECA42973C7886 /* BalanceScaleView.swift in Sources */,
+				804D83DA123CD38186D70EE8 /* CLEngine.swift in Sources */,
+				684DC8143E5EE72D2A5F6895 /* ConfidenceBadge.swift in Sources */,
+				A36A7351E36BA048DD17325C /* CoreDataIdentifiable.swift in Sources */,
+				CCCA621986F72D20C972DDD0 /* DailyBucketView.swift in Sources */,
+				39209438F3F4D3A3877E271C /* FoodBubble.swift in Sources */,
+				CFDD1530C688D117137EF516 /* FoodGroupColor.swift in Sources */,
+				26A7AE8A79E5F09A08CC7F4B /* FoodLogEntry+CoreDataClass.swift in Sources */,
+				DF7D2A9B939803522A97A911 /* FoodLogEntry+CoreDataProperties.swift in Sources */,
+				DA63E52FA18B99E8347E4BFD /* FoodLogProcessor.swift in Sources */,
+				041291D466117085F31C91F8 /* FoodLogRepository.swift in Sources */,
+				605851BDE11851A2BB4A67C2 /* FoodLogRowView.swift in Sources */,
+				08B81E947941B77566AF9767 /* GIEngine.swift in Sources */,
+				A718C8CD3B55F1DC0DFB91BB /* GLThreshold.swift in Sources */,
+				6218DF6B76FCABF02538AFC0 /* GlycoTrackApp.swift in Sources */,
+				FFB06BADA9A57D4B77A32E83 /* GlycoTrackManagedObjectModel.swift in Sources */,
+				A97DBA1B9D41A7BADAA1E037 /* HomeTabView.swift in Sources */,
+				67A1A1B7B7FD40DEBAF86952 /* DebugTabView.swift in Sources */,
+				AF6E60B55D052923B8D08A9E /* LogTabView.swift in Sources */,
+				A0D08903B4672E77482B3F08 /* MonthTabView.swift in Sources */,
+				1D23C9102CD3454A7EB2DC46 /* MonthlyHeatmapView.swift in Sources */,
+				8D4D572E5D5FF46BE470D20F /* NotificationManager.swift in Sources */,
+				A9EF6E86BA2596BFE3A1E5DF /* NutritionalProfile+CoreDataClass.swift in Sources */,
+				FDAF173A39DFC255AD53B092 /* NutritionalProfile+CoreDataProperties.swift in Sources */,
+				A73D4CC50EA0050C328B3DFB /* NutritionalRepository.swift in Sources */,
+				719519B850851D9B5DEA8F1C /* PersistenceController.swift in Sources */,
+				0D0BF3101ED86D94884B99DF /* QuadrantPlotView.swift in Sources */,
+				CBD927A2BB34C614106D5634 /* RecordButton.swift in Sources */,
+				A2F0B85F167633430502507F /* RootTabView.swift in Sources */,
+				541CADD963F1A6CF84ED8EE6 /* SummaryGenerator.swift in Sources */,
+				8752ED4DBEBBC618DAC73AE4 /* SummaryTabView.swift in Sources */,
+				8DE167AB3585707279F2E20F /* TranscriptParser.swift in Sources */,
+				87E30E1423D23F446A917C62 /* TugOfWarBarView.swift in Sources */,
+				B076FCA27DDFC7ECFBB6F792 /* VoiceCapture.swift in Sources */,
+				EB32167E33EDB53104ED047A /* WaterlineView.swift in Sources */,
+				54376F4567B22EA7489FADA9 /* WeekTabView.swift in Sources */,
+				9C86560AAEE898D9CDD72E79 /* WeeklyRiverView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C52EDD73F981DB29A3B8B6C6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EFEC5E76D7399178E86EC047 /* CLEngineTests.swift in Sources */,
+				8A3D62A8EB05FA59517C1A5D /* GIEngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8BBD427C14E999DDF618105A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 22D9D6957CDDE94324DD1301 /* GlycoTrack */;
+			targetProxy = 9E34D9D9057666FBDADBAE7B /* PBXContainerItemProxy */;
+		};
+		F8D08E0B696605535FC15641 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3AFDDF331D8AE8CF1C094262 /* GlycoTrackWidget */;
+			targetProxy = 1B43972A4304062E9C00EC40 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		09AC562DA82F4362C0F776F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glycotrack.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlycoTrack.app/GlycoTrack";
+			};
+			name = Release;
+		};
+		0C2AC7284EA5C99591223B06 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GlycoTrack/GlycoTrack.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = GlycoTrack/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glycotrack.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		26C576E27558B36596C15D03 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glycotrack.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GlycoTrack.app/GlycoTrack";
+			};
+			name = Debug;
+		};
+		879187EB2B975C6A53C576C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = GlycoTrackWidget/GlycoTrackWidget.entitlements;
+				INFOPLIST_FILE = GlycoTrackWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glycotrack.app.widget;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		B8A16C227DC623A8E349CB7E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GlycoTrack/GlycoTrack.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = GlycoTrack/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glycotrack.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		BC93F98C40DD19BB66D75B1D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 057B38EA6BEE010F76E24F96 /* GlycoTrack.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		C744D489608D837478F3F31E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = GlycoTrackWidget/GlycoTrackWidget.entitlements;
+				INFOPLIST_FILE = GlycoTrackWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.glycotrack.app.widget;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		C908A882A438434C33CDC81C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 057B38EA6BEE010F76E24F96 /* GlycoTrack.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0174D3B9C93652D352C0B5EE /* Build configuration list for PBXNativeTarget "GlycoTrackTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				26C576E27558B36596C15D03 /* Debug */,
+				09AC562DA82F4362C0F776F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8495633135E3FD273C42D8AC /* Build configuration list for PBXNativeTarget "GlycoTrackWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C744D489608D837478F3F31E /* Debug */,
+				879187EB2B975C6A53C576C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		9F79141072018FE567B449BC /* Build configuration list for PBXProject "GlycoTrack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C908A882A438434C33CDC81C /* Debug */,
+				BC93F98C40DD19BB66D75B1D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A30173AABC7082BEC7285C2D /* Build configuration list for PBXNativeTarget "GlycoTrack" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0C2AC7284EA5C99591223B06 /* Debug */,
+				B8A16C227DC623A8E349CB7E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6BDBBD800BE9D92D9135AEE3 /* Project object */;
+}
