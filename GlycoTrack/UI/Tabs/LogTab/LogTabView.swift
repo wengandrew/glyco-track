@@ -138,11 +138,15 @@ struct EditEntryView: View {
     private func resolveGrams() -> Double {
         struct Parsed { let number: Double; let unit: String }
 
+        // Handles "300g", "300 g", "2 cups", "1.5  cups" — numeric prefix plus optional unit suffix.
         func parse(_ text: String) -> Parsed? {
-            let parts = text.trimmingCharacters(in: .whitespaces)
-                .components(separatedBy: .whitespaces).filter { !$0.isEmpty }
-            guard let first = parts.first, let num = Double(first) else { return nil }
-            return Parsed(number: num, unit: parts.dropFirst().joined(separator: " ").lowercased())
+            let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard !trimmed.isEmpty else { return nil }
+            let scanner = Scanner(string: trimmed)
+            guard let num = scanner.scanDouble() else { return nil }
+            let remainder = String(trimmed[trimmed.index(trimmed.startIndex, offsetBy: scanner.currentIndex.utf16Offset(in: trimmed))...])
+            let unit = remainder.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+            return Parsed(number: num, unit: unit)
         }
 
         guard let new = parse(quantity) else { return entry.quantityGrams }
@@ -153,13 +157,12 @@ struct EditEntryView: View {
         case "kg", "kilogram", "kilograms":
             return new.number * 1000
         case "oz", "ounce", "ounces":
-            return new.number * 28.35
+            return new.number * 28.349523125
         case "lb", "lbs", "pound", "pounds":
-            return new.number * 453.6
-        case "ml", "milliliter", "milliliters", "millilitre", "millilitres":
-            return new.number
+            return new.number * 453.59237
         default:
-            // Non-metric unit (cup, slice, egg, etc.) — scale proportionally
+            // Non-mass unit (cup, slice, egg, mL, etc.) — scale proportionally from original.
+            // mL is volume and not directly convertible to grams without a density assumption.
             guard let old = parse(entry.quantity), old.number > 0 else { return entry.quantityGrams }
             return entry.quantityGrams * (new.number / old.number)
         }

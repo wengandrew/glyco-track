@@ -22,7 +22,7 @@ struct FoodLogRowView: View {
                 }
 
                 HStack(spacing: 6) {
-                    Text("\(entry.quantity) (\(Int(entry.quantityGrams))g)")
+                    Text("\(entry.quantity) (\(Int(entry.quantityGrams.rounded()))g)")
                         .font(.caption)
                         .foregroundColor(.secondary)
 
