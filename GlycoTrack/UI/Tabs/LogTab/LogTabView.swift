@@ -144,9 +144,14 @@ struct EditEntryView: View {
             guard !trimmed.isEmpty else { return nil }
             let scanner = Scanner(string: trimmed)
             guard let num = scanner.scanDouble() else { return nil }
-            let remainder = String(trimmed[trimmed.index(trimmed.startIndex, offsetBy: scanner.currentIndex.utf16Offset(in: trimmed))...])
+            let remainder = String(trimmed[scanner.currentIndex...])
             let unit = remainder.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
             return Parsed(number: num, unit: unit)
+        }
+
+        // Loose plural comparison so "cup" and "cups" match.
+        func normalize(_ unit: String) -> String {
+            unit.hasSuffix("s") ? String(unit.dropLast()) : unit
         }
 
         guard let new = parse(quantity) else { return entry.quantityGrams }
@@ -161,9 +166,12 @@ struct EditEntryView: View {
         case "lb", "lbs", "pound", "pounds":
             return new.number * 453.59237
         default:
-            // Non-mass unit (cup, slice, egg, mL, etc.) — scale proportionally from original.
-            // mL is volume and not directly convertible to grams without a density assumption.
+            // Non-mass unit (cup, slice, egg, mL, etc.). Only ratio-scale when the unit
+            // is unchanged or the user omitted it — cross-unit scaling (e.g. g → cups)
+            // produces nonsense. mL is volume and requires a per-food density to convert.
             guard let old = parse(entry.quantity), old.number > 0 else { return entry.quantityGrams }
+            let sameUnit = new.unit.isEmpty || normalize(old.unit) == normalize(new.unit)
+            guard sameUnit else { return entry.quantityGrams }
             return entry.quantityGrams * (new.number / old.number)
         }
     }
