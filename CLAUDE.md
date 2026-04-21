@@ -2,6 +2,26 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Branching & Workflow
+
+**Branch model:**
+- `main` — stable, tested builds only
+- `develop` — integration branch; always what gets built and tested on device
+- Feature branches — one per Claude session, branched off `develop`
+
+**The root repo (`/Users/ampere/code/glyco-track`) is always checked out to `develop`.** This is the Xcode build target for device testing. Do not check out `main` or a feature branch at the root.
+
+**Every session must:**
+1. Branch off `develop` (not `main`) at the start
+2. Do all work in the session's worktree on that feature branch
+3. When work is complete and the build passes, open a PR targeting `develop` (not `main`)
+4. Never merge directly to `develop` or `main` — always via PR
+
+**Active feature branches (update this as PRs open/merge):**
+<!-- Add a line per open PR: - [branch-name]: brief description -->
+
+**Cross-session awareness:** Before starting work, run `git log develop --oneline -20` to see what's already landed. Check open PRs on GitHub for what's in flight but not yet merged.
+
 ## Behavior
 
 - **Ask before assuming.** When a task has multiple reasonable approaches (e.g. a new visualization style, a data model change, a refactor), ask a clarifying question first. Don't assume the user knows the tradeoffs — explain the options briefly and ask which direction they prefer.
