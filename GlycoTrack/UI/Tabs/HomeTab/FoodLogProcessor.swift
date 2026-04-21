@@ -65,7 +65,7 @@ final class FoodLogProcessor: ObservableObject {
             _ = logRepo.create(
                 rawTranscript: transcript,
                 foodDescription: food.food,
-                quantity: food.quantity,
+                quantity: "\(food.quantity) \(food.unit)",
                 quantityGrams: food.grams,
                 timestamp: Date(),
                 confidenceScore: confidence,

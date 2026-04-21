@@ -135,16 +135,34 @@ struct EditEntryView: View {
         dismiss()
     }
 
-    // Scale original quantityGrams by the ratio of the new leading number to the old one.
     private func resolveGrams() -> Double {
-        func leadingDouble(_ text: String) -> Double? {
-            Double(text.trimmingCharacters(in: .whitespaces)
-                .components(separatedBy: .whitespaces).first ?? "")
+        struct Parsed { let number: Double; let unit: String }
+
+        func parse(_ text: String) -> Parsed? {
+            let parts = text.trimmingCharacters(in: .whitespaces)
+                .components(separatedBy: .whitespaces).filter { !$0.isEmpty }
+            guard let first = parts.first, let num = Double(first) else { return nil }
+            return Parsed(number: num, unit: parts.dropFirst().joined(separator: " ").lowercased())
         }
-        let oldNum = leadingDouble(entry.quantity) ?? 1.0
-        let newNum = leadingDouble(quantity) ?? oldNum
-        guard oldNum > 0 else { return entry.quantityGrams }
-        return entry.quantityGrams * (newNum / oldNum)
+
+        guard let new = parse(quantity) else { return entry.quantityGrams }
+
+        switch new.unit {
+        case "g", "gram", "grams":
+            return new.number
+        case "kg", "kilogram", "kilograms":
+            return new.number * 1000
+        case "oz", "ounce", "ounces":
+            return new.number * 28.35
+        case "lb", "lbs", "pound", "pounds":
+            return new.number * 453.6
+        case "ml", "milliliter", "milliliters", "millilitre", "millilitres":
+            return new.number
+        default:
+            // Non-metric unit (cup, slice, egg, etc.) — scale proportionally
+            guard let old = parse(entry.quantity), old.number > 0 else { return entry.quantityGrams }
+            return entry.quantityGrams * (new.number / old.number)
+        }
     }
 
     private func loadGIDatabase() -> [GIRecord] {
