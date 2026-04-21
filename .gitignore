@@ -1,15 +1,22 @@
 # Xcode
-*.xcodeproj/
-*.xcworkspace/
+# Ignore everything inside xcodeproj/xcworkspace directories, then
+# selectively un-ignore the files that should be committed.
+# IMPORTANT: using dir/* (not dir/) so negations can reach inside.
+*.xcodeproj/*
 !*.xcodeproj/project.pbxproj
+!*.xcodeproj/project.xcworkspace/
+*.xcodeproj/project.xcworkspace/*
+!*.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+*.xcworkspace/*
 !*.xcworkspace/contents.xcworkspacedata
+xcuserdata/
+*.xcuserstate
 DerivedData/
 .build/
 *.o
 *.d
 *.swp
 *.lock
-xcuserdata/
 *.moved-aside
 *.pbxuser
 !default.pbxuser
