@@ -12,6 +12,7 @@ struct PhysicsBucketView: View {
 
     @State private var selectedEntry: FoodLogEntry?
     @State private var sceneID = UUID()
+    @State private var scene: BucketScene?
 
     private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
     private var fillFraction: Double { min(totalGL / budget, 1.0) }
@@ -32,17 +33,25 @@ struct PhysicsBucketView: View {
 
             GeometryReader { geo in
                 ZStack {
-                    SpriteView(
-                        scene: makeScene(size: geo.size),
-                        options: [.allowsTransparency],
-                        debugOptions: []
-                    )
-                    .id(sceneID)
-                    .background(Color.clear)
+                    if let scene = scene {
+                        SpriteView(
+                            scene: scene,
+                            options: [.allowsTransparency],
+                            debugOptions: []
+                        )
+                        .background(Color.clear)
+                    } else {
+                        Color.clear
+                    }
 
                     if entries.isEmpty {
                         emptyStateOverlay
                     }
+                }
+                // Rebuild the scene only when id or geometry changes — not on every
+                // SwiftUI re-render (e.g. when the detail sheet toggles selectedEntry).
+                .task(id: SceneKey(id: sceneID, width: geo.size.width, height: geo.size.height)) {
+                    scene = makeScene(size: geo.size)
                 }
             }
             .aspectRatio(0.72, contentMode: .fit)
@@ -104,6 +113,13 @@ struct PhysicsBucketView: View {
     }
 }
 
+// Composite key used to trigger scene rebuilds on size or id change.
+private struct SceneKey: Hashable {
+    let id: UUID
+    let width: CGFloat
+    let height: CGFloat
+}
+
 // MARK: - SpriteKit Scene
 
 final class BucketScene: SKScene {
@@ -115,7 +131,6 @@ final class BucketScene: SKScene {
     private let bucketWidthFrac: CGFloat = 0.78
     private let bucketHeightFrac: CGFloat = 0.68
     private let bucketBottomFrac: CGFloat = 0.08   // bottom of bucket above scene floor
-    private let wallThickness: CGFloat = 3
 
     // Lookup: node → entry
     private var nodeToEntry: [ObjectIdentifier: FoodLogEntry] = [:]
@@ -159,8 +174,8 @@ final class BucketScene: SKScene {
         container.zPosition = -1
         addChild(container)
 
-        // Container label
-        let topHint = SKLabelNode(text: "100 GL")
+        // Container label — reflects the configured budget so UI stays in sync.
+        let topHint = SKLabelNode(text: "\(Int(budget)) GL")
         topHint.fontName = "SFProRounded-Semibold"
         topHint.fontSize = 10
         topHint.fontColor = SKColor(white: 0.55, alpha: 1.0)
@@ -263,9 +278,10 @@ final class BucketScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let point = touch.location(in: self)
+        // `nodes(at:)` returns nodes ordered front-to-back, so the first
+        // matching bubble is the topmost one.
         let hits = nodes(at: point)
-        // Topmost bubble wins
-        for node in hits.reversed() {
+        for node in hits {
             if node.name == "bubble", let entry = nodeToEntry[ObjectIdentifier(node)] {
                 // Small feedback bounce
                 node.run(.sequence([
