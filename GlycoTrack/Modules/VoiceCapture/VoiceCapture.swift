@@ -29,6 +29,7 @@ final class VoiceCapture: ObservableObject {
 
     private var silenceTimer: Timer?
     private let silenceThreshold: TimeInterval = 2.0
+    private var hasFinalized = false
 
     var onTranscriptFinalized: ((String) -> Void)?
 
@@ -45,6 +46,7 @@ final class VoiceCapture: ObservableObject {
     }
 
     func startRecording() async throws {
+        hasFinalized = false
         guard let recognizer, recognizer.isAvailable else {
             throw VoiceCaptureError.recognizerUnavailable
         }
@@ -98,6 +100,9 @@ final class VoiceCapture: ObservableObject {
     }
 
     func stopRecording() {
+        guard !hasFinalized else { return }
+        hasFinalized = true
+
         silenceTimer?.invalidate()
         silenceTimer = nil
 
