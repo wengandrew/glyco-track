@@ -4,45 +4,54 @@ struct ConfidenceBadge: View {
     let confidence: Float
     let tier: Int16
 
-    private var needsRefine: Bool { confidence < 0.7 }
+    private var isUnrecognized: Bool { tier == MatchTier.unrecognized.rawValue }
+    private var needsRefine: Bool {
+        !isUnrecognized && confidence < 0.70
+    }
 
     private var tierLabel: String {
-        switch tier {
-        case 1: return "T1"
-        case 2: return "T2"
-        case 3: return "T3"
-        case 4: return "T4"
-        default: return "T?"
-        }
+        MatchTier(rawValue: tier)?.shortLabel ?? "T?"
     }
 
     private var tierColor: Color {
-        switch tier {
-        case 1: return .green
-        case 2: return .blue
-        case 3: return .orange
-        default: return .red
+        switch MatchTier(rawValue: tier) {
+        case .direct:        return .green
+        case .componentB:    return .blue
+        case .aiDecomposed:  return .teal
+        case .aiBlended:     return .orange
+        case .unrecognized:  return .red
+        case .none:          return .gray
         }
     }
 
     var body: some View {
         HStack(spacing: 4) {
-            Text(tierLabel)
-                .font(.system(size: 10, weight: .bold, design: .monospaced))
-                .foregroundColor(tierColor)
-                .padding(.horizontal, 5)
-                .padding(.vertical, 2)
-                .background(tierColor.opacity(0.12))
-                .cornerRadius(4)
-
-            if needsRefine {
-                Text("Refine")
-                    .font(.system(size: 10, weight: .semibold))
+            if isUnrecognized {
+                Label("Not recognized", systemImage: "exclamationmark.triangle.fill")
+                    .font(.system(size: 10, weight: .bold))
                     .foregroundColor(.white)
                     .padding(.horizontal, 6)
                     .padding(.vertical, 2)
-                    .background(Color.orange)
+                    .background(Color.red)
                     .cornerRadius(4)
+            } else {
+                Text(tierLabel)
+                    .font(.system(size: 10, weight: .bold, design: .monospaced))
+                    .foregroundColor(tierColor)
+                    .padding(.horizontal, 5)
+                    .padding(.vertical, 2)
+                    .background(tierColor.opacity(0.12))
+                    .cornerRadius(4)
+
+                if needsRefine {
+                    Text("Refine")
+                        .font(.system(size: 10, weight: .semibold))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .background(Color.orange)
+                        .cornerRadius(4)
+                }
             }
         }
     }

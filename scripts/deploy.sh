@@ -6,7 +6,7 @@
 #   ./scripts/deploy.sh --device <UDID>   # target a specific device
 #   ./scripts/deploy.sh --no-launch       # install but don't relaunch the app
 #   ./scripts/deploy.sh --clean           # xcodebuild clean before building
-#   ./scripts/deploy.sh --regen           # re-run xcodegen before building
+#   ./scripts/deploy.sh --no-regen        # skip xcodegen (faster, if no files changed)
 #
 # Requirements:
 #   - Xcode 15+ (provides xcrun devicectl)
@@ -33,7 +33,7 @@ DEVICE_HW_UDID=""  # for xcodebuild -destination id=
 DEVICE_CD_ID=""    # for devicectl --device
 DO_LAUNCH=true
 DO_CLEAN=false
-DO_REGEN=false
+DO_REGEN=true
 
 # ── Parse args ────────────────────────────────────────────────────────────────
 while [[ $# -gt 0 ]]; do
@@ -42,6 +42,7 @@ while [[ $# -gt 0 ]]; do
     --no-launch) DO_LAUNCH=false; shift ;;
     --clean)     DO_CLEAN=true; shift ;;
     --regen)     DO_REGEN=true; shift ;;
+    --no-regen)  DO_REGEN=false; shift ;;
     -h|--help)
       grep '^#' "$0" | grep -v '!/usr/bin' | sed 's/^# \{0,1\}//'
       exit 0 ;;

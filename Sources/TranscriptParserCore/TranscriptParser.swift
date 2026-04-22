@@ -14,6 +14,19 @@ public struct ParsedFood: Codable, Equatable {
     }
 }
 
+/// One atomic ingredient inside a composite dish, as inferred by the
+/// ingredient-decomposition pass (Option A). Grams are the portion of the
+/// dish's total weight attributed to this ingredient.
+public struct ParsedIngredient: Codable, Equatable {
+    public let name: String
+    public let grams: Double
+
+    public init(name: String, grams: Double) {
+        self.name = name
+        self.grams = grams
+    }
+}
+
 public enum ParseError: Error, LocalizedError {
     case emptyTranscript
     case noFoodsFound
@@ -53,6 +66,30 @@ Input: "Bowl of oatmeal with blueberries"
 Output: [{"food":"oatmeal","quantity":"1","unit":"bowl","grams":250},{"food":"blueberries","quantity":"0.5","unit":"cup","grams":74}]
 """
 
+private let decompositionPrompt = """
+You are a culinary ingredient decomposer for a nutrition-tracking app. The user will give you the name of a composite dish and its total weight in grams. Break the dish into its atomic ingredients with realistic gram estimates that sum to (approximately) the total weight.
+
+Return a JSON array of objects with these exact fields:
+- name: the ingredient as a common, lowercased single food (e.g. "beef", "rice noodles", "chicken broth", "bok choy", "soy sauce")
+- grams: estimated portion in grams as a number
+
+Rules:
+- Use common singular food names that would appear in a standard nutrition database. Prefer simple forms ("beef" not "thin-sliced beef brisket"; "rice noodles" not "fresh flat rice noodles").
+- The ingredient grams should sum to roughly the total dish weight (±15%). Broth/water-heavy dishes can include "broth" as an ingredient.
+- Omit negligible ingredients (<3g) like salt, pepper, small garnishes. Keep the list to 2–6 key ingredients.
+- Return ONLY the JSON array. No prose, no markdown, no code fences.
+
+Examples:
+Input: "beef noodle soup" (250g)
+Output: [{"name":"beef","grams":60},{"name":"rice noodles","grams":90},{"name":"chicken broth","grams":90},{"name":"bok choy","grams":15}]
+
+Input: "chicken caesar salad" (300g)
+Output: [{"name":"grilled chicken","grams":120},{"name":"romaine lettuce","grams":130},{"name":"caesar dressing","grams":30},{"name":"parmesan cheese","grams":15}]
+
+Input: "cheeseburger" (220g)
+Output: [{"name":"beef patty","grams":110},{"name":"cheddar cheese","grams":25},{"name":"hamburger bun","grams":70},{"name":"lettuce","grams":10}]
+"""
+
 public final class TranscriptParser {
     private let client: ClaudeAPIClient
 
@@ -78,6 +115,24 @@ public final class TranscriptParser {
         return try extractFoods(from: responseText)
     }
 
+    /// Decompose a composite dish name into its atomic ingredients with gram
+    /// estimates. Returns an empty array if Claude cannot decompose the dish.
+    /// Never throws — the caller treats a failed decomposition as "no Option A
+    /// contribution" and falls through to the next cascade step.
+    public func decomposeIngredients(foodName: String, totalGrams: Double) async -> [ParsedIngredient] {
+        let userMessage = "\(foodName) (\(Int(totalGrams.rounded()))g)"
+        do {
+            let text = try await client.send(
+                system: decompositionPrompt,
+                userMessage: userMessage,
+                maxTokens: 384
+            )
+            return extractIngredients(from: text)
+        } catch {
+            return []
+        }
+    }
+
     private func extractFoods(from text: String) throws -> [ParsedFood] {
         guard let start = text.firstIndex(of: "["),
               let end = text.lastIndex(of: "]") else {
@@ -92,5 +147,13 @@ public final class TranscriptParser {
         } catch {
             throw ParseError.noFoodsFound
         }
+    }
+
+    private func extractIngredients(from text: String) -> [ParsedIngredient] {
+        guard let start = text.firstIndex(of: "["),
+              let end = text.lastIndex(of: "]") else { return [] }
+        let jsonSlice = String(text[start...end])
+        guard let data = jsonSlice.data(using: .utf8) else { return [] }
+        return (try? JSONDecoder().decode([ParsedIngredient].self, from: data)) ?? []
     }
 }

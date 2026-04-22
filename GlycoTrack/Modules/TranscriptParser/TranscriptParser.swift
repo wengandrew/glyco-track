@@ -9,6 +9,11 @@ struct ParsedFood: Codable, Equatable {
     let grams: Double
 }
 
+struct ParsedIngredient: Codable, Equatable {
+    let name: String
+    let grams: Double
+}
+
 enum ParseError: Error, LocalizedError {
     case emptyTranscript
     case noFoodsFound
@@ -43,6 +48,30 @@ Rules:
 Examples:
 Input: "I had two scrambled eggs, a slice of whole wheat toast with butter, and orange juice"
 Output: [{"food":"scrambled eggs","quantity":"2","unit":"eggs","grams":100},{"food":"whole wheat toast","quantity":"1","unit":"slice","grams":30},{"food":"butter","quantity":"1","unit":"tsp","grams":5},{"food":"orange juice","quantity":"1","unit":"cup","grams":248}]
+"""
+
+private let decompositionPrompt = """
+You are a culinary ingredient decomposer for a nutrition-tracking app. The user will give you the name of a composite dish and its total weight in grams. Break the dish into its atomic ingredients with realistic gram estimates that sum to (approximately) the total weight.
+
+Return a JSON array of objects with these exact fields:
+- name: the ingredient as a common, lowercased single food (e.g. "beef", "rice noodles", "chicken broth", "bok choy", "soy sauce")
+- grams: estimated portion in grams as a number
+
+Rules:
+- Use common singular food names that would appear in a standard nutrition database. Prefer simple forms ("beef" not "thin-sliced beef brisket"; "rice noodles" not "fresh flat rice noodles").
+- The ingredient grams should sum to roughly the total dish weight (±15%). Broth/water-heavy dishes can include "broth" as an ingredient.
+- Omit negligible ingredients (<3g) like salt, pepper, small garnishes. Keep the list to 2–6 key ingredients.
+- Return ONLY the JSON array. No prose, no markdown, no code fences.
+
+Examples:
+Input: "beef noodle soup" (250g)
+Output: [{"name":"beef","grams":60},{"name":"rice noodles","grams":90},{"name":"chicken broth","grams":90},{"name":"bok choy","grams":15}]
+
+Input: "chicken caesar salad" (300g)
+Output: [{"name":"grilled chicken","grams":120},{"name":"romaine lettuce","grams":130},{"name":"caesar dressing","grams":30},{"name":"parmesan cheese","grams":15}]
+
+Input: "cheeseburger" (220g)
+Output: [{"name":"beef patty","grams":110},{"name":"cheddar cheese","grams":25},{"name":"hamburger bun","grams":70},{"name":"lettuce","grams":10}]
 """
 
 final class ClaudeAPIClient {
@@ -145,5 +174,21 @@ final class TranscriptParser {
               let foods = try? JSONDecoder().decode([ParsedFood].self, from: data)
         else { throw ParseError.noFoodsFound }
         return foods
+    }
+
+    /// Decompose a composite dish name into atomic ingredients with gram estimates.
+    /// Returns an empty array on any failure so the caller can fall through.
+    func decomposeIngredients(foodName: String, totalGrams: Double) async -> [ParsedIngredient] {
+        let userMessage = "\(foodName) (\(Int(totalGrams.rounded()))g)"
+        do {
+            let text = try await client.send(system: decompositionPrompt, userMessage: userMessage, maxTokens: 384)
+            guard let start = text.firstIndex(of: "["),
+                  let end = text.lastIndex(of: "]") else { return [] }
+            let jsonSlice = String(text[start...end])
+            guard let data = jsonSlice.data(using: .utf8) else { return [] }
+            return (try? JSONDecoder().decode([ParsedIngredient].self, from: data)) ?? []
+        } catch {
+            return []
+        }
     }
 }

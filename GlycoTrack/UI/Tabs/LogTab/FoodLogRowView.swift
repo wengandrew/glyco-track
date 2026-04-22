@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct FoodLogRowView: View {
-    let entry: FoodLogEntry
+    @ObservedObject var entry: FoodLogEntry
 
     var body: some View {
         HStack(alignment: .center, spacing: 10) {

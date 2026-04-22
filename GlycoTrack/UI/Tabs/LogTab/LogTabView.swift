@@ -60,11 +60,20 @@ struct EditEntryView: View {
 
     @State private var foodDescription: String
     @State private var quantity: String
+    @State private var isSaving = false
 
     init(entry: FoodLogEntry) {
         self.entry = entry
         _foodDescription = State(initialValue: entry.foodDescription)
         _quantity = State(initialValue: entry.quantity)
+    }
+
+    private var matchLabel: String {
+        let tier = MatchTier(rawValue: entry.parsingMethod)
+        if tier == .unrecognized { return "Not recognized" }
+        let pct = Int((entry.confidenceScore * 100).rounded())
+        let name = tier?.longLabel ?? "Tier \(entry.parsingMethod)"
+        return "\(pct)% · \(name)"
     }
 
     var body: some View {
@@ -78,8 +87,7 @@ struct EditEntryView: View {
                 Section("Calculated Values (read-only)") {
                     LabeledContent("GL", value: String(format: "%.2f", entry.computedGL))
                     LabeledContent("CL", value: String(format: "%+.3f", entry.computedCL))
-                    LabeledContent("Confidence", value: String(format: "%.0f%%", entry.confidenceScore * 100))
-                    LabeledContent("Parsing Tier", value: "Tier \(entry.parsingMethod)")
+                    LabeledContent("Match", value: matchLabel)
                 }
 
                 if let refFood = entry.referenceFood {
@@ -104,43 +112,51 @@ struct EditEntryView: View {
                     Button("Cancel") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") { save() }
+                    if isSaving {
+                        ProgressView()
+                    } else {
+                        Button("Save") { save() }
+                    }
                 }
             }
         }
     }
 
     private func save() {
-        guard !foodDescription.isEmpty else { return }
+        guard !foodDescription.isEmpty, !isSaving else { return }
+        isSaving = true
+        Task { await performSave() }
+    }
 
+    @MainActor
+    private func performSave() async {
         let newGrams = resolveGrams()
-        let match = NutritionalRepository(context: context).findBestMatch(for: foodDescription)
-        let profile = match?.profile
 
-        let glResult = GIEngine(database: GIDatabase(records: loadGIDatabase())).computeGL(
-            foodName: foodDescription,
-            quantityGrams: newGrams,
-            carbsPer100g: profile?.carbsPer100g ?? 0
-        )
-        let clResult = CLEngine().computeCL(
-            nutrition: NutritionInput(
-                saturatedFatPer100g: profile?.saturatedFatPer100g ?? 0,
-                transFatPer100g: profile?.transFatPer100g ?? 0,
-                solubleFiberPer100g: profile?.solubleFiberPer100g ?? 0,
-                pufaPer100g: profile?.pufaPer100g ?? 0,
-                mufaPer100g: profile?.mufaPer100g ?? 0
-            ),
-            quantityGrams: newGrams
-        )
+        // Route through the full cascade so composite dishes ("beef noodle
+        // soup") recompute correctly on edit too. Decomposition may hit the
+        // Claude API — the Save button remains enabled; the sheet dismisses
+        // once the recompute is done.
+        let apiKey = Bundle.main.infoDictionary?["CLAUDE_API_KEY"] as? String ?? ""
+        let client = ClaudeAPIClient(apiKey: apiKey)
+        let parser = TranscriptParser(client: client)
+        let matcher = FoodMatcher(repo: NutritionalRepository(context: context), parser: parser)
+
+        let parsed = ParsedFood(food: foodDescription, quantity: quantity, unit: "", grams: newGrams)
+        let resolution = await matcher.resolve(food: parsed)
 
         FoodLogRepository(context: context).update(
             entry,
             foodDescription: foodDescription,
             quantity: quantity,
             quantityGrams: newGrams,
-            computedGL: glResult.gl,
-            computedCL: clResult.cl
+            computedGL: resolution.totalGL,
+            computedCL: resolution.totalCL,
+            confidenceScore: resolution.confidence,
+            parsingMethod: resolution.tier.rawValue,
+            referenceFood: .some(resolution.matchSummary),
+            nutritionalProfile: .some(resolution.primaryProfile)
         )
+        isSaving = false
         dismiss()
     }
 
@@ -185,13 +201,6 @@ struct EditEntryView: View {
         }
     }
 
-    private func loadGIDatabase() -> [GIRecord] {
-        guard let url = Bundle.main.url(forResource: "gi_database", withExtension: "json"),
-              let data = try? Data(contentsOf: url),
-              let records = try? JSONDecoder().decode([GIRecord].self, from: data)
-        else { return [] }
-        return records
-    }
 }
 
 // MARK: - Manual Entry

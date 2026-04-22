@@ -1,6 +1,7 @@
 import CoreData
 import Foundation
 
+@MainActor
 final class FoodLogRepository {
     private let context: NSManagedObjectContext
 
@@ -48,12 +49,20 @@ final class FoodLogRepository {
                 quantity: String,
                 quantityGrams: Double,
                 computedGL: Double,
-                computedCL: Double) {
+                computedCL: Double,
+                confidenceScore: Float? = nil,
+                parsingMethod: Int16? = nil,
+                referenceFood: String?? = nil,
+                nutritionalProfile: NutritionalProfile?? = nil) {
         entry.foodDescription = foodDescription
         entry.quantity = quantity
         entry.quantityGrams = quantityGrams
         entry.computedGL = computedGL
         entry.computedCL = computedCL
+        if let confidenceScore { entry.confidenceScore = confidenceScore }
+        if let parsingMethod { entry.parsingMethod = parsingMethod }
+        if let referenceFood { entry.referenceFood = referenceFood }
+        if let nutritionalProfile { entry.nutritionalProfile = nutritionalProfile }
         entry.isEdited = true
         save()
     }
