@@ -1,7 +1,7 @@
 import Foundation
 import CoreData
 
-/// Orchestrates: transcript → parse → GI lookup → CL lookup → Core Data save
+/// Orchestrates: transcript → parse → cascade match → Core Data save
 @MainActor
 final class FoodLogProcessor: ObservableObject {
     @Published var isProcessing: Bool = false
@@ -34,32 +34,10 @@ final class FoodLogProcessor: ObservableObject {
 
         let nutritionalRepo = NutritionalRepository(context: context)
         let logRepo = FoodLogRepository(context: context)
-        let giEngine = GIEngine(database: GIDatabase(records: loadGIDatabase()))
-        let clEngine = CLEngine()
+        let matcher = FoodMatcher(repo: nutritionalRepo, parser: parser)
 
         for food in foods {
-            let match = nutritionalRepo.findBestMatch(for: food.food)
-            let profile = match?.profile
-
-            let carbsPer100g = profile?.carbsPer100g ?? 0
-
-            let glResult = giEngine.computeGL(
-                foodName: food.food,
-                quantityGrams: food.grams,
-                carbsPer100g: carbsPer100g
-            )
-
-            let nutrition = NutritionInput(
-                saturatedFatPer100g: profile?.saturatedFatPer100g ?? 0,
-                transFatPer100g: profile?.transFatPer100g ?? 0,
-                solubleFiberPer100g: profile?.solubleFiberPer100g ?? 0,
-                pufaPer100g: profile?.pufaPer100g ?? 0,
-                mufaPer100g: profile?.mufaPer100g ?? 0
-            )
-            let clResult = clEngine.computeCL(nutrition: nutrition, quantityGrams: food.grams)
-
-            let tier = match.map { Int16($0.tier) } ?? Int16(glResult.tier)
-            let confidence = match.map { $0.confidence } ?? glResult.confidence
+            let resolution = await matcher.resolve(food: food)
             let foodGroup = FoodGroup.classify(food.food).rawValue
 
             _ = logRepo.create(
@@ -68,27 +46,18 @@ final class FoodLogProcessor: ObservableObject {
                 quantity: [food.quantity, food.unit].map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }.joined(separator: " "),
                 quantityGrams: food.grams,
                 timestamp: Date(),
-                confidenceScore: confidence,
-                parsingMethod: tier,
-                referenceFood: match?.profile.foodName,
+                confidenceScore: resolution.confidence,
+                parsingMethod: resolution.tier.rawValue,
+                referenceFood: resolution.matchSummary,
                 foodGroup: foodGroup,
-                computedGL: glResult.gl,
-                computedCL: clResult.cl,
-                nutritionalProfile: profile
+                computedGL: resolution.totalGL,
+                computedCL: resolution.totalCL,
+                nutritionalProfile: resolution.primaryProfile
             )
         }
 
         NotificationManager.shared.cancelTodayIfSufficientlyLogged(
             entryCount: logRepo.countToday()
         )
-    }
-
-    private func loadGIDatabase() -> [GIRecord] {
-        guard
-            let url = Bundle.main.url(forResource: "gi_database", withExtension: "json"),
-            let data = try? Data(contentsOf: url),
-            let records = try? JSONDecoder().decode([GIRecord].self, from: data)
-        else { return [] }
-        return records
     }
 }

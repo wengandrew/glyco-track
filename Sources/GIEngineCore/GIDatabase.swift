@@ -25,20 +25,18 @@ public struct GIDatabase {
     public func lookup(_ foodName: String) -> (record: GIRecord, confidence: Float, tier: Int)? {
         let normalized = foodName.lowercased().trimmingCharacters(in: .whitespaces)
 
-        // Tier 1: exact match (name or alias)
+        // Tier 1: exact match on canonical name or alias.
         if let record = nameIndex[normalized] {
             return (record, 0.95, 1)
         }
 
-        // Tier 1: contains match
-        if let record = records.first(where: { rec in
-            normalized.contains(rec.name.lowercased()) || rec.name.lowercased().contains(normalized)
-                || rec.aliases.contains(where: { normalized.contains($0.lowercased()) || $0.lowercased().contains(normalized) })
-        }) {
-            return (record, 0.87, 1)
-        }
+        // NOTE: bidirectional substring matching was removed. Composite names
+        // like "beef noodle soup" used to spuriously match any short DB token
+        // inside them (e.g. "beef"), reporting ~0.87 confidence while the
+        // caller's macro lookup returned nothing. Use the cascade in
+        // FoodMatcher (iOS layer) for composite-name decomposition.
 
-        // Tier 2: fuzzy match (Levenshtein ≤ 3)
+        // Tier 2: fuzzy match (Levenshtein ≤ 3) — typos only.
         var bestRecord: GIRecord?
         var bestDistance = Int.max
         for record in records {

@@ -28,6 +28,11 @@ struct RootTabView: View {
                     Label("Summary", systemImage: "text.magnifyingglass")
                 }
 
+            AboutTabView()
+                .tabItem {
+                    Label("About", systemImage: "info.circle")
+                }
+
             DebugTabView()
                 .tabItem {
                     Label("Debug", systemImage: "wrench.and.screwdriver")

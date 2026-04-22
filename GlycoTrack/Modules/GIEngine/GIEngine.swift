@@ -1,7 +1,10 @@
 import Foundation
 
 // iOS app target wrapper — mirrors GIEngineCore SPM module.
-// Keeps the same API so FoodLogProcessor can use it directly.
+// Kept for compatibility; the new FoodLogProcessor pipeline reads GI directly
+// from NutritionalProfile and uses GIEngine.computeGL(gi:carbsGrams:) for the
+// composite per-ingredient math. This type still supports single-food lookups
+// for any legacy callers.
 
 struct GIRecord: Codable {
     let name: String
@@ -28,13 +31,12 @@ struct GIDatabase {
     func lookup(_ foodName: String) -> (record: GIRecord, confidence: Float, tier: Int)? {
         let normalized = foodName.lowercased().trimmingCharacters(in: .whitespaces)
 
+        // Exact match on canonical name or alias.
         if let record = nameIndex[normalized] { return (record, 0.95, 1) }
 
-        if let record = records.first(where: { rec in
-            normalized.contains(rec.name.lowercased()) || rec.name.lowercased().contains(normalized)
-            || rec.aliases.contains(where: { normalized.contains($0.lowercased()) || $0.lowercased().contains(normalized) })
-        }) { return (record, 0.87, 1) }
-
+        // Fuzzy (Levenshtein) — typos only; does NOT do substring containment,
+        // which previously caused "beef noodle soup" to spuriously match "beef"
+        // and report 0.87 confidence despite carbs being 0.
         var bestRecord: GIRecord?
         var bestDistance = Int.max
         for record in records {

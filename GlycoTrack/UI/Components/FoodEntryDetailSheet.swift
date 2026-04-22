@@ -124,9 +124,13 @@ struct FoodEntryDetailSheet: View {
     }
 
     private var confidenceLabel: String {
+        let tier = MatchTier(rawValue: entry.parsingMethod)
+        if tier == .unrecognized {
+            return "Not recognized — GL and CL set to 0"
+        }
         let pct = Int((entry.confidenceScore * 100).rounded())
-        let tier = "T\(entry.parsingMethod)"
-        return "\(pct)% (\(tier))"
+        let tierName = tier?.longLabel ?? "Unknown"
+        return "\(pct)% · \(tierName) (T\(entry.parsingMethod))"
     }
 
     private func detailRow(_ label: String, _ value: String) -> some View {
