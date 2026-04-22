@@ -76,13 +76,46 @@ The iOS wrappers mirror the SPM API exactly. Tests run against the SPM targets v
 VoiceCapture (SFSpeechRecognizer, on-device)
   → transcript string
   → FoodLogProcessor.process(transcript:context:)         [HomeTab/FoodLogProcessor.swift]
-    → ClaudeAPIClient.send() → JSON array of ParsedFood
-    → GIEngine.computeGL()  ← NutritionalRepository.findBestMatch()
-    → CLEngine.computeCL()  ← same NutritionalProfile
-    → FoodLogRepository.create() → FoodLogEntry saved to Core Data
+    → TranscriptParser.parse() → [ParsedFood]
+    → FoodMatcher.resolve(food:) → FoodResolution          [Modules/Matching/FoodMatcher.swift]
+        T1  NutritionalRepository.findBestMatch()  — exact / contains / fuzzy whole-name
+        T2  NutritionalRepository.findComponents() — reverse-substring decomposition
+        T3  TranscriptParser.decomposeIngredients() → Claude API → per-ingredient DB lookup
+        T4  T3 + T2 fallback for unresolved ingredients
+        T5  unrecognized → GL = 0, CL = 0, red badge
+    → FoodLogRepository.create() → FoodLogEntry (computedGL, computedCL, tier, confidence)
 ```
 
-`FoodLogProcessor` is `@MainActor ObservableObject` — it owns the full orchestration and is the right place to add any new logging logic.
+`FoodLogProcessor` is `@MainActor ObservableObject`. `FoodMatcher`, `NutritionalRepository`, and `FoodLogRepository` are all `@MainActor` — see the Core Data threading rule below.
+
+### GL/CL computation accuracy — critical rules
+
+Getting these numbers right is the core purpose of the app. Several failure modes have been found and fixed; do not reintroduce them.
+
+**1. Never silently return GL = 0 / CL = 0 for an unrecognized food.**
+If matching fails, return `MatchTier.unrecognized` (T5) with explicit zeros and a red "Not recognized" badge. A false high-confidence match with zeroed values is worse than admitting failure — it silently corrupts daily totals.
+
+**2. USDA-only entries with real carbs must use GI = 55, not GI = 0.**
+`NutritionalProfile.glycemicIndex == 0` means "no Sydney GI entry", not "zero GI". If `carbsPer100g > 3` and `glycemicIndex == 0`, substitute GI = 55 (medium) before computing GL. Noodles and grains without a GI entry would otherwise report GL = 0.
+
+**3. Composite dishes must be decomposed; GL/CL are summed across components.**
+`GL_total = Σ (GI_i × carbs_i_in_serving) / 100` across resolved components. A single direct lookup on "beef noodle soup" will fail; the cascade is what makes composite dishes work.
+
+**4. Claude's ingredient gram estimates must be normalized to the user's actual serving size.**
+`decomposeIngredients` allows ±15% total mass error. Always scale: `scaledGrams = ing.grams × (totalGrams / sum(ingredients.grams))` before computing GL/CL, so the result tracks the actual portion.
+
+**5. Word-boundary matching must be applied at every substring site.**
+Short food names ("egg", "ale", "oat", "tea") appear as raw substrings inside unrelated words ("veggie", "kale", "bloated", "steak"). Both T1's contains-check (`fetchDBNameContainsQuery`) and T2's `findComponents` use `_wordBoundaryContains` — do not replace these with plain `String.contains`.
+
+### Core Data threading — @MainActor required
+
+`PersistenceController.shared.context` is a main-queue `NSManagedObjectContext`. Per SE-0338, non-isolated `async` functions run on the cooperative pool (not the caller's actor), so any Core Data fetch inside an unannotated async function is a threading violation that crashes intermittently.
+
+**`NutritionalRepository`, `FoodLogRepository`, and `FoodMatcher` are all `@MainActor`.** Keep them that way. Adding a new class that touches the main context? Mark it `@MainActor` too. The network `await` inside `FoodMatcher.resolve` (Claude API call) still suspends cleanly — UI remains responsive.
+
+### SwiftUI + Core Data observation
+
+Use `@ObservedObject var entry: FoodLogEntry` (not `let`) in any view that displays a Core Data object's properties directly. `NSManagedObject` conforms to `ObservableObject` and fires `objectWillChange` on every property save. With `let`, SwiftUI never subscribes and the row won't update when the entry is edited.
 
 ### Core Data model
 
