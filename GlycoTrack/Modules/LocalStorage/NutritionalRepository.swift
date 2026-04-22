@@ -148,8 +148,13 @@ final class NutritionalRepository {
     private func fetchDBNameContainsQuery(_ query: String) -> NutritionalProfile? {
         let request = NutritionalProfile.fetchRequest()
         request.predicate = NSPredicate(format: "foodName CONTAINS[cd] %@", query)
-        request.fetchLimit = 1
-        return try? context.fetch(request).first
+        let candidates = (try? context.fetch(request)) ?? []
+        // NSPredicate CONTAINS is raw substring — "egg" would match "veggie straws"
+        // because "veggie" contains "egg" as a substring. Post-filter with
+        // word-boundary check so only genuine word-level matches survive.
+        return candidates.first {
+            _wordBoundaryContains(haystack: $0.foodName.lowercased(), needle: query)
+        }
     }
 
     private func fetchFuzzy(_ name: String) -> (NutritionalProfile, Int)? {
