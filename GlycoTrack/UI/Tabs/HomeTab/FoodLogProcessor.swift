@@ -12,6 +12,7 @@ final class FoodLogProcessor: ObservableObject {
     }
 
     func process(transcript: String, context: NSManagedObjectContext) async {
+        guard !isProcessing else { return }
         isProcessing = true
         lastError = nil
         defer { isProcessing = false }
