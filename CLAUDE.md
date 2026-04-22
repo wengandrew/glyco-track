@@ -25,31 +25,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Behavior
 
 - **Ask before assuming.** When a task has multiple reasonable approaches (e.g. a new visualization style, a data model change, a refactor), ask a clarifying question first. Don't assume the user knows the tradeoffs — explain the options briefly and ask which direction they prefer.
-- **Always rebuild after code changes.** After any code edit, run the build command below and report the result. Do not summarize a change as done until the build succeeds.
+- **Always rebuild after code changes.** After any code edit, run `./scripts/deploy.sh` and report the result. Do not summarize a change as done until the build succeeds.
 
 ## Build & Test Commands
 
 ```bash
-# Generate Xcode project (required after adding/removing files or changing project.yml)
-xcodegen generate
+# Build and deploy to connected iPhone — the default workflow.
+# Runs xcodegen automatically, so no separate regen step is needed.
+./scripts/deploy.sh                       # auto-detects device, regens + builds + installs
+./scripts/deploy.sh --no-launch           # install without launching
+./scripts/deploy.sh --clean               # clean build first
+./scripts/deploy.sh --no-regen            # skip xcodegen (faster, only when no files changed)
 
-# Build for iOS Simulator
-xcodebuild -project GlycoTrack.xcodeproj -scheme GlycoTrack \
-  -destination 'generic/platform=iOS Simulator' -configuration Debug build
-
-# Run unit tests (pure Swift, no simulator needed — fast)
+# Run unit tests (pure Swift, no device needed — covers GI/CL engine math)
 swift test
-
-# Run a single test
 swift test --filter GIEngineTests/testWhiteRiceGL
 
-# Build and deploy to connected iPhone (no Xcode UI needed)
-./scripts/deploy.sh                       # auto-detects device
-./scripts/deploy.sh --clean --regen       # clean + regen project first
-./scripts/deploy.sh --no-launch           # install without launching
+# Simulator-only build (no device required)
+xcodebuild -project GlycoTrack.xcodeproj -scheme GlycoTrack \
+  -destination 'generic/platform=iOS Simulator' -configuration Debug build
 ```
 
-The `project.pbxproj` is committed and tracked. After running `xcodegen generate`, stage and commit the updated `GlycoTrack.xcodeproj/project.pbxproj` if it changed. The `contents.xcworkspacedata` file is also tracked — do not delete it.
+The `project.pbxproj` is committed and tracked. `deploy.sh` regenerates it automatically on every run, so after adding or removing Swift files just run `deploy.sh` as normal and commit the updated `project.pbxproj` if it changed. The `contents.xcworkspacedata` file is also tracked — do not delete it.
 
 ## Architecture
 
