@@ -107,6 +107,9 @@ If matching fails, return `MatchTier.unrecognized` (T5) with explicit zeros and 
 **5. Word-boundary matching must be applied at every substring site.**
 Short food names ("egg", "ale", "oat", "tea") appear as raw substrings inside unrelated words ("veggie", "kale", "bloated", "steak"). Both T1's contains-check (`fetchDBNameContainsQuery`) and T2's `findComponents` use `_wordBoundaryContains` — do not replace these with plain `String.contains`.
 
+**6. T1 contains-match requires a word-count ratio gate (≥ 50%).**
+Even after word-boundary checks pass, a short generic query can spuriously match a long DB entry whose first word happens to be that query ("sugar" → "sugar snap peas", "apple" → "apple cider vinegar"). `fetchDBNameContainsQuery` enforces that the query must cover at least 50% of the DB entry's word count. "white rice" / "steamed white rice" = 67% → accepted. "sugar" / "sugar snap peas" = 33% → rejected, falls through to T2/T3.
+
 ### Core Data threading — @MainActor required
 
 `PersistenceController.shared.context` is a main-queue `NSManagedObjectContext`. Per SE-0338, non-isolated `async` functions run on the cooperative pool (not the caller's actor), so any Core Data fetch inside an unannotated async function is a threading violation that crashes intermittently.
