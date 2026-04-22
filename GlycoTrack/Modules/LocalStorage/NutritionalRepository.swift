@@ -99,18 +99,41 @@ final class NutritionalRepository {
     }
 
     /// Fraction of the query's characters (excluding whitespace) that are covered
-    /// by the union of component matches. Used to gate Tier 2 confidence.
+    /// by the union of component matches. Tracks actual character positions to
+    /// avoid double-counting overlapping tokens.
     func coverageFraction(query: String, components: [ComponentMatch]) -> Double {
         let normalized = query.lowercased().trimmingCharacters(in: .whitespaces)
-        let nonSpaceChars = normalized.filter { !$0.isWhitespace }.count
+        let queryChars = Array(normalized)
+        let nonSpaceChars = queryChars.filter { !$0.isWhitespace }.count
         guard nonSpaceChars > 0 else { return 0 }
-        let covered = components.reduce(0) { acc, match in
-            acc + match.matchedToken.filter { !$0.isWhitespace }.count
+
+        var covered = Array(repeating: false, count: queryChars.count)
+        for match in components {
+            let tokenChars = Array(match.matchedToken)
+            guard !tokenChars.isEmpty, tokenChars.count <= queryChars.count else { continue }
+            for start in 0...(queryChars.count - tokenChars.count) {
+                var matches = true
+                for offset in 0..<tokenChars.count where queryChars[start + offset] != tokenChars[offset] {
+                    matches = false
+                    break
+                }
+                if matches {
+                    for offset in 0..<tokenChars.count { covered[start + offset] = true }
+                }
+            }
         }
-        return min(1.0, Double(covered) / Double(nonSpaceChars))
+
+        let coveredNonSpace = zip(queryChars, covered).reduce(0) { count, pair in
+            count + ((pair.1 && !pair.0.isWhitespace) ? 1 : 0)
+        }
+        return Double(coveredNonSpace) / Double(nonSpaceChars)
     }
 
     // MARK: - Private helpers
+
+    func wordBoundaryContains(haystack: String, needle: String) -> Bool {
+        _wordBoundaryContains(haystack: haystack, needle: needle)
+    }
 
     private func fetchExact(_ name: String) -> NutritionalProfile? {
         let request = NutritionalProfile.fetchRequest()
@@ -145,7 +168,7 @@ final class NutritionalRepository {
     /// while still allowing "beef" to match inside "beef noodle soup". Plural
     /// "s"/"es" suffixes on the needle are tolerated on the right edge so
     /// "egg" matches "scrambled eggs" but NOT "eggplant".
-    private func wordBoundaryContains(haystack: String, needle: String) -> Bool {
+    private func _wordBoundaryContains(haystack: String, needle: String) -> Bool {
         guard !needle.isEmpty, needle.count <= haystack.count else { return false }
         let h = Array(haystack)
         let n = Array(needle)

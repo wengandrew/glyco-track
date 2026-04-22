@@ -107,10 +107,12 @@ final class FoodMatcher {
         let coverage = repo.coverageFraction(query: query, components: components)
         let tier2IsStrong = (components.count >= 2 && coverage >= 0.6)
             || (components.count >= 1 && coverage >= 0.75)
+            || (!components.isEmpty && coverage >= 0.40)
 
         // ── Tier 3/4 · AI decomposition (Option A) ──────────────────────────
-        // Invoked whenever Tier 1 missed AND Tier 2 is weak or empty. If Tier 2
-        // is strong we still prefer it (faster, no extra API call).
+        // Only invoked when T2 is weak AND found nothing at all (or negligible
+        // coverage). Skips the API call whenever local matching surfaces anything
+        // meaningful, keeping common variations fast and offline.
         if !tier2IsStrong {
             let ingredients = await parser.decomposeIngredients(foodName: query, totalGrams: grams)
             if !ingredients.isEmpty {
@@ -166,31 +168,35 @@ final class FoodMatcher {
         var anyBlended = false
         var matchedMass: Double = 0
         let totalMass = max(1, ingredients.reduce(0) { $0 + $1.grams })
+        // Normalize Claude's gram estimates to the user's actual totalGrams.
+        // Claude is allowed ±15% in total mass; scaling removes that bias before
+        // computing GL/CL so the results track the actual portion size.
+        let normScale = totalGrams / totalMass
 
         for ing in ingredients {
+            let scaledGrams = ing.grams * normScale
             // Direct lookup on the ingredient name.
             if let direct = repo.findBestMatch(for: ing.name) {
-                resolved.append(ResolvedComponent(profile: direct.profile, grams: ing.grams, via: .aiDecomposed))
-                matchedMass += ing.grams
+                resolved.append(ResolvedComponent(profile: direct.profile, grams: scaledGrams, via: .aiDecomposed))
+                matchedMass += scaledGrams
                 continue
             }
             // Fall back to Option B for this ingredient name.
             let subComponents = repo.findComponents(for: ing.name)
             if let best = subComponents.max(by: { $0.coverage < $1.coverage }) {
-                resolved.append(ResolvedComponent(profile: best.profile, grams: ing.grams, via: .aiPlusComponent))
-                matchedMass += ing.grams
+                resolved.append(ResolvedComponent(profile: best.profile, grams: scaledGrams, via: .aiPlusComponent))
+                matchedMass += scaledGrams
                 anyBlended = true
                 continue
             }
             // If the pool found during the outer query covers this ingredient
-            // name, we can still use it. This handles cases where the AI names
-            // an ingredient the DB doesn't have, but the overall query string
-            // matched something that overlaps.
+            // name, we can still use it. Use word-boundary matching to avoid the
+            // same false-positive substring hits this PR eliminates elsewhere.
             if let pooled = componentPool.first(where: {
-                ing.name.lowercased().contains($0.matchedToken)
+                repo.wordBoundaryContains(haystack: ing.name.lowercased(), needle: $0.matchedToken)
             }) {
-                resolved.append(ResolvedComponent(profile: pooled.profile, grams: ing.grams, via: .aiPlusComponent))
-                matchedMass += ing.grams
+                resolved.append(ResolvedComponent(profile: pooled.profile, grams: scaledGrams, via: .aiPlusComponent))
+                matchedMass += scaledGrams
                 anyBlended = true
             }
             // else: ingredient unresolved, skipped
@@ -198,7 +204,7 @@ final class FoodMatcher {
 
         guard !resolved.isEmpty else { return nil }
 
-        let matchFraction = matchedMass / totalMass
+        let matchFraction = matchedMass / max(1, totalGrams)
         let allMatched = resolved.count == ingredients.count
         let tier: MatchTier = (allMatched && !anyBlended) ? .aiDecomposed : .aiBlended
 

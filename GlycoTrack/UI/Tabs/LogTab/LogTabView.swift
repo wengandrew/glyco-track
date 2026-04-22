@@ -60,6 +60,7 @@ struct EditEntryView: View {
 
     @State private var foodDescription: String
     @State private var quantity: String
+    @State private var isSaving = false
 
     init(entry: FoodLogEntry) {
         self.entry = entry
@@ -111,14 +112,19 @@ struct EditEntryView: View {
                     Button("Cancel") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") { save() }
+                    if isSaving {
+                        ProgressView()
+                    } else {
+                        Button("Save") { save() }
+                    }
                 }
             }
         }
     }
 
     private func save() {
-        guard !foodDescription.isEmpty else { return }
+        guard !foodDescription.isEmpty, !isSaving else { return }
+        isSaving = true
         Task { await performSave() }
     }
 
@@ -150,6 +156,7 @@ struct EditEntryView: View {
             referenceFood: .some(resolution.matchSummary),
             nutritionalProfile: .some(resolution.primaryProfile)
         )
+        isSaving = false
         dismiss()
     }
 
