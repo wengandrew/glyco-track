@@ -1,6 +1,7 @@
 import CoreData
 import Foundation
 
+@MainActor
 final class FoodLogRepository {
     private let context: NSManagedObjectContext
 

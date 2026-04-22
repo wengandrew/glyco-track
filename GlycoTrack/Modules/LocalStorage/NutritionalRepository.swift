@@ -17,6 +17,9 @@ struct ComponentMatch {
     let coverage: Int
 }
 
+/// All operations use a main-queue NSManagedObjectContext, so the type is
+/// @MainActor-isolated to prevent cross-thread Core Data access.
+@MainActor
 final class NutritionalRepository {
     private let context: NSManagedObjectContext
 

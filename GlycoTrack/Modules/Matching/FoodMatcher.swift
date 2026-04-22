@@ -70,6 +70,14 @@ enum MatchTier: Int16, CaseIterable {
 ///   3. Tier 3 — Claude ingredient decomposition (Option A)
 ///   4. Tier 4 — Tier 3 with Tier 2 filling in unresolved ingredients
 ///   5. Tier 5 — give up; emit zeros + "not recognized"
+///
+/// @MainActor-isolated because all `NutritionalRepository` and `FoodLogRepository`
+/// callers use `PersistenceController.shared.context` (a main-queue
+/// NSManagedObjectContext). Non-isolated async functions run on the cooperative
+/// pool per SE-0338, which would hit Core Data's thread-affinity guard and
+/// crash intermittently. The network hop for AI decomposition still suspends
+/// without blocking UI.
+@MainActor
 final class FoodMatcher {
     private let repo: NutritionalRepository
     private let parser: TranscriptParser
