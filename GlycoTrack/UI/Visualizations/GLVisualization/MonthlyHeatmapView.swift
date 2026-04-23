@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Prototype C: Monthly Heatmap
-/// Calendar grid. Cell color = total daily GL (green → red gradient). Tap day → drill to DailyBucketView.
+/// Calendar grid. Cell color = total daily GL (green → red gradient). Tap day → drill to the bucket view for that date.
 struct MonthlyHeatmapView: View {
     let month: Date
     let getDayEntries: (Date) -> [FoodLogEntry]
@@ -77,7 +77,7 @@ struct MonthlyHeatmapView: View {
         )) {
             if let date = selectedDate {
                 NavigationView {
-                    DailyBucketView(entries: getDayEntries(date))
+                    PhysicsBucketView(entries: getDayEntries(date))
                         .navigationTitle(date.formatted(date: .abbreviated, time: .omitted))
                         .navigationBarTitleDisplayMode(.inline)
                         .toolbar {

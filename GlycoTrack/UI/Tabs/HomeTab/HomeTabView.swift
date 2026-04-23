@@ -6,19 +6,19 @@ struct HomeTabView: View {
     @StateObject private var voiceCapture = VoiceCapture()
     @StateObject private var logProcessor: FoodLogProcessor
 
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: false)],
-        predicate: todayPredicate(),
-        animation: .default
-    )
-    private var todayEntries: FetchedResults<FoodLogEntry>
+    @FetchRequest private var entries: FetchedResults<FoodLogEntry>
 
-    @State private var glPrototype: GLPrototype = .physicsBucket
+    @State private var selectedDate: Date = Calendar.current.startOfDay(for: Date())
     @State private var clPrototype: CLPrototype = .tugOfWar
     @State private var showQuadrant = false
 
     init() {
         _logProcessor = StateObject(wrappedValue: FoodLogProcessor())
+        _entries = FetchRequest<FoodLogEntry>(
+            sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: false)],
+            predicate: Self.predicate(for: Date()),
+            animation: .default
+        )
     }
 
     var body: some View {
@@ -27,7 +27,9 @@ struct HomeTabView: View {
                 VStack(spacing: 18) {
                     recordingSection
 
-                    let entries = Array(todayEntries)
+                    dateNavigator
+
+                    let entryArray = Array(entries)
 
                     // ── GL SECTION ───────────────────────────────
                     MetricSection(
@@ -36,20 +38,10 @@ struct HomeTabView: View {
                         accent: .glAccent,
                         icon: "drop.fill"
                     ) {
-                        Picker("GL view", selection: $glPrototype) {
-                            ForEach(GLPrototype.allCases) { p in
-                                Text(p.shortLabel).tag(p)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-
-                        switch glPrototype {
-                        case .physicsBucket:
-                            PhysicsBucketView(entries: entries)
-                        case .classicBucket:
-                            DailyBucketView(entries: entries)
-                        }
+                        PhysicsBucketView(entries: entryArray)
                     }
+                    .contentShape(Rectangle())
+                    .gesture(horizontalSwipe)
 
                     // ── CL SECTION ───────────────────────────────
                     MetricSection(
@@ -67,13 +59,15 @@ struct HomeTabView: View {
 
                         switch clPrototype {
                         case .tugOfWar:
-                            TugOfWarBarView(entries: entries)
+                            TugOfWarBarView(entries: entryArray)
                         case .waterline:
-                            WaterlineView(entries: entries)
+                            WaterlineView(entries: entryArray)
                         case .balance:
-                            BalanceScaleView(entries: entries)
+                            BalanceScaleView(entries: entryArray)
                         }
                     }
+                    .contentShape(Rectangle())
+                    .gesture(horizontalSwipe)
 
                     // ── COMBINED ─────────────────────────────────
                     Button {
@@ -99,17 +93,17 @@ struct HomeTabView: View {
                         .padding(.horizontal)
                     }
 
-                    if !entries.isEmpty {
-                        TodayEntrySummary(entries: entries)
+                    if !entryArray.isEmpty {
+                        TodayEntrySummary(entries: entryArray)
                             .padding(.horizontal)
                     }
                 }
                 .padding(.bottom, 24)
             }
-            .navigationTitle("Today")
+            .navigationTitle(titleForNav)
             .sheet(isPresented: $showQuadrant) {
                 NavigationView {
-                    QuadrantPlotView(entries: Array(todayEntries))
+                    QuadrantPlotView(entries: Array(entries))
                         .navigationTitle("GL × CL Quadrant")
                         .navigationBarTitleDisplayMode(.inline)
                         .toolbar {
@@ -122,14 +116,116 @@ struct HomeTabView: View {
         }
         .onOpenURL { url in
             if url.scheme == "glycotrack" && url.host == "record" {
+                // Logging a new item should snap the view back to today.
+                changeDate(to: Calendar.current.startOfDay(for: Date()))
                 Task { await toggleRecording() }
             }
         }
+        .onChange(of: selectedDate) { newDate in
+            entries.nsPredicate = Self.predicate(for: newDate)
+        }
     }
+
+    // MARK: - Date navigation
+
+    private var dateNavigator: some View {
+        HStack(spacing: 16) {
+            Button {
+                changeDate(byDays: -1)
+            } label: {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(.accentColor)
+                    .frame(width: 32, height: 32)
+                    .background(Color(.systemGray6))
+                    .clipShape(Circle())
+            }
+
+            VStack(spacing: 0) {
+                Text(dateHeading)
+                    .font(.subheadline.weight(.semibold))
+                Text(dateSubheading)
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+            .frame(maxWidth: .infinity)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                changeDate(to: Calendar.current.startOfDay(for: Date()))
+            }
+
+            Button {
+                changeDate(byDays: 1)
+            } label: {
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(isToday ? .secondary : .accentColor)
+                    .frame(width: 32, height: 32)
+                    .background(Color(.systemGray6))
+                    .clipShape(Circle())
+            }
+            .disabled(isToday)
+        }
+        .padding(.horizontal)
+    }
+
+    private var horizontalSwipe: some Gesture {
+        DragGesture(minimumDistance: 20)
+            .onEnded { value in
+                let dx = value.translation.width
+                let dy = value.translation.height
+                // Only trigger on decisive horizontal motion.
+                guard abs(dx) > 60, abs(dx) > abs(dy) * 1.5 else { return }
+                if dx < 0 {
+                    // Left swipe → next day (forward in time).
+                    changeDate(byDays: 1)
+                } else {
+                    // Right swipe → previous day.
+                    changeDate(byDays: -1)
+                }
+            }
+    }
+
+    private var isToday: Bool {
+        Calendar.current.isDate(selectedDate, inSameDayAs: Date())
+    }
+
+    private var titleForNav: String {
+        isToday ? "Today" : DateFormatter.short.string(from: selectedDate)
+    }
+
+    private var dateHeading: String {
+        isToday ? "Today" : DateFormatter.weekdayMonthDay.string(from: selectedDate)
+    }
+
+    private var dateSubheading: String {
+        isToday ? DateFormatter.weekdayMonthDay.string(from: selectedDate) : "Tap to return to today"
+    }
+
+    private func changeDate(byDays delta: Int) {
+        guard let target = Calendar.current.date(byAdding: .day, value: delta, to: selectedDate) else { return }
+        changeDate(to: target)
+    }
+
+    private func changeDate(to date: Date) {
+        let startOfDay = Calendar.current.startOfDay(for: date)
+        let today = Calendar.current.startOfDay(for: Date())
+        // Don't allow navigating into the future.
+        let clamped = startOfDay > today ? today : startOfDay
+        withAnimation(.easeInOut(duration: 0.2)) {
+            selectedDate = clamped
+        }
+    }
+
+    // MARK: - Recording
 
     private var recordingSection: some View {
         VStack(spacing: 8) {
             RecordButton(isRecording: voiceCapture.isRecording) {
+                // Ensure we're back on today when logging a new entry.
+                if !isToday {
+                    changeDate(to: Calendar.current.startOfDay(for: Date()))
+                }
                 Task { await toggleRecording() }
             }
 
@@ -193,20 +289,18 @@ struct HomeTabView: View {
         defaults?.set(repo.dailyGL(for: Date()), forKey: "todayGL")
         defaults?.set(repo.countToday(), forKey: "todayEntryCount")
     }
+
+    // MARK: - Predicate
+
+    static func predicate(for date: Date) -> NSPredicate {
+        let start = Calendar.current.startOfDay(for: date)
+        let end = Calendar.current.date(byAdding: .day, value: 1, to: start)!
+        return NSPredicate(format: "timestamp >= %@ AND timestamp < %@ AND isSoftDeleted == NO",
+                           start as NSDate, end as NSDate)
+    }
 }
 
 // MARK: - Prototype enums
-
-enum GLPrototype: String, CaseIterable, Identifiable {
-    case physicsBucket, classicBucket
-    var id: String { rawValue }
-    var shortLabel: String {
-        switch self {
-        case .physicsBucket: return "Bucket (physics)"
-        case .classicBucket: return "Bucket (static)"
-        }
-    }
-}
 
 enum CLPrototype: String, CaseIterable, Identifiable {
     case tugOfWar, waterline, balance
@@ -310,9 +404,17 @@ struct StatChip: View {
     }
 }
 
-private func todayPredicate() -> NSPredicate {
-    let start = Calendar.current.startOfDay(for: Date())
-    let end = Calendar.current.date(byAdding: .day, value: 1, to: start)!
-    return NSPredicate(format: "timestamp >= %@ AND timestamp < %@ AND isSoftDeleted == NO",
-                       start as NSDate, end as NSDate)
+// MARK: - Date formatters
+
+private extension DateFormatter {
+    static let short: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "EEE, MMM d"
+        return f
+    }()
+    static let weekdayMonthDay: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "EEEE, MMM d"
+        return f
+    }()
 }

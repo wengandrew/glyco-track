@@ -1,28 +1,25 @@
 import SwiftUI
+import SpriteKit
+import UIKit
 
-/// Prototype F: Balance Scale (CL Visualization)
-/// Two plates with bubbles. Scale tips toward heavier side (net CL direction).
+/// Balance Scale (CL Visualization).
+/// A pinned beam with two hanging plates. Food items drop onto the appropriate plate —
+/// beneficial (−CL) on the left, harmful (+CL) on the right. Beam rotates naturally
+/// from accumulated torque. Item mass is proportional to |CL|.
 struct BalanceScaleView: View {
     let entries: [FoodLogEntry]
 
-    private var harmfulEntries: [FoodLogEntry] { entries.filter { $0.computedCL > 0 } }
-    private var beneficialEntries: [FoodLogEntry] { entries.filter { $0.computedCL < 0 } }
+    @State private var selectedEntry: FoodLogEntry?
+    @State private var sceneID = UUID()
+    @State private var scene: BalanceScene?
 
-    private var totalHarmful: Double { harmfulEntries.reduce(0) { $0 + $1.computedCL } }
-    private var totalBeneficial: Double { beneficialEntries.reduce(0) { $0 + abs($1.computedCL) } }
     private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
-
-    // Tip angle: positive = tips right (harmful heavier), negative = tips left (beneficial heavier)
-    private var tipAngle: Double {
-        let maxAngle = 25.0
-        let ratio = (totalHarmful - totalBeneficial) / max(totalHarmful + totalBeneficial, 1.0)
-        return ratio * maxAngle
-    }
+    private var entryIDs: [UUID] { entries.compactMap { $0.id } }
 
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(alignment: .leading, spacing: 10) {
             HStack {
-                Text("CL Balance")
+                Text("Balance")
                     .font(.headline)
                 Spacer()
                 CLNetLabel(netCL: netCL)
@@ -30,91 +27,319 @@ struct BalanceScaleView: View {
 
             GeometryReader { geo in
                 ZStack {
-                    // Fulcrum
-                    VStack(spacing: 0) {
-                        Spacer()
-                        Triangle()
-                            .fill(Color(.systemGray3))
-                            .frame(width: 24, height: 20)
+                    if let scene {
+                        SpriteView(scene: scene, options: [.allowsTransparency])
+                            .background(Color.clear)
+                            .id(sceneID)
+                    } else {
+                        Color.clear
                     }
-
-                    // Beam
-                    ZStack {
-                        Rectangle()
-                            .fill(Color(.systemGray2))
-                            .frame(width: geo.size.width * 0.85, height: 4)
-                            .cornerRadius(2)
-
-                        // Left plate (beneficial)
-                        VStack {
-                            ScalePlate(entries: beneficialEntries, label: "Beneficial", color: .green, isLeft: true)
-                                .offset(x: -geo.size.width * 0.3, y: tipAngle > 0 ? abs(tipAngle) * 1.5 : 0)
-                        }
-
-                        // Right plate (harmful)
-                        VStack {
-                            ScalePlate(entries: harmfulEntries, label: "Harmful", color: .red, isLeft: false)
-                                .offset(x: geo.size.width * 0.3, y: tipAngle < 0 ? abs(tipAngle) * 1.5 : 0)
-                        }
-                    }
-                    .rotationEffect(.degrees(tipAngle * 0.4))
-                    .offset(y: -20)
+                    if entries.isEmpty { emptyOverlay }
+                }
+                .task(id: SceneKeyCL(id: sceneID, width: geo.size.width, height: geo.size.height)) {
+                    scene = makeScene(size: geo.size)
                 }
             }
-            .aspectRatio(1.4, contentMode: .fit)
+            .aspectRatio(1.3, contentMode: .fit)
+            .onChange(of: entryIDs) { _ in sceneID = UUID() }
+            .onAppear { sceneID = UUID() }
 
-            // Net result label
+            HStack {
+                Label("Beneficial", systemImage: "leaf.fill")
+                    .font(.caption2).foregroundColor(.green.opacity(0.8))
+                Spacer()
+                Button {
+                    sceneID = UUID()
+                } label: {
+                    Label("Replay", systemImage: "arrow.clockwise")
+                        .font(.caption2)
+                        .foregroundColor(.accentColor)
+                }
+                Spacer()
+                Label("Harmful", systemImage: "exclamationmark.triangle.fill")
+                    .font(.caption2).foregroundColor(.red.opacity(0.8))
+            }
+
             Text(netCL < -0.5 ? "Your choices are net beneficial for heart health." :
                  netCL > 0.5 ? "Your choices are net harmful for heart health." :
                  "Your cholesterol impact is roughly neutral.")
-                .font(.caption)
+                .font(.caption2)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
         }
         .padding()
-    }
-}
-
-struct ScalePlate: View {
-    let entries: [FoodLogEntry]
-    let label: String
-    let color: Color
-    let isLeft: Bool
-
-    var body: some View {
-        VStack(spacing: 4) {
-            // Plate
-            ZStack {
-                Ellipse()
-                    .fill(color.opacity(0.1))
-                    .overlay(Ellipse().stroke(color.opacity(0.4), lineWidth: 1.5))
-                    .frame(width: 90, height: 36)
-
-                // Mini bubbles
-                HStack(spacing: 3) {
-                    ForEach(entries.prefix(4), id: \.id) { entry in
-                        let size = CGFloat(max(8, sqrt(abs(entry.computedCL)) * 4))
-                        Circle()
-                            .fill(FoodGroup.from(string: entry.foodGroup).color.opacity(0.8))
-                            .frame(width: min(size, 22), height: min(size, 22))
-                    }
-                }
-            }
-
-            Text(label)
-                .font(.system(size: 10, weight: .medium))
-                .foregroundColor(color)
+        .sheet(item: $selectedEntry) { entry in
+            FoodEntryDetailSheet(entry: entry)
         }
     }
+
+    private var emptyOverlay: some View {
+        VStack(spacing: 6) {
+            Image(systemName: "scalemass")
+                .font(.system(size: 30))
+                .foregroundColor(.secondary)
+            Text("No CL logged yet")
+                .font(.caption).foregroundColor(.secondary)
+        }
+    }
+
+    private func makeScene(size: CGSize) -> BalanceScene {
+        let scene = BalanceScene(size: size, entries: entries)
+        scene.scaleMode = .resizeFill
+        scene.onItemTapped = { entry in selectedEntry = entry }
+        return scene
+    }
 }
 
-struct Triangle: Shape {
-    func path(in rect: CGRect) -> Path {
-        Path { p in
-            p.move(to: CGPoint(x: rect.midX, y: rect.minY))
-            p.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-            p.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-            p.closeSubpath()
+// MARK: - Scene
+
+final class BalanceScene: SKScene {
+    private let entries: [FoodLogEntry]
+    var onItemTapped: ((FoodLogEntry) -> Void)?
+
+    private var beamNode: SKNode?
+    private var nodeToEntry: [ObjectIdentifier: FoodLogEntry] = [:]
+
+    // Tuning
+    private let areaPerCLUnit: CGFloat = 350
+    private let minRadius: CGFloat = 13
+    private let itemMassPerCL: CGFloat = 0.6
+
+    init(size: CGSize, entries: [FoodLogEntry]) {
+        self.entries = entries
+        super.init(size: size)
+    }
+
+    required init?(coder aDecoder: NSCoder) { fatalError() }
+
+    override func didMove(to view: SKView) {
+        backgroundColor = .clear
+        view.allowsTransparency = true
+
+        physicsWorld.gravity = CGVector(dx: 0, dy: -8.0)
+        physicsWorld.speed = 1.0
+
+        buildStand()
+        buildBeamAndPlates()
+        scheduleItemDrops()
+    }
+
+    // Positions (derived from scene size)
+    private var pivotPos: CGPoint { CGPoint(x: size.width / 2, y: size.height * 0.32) }
+    private var beamLength: CGFloat { size.width * 0.75 }
+    private var beamThickness: CGFloat { 6 }
+    private var plateWidth: CGFloat { size.width * 0.28 }
+    private var plateThickness: CGFloat { 4 }
+    private var plateDrop: CGFloat { size.height * 0.10 }
+    private var lipHeight: CGFloat { size.height * 0.12 }
+    private var lipThickness: CGFloat { 2 }
+
+    /// Build the static stand (post + base + pivot).
+    private func buildStand() {
+        let standColor = SKColor(white: 0.55, alpha: 1.0)
+
+        // Vertical post
+        let post = SKShapeNode(rect: CGRect(x: pivotPos.x - 3, y: 20, width: 6, height: pivotPos.y - 20), cornerRadius: 2)
+        post.fillColor = standColor
+        post.strokeColor = .clear
+        post.zPosition = -1
+        addChild(post)
+
+        // Base
+        let base = SKShapeNode(rect: CGRect(x: pivotPos.x - 40, y: 12, width: 80, height: 10), cornerRadius: 3)
+        base.fillColor = standColor
+        base.strokeColor = .clear
+        base.zPosition = -1
+        addChild(base)
+
+        // Pivot cap
+        let cap = SKShapeNode(circleOfRadius: 6)
+        cap.position = pivotPos
+        cap.fillColor = SKColor(white: 0.35, alpha: 1.0)
+        cap.strokeColor = .clear
+        cap.zPosition = 5
+        addChild(cap)
+
+        // Ground floor — catches any runaway items
+        addChild(wall(from: CGPoint(x: -40, y: 2), to: CGPoint(x: size.width + 40, y: 2)))
+    }
+
+    /// Build the rotating beam + plates as one compound body pinned at the pivot.
+    private func buildBeamAndPlates() {
+        let beam = SKNode()
+        beam.position = pivotPos
+        beam.zPosition = 2
+
+        // Visual: beam rectangle
+        let beamRect = CGRect(x: -beamLength / 2, y: -beamThickness / 2, width: beamLength, height: beamThickness)
+        let beamShape = SKShapeNode(rect: beamRect, cornerRadius: 2)
+        beamShape.fillColor = SKColor(white: 0.35, alpha: 1.0)
+        beamShape.strokeColor = .clear
+        beam.addChild(beamShape)
+
+        // Plate positions relative to beam origin
+        let leftCenter = CGPoint(x: -beamLength / 2 + plateWidth / 2, y: -plateDrop)
+        let rightCenter = CGPoint(x: beamLength / 2 - plateWidth / 2, y: -plateDrop)
+
+        // Visual plates (slabs + lips)
+        drawPlateVisual(on: beam, center: leftCenter, color: .green)
+        drawPlateVisual(on: beam, center: rightCenter, color: .red)
+
+        // Compound physics body: beam rectangle + each plate (slab + 2 lips).
+        let beamBody = SKPhysicsBody(rectangleOf: CGSize(width: beamLength, height: beamThickness))
+
+        let leftSlab = SKPhysicsBody(rectangleOf: CGSize(width: plateWidth, height: plateThickness),
+                                     center: leftCenter)
+        let leftLipL = SKPhysicsBody(rectangleOf: CGSize(width: lipThickness, height: lipHeight),
+                                     center: CGPoint(x: leftCenter.x - plateWidth / 2 + lipThickness / 2,
+                                                     y: leftCenter.y + lipHeight / 2))
+        let leftLipR = SKPhysicsBody(rectangleOf: CGSize(width: lipThickness, height: lipHeight),
+                                     center: CGPoint(x: leftCenter.x + plateWidth / 2 - lipThickness / 2,
+                                                     y: leftCenter.y + lipHeight / 2))
+
+        let rightSlab = SKPhysicsBody(rectangleOf: CGSize(width: plateWidth, height: plateThickness),
+                                      center: rightCenter)
+        let rightLipL = SKPhysicsBody(rectangleOf: CGSize(width: lipThickness, height: lipHeight),
+                                      center: CGPoint(x: rightCenter.x - plateWidth / 2 + lipThickness / 2,
+                                                      y: rightCenter.y + lipHeight / 2))
+        let rightLipR = SKPhysicsBody(rectangleOf: CGSize(width: lipThickness, height: lipHeight),
+                                      center: CGPoint(x: rightCenter.x + plateWidth / 2 - lipThickness / 2,
+                                                      y: rightCenter.y + lipHeight / 2))
+
+        let compound = SKPhysicsBody(bodies: [beamBody, leftSlab, leftLipL, leftLipR,
+                                              rightSlab, rightLipL, rightLipR])
+        compound.mass = 2.0                // heavy enough to resist small items but not immovable
+        compound.allowsRotation = true
+        compound.angularDamping = 2.5      // keep oscillation under control
+        compound.linearDamping = 4.0
+        compound.friction = 0.7
+        beam.physicsBody = compound
+        addChild(beam)
+        beamNode = beam
+
+        // Static pivot anchor
+        let pivot = SKNode()
+        pivot.position = pivotPos
+        let pivotBody = SKPhysicsBody(circleOfRadius: 1)
+        pivotBody.isDynamic = false
+        pivot.physicsBody = pivotBody
+        addChild(pivot)
+
+        // Pin joint at the pivot — beam rotates freely around it.
+        if let bodyA = pivot.physicsBody, let bodyB = beam.physicsBody {
+            let joint = SKPhysicsJointPin.joint(withBodyA: bodyA, bodyB: bodyB, anchor: pivotPos)
+            joint.shouldEnableLimits = true
+            joint.lowerAngleLimit = -CGFloat.pi / 6   // ±30° tilt
+            joint.upperAngleLimit = CGFloat.pi / 6
+            joint.frictionTorque = 0.2
+            physicsWorld.add(joint)
+        }
+    }
+
+    private func drawPlateVisual(on parent: SKNode, center: CGPoint, color: SKColor) {
+        let slab = SKShapeNode(rect: CGRect(x: center.x - plateWidth / 2, y: center.y - plateThickness / 2,
+                                            width: plateWidth, height: plateThickness), cornerRadius: 1.5)
+        slab.fillColor = color.withAlphaComponent(0.25)
+        slab.strokeColor = color.withAlphaComponent(0.7)
+        slab.lineWidth = 1
+        parent.addChild(slab)
+
+        // Lips
+        for dx in [-plateWidth / 2 + lipThickness / 2, plateWidth / 2 - lipThickness / 2] {
+            let lip = SKShapeNode(rect: CGRect(x: center.x + dx - lipThickness / 2, y: center.y,
+                                               width: lipThickness, height: lipHeight),
+                                  cornerRadius: 1)
+            lip.fillColor = color.withAlphaComponent(0.5)
+            lip.strokeColor = .clear
+            parent.addChild(lip)
+        }
+    }
+
+    private func wall(from a: CGPoint, to b: CGPoint) -> SKNode {
+        let n = SKNode()
+        let body = SKPhysicsBody(edgeFrom: a, to: b)
+        body.isDynamic = false
+        body.friction = 0.3
+        n.physicsBody = body
+        return n
+    }
+
+    // MARK: - Drops
+
+    private func scheduleItemDrops() {
+        // Alternate heavier-first across both sides so the beam doesn't swing wildly
+        // before the other side loads up.
+        let sorted = entries.sorted { abs($0.computedCL) > abs($1.computedCL) }
+        for (i, entry) in sorted.enumerated() {
+            run(.wait(forDuration: 0.3 + Double(i) * 0.22)) { [weak self] in
+                self?.dropItem(for: entry)
+            }
+        }
+    }
+
+    private func dropItem(for entry: FoodLogEntry) {
+        let cl = CGFloat(entry.computedCL)
+        let magnitude = abs(cl)
+        guard magnitude > 0.01 else { return }
+
+        let area = magnitude * areaPerCLUnit
+        let rawRadius = sqrt(area / .pi)
+        let radius = max(minRadius, min(rawRadius, plateWidth / 2 - 4))
+
+        let emoji = FoodEmoji.resolve(entry: entry)
+
+        let node = SKNode()
+        node.name = "item"
+
+        let disc = SKShapeNode(circleOfRadius: radius)
+        disc.fillColor = SKColor(white: 1.0, alpha: 0.95)
+        disc.strokeColor = cl > 0 ? SKColor(red: 0.85, green: 0.3, blue: 0.3, alpha: 0.7) :
+                                    SKColor(red: 0.25, green: 0.65, blue: 0.4, alpha: 0.7)
+        disc.lineWidth = 1.2
+        node.addChild(disc)
+
+        let label = SKLabelNode(text: emoji)
+        label.fontSize = radius * 1.5
+        label.verticalAlignmentMode = .center
+        label.horizontalAlignmentMode = .center
+        node.addChild(label)
+
+        // Spawn above the target plate.
+        let side: CGFloat = cl > 0 ? 1 : -1
+        let plateCenterX = pivotPos.x + side * (beamLength / 2 - plateWidth / 2)
+        let jitter = CGFloat.random(in: -plateWidth / 3 ... plateWidth / 3)
+        node.position = CGPoint(x: plateCenterX + jitter, y: size.height - radius - 4)
+
+        let body = SKPhysicsBody(circleOfRadius: radius)
+        body.restitution = 0.05
+        body.friction = 0.85
+        body.linearDamping = 0.3
+        body.angularDamping = 0.5
+        body.mass = max(0.15, magnitude * itemMassPerCL)
+        body.allowsRotation = true
+        node.physicsBody = body
+
+        nodeToEntry[ObjectIdentifier(node)] = entry
+        addChild(node)
+
+        node.setScale(0.5)
+        node.run(.scale(to: 1.0, duration: 0.2))
+    }
+
+    // MARK: Tap
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let point = touch.location(in: self)
+        for node in nodes(at: point) {
+            var candidate: SKNode? = node
+            while let n = candidate, n.name != "item" { candidate = n.parent }
+            if let hit = candidate, let entry = nodeToEntry[ObjectIdentifier(hit)] {
+                hit.run(.sequence([.scale(to: 1.15, duration: 0.08), .scale(to: 1.0, duration: 0.1)]))
+                onItemTapped?(entry)
+                return
+            }
         }
     }
 }

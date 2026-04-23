@@ -5,10 +5,10 @@ struct FoodLogRowView: View {
 
     var body: some View {
         HStack(alignment: .center, spacing: 10) {
-            // Food group dot
-            Circle()
-                .fill(FoodGroup.from(string: entry.foodGroup).color)
-                .frame(width: 10, height: 10)
+            // Food emoji
+            Text(FoodEmoji.resolve(entry: entry))
+                .font(.system(size: 22))
+                .frame(width: 28, height: 28)
 
             VStack(alignment: .leading, spacing: 2) {
                 HStack(alignment: .firstTextBaseline) {

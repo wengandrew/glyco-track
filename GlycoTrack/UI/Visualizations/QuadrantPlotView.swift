@@ -73,14 +73,15 @@ struct QuadrantPlotView: View {
                         let x = w/2 + xFrac * w * 0.9
                         let y = h/2 - yFrac * h * 0.9
 
-                        FoodBubble(
-                            foodDescription: entry.foodDescription,
+                        FoodGraphic(
+                            emoji: FoodEmoji.resolve(entry: entry),
                             magnitude: max(entry.computedGL, abs(entry.computedCL)),
-                            foodGroup: FoodGroup.from(string: entry.foodGroup),
-                            scaleFactor: 2.5
+                            areaPerUnit: 60,
+                            minSide: 24,
+                            maxSide: 72
                         )
                         .position(x: x, y: y)
-                        .opacity(0.85)
+                        .opacity(0.95)
                     }
 
                     // Centroid crosshair

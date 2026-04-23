@@ -2,10 +2,11 @@ import SwiftUI
 import SpriteKit
 import UIKit
 
-/// Prototype A (v2): Physics-based Daily GL Bucket.
-/// Bubbles drop from the top and settle into a bucket under gravity.
-/// Bubbles that exceed the bucket capacity overflow the rim and fall outside.
-/// Tap any bubble to see food details.
+/// Physics-based Daily GL Bucket.
+/// Food emojis drop from the top and settle into a bucket under gravity. Each emoji's
+/// **area** is proportional to its GL. The bucket's interior area is sized so that a
+/// full daily GL budget (100) exactly fills it — anything over spills over the rim.
+/// Tap any emoji to see food details.
 struct PhysicsBucketView: View {
     let entries: [FoodLogEntry]
     let budget: Double = dailyGLBudgetUI
@@ -16,6 +17,8 @@ struct PhysicsBucketView: View {
 
     private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
     private var fillFraction: Double { min(totalGL / budget, 1.0) }
+    /// Stable signal for replay-on-new-log.
+    private var entryIDs: [UUID] { entries.compactMap { $0.id } }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -23,7 +26,7 @@ struct PhysicsBucketView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Today's GL Bucket")
                         .font(.headline)
-                    Text("Tap a bubble to see what's inside")
+                    Text("Tap an item to see what's inside")
                         .font(.caption2)
                         .foregroundColor(.secondary)
                 }
@@ -40,6 +43,7 @@ struct PhysicsBucketView: View {
                             debugOptions: []
                         )
                         .background(Color.clear)
+                        .id(sceneID) // force view rebuild when replaying
                     } else {
                         Color.clear
                     }
@@ -48,15 +52,17 @@ struct PhysicsBucketView: View {
                         emptyStateOverlay
                     }
                 }
-                // Rebuild the scene only when id or geometry changes — not on every
-                // SwiftUI re-render (e.g. when the detail sheet toggles selectedEntry).
                 .task(id: SceneKey(id: sceneID, width: geo.size.width, height: geo.size.height)) {
                     scene = makeScene(size: geo.size)
                 }
             }
-            .aspectRatio(0.72, contentMode: .fit)
+            .aspectRatio(0.78, contentMode: .fit)
+            // Replay when a new entry is logged.
+            .onChange(of: entryIDs) { _ in sceneID = UUID() }
+            // Replay when the view reappears (e.g. user switches back to Today).
+            .onAppear { sceneID = UUID() }
 
-            // Fill bar
+            // Fill bar + replay
             VStack(spacing: 4) {
                 GeometryReader { geo in
                     ZStack(alignment: .leading) {
@@ -72,7 +78,7 @@ struct PhysicsBucketView: View {
                     Text("0").font(.caption2).foregroundColor(.secondary)
                     Spacer()
                     Button {
-                        sceneID = UUID() // replay the drop
+                        sceneID = UUID()
                     } label: {
                         Label("Replay", systemImage: "arrow.clockwise")
                             .font(.caption2)
@@ -113,11 +119,21 @@ struct PhysicsBucketView: View {
     }
 }
 
-// Composite key used to trigger scene rebuilds on size or id change.
 private struct SceneKey: Hashable {
     let id: UUID
     let width: CGFloat
     let height: CGFloat
+}
+
+struct GLStatusLabel: View {
+    let total: Double
+    let budget: Double
+
+    var body: some View {
+        Text("\(Int(total)) / \(Int(budget)) GL")
+            .font(.subheadline).fontWeight(.semibold)
+            .foregroundColor(total > budget ? .red : .primary)
+    }
 }
 
 // MARK: - SpriteKit Scene
@@ -127,17 +143,30 @@ final class BucketScene: SKScene {
     private let budget: Double
     var onBubbleTapped: ((FoodLogEntry) -> Void)?
 
-    // Bucket geometry (fractions of scene size)
-    private let bucketWidthFrac: CGFloat = 0.78
-    private let bucketHeightFrac: CGFloat = 0.68
-    private let bucketBottomFrac: CGFloat = 0.08   // bottom of bucket above scene floor
+    // Bucket geometry as fractions of scene size.
+    private let bucketWidthFrac: CGFloat = 0.82
+    private let bucketHeightFrac: CGFloat = 0.72
+    private let bucketBottomFrac: CGFloat = 0.06
 
-    // Lookup: node → entry
+    /// Fraction of bucket interior that a full budget actually fills.
+    /// Random-pack settled circles occupy ~70–74% of their container; we target
+    /// ~78% so a full budget visibly reaches the rim and anything above overflows.
+    private let packingFactor: CGFloat = 0.78
+
+    /// Points² per unit of GL — derived from bucket geometry at init.
+    private let areaPerUnit: CGFloat
+    /// Minimum rendered radius so tiny items remain visible/tappable.
+    private let minRadius: CGFloat = 11
+
     private var nodeToEntry: [ObjectIdentifier: FoodLogEntry] = [:]
 
     init(size: CGSize, entries: [FoodLogEntry], budget: Double) {
-        self.entries = entries.sorted { $0.computedGL > $1.computedGL } // heaviest first (so small ones pack later)
+        self.entries = entries.sorted { $0.computedGL > $1.computedGL } // heavy first → small ones pack on top
         self.budget = budget
+
+        let bucketArea = size.width * bucketWidthFrac * size.height * bucketHeightFrac
+        self.areaPerUnit = (bucketArea * packingFactor) / CGFloat(max(budget, 1))
+
         super.init(size: size)
     }
 
@@ -154,7 +183,6 @@ final class BucketScene: SKScene {
         scheduleBubbleDrops()
     }
 
-    // Bucket shape: open top, two side walls, floor. A wider floor outside catches overflow.
     private func buildBucket() {
         let w = size.width
         let h = size.height
@@ -166,39 +194,36 @@ final class BucketScene: SKScene {
         let bucketRight = bucketLeft + bucketW
         let bucketTop = bucketBottomY + bucketH
 
-        // Visual container
-        let container = SKShapeNode(rect: CGRect(x: bucketLeft, y: bucketBottomY, width: bucketW, height: bucketH), cornerRadius: 12)
-        container.strokeColor = SKColor(white: 0.75, alpha: 1.0)
+        let container = SKShapeNode(
+            rect: CGRect(x: bucketLeft, y: bucketBottomY, width: bucketW, height: bucketH),
+            cornerRadius: 14
+        )
+        container.strokeColor = SKColor(white: 0.72, alpha: 1.0)
         container.lineWidth = 2
         container.fillColor = SKColor(white: 0.96, alpha: 1.0)
         container.zPosition = -1
         addChild(container)
 
-        // Container label — reflects the configured budget so UI stays in sync.
+        // Budget label in the top-right corner of the bucket.
         let topHint = SKLabelNode(text: "\(Int(budget)) GL")
         topHint.fontName = "SFProRounded-Semibold"
         topHint.fontSize = 10
-        topHint.fontColor = SKColor(white: 0.55, alpha: 1.0)
+        topHint.fontColor = SKColor(white: 0.5, alpha: 1.0)
         topHint.position = CGPoint(x: bucketRight - 20, y: bucketTop - 14)
         topHint.horizontalAlignmentMode = .right
         addChild(topHint)
 
-        // Physics walls: left, right, bottom (floor INSIDE bucket), and scene floor (for overflow)
-        let leftWall = makeWall(from: CGPoint(x: bucketLeft, y: bucketBottomY),
-                                to: CGPoint(x: bucketLeft, y: bucketTop))
-        let rightWall = makeWall(from: CGPoint(x: bucketRight, y: bucketBottomY),
-                                 to: CGPoint(x: bucketRight, y: bucketTop))
-        let floor = makeWall(from: CGPoint(x: bucketLeft, y: bucketBottomY),
-                             to: CGPoint(x: bucketRight, y: bucketBottomY))
+        // Bucket walls + floor
+        addChild(makeWall(from: CGPoint(x: bucketLeft, y: bucketBottomY),
+                          to: CGPoint(x: bucketLeft, y: bucketTop)))
+        addChild(makeWall(from: CGPoint(x: bucketRight, y: bucketBottomY),
+                          to: CGPoint(x: bucketRight, y: bucketTop)))
+        addChild(makeWall(from: CGPoint(x: bucketLeft, y: bucketBottomY),
+                          to: CGPoint(x: bucketRight, y: bucketBottomY)))
 
-        // Scene floor — catches overflow bubbles after they spill over the rim
-        let sceneFloor = makeWall(from: CGPoint(x: -20, y: 2),
-                                  to: CGPoint(x: w + 20, y: 2))
-
-        addChild(leftWall)
-        addChild(rightWall)
-        addChild(floor)
-        addChild(sceneFloor)
+        // Scene floor — catches overflow after it spills over the rim.
+        addChild(makeWall(from: CGPoint(x: -40, y: 2),
+                          to: CGPoint(x: w + 40, y: 2)))
     }
 
     private func makeWall(from a: CGPoint, to b: CGPoint) -> SKNode {
@@ -212,10 +237,8 @@ final class BucketScene: SKScene {
     }
 
     private func scheduleBubbleDrops() {
-        // Drop bubbles one at a time, ~0.12s apart, in heaviest-first order.
-        // This gives a visible "pour" animation.
         for (i, entry) in entries.enumerated() {
-            let delay = 0.08 + Double(i) * 0.11
+            let delay = 0.08 + Double(i) * 0.12
             run(.wait(forDuration: delay)) { [weak self] in
                 self?.dropBubble(for: entry)
             }
@@ -223,54 +246,57 @@ final class BucketScene: SKScene {
     }
 
     private func dropBubble(for entry: FoodLogEntry) {
-        let radius = CGFloat(max(14, sqrt(max(entry.computedGL, 0.1)) * 5.0))
-        let clamped = min(radius, size.width * 0.18)
+        // Area is proportional to GL (with a floor for visibility).
+        let area = CGFloat(max(entry.computedGL, 0.2)) * areaPerUnit
+        let rawRadius = sqrt(area / .pi)
+        let radius = max(minRadius, min(rawRadius, size.width * 0.22))
 
-        let group = FoodGroup.from(string: entry.foodGroup)
-        let bubble = SKShapeNode(circleOfRadius: clamped)
-        bubble.fillColor = SKColor(group.color).withAlphaComponent(0.88)
-        bubble.strokeColor = SKColor(group.color).withAlphaComponent(1.0)
-        bubble.lineWidth = 1.5
-        bubble.zPosition = 1
+        let emoji = FoodEmoji.resolve(entry: entry)
 
-        // Spawn near top of scene, slightly random x
-        let bucketLeft = (size.width - size.width * bucketWidthFrac) / 2
-        let bucketRight = bucketLeft + size.width * bucketWidthFrac
-        let minX = bucketLeft + clamped + 4
-        let maxX = bucketRight - clamped - 4
+        // Container node — carries the physics body and tap target.
+        let node = SKNode()
+        node.name = "bubble"
+
+        // Faint backing disc so the emoji reads against the bucket fill.
+        let disc = SKShapeNode(circleOfRadius: radius)
+        disc.fillColor = SKColor(white: 1.0, alpha: 0.85)
+        disc.strokeColor = SKColor(white: 0.75, alpha: 0.6)
+        disc.lineWidth = 0.8
+        disc.zPosition = 0
+        node.addChild(disc)
+
+        // Emoji label centered in the disc.
+        let label = SKLabelNode(text: emoji)
+        label.fontSize = radius * 1.5
+        label.verticalAlignmentMode = .center
+        label.horizontalAlignmentMode = .center
+        label.zPosition = 1
+        node.addChild(label)
+
+        // Spawn position: near the top, randomized x inside bucket walls.
+        let bucketW = size.width * bucketWidthFrac
+        let bucketLeft = (size.width - bucketW) / 2
+        let minX = bucketLeft + radius + 4
+        let maxX = bucketLeft + bucketW - radius - 4
         let x = CGFloat.random(in: minX...max(minX + 1, maxX))
-        let y = size.height - clamped - 8
+        let y = size.height - radius - 8
+        node.position = CGPoint(x: x, y: y)
 
-        bubble.position = CGPoint(x: x, y: y)
-
-        let body = SKPhysicsBody(circleOfRadius: clamped)
+        let body = SKPhysicsBody(circleOfRadius: radius)
         body.restitution = 0.15
-        body.friction = 0.35
-        body.linearDamping = 0.35
-        body.angularDamping = 0.4
-        body.mass = max(0.1, CGFloat(entry.computedGL) * 0.05)
+        body.friction = 0.4
+        body.linearDamping = 0.4
+        body.angularDamping = 0.5
+        body.mass = max(0.1, CGFloat(entry.computedGL) * 0.04)
         body.allowsRotation = true
-        bubble.physicsBody = body
+        node.physicsBody = body
 
-        // Label on large bubbles
-        if clamped > 22 {
-            let label = SKLabelNode(text: String(entry.foodDescription.prefix(14)))
-            label.fontName = "HelveticaNeue-Bold"
-            label.fontSize = min(12, clamped * 0.35)
-            label.fontColor = .white
-            label.verticalAlignmentMode = .center
-            label.horizontalAlignmentMode = .center
-            label.zPosition = 2
-            bubble.addChild(label)
-        }
+        nodeToEntry[ObjectIdentifier(node)] = entry
+        addChild(node)
 
-        nodeToEntry[ObjectIdentifier(bubble)] = entry
-        bubble.name = "bubble"
-        addChild(bubble)
-
-        // Tiny pop-in scale
-        bubble.setScale(0.4)
-        bubble.run(.scale(to: 1.0, duration: 0.18))
+        // Pop-in
+        node.setScale(0.4)
+        node.run(.scale(to: 1.0, duration: 0.18))
     }
 
     // MARK: Tap handling
@@ -278,19 +304,20 @@ final class BucketScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
         let point = touch.location(in: self)
-        // `nodes(at:)` returns nodes ordered front-to-back, so the first
-        // matching bubble is the topmost one.
         let hits = nodes(at: point)
         for node in hits {
-            if node.name == "bubble", let entry = nodeToEntry[ObjectIdentifier(node)] {
-                // Small feedback bounce
-                node.run(.sequence([
-                    .scale(to: 1.15, duration: 0.08),
-                    .scale(to: 1.0, duration: 0.1)
-                ]))
-                onBubbleTapped?(entry)
-                return
+            // Walk up to the bubble container (the label/disc are children).
+            var candidate: SKNode? = node
+            while let n = candidate, n.name != "bubble" {
+                candidate = n.parent
             }
+            guard let bubble = candidate, let entry = nodeToEntry[ObjectIdentifier(bubble)] else { continue }
+            bubble.run(.sequence([
+                .scale(to: 1.15, duration: 0.08),
+                .scale(to: 1.0, duration: 0.1)
+            ]))
+            onBubbleTapped?(entry)
+            return
         }
     }
 }
