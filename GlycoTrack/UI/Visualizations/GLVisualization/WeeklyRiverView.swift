@@ -45,19 +45,19 @@ struct WeeklyRiverView: View {
                             .offset(y: geo.size.height * fraction)
                     }
 
-                    // Bubbles
+                    // Food graphics
                     ForEach(entries, id: \.id) { entry in
                         let col = dayIndex(for: entry.timestamp ?? Date())
                         let yFrac = timeOfDayFraction(for: entry.timestamp ?? Date())
-                        let radius = CGFloat(max(8, sqrt(entry.computedGL) * 3.5))
                         let x = colWidth * Double(col) + colWidth / 2
                         let y = geo.size.height * yFrac
 
-                        FoodBubble(
-                            foodDescription: entry.foodDescription,
+                        FoodGraphic(
+                            emoji: FoodEmoji.resolve(entry: entry),
                             magnitude: entry.computedGL,
-                            foodGroup: FoodGroup.from(string: entry.foodGroup),
-                            scaleFactor: 3.5
+                            areaPerUnit: 40,
+                            minSide: 20,
+                            maxSide: 64
                         )
                         .position(x: x, y: y)
                     }

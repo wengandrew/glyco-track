@@ -132,16 +132,23 @@ Two JSON files are bundled as app resources and seeded into Core Data at first l
 
 Foods with no USDA match get CL = 0. Foods with no GI match fall back to GI = 55 (tier 3, confidence 0.35). The USDA set is intentionally small (design target was 7,793) — expansion is a known post-MVP gap.
 
-### Visualizations (prototyping phase)
+### Visualizations
 
-All visualization views live under `GlycoTrack/UI/Visualizations/` and are explicitly experimental. The design intent is to test multiple renderings and keep winners:
-- **GL views** (unsigned, budget-based): `PhysicsBucketView` (SpriteKit physics), `DailyBucketView` (static), `WeeklyRiverView`, `MonthlyHeatmapView`
-- **CL views** (signed, ±): `TugOfWarBarView`, `WaterlineView`, `BalanceScaleView`
-- **Combined**: `QuadrantPlotView` (GL on Y, CL on X — the app's most distinctive view)
+All visualization views live under `GlycoTrack/UI/Visualizations/`.
 
-`HomeTabView` separates GL and CL into two distinct labeled sections with different accent colors (blue for GL, crimson for CL). The picker labels "GL View" must only contain GL prototypes, and "CL View" must only contain CL prototypes — they were previously mixed, which was confusing.
+- **GL views** (unsigned, budget-based): `PhysicsBucketView` (SpriteKit physics — the only daily GL view), `WeeklyRiverView`, `MonthlyHeatmapView`.
+- **CL views** (signed, ±): `TugOfWarBarView` (SwiftUI stacked bar), `WaterlineView` (SpriteKit physics — buoyancy), `BalanceScaleView` (SpriteKit physics — pinned beam).
+- **Combined**: `QuadrantPlotView` (GL on Y, CL on X).
 
-Tappable bubbles open `FoodEntryDetailSheet` — pass a `FoodLogEntry` as `.sheet(item:)`.
+`HomeTabView` shows a date navigator (chevrons + swipe left/right on the viz sections) that drives an `@FetchRequest` with a dynamic predicate for the selected day. Forward navigation is capped at today.
+
+**Area-proportional encoding.** Every visualization encodes GL (or |CL|) as the area of its food graphic. In `PhysicsBucketView`, the bucket's interior area is sized at scene-init so that `budget * areaPerUnit ≈ 78%` of bucket area — i.e. a full 100-GL day fills the bucket and items above that spill over the rim. CL views use a fixed `areaPerCLUnit` tuned per-view. For CL, sign is encoded by position (harmful = top/right, beneficial = bottom/left), never by area.
+
+**Food emojis.** `FoodEmoji.resolve(entry:)` maps a `FoodLogEntry` to a single emoji via (1) exact match in `food_emoji_map.json` on `referenceFood` or `foodDescription`, then (2) a keyword classifier in `FoodEmoji.swift`. Low-confidence matches (`confidenceScore < 0.3`) always return ❓ — never fabricate a high-confidence emoji for an unknown food, same rule as GL/CL. Visualizations use `FoodGraphic` (SwiftUI) or an `SKLabelNode` with the emoji (SpriteKit); both size the glyph so its drawn area is proportional to the passed magnitude. Food-group color fills were removed from visualizations — the emoji is now the identifier. Tier/confidence coloring (e.g. `ConfidenceBadge` in `FoodLogRowView`) is unrelated and retained.
+
+**Replay triggers.** Physics scenes in `PhysicsBucketView`, `WaterlineView`, and `BalanceScaleView` rebuild (replaying the drop animation) when (a) the view appears, (b) the entry list changes — via `.onChange(of: entryIDs)`, (c) the user taps Replay. Implemented by bumping a `sceneID: UUID` `@State` and using `.id(sceneID)` on the `SpriteView`.
+
+Tappable items open `FoodEntryDetailSheet` — pass a `FoodLogEntry` as `.sheet(item:)`.
 
 ### API key
 
