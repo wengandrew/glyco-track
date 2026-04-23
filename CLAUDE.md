@@ -22,6 +22,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Cross-session awareness:** Before starting work, run `git log develop --oneline -20` to see what's already landed. Check open PRs on GitHub for what's in flight but not yet merged.
 
+**Worktree sync rule — do this at the start of every session in a worktree:**
+```bash
+git fetch origin
+git rebase origin/develop
+```
+Worktrees do not auto-track their base branch. If new PRs land on `develop` after the worktree was created, the worktree branch stays frozen at its creation point. Failing to rebase means you build and test against stale code for the entire session, and only discover the drift at PR time. Rebase early, not just before opening the PR.
+
 ## Behavior
 
 - **Ask before assuming.** When a task has multiple reasonable approaches (e.g. a new visualization style, a data model change, a refactor), ask a clarifying question first. Don't assume the user knows the tradeoffs — explain the options briefly and ask which direction they prefer.
