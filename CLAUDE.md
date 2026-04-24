@@ -12,10 +12,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 **The root repo (`/Users/ampere/code/glyco-track`) is always checked out to `develop`.** This is the Xcode build target for device testing. Do not check out `main` or a feature branch at the root.
 
 **Every session must:**
-1. Branch off `develop` (not `main`) at the start
-2. Do all work in the session's worktree on that feature branch
-3. When work is complete and the build passes, open a PR targeting `develop` (not `main`)
-4. Never merge directly to `develop` or `main` — always via PR
+1. Sync with remote before writing any code: `git fetch origin && git rebase origin/develop`
+2. Branch off `develop` (not `main`) at the start
+3. Do all work in the session's worktree on that feature branch
+4. When work is complete, open a PR targeting `develop` (not `main`) — **do not build or deploy locally**
+5. Never merge directly to `develop` or `main` — always via PR
+
+**Do not build or deploy.** Claude must not run `./scripts/deploy.sh`, `xcodebuild`, or any command that installs the app on device. The user reviews all code changes via PR on GitHub before anything reaches the device. Opening the PR is the end of Claude's job for a given task.
 
 **Active feature branches (update this as PRs open/merge):**
 <!-- Add a line per open PR: - [branch-name]: brief description -->
@@ -32,13 +35,14 @@ Worktrees do not auto-track their base branch. If new PRs land on `develop` afte
 ## Behavior
 
 - **Ask before assuming.** When a task has multiple reasonable approaches (e.g. a new visualization style, a data model change, a refactor), ask a clarifying question first. Don't assume the user knows the tradeoffs — explain the options briefly and ask which direction they prefer.
-- **Always rebuild after code changes.** After any code edit, run `./scripts/deploy.sh` and report the result. Do not summarize a change as done until the build succeeds.
+- **Never build or deploy.** Do not run `deploy.sh`, `xcodebuild`, or any install command. Open a PR and let the user review and merge.
 
 ## Build & Test Commands
 
+These are for the user's reference, not for Claude to run autonomously.
+
 ```bash
-# Build and deploy to connected iPhone — the default workflow.
-# Runs xcodegen automatically, so no separate regen step is needed.
+# Deploy to connected iPhone (user runs this after merging a PR)
 ./scripts/deploy.sh                       # auto-detects device, regens + builds + installs
 ./scripts/deploy.sh --no-launch           # install without launching
 ./scripts/deploy.sh --clean               # clean build first
@@ -47,13 +51,9 @@ Worktrees do not auto-track their base branch. If new PRs land on `develop` afte
 # Run unit tests (pure Swift, no device needed — covers GI/CL engine math)
 swift test
 swift test --filter GIEngineTests/testWhiteRiceGL
-
-# Simulator-only build (no device required)
-xcodebuild -project GlycoTrack.xcodeproj -scheme GlycoTrack \
-  -destination 'generic/platform=iOS Simulator' -configuration Debug build
 ```
 
-The `project.pbxproj` is committed and tracked. `deploy.sh` regenerates it automatically on every run, so after adding or removing Swift files just run `deploy.sh` as normal and commit the updated `project.pbxproj` if it changed. The `contents.xcworkspacedata` file is also tracked — do not delete it.
+The `project.pbxproj` is committed and tracked. After adding or removing Swift files, run `xcodegen generate` and commit the updated `project.pbxproj`. The `contents.xcworkspacedata` file is also tracked — do not delete it.
 
 ## Architecture
 
