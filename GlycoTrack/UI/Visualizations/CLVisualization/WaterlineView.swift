@@ -3,8 +3,8 @@ import SpriteKit
 import UIKit
 
 /// Waterline (CL Visualization).
-/// A tank with a mid-line "waterline". Harmful items (+CL) float above; beneficial
-/// items (−CL) sink below. The water-fill tint and level convey net CL: red-rising
+/// A tank with a mid-line "waterline". Harmful items (+CL) sink below; beneficial
+/// items (−CL) float above. The water-fill tint and level convey net CL: red-rising
 /// when net-harmful, green-settling when net-beneficial.
 /// Each item is rendered as a food emoji; area is proportional to |CL|.
 struct WaterlineView: View {
@@ -49,7 +49,7 @@ struct WaterlineView: View {
             .onAppear { sceneID = UUID() }
 
             HStack {
-                Label("Harmful ↑", systemImage: "arrow.up.circle.fill")
+                Label("Harmful ↓", systemImage: "arrow.down.circle.fill")
                     .font(.caption2).foregroundColor(.red.opacity(0.8))
                 Spacer()
                 Button {
@@ -60,7 +60,7 @@ struct WaterlineView: View {
                         .foregroundColor(.accentColor)
                 }
                 Spacer()
-                Label("Beneficial ↓", systemImage: "arrow.down.circle.fill")
+                Label("Beneficial ↑", systemImage: "arrow.up.circle.fill")
                     .font(.caption2).foregroundColor(.green.opacity(0.8))
             }
         }
@@ -256,15 +256,16 @@ final class WaterlineScene: SKScene {
         label.zPosition = 1
         node.addChild(label)
 
-        // Spawn position: harmful items from the top half, beneficial from the bottom half.
+        // Spawn position: harmful items sink from the top, beneficial items rise
+        // from the bottom — each spawns in the half it's leaving so the motion reads.
         let marginX: CGFloat = radius + 4
         let x = CGFloat.random(in: (rect.minX + marginX)...(rect.maxX - marginX))
         let y: CGFloat
         if cl > 0 {
-            // Harmful: spawn above waterline (upper portion).
+            // Harmful: spawn above waterline so gravity pulls it down across the line.
             y = CGFloat.random(in: (rect.midY + radius + 4)...(rect.maxY - radius - 4))
         } else {
-            // Beneficial: spawn below waterline.
+            // Beneficial: spawn below waterline so buoyancy lifts it up across the line.
             y = CGFloat.random(in: (rect.minY + radius + 4)...(rect.midY - radius - 4))
         }
         node.position = CGPoint(x: x, y: y)
@@ -276,9 +277,9 @@ final class WaterlineScene: SKScene {
         body.angularDamping = 0.9
         body.mass = max(0.1, magnitude * 0.04)
         body.allowsRotation = true
-        // Harmful items: we'll apply per-frame upward buoyancy overpowering gravity.
-        // Mark them via categoryBitMask so update() can find them quickly.
-        if cl > 0 {
+        // Beneficial items: we apply per-frame upward buoyancy overpowering gravity
+        // so they float. Harmful items sink under gravity alone.
+        if cl < 0 {
             body.categoryBitMask = buoyancyCategory
         }
         node.physicsBody = body
@@ -291,7 +292,7 @@ final class WaterlineScene: SKScene {
     }
 
     override func update(_ currentTime: TimeInterval) {
-        // Apply upward buoyancy on harmful items so they float above the waterline.
+        // Apply upward buoyancy on beneficial items so they float above the waterline.
         for child in children {
             guard child.name == "item",
                   let body = child.physicsBody,
