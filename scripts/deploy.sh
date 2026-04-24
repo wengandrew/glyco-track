@@ -92,6 +92,11 @@ ok "Target: $DEVICE_NAME  hw=$DEVICE_HW_UDID  cd=$DEVICE_CD_ID"
 
 ok "Target: $DEVICE_NAME ($DEVICE_HW_UDID)"
 
+# ── Inject build info (git branch/commit/timestamp) ───────────────────────────
+step "Injecting build info"
+./scripts/inject_build_info.sh
+ok "Build info injected"
+
 # ── Optionally regenerate project ─────────────────────────────────────────────
 if $DO_REGEN; then
   step "Regenerating Xcode project"

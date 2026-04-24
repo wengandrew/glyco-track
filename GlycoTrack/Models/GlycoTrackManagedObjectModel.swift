@@ -18,7 +18,6 @@ extension NSManagedObjectModel {
             attr("computedGL",      .doubleAttributeType,    0.0,              false),
             attr("confidenceScore", .floatAttributeType,     Float(0),         false),
             attr("foodDescription", .stringAttributeType,    "",               false),
-            attr("foodGroup",       .stringAttributeType,    "proteins",       false),
             attr("id",              .UUIDAttributeType,      nil,              true),
             attr("isEdited",        .booleanAttributeType,   false,            false),
             attr("isSoftDeleted",   .booleanAttributeType,   false,            false),

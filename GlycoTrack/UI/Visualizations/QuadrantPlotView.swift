@@ -1,14 +1,22 @@
 import SwiftUI
 
-/// GL × CL Quadrant Plot
+/// GL × CL Quadrant Plot — embeddable section.
 /// GL on Y-axis (unsigned, 0+), CL on X-axis (signed, negative=beneficial).
 /// Quadrant labels:
 ///   Top-right:    High GL + Harmful CL = Worst (cake, donuts)
 ///   Top-left:     High GL + Beneficial CL = Complex (oatmeal, brown rice)
 ///   Bottom-right: Low GL + Harmful CL = Watch out (butter, cream)
 ///   Bottom-left:  Low GL + Beneficial CL = Best (vegetables, olive oil)
-struct QuadrantPlotView: View {
+///
+/// Embeddable — no sheet, no navigation. Host views own tap routing via `onTap`.
+struct QuadrantPlotSection: View {
     let entries: [FoodLogEntry]
+    let onTap: (FoodLogEntry) -> Void
+
+    init(entries: [FoodLogEntry], onTap: @escaping (FoodLogEntry) -> Void = { _ in }) {
+        self.entries = entries
+        self.onTap = onTap
+    }
 
     private var maxGL: Double { max(entries.map(\.computedGL).max() ?? 30, 30) }
     private var maxAbsCL: Double { max(entries.map { abs($0.computedCL) }.max() ?? 10, 10) }
@@ -22,7 +30,7 @@ struct QuadrantPlotView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("GL × CL Quadrant")
+            Text("GL × CL")
                 .font(.headline)
                 .padding(.horizontal)
 
@@ -80,6 +88,8 @@ struct QuadrantPlotView: View {
                             minSide: 24,
                             maxSide: 72
                         )
+                        .contentShape(Rectangle())
+                        .onTapGesture { onTap(entry) }
                         .position(x: x, y: y)
                         .opacity(0.95)
                     }
@@ -94,6 +104,7 @@ struct QuadrantPlotView: View {
                             Circle().stroke(Color.primary.opacity(0.5), lineWidth: 1.5).frame(width: 10, height: 10)
                         }
                         .position(x: cx, y: cy)
+                        .allowsHitTesting(false)
                     }
 
                     // Axis labels
@@ -116,3 +127,4 @@ struct QuadrantPlotView: View {
         }
     }
 }
+

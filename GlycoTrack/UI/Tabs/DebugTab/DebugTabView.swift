@@ -19,6 +19,7 @@ struct DebugTabView: View {
     var body: some View {
         NavigationStack {
             List {
+                buildInfoSection
                 statsSection
                 foodLogSection
                 nutritionalProfileSection
@@ -38,6 +39,26 @@ struct DebugTabView: View {
     }
 
     // MARK: - Sections
+
+    private var buildInfoSection: some View {
+        Section("Build Info") {
+            LabeledContent("Version", value: "\(AppInfo.version) (\(AppInfo.build))")
+            LabeledContent("Branch", value: AppInfo.gitBranch)
+            LabeledContent("Commit", value: AppInfo.gitCommit)
+            LabeledContent("Built", value: AppInfo.buildTimestamp)
+            LabeledContent("Last data update", value: lastDataUpdateDisplay)
+        }
+    }
+
+    private var lastDataUpdateDisplay: String {
+        let latest = foodLogs
+            .lazy
+            .filter { !$0.isSoftDeleted }
+            .compactMap { $0.timestamp }
+            .max()
+        guard let latest else { return "never" }
+        return latest.formatted(date: .abbreviated, time: .shortened)
+    }
 
     private var statsSection: some View {
         Section("Summary") {
@@ -106,7 +127,6 @@ struct DebugTabView: View {
                 "parsingMethod":      e.parsingMethod,
                 "confidenceScore":    e.confidenceScore,
                 "referenceFood":      e.referenceFood ?? "nil",
-                "foodGroup":          e.foodGroup,
                 "computedGL":         e.computedGL,
                 "computedCL":         e.computedCL,
                 "isEdited":           e.isEdited,

@@ -36,7 +36,7 @@ struct LogTabView: View {
                 }
             }
             .sheet(item: $selectedEntry) { entry in
-                EditEntryView(entry: entry)
+                FoodEntryDetailSheet(entry: entry)
             }
             .sheet(isPresented: $showManualEntry) {
                 ManualEntryView()
@@ -60,12 +60,14 @@ struct EditEntryView: View {
 
     @State private var foodDescription: String
     @State private var quantity: String
+    @State private var editedTimestamp: Date
     @State private var isSaving = false
 
     init(entry: FoodLogEntry) {
         self.entry = entry
         _foodDescription = State(initialValue: entry.foodDescription)
         _quantity = State(initialValue: entry.quantity)
+        _editedTimestamp = State(initialValue: entry.timestamp ?? Date())
     }
 
     private var matchLabel: String {
@@ -82,6 +84,13 @@ struct EditEntryView: View {
                 Section("Food") {
                     TextField("Food description", text: $foodDescription)
                     TextField("Quantity (e.g. 1 cup)", text: $quantity)
+                    DatePicker(
+                        "Date & time",
+                        selection: $editedTimestamp,
+                        in: ...Date(),
+                        displayedComponents: [.date, .hourAndMinute]
+                    )
+                    .environment(\.locale, .current)
                 }
 
                 Section("Calculated Values (read-only)") {
@@ -143,6 +152,13 @@ struct EditEntryView: View {
 
         let parsed = ParsedFood(food: foodDescription, quantity: quantity, unit: "", grams: newGrams)
         let resolution = await matcher.resolve(food: parsed)
+
+        // Round timestamp to nearest 30 minutes — SwiftUI's DatePicker in a
+        // Form style doesn't expose minuteInterval, so enforce at Save.
+        let rounded = Date(
+            timeIntervalSince1970: (editedTimestamp.timeIntervalSince1970 / 1800).rounded() * 1800
+        )
+        entry.timestamp = rounded
 
         FoodLogRepository(context: context).update(
             entry,

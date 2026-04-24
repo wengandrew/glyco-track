@@ -8,13 +8,26 @@ import UIKit
 /// from accumulated torque. Item mass is proportional to |CL|.
 struct BalanceScaleView: View {
     let entries: [FoodLogEntry]
+    /// Date this view represents. Changing the day forces a scene rebuild —
+    /// mirrors the fix in PhysicsBucketView for the swipe-back-to-today stale
+    /// bubbles bug.
+    let dateKey: Date?
 
     @State private var selectedEntry: FoodLogEntry?
     @State private var sceneID = UUID()
     @State private var scene: BalanceScene?
 
+    init(entries: [FoodLogEntry], dateKey: Date? = nil) {
+        self.entries = entries
+        self.dateKey = dateKey
+    }
+
     private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
     private var entryIDs: [UUID] { entries.compactMap { $0.id } }
+    private var dayKey: Date {
+        guard let dateKey else { return .distantPast }
+        return Calendar.current.startOfDay(for: dateKey)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -42,6 +55,7 @@ struct BalanceScaleView: View {
             }
             .aspectRatio(1.3, contentMode: .fit)
             .onChange(of: entryIDs) { _ in sceneID = UUID() }
+            .onChange(of: dayKey) { _ in sceneID = UUID() }
             .onAppear { sceneID = UUID() }
 
             HStack {

@@ -145,17 +145,32 @@ All visualization views live under `GlycoTrack/UI/Visualizations/`.
 
 - **GL views** (unsigned, budget-based): `PhysicsBucketView` (SpriteKit physics — the only daily GL view), `WeeklyRiverView`, `MonthlyHeatmapView`.
 - **CL views** (signed, ±): `TugOfWarBarView` (SwiftUI stacked bar), `WaterlineView` (SpriteKit physics — buoyancy), `BalanceScaleView` (SpriteKit physics — pinned beam).
-- **Combined**: `QuadrantPlotView` (GL on Y, CL on X).
+- **Combined**: `QuadrantPlotSection` (GL on Y, CL on X) — embedded directly on Today, Week, and Month tabs (no modal sheet wrapper).
 
 `HomeTabView` shows a date navigator (chevrons + swipe left/right on the viz sections) that drives an `@FetchRequest` with a dynamic predicate for the selected day. Forward navigation is capped at today.
 
+**Date-scoped physics scenes must take a `dateKey`.** `PhysicsBucketView` and `BalanceScaleView` accept a `dateKey: Date?` init param. When the date changes, the host passes the new key and the scene rebuilds via `.onChange(of: dayKey)` bumping `sceneID`. Without this, swiping back to a day that superficially looks "the same" (same entry IDs, or FetchRequest lag) leaves a stale scene on screen. If you add a new date-scoped SpriteKit scene, thread `dateKey` through the same way.
+
 **Area-proportional encoding.** Every visualization encodes GL (or |CL|) as the area of its food graphic. In `PhysicsBucketView`, the bucket's interior area is sized at scene-init so that `budget * areaPerUnit ≈ 78%` of bucket area — i.e. a full 100-GL day fills the bucket and items above that spill over the rim. CL views use a fixed `areaPerCLUnit` tuned per-view. For CL, sign is encoded by position (harmful = top/right, beneficial = bottom/left), never by area.
 
-**Food emojis.** `FoodEmoji.resolve(entry:)` maps a `FoodLogEntry` to a single emoji via (1) exact match in `food_emoji_map.json` on `referenceFood` or `foodDescription`, then (2) a keyword classifier in `FoodEmoji.swift`. Low-confidence matches (`confidenceScore < 0.3`) always return ❓ — never fabricate a high-confidence emoji for an unknown food, same rule as GL/CL. Visualizations use `FoodGraphic` (SwiftUI) or an `SKLabelNode` with the emoji (SpriteKit); both size the glyph so its drawn area is proportional to the passed magnitude. Food-group color fills were removed from visualizations — the emoji is now the identifier. Tier/confidence coloring (e.g. `ConfidenceBadge` in `FoodLogRowView`) is unrelated and retained.
+**Food emojis.** `FoodEmoji.resolve(entry:)` maps a `FoodLogEntry` to a single emoji via (1) exact match in `food_emoji_map.json` on `referenceFood` or `foodDescription`, then (2) a keyword classifier in `FoodEmoji.swift`. Low-confidence matches (`confidenceScore < 0.3`) always return ❓ — never fabricate a high-confidence emoji for an unknown food, same rule as GL/CL. Visualizations use `FoodGraphic` (SwiftUI) or an `SKLabelNode` with the emoji (SpriteKit); both size the glyph so its drawn area is proportional to the passed magnitude. The emoji is the sole visual identifier for a food — the `FoodGroup` classification (formerly colored circles / tinted tokens) was deleted entirely. `FoodEntryDetailSheet`'s header also uses `FoodEmoji.resolve(entry:)` — keep it that way; do not re-introduce food-group coloring anywhere. Tier/confidence coloring (e.g. `ConfidenceBadge` in `FoodLogRowView`) is unrelated and retained.
+
+**Waterline buoyancy contract.** `WaterlineView` uses explicit `floatCategory` and `sinkCategory` physics-category bitmasks — set on BOTH branches when creating each item's body. Do not rely on the default mask (`0xFFFFFFFF`), which matches every category and leaks lift onto items that should sink. **Beneficial CL (negative) → `floatCategory`**, low effective density, gets upward Archimedean force scaled by submerged depth → rises to the surface. **Harmful CL (positive) → `sinkCategory`**, higher density, gets a mild extra downward nudge → settles on the bottom. Items of each kind spawn in the half they need to cross so the motion reads. Direction is deliberately opposite of the bucket (harmful fills the bucket; harmful sinks in the tank) so the two views aren't visually redundant.
 
 **Replay triggers.** Physics scenes in `PhysicsBucketView`, `WaterlineView`, and `BalanceScaleView` rebuild (replaying the drop animation) when (a) the view appears, (b) the entry list changes — via `.onChange(of: entryIDs)`, (c) the user taps Replay. Implemented by bumping a `sceneID: UUID` `@State` and using `.id(sceneID)` on the `SpriteView`.
 
-Tappable items open `FoodEntryDetailSheet` — pass a `FoodLogEntry` as `.sheet(item:)`.
+**Unified entry-interaction flow.** Every tap — visualization item, Log-tab row, river item, quadrant dot — opens `FoodEntryDetailSheet` first. The sheet shows an emoji header, prominent timestamp, GL/CL, tier/confidence, and raw transcript. It has an Edit button in the toolbar that presents `EditEntryView` (defined in `LogTab/LogTabView.swift`). Never open `EditEntryView` directly from a tap — always go through the detail sheet. `FoodEntryDetailSheet` uses `@ObservedObject var entry` so it refreshes after an edit.
+
+`EditEntryView` includes a timestamp `DatePicker` (rounded to 30-minute intervals on Save, constrained to `...Date()` so users can't log future entries).
+
+### Build info (debug tab)
+
+`GlycoTrack/Config/BuildInfo.generated.swift` is regenerated by `scripts/inject_build_info.sh` (git branch, short commit with `-dirty` marker, UTC timestamp). `AppInfo` (`GlycoTrack/Config/AppInfo.swift`) exposes this plus `CFBundleShortVersionString` / `CFBundleVersion`. `DebugTabView` surfaces it in the "Build Info" section along with the last-data-update timestamp. `scripts/deploy.sh` calls `inject_build_info.sh` before `xcodegen generate`, so every device install gets fresh values. The generated file is committed so clean checkouts still compile.
+
+### Reusable period components
+
+- `PeriodSummaryView(title:, entries:, daysInPeriod:)` — single summary card used by both Week and Month tabs. Shows Avg Daily GL, Total GL, Net CL. Days-logged and "N entries need review" warnings were removed deliberately — do not reintroduce them.
+- `QuadrantPlotSection(entries:, onTap:)` — embeddable GL × CL quadrant; host owns the `selectedEntry` state and `.sheet(item:) { FoodEntryDetailSheet(entry:) }` wiring.
 
 ### API key
 

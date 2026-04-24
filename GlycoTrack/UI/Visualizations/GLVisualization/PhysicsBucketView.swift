@@ -9,16 +9,35 @@ import UIKit
 /// Tap any emoji to see food details.
 struct PhysicsBucketView: View {
     let entries: [FoodLogEntry]
+    /// Date this view represents. Changing this value forces a scene rebuild
+    /// even if the entry IDs happen to overlap between days — fixes the
+    /// swipe-back-to-today stale-items bug where an `.onChange(of: entryIDs)`
+    /// trigger alone wasn't enough because the stale SwiftUI body snapshot
+    /// could still feed the old entries into the newly-rebuilt scene.
+    let dateKey: Date?
     let budget: Double = dailyGLBudgetUI
 
     @State private var selectedEntry: FoodLogEntry?
     @State private var sceneID = UUID()
     @State private var scene: BucketScene?
 
+    init(entries: [FoodLogEntry], dateKey: Date? = nil) {
+        self.entries = entries
+        self.dateKey = dateKey
+    }
+
     private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
     private var fillFraction: Double { min(totalGL / budget, 1.0) }
     /// Stable signal for replay-on-new-log.
     private var entryIDs: [UUID] { entries.compactMap { $0.id } }
+    /// Day-bucket of `dateKey` (or distantPast if unset) — used so that
+    /// intra-day time changes (e.g. a new log at 2:05 pm when we previously
+    /// rendered at 2:00 pm) do NOT force extra rebuilds, but day-to-day
+    /// navigation does.
+    private var dayKey: Date {
+        guard let dateKey else { return .distantPast }
+        return Calendar.current.startOfDay(for: dateKey)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -47,6 +66,9 @@ struct PhysicsBucketView: View {
             .aspectRatio(0.78, contentMode: .fit)
             // Replay when a new entry is logged.
             .onChange(of: entryIDs) { _ in sceneID = UUID() }
+            // Replay when the displayed day changes — covers the swipe-back-to-today
+            // case where entryIDs alone may not differ enough to trigger a rebuild.
+            .onChange(of: dayKey) { _ in sceneID = UUID() }
             // Replay when the view reappears (e.g. user switches back to Today).
             .onAppear { sceneID = UUID() }
 
