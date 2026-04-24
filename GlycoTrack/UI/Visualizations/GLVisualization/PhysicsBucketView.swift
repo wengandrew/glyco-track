@@ -22,18 +22,6 @@ struct PhysicsBucketView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HStack(alignment: .firstTextBaseline) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Today's GL Bucket")
-                        .font(.headline)
-                    Text("Tap an item to see what's inside")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
-                }
-                Spacer()
-                GLStatusLabel(total: totalGL, budget: budget)
-            }
-
             GeometryReader { geo in
                 ZStack {
                     if let scene = scene {

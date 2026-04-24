@@ -8,6 +8,14 @@ struct HomeTabView: View {
 
     @FetchRequest private var entries: FetchedResults<FoodLogEntry>
 
+    // Earliest logged entry ever — used to clamp backward date navigation.
+    @FetchRequest(
+        sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
+        predicate: NSPredicate(format: "isSoftDeleted == NO"),
+        animation: .default
+    )
+    private var allEntriesAsc: FetchedResults<FoodLogEntry>
+
     @State private var selectedDate: Date = Calendar.current.startOfDay(for: Date())
     @State private var clPrototype: CLPrototype = .tugOfWar
     @State private var showQuadrant = false
@@ -27,17 +35,18 @@ struct HomeTabView: View {
                 VStack(spacing: 18) {
                     recordingSection
 
-                    dateNavigator
-
                     let entryArray = Array(entries)
+                    let totalGL = entryArray.reduce(0) { $0 + $1.computedGL }
 
                     // ── GL SECTION ───────────────────────────────
                     MetricSection(
                         title: "Glycemic Load",
                         subtitle: "Carbs · diabetes risk",
                         accent: .glAccent,
-                        icon: "drop.fill"
+                        icon: "drop.fill",
+                        trailing: { GLStatusLabel(total: totalGL, budget: dailyGLBudgetUI) }
                     ) {
+                        dateNavigator
                         PhysicsBucketView(entries: entryArray)
                     }
                     .contentShape(Rectangle())
@@ -135,11 +144,12 @@ struct HomeTabView: View {
             } label: {
                 Image(systemName: "chevron.left")
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(.accentColor)
+                    .foregroundColor(isEarliest ? .secondary : .accentColor)
                     .frame(width: 32, height: 32)
                     .background(Color(.systemGray6))
                     .clipShape(Circle())
             }
+            .disabled(isEarliest)
 
             VStack(spacing: 0) {
                 Text(dateHeading)
@@ -166,7 +176,6 @@ struct HomeTabView: View {
             }
             .disabled(isToday)
         }
-        .padding(.horizontal)
     }
 
     private var horizontalSwipe: some Gesture {
@@ -190,6 +199,17 @@ struct HomeTabView: View {
         Calendar.current.isDate(selectedDate, inSameDayAs: Date())
     }
 
+    /// Earliest day that has any logged entry — nil until the first log.
+    private var earliestLoggedDay: Date? {
+        guard let first = allEntriesAsc.first, let ts = first.timestamp else { return nil }
+        return Calendar.current.startOfDay(for: ts)
+    }
+
+    private var isEarliest: Bool {
+        guard let earliest = earliestLoggedDay else { return true }
+        return Calendar.current.isDate(selectedDate, inSameDayAs: earliest)
+    }
+
     private var titleForNav: String {
         isToday ? "Today" : DateFormatter.short.string(from: selectedDate)
     }
@@ -211,7 +231,12 @@ struct HomeTabView: View {
         let startOfDay = Calendar.current.startOfDay(for: date)
         let today = Calendar.current.startOfDay(for: Date())
         // Don't allow navigating into the future.
-        let clamped = startOfDay > today ? today : startOfDay
+        var clamped = startOfDay > today ? today : startOfDay
+        // Don't allow navigating before the first-ever logged day — there's
+        // nothing to show and the empty-day display is misleading.
+        if let earliest = earliestLoggedDay, clamped < earliest {
+            clamped = earliest
+        }
         withAnimation(.easeInOut(duration: 0.2)) {
             selectedDate = clamped
         }
@@ -316,11 +341,12 @@ enum CLPrototype: String, CaseIterable, Identifiable {
 
 // MARK: - Section chrome
 
-struct MetricSection<Content: View>: View {
+struct MetricSection<Content: View, Trailing: View>: View {
     let title: String
     let subtitle: String
     let accent: Color
     let icon: String
+    @ViewBuilder let trailing: () -> Trailing
     @ViewBuilder let content: () -> Content
 
     var body: some View {
@@ -342,6 +368,7 @@ struct MetricSection<Content: View>: View {
                         .foregroundColor(.secondary)
                 }
                 Spacer()
+                trailing()
             }
             .padding(.horizontal)
 
@@ -354,6 +381,23 @@ struct MetricSection<Content: View>: View {
                 .fill(accent.opacity(0.04))
                 .padding(.horizontal, 8)
         )
+    }
+}
+
+extension MetricSection where Trailing == EmptyView {
+    init(
+        title: String,
+        subtitle: String,
+        accent: Color,
+        icon: String,
+        @ViewBuilder content: @escaping () -> Content
+    ) {
+        self.title = title
+        self.subtitle = subtitle
+        self.accent = accent
+        self.icon = icon
+        self.trailing = { EmptyView() }
+        self.content = content
     }
 }
 

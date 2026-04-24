@@ -131,7 +131,10 @@ final class BalanceScene: SKScene {
     private var beamThickness: CGFloat { 6 }
     private var plateWidth: CGFloat { size.width * 0.28 }
     private var plateThickness: CGFloat { 4 }
-    private var plateDrop: CGFloat { size.height * 0.10 }
+    /// Vertical distance from beam center up to each plate's slab. Plates sit
+    /// ABOVE the beam so items falling from the top land in the cup formed by
+    /// the slab + lips, instead of bouncing off the beam.
+    private var plateLift: CGFloat { size.height * 0.08 }
     private var lipHeight: CGFloat { size.height * 0.12 }
     private var lipThickness: CGFloat { 2 }
 
@@ -178,9 +181,10 @@ final class BalanceScene: SKScene {
         beamShape.strokeColor = .clear
         beam.addChild(beamShape)
 
-        // Plate positions relative to beam origin
-        let leftCenter = CGPoint(x: -beamLength / 2 + plateWidth / 2, y: -plateDrop)
-        let rightCenter = CGPoint(x: beamLength / 2 - plateWidth / 2, y: -plateDrop)
+        // Plate positions relative to beam origin. Plates sit ABOVE the beam
+        // so items falling from the top land in the cup.
+        let leftCenter = CGPoint(x: -beamLength / 2 + plateWidth / 2, y: plateLift)
+        let rightCenter = CGPoint(x: beamLength / 2 - plateWidth / 2, y: plateLift)
 
         // Visual plates (slabs + lips)
         drawPlateVisual(on: beam, center: leftCenter, color: .green)
