@@ -201,8 +201,8 @@ struct HomeTabView: View {
 
     /// Earliest day that has any logged entry — nil until the first log.
     private var earliestLoggedDay: Date? {
-        guard let first = allEntriesAsc.first else { return nil }
-        return Calendar.current.startOfDay(for: first.timestamp)
+        guard let first = allEntriesAsc.first, let ts = first.timestamp else { return nil }
+        return Calendar.current.startOfDay(for: ts)
     }
 
     private var isEarliest: Bool {
