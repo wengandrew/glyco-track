@@ -18,7 +18,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 4. When work is complete, open a PR targeting `develop` (not `main`) — **do not build or deploy locally**
 5. Never merge directly to `develop` or `main` — always via PR
 
-**Do not build or deploy.** Claude must not run `./scripts/deploy.sh`, `xcodebuild`, or any command that installs the app on device. The user reviews all code changes via PR on GitHub before anything reaches the device. Opening the PR is the end of Claude's job for a given task.
+**Build to verify, but do not deploy.** Claude MAY run `xcodebuild` (or `xcodegen generate && xcodebuild`) with a `build` action for the iOS Simulator destination to verify compilation before opening a PR. Claude MUST NOT run `./scripts/deploy.sh` or any command that installs the app on device — deployment to the user's iPhone is the user's job, after reviewing the PR. Safe verification command:
+
+```bash
+xcodebuild -project GlycoTrack.xcodeproj -scheme GlycoTrack \
+  -configuration Debug \
+  -destination 'generic/platform=iOS Simulator' \
+  build
+```
+
+If the build fails, fix the compile errors before opening (or updating) the PR. Never use `-allowProvisioningUpdates`, `install`, or any device destination.
 
 **Active feature branches (update this as PRs open/merge):**
 <!-- Add a line per open PR: - [branch-name]: brief description -->
@@ -35,7 +44,7 @@ Worktrees do not auto-track their base branch. If new PRs land on `develop` afte
 ## Behavior
 
 - **Ask before assuming.** When a task has multiple reasonable approaches (e.g. a new visualization style, a data model change, a refactor), ask a clarifying question first. Don't assume the user knows the tradeoffs — explain the options briefly and ask which direction they prefer.
-- **Never build or deploy.** Do not run `deploy.sh`, `xcodebuild`, or any install command. Open a PR and let the user review and merge.
+- **Build to verify, never deploy.** You MAY run `xcodebuild … build` against the iOS Simulator destination to catch compile errors before PR. Do NOT run `deploy.sh` or any install/device command — that's the user's step.
 
 ## Build & Test Commands
 
