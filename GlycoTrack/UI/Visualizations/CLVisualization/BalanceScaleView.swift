@@ -14,7 +14,10 @@ struct BalanceScaleView: View {
     let dateKey: Date?
 
     @State private var selectedEntry: FoodLogEntry?
-    @State private var sceneID = UUID()
+    /// Bumped to force replay without an input change (Replay button, tab re-appearance).
+    /// Day/entry changes force replay automatically via the scene key — this nonce only
+    /// covers the "same inputs, replay anyway" cases.
+    @State private var replayNonce = UUID()
     @State private var scene: BalanceScene?
 
     init(entries: [FoodLogEntry], dateKey: Date? = nil) {
@@ -39,31 +42,42 @@ struct BalanceScaleView: View {
             }
 
             GeometryReader { geo in
+                // Pure-function scene key — see PhysicsBucketView for the rationale.
+                // Including dayKey + entryIDs in both the SpriteView `.id` and the
+                // `.task(id:)` guarantees the scene rebuilds with fresh entries when
+                // the user navigates between days, avoiding the stale-capture race
+                // where a UUID-based id could be bumped during a render that still
+                // held yesterday's entries.
+                let key = SceneKeyCL(
+                    replay: replayNonce,
+                    dayKey: dayKey,
+                    entryIDs: entryIDs,
+                    width: geo.size.width,
+                    height: geo.size.height
+                )
                 ZStack {
                     if let scene {
                         SpriteView(scene: scene, options: [.allowsTransparency])
                             .background(Color.clear)
-                            .id(sceneID)
+                            .id(key)
                     } else {
                         Color.clear
                     }
                     if entries.isEmpty { emptyOverlay }
                 }
-                .task(id: SceneKeyCL(id: sceneID, width: geo.size.width, height: geo.size.height)) {
+                .task(id: key) {
                     scene = makeScene(size: geo.size)
                 }
             }
             .aspectRatio(1.3, contentMode: .fit)
-            .onChange(of: entryIDs) { _ in sceneID = UUID() }
-            .onChange(of: dayKey) { _ in sceneID = UUID() }
-            .onAppear { sceneID = UUID() }
+            .onAppear { replayNonce = UUID() }
 
             HStack {
                 Label("Beneficial", systemImage: "leaf.fill")
                     .font(.caption2).foregroundColor(.green.opacity(0.8))
                 Spacer()
                 Button {
-                    sceneID = UUID()
+                    replayNonce = UUID()
                 } label: {
                     Label("Replay", systemImage: "arrow.clockwise")
                         .font(.caption2)

@@ -73,7 +73,7 @@ struct HomeTabView: View {
                         case .tugOfWar:
                             TugOfWarBarView(entries: entryArray)
                         case .waterline:
-                            WaterlineView(entries: entryArray)
+                            WaterlineView(entries: entryArray, dateKey: selectedDate)
                         case .balance:
                             BalanceScaleView(entries: entryArray, dateKey: selectedDate)
                         }

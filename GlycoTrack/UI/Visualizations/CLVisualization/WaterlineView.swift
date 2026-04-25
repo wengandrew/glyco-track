@@ -9,13 +9,25 @@ import UIKit
 /// Each item is rendered as a food emoji; area is proportional to |CL|.
 struct WaterlineView: View {
     let entries: [FoodLogEntry]
+    /// Date this view represents. Same role as in PhysicsBucketView/BalanceScaleView —
+    /// changing the day forces the scene to rebuild even if entry IDs happen to overlap.
+    let dateKey: Date?
 
     @State private var selectedEntry: FoodLogEntry?
-    @State private var sceneID = UUID()
+    @State private var replayNonce = UUID()
     @State private var scene: WaterlineScene?
+
+    init(entries: [FoodLogEntry], dateKey: Date? = nil) {
+        self.entries = entries
+        self.dateKey = dateKey
+    }
 
     private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
     private var entryIDs: [UUID] { entries.compactMap { $0.id } }
+    private var dayKey: Date {
+        guard let dateKey else { return .distantPast }
+        return Calendar.current.startOfDay(for: dateKey)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -27,6 +39,13 @@ struct WaterlineView: View {
             }
 
             GeometryReader { geo in
+                let key = SceneKeyCL(
+                    replay: replayNonce,
+                    dayKey: dayKey,
+                    entryIDs: entryIDs,
+                    width: geo.size.width,
+                    height: geo.size.height
+                )
                 ZStack {
                     if let scene {
                         SpriteView(
@@ -34,26 +53,25 @@ struct WaterlineView: View {
                             options: [.allowsTransparency]
                         )
                         .background(Color.clear)
-                        .id(sceneID)
+                        .id(key)
                     } else {
                         Color.clear
                     }
                     if entries.isEmpty { emptyOverlay }
                 }
-                .task(id: SceneKeyCL(id: sceneID, width: geo.size.width, height: geo.size.height)) {
+                .task(id: key) {
                     scene = makeScene(size: geo.size)
                 }
             }
             .aspectRatio(0.85, contentMode: .fit)
-            .onChange(of: entryIDs) { _ in sceneID = UUID() }
-            .onAppear { sceneID = UUID() }
+            .onAppear { replayNonce = UUID() }
 
             HStack {
                 Label("Harmful ↓", systemImage: "arrow.down.circle.fill")
                     .font(.caption2).foregroundColor(.red.opacity(0.8))
                 Spacer()
                 Button {
-                    sceneID = UUID()
+                    replayNonce = UUID()
                 } label: {
                     Label("Replay", systemImage: "arrow.clockwise")
                         .font(.caption2)
@@ -88,8 +106,15 @@ struct WaterlineView: View {
     }
 }
 
+/// Pure-function scene key shared by WaterlineView and BalanceScaleView.
+/// Including dayKey + entryIDs in the key (rather than a UUID bumped via `.onChange`)
+/// avoids the SwiftUI race where the id could be bumped during a render that still
+/// captured stale entries — the scene built in that render would then never be replaced
+/// even after entries finally updated.
 struct SceneKeyCL: Hashable {
-    let id: UUID
+    let replay: UUID
+    let dayKey: Date
+    let entryIDs: [UUID]
     let width: CGFloat
     let height: CGFloat
 }

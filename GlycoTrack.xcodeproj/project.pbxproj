@@ -20,6 +20,7 @@
 		2604E20D340C259B8A5722C5 /* FoodGraphic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFF15FD7B99E00160837027 /* FoodGraphic.swift */; };
 		26A7AE8A79E5F09A08CC7F4B /* FoodLogEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51938CF5F6DF886635DF3426 /* FoodLogEntry+CoreDataClass.swift */; };
 		2AB15550573722F27840C076 /* GlycoTrackWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C70C082CC09B5E60AF485E04 /* GlycoTrackWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		414C04B785EC7D63A03EF6BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA893F988E91457F91A4E3BF /* Assets.xcassets */; };
 		478432404A32D39AB16C3824 /* GlycoTrackWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E299D37D943223074C0464 /* GlycoTrackWidgetEntryView.swift */; };
 		4BBADB6F44367C378B4CFA1E /* FoodMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C16B19721941F485C06001 /* FoodMatcher.swift */; };
 		541CADD963F1A6CF84ED8EE6 /* SummaryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC65AD31C004BA65B554B9B /* SummaryGenerator.swift */; };
@@ -144,10 +145,12 @@
 		C70C082CC09B5E60AF485E04 /* GlycoTrackWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = GlycoTrackWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA2306B0E783E13C7D020642 /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
 		DA4859E2F701A70D2FDD7A83 /* NutritionalProfile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NutritionalProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
+		DA893F988E91457F91A4E3BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCC319390AA669EE258FAD6F /* CLEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLEngine.swift; sourceTree = "<group>"; };
 		E6C16B19721941F485C06001 /* FoodMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMatcher.swift; sourceTree = "<group>"; };
 		E838C1BDD90901F73964B424 /* PeriodSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodSummaryView.swift; sourceTree = "<group>"; };
 		E872FBC247922AFD48D894E0 /* TugOfWarBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TugOfWarBarView.swift; sourceTree = "<group>"; };
+		EC6C50E55067161C1D7654B6 /* GlycoTrack.local.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GlycoTrack.local.xcconfig; sourceTree = "<group>"; };
 		EC98CA71D925406ACDA67295 /* SummaryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryTabView.swift; sourceTree = "<group>"; };
 		F3A6E1677A79798237CFB545 /* gi_database.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = gi_database.json; sourceTree = "<group>"; };
 		FA0635BF8C8072E15E778AD6 /* DebugTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTabView.swift; sourceTree = "<group>"; };
@@ -197,6 +200,7 @@
 		1A970110B187D9BFAC19AE52 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DA893F988E91457F91A4E3BF /* Assets.xcassets */,
 				4C263514B81487DA19F869F3 /* food_emoji_map.json */,
 				F3A6E1677A79798237CFB545 /* gi_database.json */,
 				93C58B72C496B16CA9474321 /* usda_nutrition.json */,
@@ -218,6 +222,7 @@
 			children = (
 				0E7AC5A8B6B5D9D3340E2D7A /* AppInfo.swift */,
 				0FEDAD6172CAF0ACDF326FB5 /* BuildInfo.generated.swift */,
+				EC6C50E55067161C1D7654B6 /* GlycoTrack.local.xcconfig */,
 				057B38EA6BEE010F76E24F96 /* GlycoTrack.xcconfig */,
 				6A1B66F0A6155C24C35BD9A5 /* GlycoTrack.xcconfig.example */,
 			);
@@ -590,6 +595,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				414C04B785EC7D63A03EF6BE /* Assets.xcassets in Resources */,
 				7090F21A3809A883F654669C /* GlycoTrack.xcconfig.example in Resources */,
 				72E8408FB1D9F7D5769B835E /* food_emoji_map.json in Resources */,
 				F0EFA312B13AFE888D07FC06 /* gi_database.json in Resources */,

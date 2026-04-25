@@ -18,7 +18,10 @@ struct PhysicsBucketView: View {
     let budget: Double = dailyGLBudgetUI
 
     @State private var selectedEntry: FoodLogEntry?
-    @State private var sceneID = UUID()
+    /// Bumped to force an animation replay without an input change (Replay button,
+    /// tab re-appearance). Day/entry changes force replay automatically via
+    /// `SceneKey` below — this nonce only covers the "same inputs, replay anyway" cases.
+    @State private var replayNonce = UUID()
     @State private var scene: BucketScene?
 
     init(entries: [FoodLogEntry], dateKey: Date? = nil) {
@@ -42,6 +45,20 @@ struct PhysicsBucketView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             GeometryReader { geo in
+                // Key is a pure function of the reactive inputs. Whenever day, entries,
+                // size, or replay-nonce changes, both the SpriteView's `.id` and the
+                // `.task(id:)` change together — guaranteeing the task re-runs with a
+                // fresh `self.entries` capture and the view rebuilds around the new scene.
+                // This avoids the SwiftUI race where a UUID-based sceneID could be bumped
+                // during a render that still holds stale entries, producing a scene built
+                // from yesterday's items that then sticks because the id never changes again.
+                let key = SceneKey(
+                    replay: replayNonce,
+                    dayKey: dayKey,
+                    entryIDs: entryIDs,
+                    width: geo.size.width,
+                    height: geo.size.height
+                )
                 ZStack {
                     if let scene = scene {
                         SpriteView(
@@ -50,7 +67,7 @@ struct PhysicsBucketView: View {
                             debugOptions: []
                         )
                         .background(Color.clear)
-                        .id(sceneID) // force view rebuild when replaying
+                        .id(key)
                     } else {
                         Color.clear
                     }
@@ -59,18 +76,14 @@ struct PhysicsBucketView: View {
                         emptyStateOverlay
                     }
                 }
-                .task(id: SceneKey(id: sceneID, width: geo.size.width, height: geo.size.height)) {
+                .task(id: key) {
                     scene = makeScene(size: geo.size)
                 }
             }
             .aspectRatio(0.78, contentMode: .fit)
-            // Replay when a new entry is logged.
-            .onChange(of: entryIDs) { _ in sceneID = UUID() }
-            // Replay when the displayed day changes — covers the swipe-back-to-today
-            // case where entryIDs alone may not differ enough to trigger a rebuild.
-            .onChange(of: dayKey) { _ in sceneID = UUID() }
             // Replay when the view reappears (e.g. user switches back to Today).
-            .onAppear { sceneID = UUID() }
+            // Day/entries changes trigger replay automatically via the key above.
+            .onAppear { replayNonce = UUID() }
 
             // Fill bar + replay
             VStack(spacing: 4) {
@@ -88,7 +101,7 @@ struct PhysicsBucketView: View {
                     Text("0").font(.caption2).foregroundColor(.secondary)
                     Spacer()
                     Button {
-                        sceneID = UUID()
+                        replayNonce = UUID()
                     } label: {
                         Label("Replay", systemImage: "arrow.clockwise")
                             .font(.caption2)
@@ -130,7 +143,9 @@ struct PhysicsBucketView: View {
 }
 
 private struct SceneKey: Hashable {
-    let id: UUID
+    let replay: UUID
+    let dayKey: Date
+    let entryIDs: [UUID]
     let width: CGFloat
     let height: CGFloat
 }
