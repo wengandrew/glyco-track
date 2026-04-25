@@ -10,19 +10,15 @@ import UIKit
 struct PhysicsBucketView: View {
     let entries: [FoodLogEntry]
     /// Date this view represents. Changing this value forces a scene rebuild
-    /// even if the entry IDs happen to overlap between days — fixes the
-    /// swipe-back-to-today stale-items bug where an `.onChange(of: entryIDs)`
-    /// trigger alone wasn't enough because the stale SwiftUI body snapshot
-    /// could still feed the old entries into the newly-rebuilt scene.
+    /// even if the entry IDs happen to overlap between days.
     let dateKey: Date?
     let budget: Double = dailyGLBudgetUI
 
     @State private var selectedEntry: FoodLogEntry?
-    /// Bumped to force an animation replay without an input change (Replay button,
-    /// tab re-appearance). Day/entry changes force replay automatically via
-    /// `SceneKey` below — this nonce only covers the "same inputs, replay anyway" cases.
+    /// Bumped to force a rebuild without an input change (Replay button, tab
+    /// re-appearance). Day/entries changes force a rebuild automatically via
+    /// `SceneKey` — this nonce only covers the "same inputs, replay anyway" cases.
     @State private var replayNonce = UUID()
-    @State private var scene: BucketScene?
 
     init(entries: [FoodLogEntry], dateKey: Date? = nil) {
         self.entries = entries
@@ -31,12 +27,9 @@ struct PhysicsBucketView: View {
 
     private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
     private var fillFraction: Double { min(totalGL / budget, 1.0) }
-    /// Stable signal for replay-on-new-log.
     private var entryIDs: [UUID] { entries.compactMap { $0.id } }
-    /// Day-bucket of `dateKey` (or distantPast if unset) — used so that
-    /// intra-day time changes (e.g. a new log at 2:05 pm when we previously
-    /// rendered at 2:00 pm) do NOT force extra rebuilds, but day-to-day
-    /// navigation does.
+    /// Day-bucket of `dateKey` (or distantPast if unset). Intra-day time changes
+    /// don't force extra rebuilds, but day-to-day navigation does.
     private var dayKey: Date {
         guard let dateKey else { return .distantPast }
         return Calendar.current.startOfDay(for: dateKey)
@@ -45,13 +38,22 @@ struct PhysicsBucketView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             GeometryReader { geo in
-                // Key is a pure function of the reactive inputs. Whenever day, entries,
-                // size, or replay-nonce changes, both the SpriteView's `.id` and the
-                // `.task(id:)` change together — guaranteeing the task re-runs with a
-                // fresh `self.entries` capture and the view rebuilds around the new scene.
-                // This avoids the SwiftUI race where a UUID-based sceneID could be bumped
-                // during a render that still holds stale entries, producing a scene built
-                // from yesterday's items that then sticks because the id never changes again.
+                // The scene key is a pure function of the reactive inputs.
+                //
+                // Why we use `.id(key)` on a child view + `@State` scene built at init,
+                // instead of `.task(id: key)` writing to the parent's `@State scene`:
+                //
+                //   `.task(id:)` cancels-and-restarts when id changes, but with a
+                //   synchronous body (no awaits / cancellation checks), BOTH the stale
+                //   and fresh tasks run to completion. Their finish order is undefined,
+                //   so the stale one can land last and overwrite the fresh scene. The
+                //   user-visible bug was "always one day behind on swipe".
+                //
+                //   `.id(key)` on a child view forces SwiftUI to tear down and re-init
+                //   that child whenever the key changes. The child's `@State` is reset,
+                //   its `init` is what creates the SKScene from `entries`, and the scene
+                //   construction happens synchronously on the main thread inside body
+                //   evaluation. No cross-task ordering, no race.
                 let key = SceneKey(
                     replay: replayNonce,
                     dayKey: dayKey,
@@ -60,24 +62,17 @@ struct PhysicsBucketView: View {
                     height: geo.size.height
                 )
                 ZStack {
-                    if let scene = scene {
-                        SpriteView(
-                            scene: scene,
-                            options: [.allowsTransparency],
-                            debugOptions: []
-                        )
-                        .background(Color.clear)
-                        .id(key)
-                    } else {
-                        Color.clear
-                    }
+                    BucketSceneHost(
+                        entries: entries,
+                        size: geo.size,
+                        budget: budget,
+                        onTap: { selectedEntry = $0 }
+                    )
+                    .id(key)
 
                     if entries.isEmpty {
                         emptyStateOverlay
                     }
-                }
-                .task(id: key) {
-                    scene = makeScene(size: geo.size)
                 }
             }
             .aspectRatio(0.78, contentMode: .fit)
@@ -131,14 +126,29 @@ struct PhysicsBucketView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+}
 
-    private func makeScene(size: CGSize) -> BucketScene {
-        let scene = BucketScene(size: size, entries: entries, budget: budget)
-        scene.scaleMode = .resizeFill
-        scene.onBubbleTapped = { entry in
-            selectedEntry = entry
-        }
-        return scene
+/// Wraps a `SpriteView` whose `BucketScene` is constructed synchronously at init.
+/// The parent uses `.id(SceneKey)` on this view, so SwiftUI tears it down and
+/// re-inits whenever any reactive input changes — guaranteeing the scene is
+/// always built from the latest `entries`. See `PhysicsBucketView` for rationale.
+private struct BucketSceneHost: View {
+    @State private var scene: BucketScene
+
+    init(entries: [FoodLogEntry], size: CGSize, budget: Double, onTap: @escaping (FoodLogEntry) -> Void) {
+        let s = BucketScene(size: size, entries: entries, budget: budget)
+        s.scaleMode = .resizeFill
+        s.onBubbleTapped = onTap
+        _scene = State(initialValue: s)
+    }
+
+    var body: some View {
+        SpriteView(
+            scene: scene,
+            options: [.allowsTransparency],
+            debugOptions: []
+        )
+        .background(Color.clear)
     }
 }
 

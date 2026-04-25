@@ -15,7 +15,6 @@ struct WaterlineView: View {
 
     @State private var selectedEntry: FoodLogEntry?
     @State private var replayNonce = UUID()
-    @State private var scene: WaterlineScene?
 
     init(entries: [FoodLogEntry], dateKey: Date? = nil) {
         self.entries = entries
@@ -39,6 +38,8 @@ struct WaterlineView: View {
             }
 
             GeometryReader { geo in
+                // See PhysicsBucketView for the rationale on `.id(key)` + child-view-with-
+                // @State (rather than `.task(id:)`).
                 let key = SceneKeyCL(
                     replay: replayNonce,
                     dayKey: dayKey,
@@ -47,20 +48,14 @@ struct WaterlineView: View {
                     height: geo.size.height
                 )
                 ZStack {
-                    if let scene {
-                        SpriteView(
-                            scene: scene,
-                            options: [.allowsTransparency]
-                        )
-                        .background(Color.clear)
-                        .id(key)
-                    } else {
-                        Color.clear
-                    }
+                    WaterlineSceneHost(
+                        entries: entries,
+                        size: geo.size,
+                        onTap: { selectedEntry = $0 }
+                    )
+                    .id(key)
+
                     if entries.isEmpty { emptyOverlay }
-                }
-                .task(id: key) {
-                    scene = makeScene(size: geo.size)
                 }
             }
             .aspectRatio(0.85, contentMode: .fit)
@@ -97,12 +92,23 @@ struct WaterlineView: View {
                 .font(.caption).foregroundColor(.secondary)
         }
     }
+}
 
-    private func makeScene(size: CGSize) -> WaterlineScene {
-        let scene = WaterlineScene(size: size, entries: entries)
-        scene.scaleMode = .resizeFill
-        scene.onItemTapped = { entry in selectedEntry = entry }
-        return scene
+/// Wraps a `SpriteView` whose `WaterlineScene` is constructed synchronously at init.
+/// The parent uses `.id(SceneKeyCL)` on this view — see `PhysicsBucketView` for rationale.
+private struct WaterlineSceneHost: View {
+    @State private var scene: WaterlineScene
+
+    init(entries: [FoodLogEntry], size: CGSize, onTap: @escaping (FoodLogEntry) -> Void) {
+        let s = WaterlineScene(size: size, entries: entries)
+        s.scaleMode = .resizeFill
+        s.onItemTapped = onTap
+        _scene = State(initialValue: s)
+    }
+
+    var body: some View {
+        SpriteView(scene: scene, options: [.allowsTransparency])
+            .background(Color.clear)
     }
 }
 
