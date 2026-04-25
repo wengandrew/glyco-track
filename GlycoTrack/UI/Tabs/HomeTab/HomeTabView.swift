@@ -18,7 +18,7 @@ struct HomeTabView: View {
 
     @State private var selectedDate: Date = Calendar.current.startOfDay(for: Date())
     @State private var clPrototype: CLPrototype = .tugOfWar
-    @State private var showQuadrant = false
+    @State private var selectedEntry: FoodLogEntry?
 
     init() {
         _logProcessor = StateObject(wrappedValue: FoodLogProcessor())
@@ -47,7 +47,10 @@ struct HomeTabView: View {
                         trailing: { GLStatusLabel(total: totalGL, budget: dailyGLBudgetUI) }
                     ) {
                         dateNavigator
-                        PhysicsBucketView(entries: entryArray)
+                        PhysicsBucketView(
+                            entries: entryArray,
+                            dateKey: selectedDate
+                        )
                     }
                     .contentShape(Rectangle())
                     .gesture(horizontalSwipe)
@@ -70,37 +73,19 @@ struct HomeTabView: View {
                         case .tugOfWar:
                             TugOfWarBarView(entries: entryArray)
                         case .waterline:
-                            WaterlineView(entries: entryArray)
+                            WaterlineView(entries: entryArray, dateKey: selectedDate)
                         case .balance:
-                            BalanceScaleView(entries: entryArray)
+                            BalanceScaleView(entries: entryArray, dateKey: selectedDate)
                         }
                     }
                     .contentShape(Rectangle())
                     .gesture(horizontalSwipe)
 
-                    // ── COMBINED ─────────────────────────────────
-                    Button {
-                        showQuadrant = true
-                    } label: {
-                        HStack {
-                            Image(systemName: "chart.scatter")
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("GL × CL Quadrant")
-                                    .font(.subheadline.weight(.semibold))
-                                Text("See the trade-off between both metrics")
-                                    .font(.caption2)
-                                    .foregroundColor(.secondary)
-                            }
-                            Spacer()
-                            Image(systemName: "chevron.right")
-                                .foregroundColor(.secondary)
-                        }
-                        .foregroundColor(.primary)
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(12)
-                        .padding(.horizontal)
-                    }
+                    // ── COMBINED: GL × CL Quadrant (embedded) ────
+                    QuadrantPlotSection(
+                        entries: entryArray,
+                        onTap: { selectedEntry = $0 }
+                    )
 
                     if !entryArray.isEmpty {
                         TodayEntrySummary(entries: entryArray)
@@ -110,17 +95,8 @@ struct HomeTabView: View {
                 .padding(.bottom, 24)
             }
             .navigationTitle(titleForNav)
-            .sheet(isPresented: $showQuadrant) {
-                NavigationView {
-                    QuadrantPlotView(entries: Array(entries))
-                        .navigationTitle("GL × CL Quadrant")
-                        .navigationBarTitleDisplayMode(.inline)
-                        .toolbar {
-                            ToolbarItem(placement: .cancellationAction) {
-                                Button("Close") { showQuadrant = false }
-                            }
-                        }
-                }
+            .sheet(item: $selectedEntry) { entry in
+                FoodEntryDetailSheet(entry: entry)
             }
         }
         .onOpenURL { url in

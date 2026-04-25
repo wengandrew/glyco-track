@@ -8,13 +8,28 @@ import UIKit
 /// from accumulated torque. Item mass is proportional to |CL|.
 struct BalanceScaleView: View {
     let entries: [FoodLogEntry]
+    /// Date this view represents. Changing the day forces a scene rebuild —
+    /// mirrors the fix in PhysicsBucketView for the swipe-back-to-today stale
+    /// bubbles bug.
+    let dateKey: Date?
 
     @State private var selectedEntry: FoodLogEntry?
-    @State private var sceneID = UUID()
-    @State private var scene: BalanceScene?
+    /// Bumped to force a rebuild without an input change (Replay button, tab
+    /// re-appearance). Day/entries changes force a rebuild automatically via the
+    /// scene key — this nonce only covers the "same inputs, replay anyway" cases.
+    @State private var replayNonce = UUID()
+
+    init(entries: [FoodLogEntry], dateKey: Date? = nil) {
+        self.entries = entries
+        self.dateKey = dateKey
+    }
 
     private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
     private var entryIDs: [UUID] { entries.compactMap { $0.id } }
+    private var dayKey: Date {
+        guard let dateKey else { return .distantPast }
+        return Calendar.current.startOfDay(for: dateKey)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -26,30 +41,37 @@ struct BalanceScaleView: View {
             }
 
             GeometryReader { geo in
+                // See PhysicsBucketView for rationale on the .id(key) + child-view-with-
+                // @State pattern. We don't use .task(id:) here because two synchronous
+                // tasks (stale + fresh) racing to assign `scene` had non-deterministic
+                // landing order — the stale task could overwrite the fresh one.
+                let key = SceneKeyCL(
+                    replay: replayNonce,
+                    dayKey: dayKey,
+                    entryIDs: entryIDs,
+                    width: geo.size.width,
+                    height: geo.size.height
+                )
                 ZStack {
-                    if let scene {
-                        SpriteView(scene: scene, options: [.allowsTransparency])
-                            .background(Color.clear)
-                            .id(sceneID)
-                    } else {
-                        Color.clear
-                    }
+                    BalanceSceneHost(
+                        entries: entries,
+                        size: geo.size,
+                        onTap: { selectedEntry = $0 }
+                    )
+                    .id(key)
+
                     if entries.isEmpty { emptyOverlay }
-                }
-                .task(id: SceneKeyCL(id: sceneID, width: geo.size.width, height: geo.size.height)) {
-                    scene = makeScene(size: geo.size)
                 }
             }
             .aspectRatio(1.3, contentMode: .fit)
-            .onChange(of: entryIDs) { _ in sceneID = UUID() }
-            .onAppear { sceneID = UUID() }
+            .onAppear { replayNonce = UUID() }
 
             HStack {
                 Label("Beneficial", systemImage: "leaf.fill")
                     .font(.caption2).foregroundColor(.green.opacity(0.8))
                 Spacer()
                 Button {
-                    sceneID = UUID()
+                    replayNonce = UUID()
                 } label: {
                     Label("Replay", systemImage: "arrow.clockwise")
                         .font(.caption2)
@@ -83,12 +105,24 @@ struct BalanceScaleView: View {
                 .font(.caption).foregroundColor(.secondary)
         }
     }
+}
 
-    private func makeScene(size: CGSize) -> BalanceScene {
-        let scene = BalanceScene(size: size, entries: entries)
-        scene.scaleMode = .resizeFill
-        scene.onItemTapped = { entry in selectedEntry = entry }
-        return scene
+/// Wraps a `SpriteView` whose `BalanceScene` is constructed synchronously at init.
+/// The parent uses `.id(SceneKeyCL)` on this view so SwiftUI tears it down and re-inits
+/// whenever any reactive input changes — see `PhysicsBucketView` for rationale.
+private struct BalanceSceneHost: View {
+    @State private var scene: BalanceScene
+
+    init(entries: [FoodLogEntry], size: CGSize, onTap: @escaping (FoodLogEntry) -> Void) {
+        let s = BalanceScene(size: size, entries: entries)
+        s.scaleMode = .resizeFill
+        s.onItemTapped = onTap
+        _scene = State(initialValue: s)
+    }
+
+    var body: some View {
+        SpriteView(scene: scene, options: [.allowsTransparency])
+            .background(Color.clear)
     }
 }
 

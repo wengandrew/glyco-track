@@ -18,7 +18,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 4. When work is complete, open a PR targeting `develop` (not `main`) — **do not build or deploy locally**
 5. Never merge directly to `develop` or `main` — always via PR
 
-**Do not build or deploy.** Claude must not run `./scripts/deploy.sh`, `xcodebuild`, or any command that installs the app on device. The user reviews all code changes via PR on GitHub before anything reaches the device. Opening the PR is the end of Claude's job for a given task.
+**Build to verify, but do not deploy.** Claude MAY run `xcodebuild` (or `xcodegen generate && xcodebuild`) with a `build` action for the iOS Simulator destination to verify compilation before opening a PR. Claude MUST NOT run `./scripts/deploy.sh` or any command that installs the app on device — deployment to the user's iPhone is the user's job, after reviewing the PR. Safe verification command:
+
+```bash
+xcodebuild -project GlycoTrack.xcodeproj -scheme GlycoTrack \
+  -configuration Debug \
+  -destination 'generic/platform=iOS Simulator' \
+  build
+```
+
+If the build fails, fix the compile errors before opening (or updating) the PR. Never use `-allowProvisioningUpdates`, `install`, or any device destination.
 
 **Active feature branches (update this as PRs open/merge):**
 <!-- Add a line per open PR: - [branch-name]: brief description -->
@@ -35,7 +44,7 @@ Worktrees do not auto-track their base branch. If new PRs land on `develop` afte
 ## Behavior
 
 - **Ask before assuming.** When a task has multiple reasonable approaches (e.g. a new visualization style, a data model change, a refactor), ask a clarifying question first. Don't assume the user knows the tradeoffs — explain the options briefly and ask which direction they prefer.
-- **Never build or deploy.** Do not run `deploy.sh`, `xcodebuild`, or any install command. Open a PR and let the user review and merge.
+- **Build to verify, never deploy.** You MAY run `xcodebuild … build` against the iOS Simulator destination to catch compile errors before PR. Do NOT run `deploy.sh` or any install/device command — that's the user's step.
 
 ## Build & Test Commands
 
@@ -145,17 +154,43 @@ All visualization views live under `GlycoTrack/UI/Visualizations/`.
 
 - **GL views** (unsigned, budget-based): `PhysicsBucketView` (SpriteKit physics — the only daily GL view), `WeeklyRiverView`, `MonthlyHeatmapView`.
 - **CL views** (signed, ±): `TugOfWarBarView` (SwiftUI stacked bar), `WaterlineView` (SpriteKit physics — buoyancy), `BalanceScaleView` (SpriteKit physics — pinned beam).
-- **Combined**: `QuadrantPlotView` (GL on Y, CL on X).
+- **Combined**: `QuadrantPlotSection` (CL on X, GL on Y) — embedded directly on Today, Week, and Month tabs (no modal sheet wrapper). Despite the legacy "Quadrant" name, this is a **two-region** plot: only CL is signed, so the chart splits left/right at CL = 0 (left = beneficial, right = harmful) and grows upward from a GL = 0 baseline. Do not re-introduce a four-quadrant grid — the lower half would be permanently empty and would mislead readers into thinking "negative GL" is meaningful.
 
 `HomeTabView` shows a date navigator (chevrons + swipe left/right on the viz sections) that drives an `@FetchRequest` with a dynamic predicate for the selected day. Forward navigation is capped at today.
 
+**Date-scoped physics scenes must use `.id(SceneKey)` on a child host view that constructs its scene at init.** `PhysicsBucketView`, `BalanceScaleView`, and `WaterlineView` each accept a `dateKey: Date?` init param and each contain a small private host view (`BucketSceneHost`, `BalanceSceneHost`, `WaterlineSceneHost`). The host owns the SKScene as `@State`, initialized synchronously from `entries` in its `init`. The parent applies `.id(SceneKey(replay, dayKey, entryIDs, width, height))` to the host, so SwiftUI tears down and re-inits the host whenever any reactive input changes — and the new init reads the latest `entries` value passed in.
+
+**Do not** use `.task(id:)` to write the scene to a parent's `@State`, and **do not** bump a UUID `sceneID` in `.onChange(of: entryIDs)` / `.onChange(of: dayKey)`. Both patterns failed in production:
+
+  1. `.task(id:)` with a synchronous body has no cancellation checkpoints, so when two tasks (stale + fresh) are scheduled in quick succession their finish order is undefined — the stale task can land last and overwrite the fresh scene. User-visible bug: viz "always one day behind on swipe."
+  2. The `.onChange` UUID-bump pattern has a SwiftUI render-order race: `@FetchRequest`'s predicate update happens in a sibling `.onChange(of: selectedDate)` whose ordering relative to the child's `.onChange(of: dayKey)` is not guaranteed, so the UUID could be bumped during a render that still held yesterday's entries.
+
+The `.id`-on-child-host pattern dodges both: SwiftUI's view-identity-reset semantics force a fresh `init` call with the current `entries` parameter, all on the main thread inside body evaluation. No async, no race. Keep `replayNonce: UUID` only for cases where inputs don't change (Replay button, view re-appearance). If you add a new date-scoped SpriteKit scene, follow the same pattern.
+
 **Area-proportional encoding.** Every visualization encodes GL (or |CL|) as the area of its food graphic. In `PhysicsBucketView`, the bucket's interior area is sized at scene-init so that `budget * areaPerUnit ≈ 78%` of bucket area — i.e. a full 100-GL day fills the bucket and items above that spill over the rim. CL views use a fixed `areaPerCLUnit` tuned per-view. For CL, sign is encoded by position (harmful = top/right, beneficial = bottom/left), never by area.
 
-**Food emojis.** `FoodEmoji.resolve(entry:)` maps a `FoodLogEntry` to a single emoji via (1) exact match in `food_emoji_map.json` on `referenceFood` or `foodDescription`, then (2) a keyword classifier in `FoodEmoji.swift`. Low-confidence matches (`confidenceScore < 0.3`) always return ❓ — never fabricate a high-confidence emoji for an unknown food, same rule as GL/CL. Visualizations use `FoodGraphic` (SwiftUI) or an `SKLabelNode` with the emoji (SpriteKit); both size the glyph so its drawn area is proportional to the passed magnitude. Food-group color fills were removed from visualizations — the emoji is now the identifier. Tier/confidence coloring (e.g. `ConfidenceBadge` in `FoodLogRowView`) is unrelated and retained.
+**Food emojis.** `FoodEmoji.resolve(entry:)` maps a `FoodLogEntry` to a single emoji via (1) exact match in `food_emoji_map.json` on `referenceFood` or `foodDescription`, then (2) a keyword classifier in `FoodEmoji.swift`. Low-confidence matches (`confidenceScore < 0.3`) always return ❓ — never fabricate a high-confidence emoji for an unknown food, same rule as GL/CL. Visualizations use `FoodGraphic` (SwiftUI) or an `SKLabelNode` with the emoji (SpriteKit); both size the glyph so its drawn area is proportional to the passed magnitude. The emoji is the sole visual identifier for a food — the `FoodGroup` classification (formerly colored circles / tinted tokens) was deleted entirely. `FoodEntryDetailSheet`'s header also uses `FoodEmoji.resolve(entry:)` — keep it that way; do not re-introduce food-group coloring anywhere. Tier/confidence coloring (e.g. `ConfidenceBadge` in `FoodLogRowView`) is unrelated and retained.
 
-**Replay triggers.** Physics scenes in `PhysicsBucketView`, `WaterlineView`, and `BalanceScaleView` rebuild (replaying the drop animation) when (a) the view appears, (b) the entry list changes — via `.onChange(of: entryIDs)`, (c) the user taps Replay. Implemented by bumping a `sceneID: UUID` `@State` and using `.id(sceneID)` on the `SpriteView`.
+**Waterline buoyancy contract.** `WaterlineView` uses explicit `floatCategory` and `sinkCategory` physics-category bitmasks — set on BOTH branches when creating each item's body. Do not rely on the default mask (`0xFFFFFFFF`), which matches every category and leaks lift onto items that should sink. **Beneficial CL (negative) → `floatCategory`**, low effective density, gets upward Archimedean force scaled by submerged depth → rises to the surface. **Harmful CL (positive) → `sinkCategory`**, higher density, gets a mild extra downward nudge → settles on the bottom. Items of each kind spawn in the half they need to cross so the motion reads. Direction is deliberately opposite of the bucket (harmful fills the bucket; harmful sinks in the tank) so the two views aren't visually redundant.
 
-Tappable items open `FoodEntryDetailSheet` — pass a `FoodLogEntry` as `.sheet(item:)`.
+**Replay triggers.** Physics scenes in `PhysicsBucketView`, `WaterlineView`, and `BalanceScaleView` rebuild (replaying the drop animation) when (a) the view appears — `.onAppear { replayNonce = UUID() }`, (b) the entry list changes — automatic via `entryIDs` being part of the scene key, (c) the displayed day changes — automatic via `dayKey` being part of the scene key, (d) the user taps Replay — bumps `replayNonce`. The scene key is wired into `.id(key)` on a private host view; the host's `init` constructs the scene from the current `entries` synchronously. See "Date-scoped physics scenes" above for why this pattern is required (other approaches deadlock on async ordering or SwiftUI render-order races).
+
+**Unified entry-interaction flow.** Every tap — visualization item, Log-tab row, river item, quadrant dot — opens `FoodEntryDetailSheet` first. The sheet shows an emoji header, prominent timestamp, GL/CL, tier/confidence, and raw transcript. It has an Edit button in the toolbar that presents `EditEntryView` (defined in `LogTab/LogTabView.swift`). Never open `EditEntryView` directly from a tap — always go through the detail sheet. `FoodEntryDetailSheet` uses `@ObservedObject var entry` so it refreshes after an edit.
+
+`EditEntryView` includes a timestamp `DatePicker` (rounded to 30-minute intervals on Save, constrained to `...Date()` so users can't log future entries).
+
+### Build info (debug tab)
+
+`GlycoTrack/Config/BuildInfo.generated.swift` is regenerated by `scripts/inject_build_info.sh` (git branch, short commit with `-dirty` marker, UTC timestamp). `AppInfo` (`GlycoTrack/Config/AppInfo.swift`) exposes this plus `CFBundleShortVersionString` / `CFBundleVersion`. `DebugTabView` surfaces it in the "Build Info" section along with the last-data-update timestamp. `scripts/deploy.sh` calls `inject_build_info.sh` before `xcodegen generate`, so every device install gets fresh values. The generated file is committed so clean checkouts still compile.
+
+### Reusable period components
+
+- `PeriodSummaryView(title:, entries:, daysInPeriod:)` — single summary card used by both Week and Month tabs. Shows Avg Daily GL, Total GL, Net CL. Days-logged and "N entries need review" warnings were removed deliberately — do not reintroduce them.
+- `QuadrantPlotSection(entries:, onTap:)` — embeddable GL × CL two-region plot (left = beneficial CL, right = harmful CL, GL up); host owns the `selectedEntry` state and `.sheet(item:) { FoodEntryDetailSheet(entry:) }` wiring.
+
+### App icon
+
+Lives in `GlycoTrack/Resources/Assets.xcassets/AppIcon.appiconset/`. Modern Xcode asset catalog: a single 1024×1024 universal source PNG (`AppIcon-1024.png`); the asset catalog compiler synthesizes all device sizes at build time. The PNG is generated by `scripts/generate_app_icon.py` (Pillow) so the design is reproducible and edits are diff-friendly — re-run the script after tweaking colors or geometry. `project.yml` sets `ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon` so the build picks it up automatically; do not also set `CFBundleIcons*` in `Info.plist` (would conflict).
 
 ### API key
 

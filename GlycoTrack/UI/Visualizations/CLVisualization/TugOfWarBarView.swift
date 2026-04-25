@@ -1,10 +1,16 @@
 import SwiftUI
 
 /// Tug of War (CL Visualization).
-/// Horizontal bar centered at zero. Beneficial foods (−CL) push LEFT, harmful foods
-/// (+CL) push RIGHT. Each food is an emoji token whose width is proportional to |CL|
-/// (token height is fixed, so width∝area∝magnitude). The rope marker in the middle
-/// is offset toward the winning side by the net CL.
+/// Horizontal bar centered at zero. Beneficial foods (−CL) push LEFT, harmful
+/// foods (+CL) push RIGHT. Each food is an emoji token whose width is
+/// proportional to |CL| (token height is fixed, so width∝area∝magnitude).
+///
+/// The bar is horizontally scrollable: the content keeps a fixed
+/// `pointsPerCLUnit` scale so token sizes stay comparable across days. On
+/// short days content fills `availableWidth`; on heavy days it extends past
+/// the visible edge and can be scrolled. The zero line sits at the horizontal
+/// center of the content, and the scroll position defaults to centered so
+/// the rope marker is initially visible.
 struct TugOfWarBarView: View {
     let entries: [FoodLogEntry]
 
@@ -33,15 +39,29 @@ struct TugOfWarBarView: View {
 
     private var totalHarmful: Double { harmfulTokens.reduce(0) { $0 + $1.magnitude } }
     private var totalBeneficial: Double { beneficialTokens.reduce(0) { $0 + $1.magnitude } }
-    private var maxTotal: Double { max(totalHarmful, totalBeneficial, 1.0) }
     private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
-    private var ropeOffset: Double {
-        // Offset of the center rope marker as fraction of half-width, clamped.
-        let ratio = (totalHarmful - totalBeneficial) / max(totalHarmful + totalBeneficial, 1.0)
-        return max(-0.95, min(ratio, 0.95))
-    }
 
+    // Visual constants
     private let tokenHeight: CGFloat = 38
+    private let tokenSpacing: CGFloat = 2
+    private let sideInset: CGFloat = 12
+    /// Points of bar width per unit |CL|. Fixed so token sizes are comparable
+    /// across days rather than rescaling to fit the screen.
+    private let pointsPerCLUnit: CGFloat = 14
+    /// Minimum visible width a token occupies regardless of magnitude, so
+    /// tiny tokens stay readable.
+    private let minTokenWidth: CGFloat = 28
+
+    /// Visual width one side of the bar occupies given its total magnitude,
+    /// accounting for the min-width-per-token floor.
+    private func sideVisualWidth(tokens: [Token]) -> CGFloat {
+        guard !tokens.isEmpty else { return 0 }
+        let spacing = CGFloat(max(0, tokens.count - 1)) * tokenSpacing
+        let tokenWidths = tokens.reduce(CGFloat(0)) { acc, t in
+            acc + max(minTokenWidth, CGFloat(t.magnitude) * pointsPerCLUnit)
+        }
+        return tokenWidths + spacing
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -53,42 +73,69 @@ struct TugOfWarBarView: View {
             }
 
             GeometryReader { geo in
-                let halfWidth = geo.size.width / 2
-                let totalMagnitude = totalHarmful + totalBeneficial
-                // Points of bar width per unit |CL|. One unit of total magnitude spans
-                // the whole bar; beyond that we scale down.
-                let pointsPerUnit = totalMagnitude > 0 ? (geo.size.width / CGFloat(max(totalMagnitude, maxTotal * 2))) : 0
+                let availableWidth = geo.size.width
+                let beneficialSide = sideVisualWidth(tokens: beneficialTokens)
+                let harmfulSide = sideVisualWidth(tokens: harmfulTokens)
+                // Keep symmetric so the rope sits at the content midpoint.
+                let halfSide = max(beneficialSide, harmfulSide) + sideInset
+                // Full content width; never shrinks below the available width
+                // so short days still visually fill the space.
+                let contentWidth = max(availableWidth, halfSide * 2)
+                let centerAnchorID = "tugofwar.center"
 
-                ZStack(alignment: .center) {
-                    // Background rail
-                    RoundedRectangle(cornerRadius: tokenHeight / 2)
-                        .fill(Color(.systemGray6))
-                        .frame(height: tokenHeight + 8)
+                ScrollViewReader { proxy in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        ZStack(alignment: .center) {
+                            // Background rail — spans full content width
+                            RoundedRectangle(cornerRadius: tokenHeight / 2)
+                                .fill(Color(.systemGray6))
+                                .frame(width: contentWidth, height: tokenHeight + 8)
 
-                    HStack(spacing: 0) {
-                        // Beneficial (extends left from center)
-                        HStack(spacing: 2) {
-                            Spacer(minLength: 0)
-                            ForEach(beneficialTokens.reversed()) { token in
-                                tokenView(token, pointsPerUnit: pointsPerUnit, side: .beneficial)
+                            HStack(spacing: 0) {
+                                // Beneficial (extends left from center)
+                                HStack(spacing: tokenSpacing) {
+                                    Spacer(minLength: 0)
+                                    ForEach(beneficialTokens.reversed()) { token in
+                                        tokenView(token, side: .beneficial)
+                                    }
+                                }
+                                .frame(width: contentWidth / 2, alignment: .trailing)
+
+                                // Harmful (extends right from center)
+                                HStack(spacing: tokenSpacing) {
+                                    ForEach(harmfulTokens) { token in
+                                        tokenView(token, side: .harmful)
+                                    }
+                                    Spacer(minLength: 0)
+                                }
+                                .frame(width: contentWidth / 2, alignment: .leading)
                             }
-                        }
-                        .frame(width: halfWidth, alignment: .trailing)
+                            .frame(width: contentWidth)
 
-                        // Harmful (extends right from center)
-                        HStack(spacing: 2) {
-                            ForEach(harmfulTokens) { token in
-                                tokenView(token, pointsPerUnit: pointsPerUnit, side: .harmful)
-                            }
-                            Spacer(minLength: 0)
+                            // Rope marker at the zero line (content midpoint)
+                            ropeMarker
+                                // Invisible anchor used to center the scroll view on load.
+                                .background(
+                                    Color.clear
+                                        .frame(width: 1, height: 1)
+                                        .id(centerAnchorID)
+                                )
                         }
-                        .frame(width: halfWidth, alignment: .leading)
+                        .frame(width: contentWidth, height: tokenHeight + 24)
                     }
-                    .padding(.horizontal, 4)
-
-                    // Rope marker (the tug position)
-                    ropeMarker
-                        .offset(x: CGFloat(ropeOffset) * (halfWidth - 12))
+                    .onAppear {
+                        // Center the rope in the visible viewport on first appearance.
+                        DispatchQueue.main.async {
+                            proxy.scrollTo(centerAnchorID, anchor: .center)
+                        }
+                    }
+                    .onChange(of: entries.count) { _ in
+                        DispatchQueue.main.async {
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                proxy.scrollTo(centerAnchorID, anchor: .center)
+                            }
+                        }
+                    }
                 }
             }
             .frame(height: tokenHeight + 24)
@@ -116,9 +163,8 @@ struct TugOfWarBarView: View {
     private enum Side { case harmful, beneficial }
 
     @ViewBuilder
-    private func tokenView(_ token: Token, pointsPerUnit: CGFloat, side: Side) -> some View {
-        // Minimum width keeps emojis readable even for tiny items.
-        let w = max(28, CGFloat(token.magnitude) * pointsPerUnit)
+    private func tokenView(_ token: Token, side: Side) -> some View {
+        let w = max(minTokenWidth, CGFloat(token.magnitude) * pointsPerCLUnit)
         let tint: Color = side == .harmful ? .red : .green
         Button {
             selectedEntry = token.entry
@@ -149,5 +195,6 @@ struct TugOfWarBarView: View {
                 .font(.system(size: 10))
                 .foregroundColor(netCL > 0 ? .red : (netCL < 0 ? .green : .gray))
         }
+        .allowsHitTesting(false)
     }
 }

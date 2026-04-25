@@ -2,8 +2,18 @@ import SwiftUI
 
 /// Prototype B: Weekly River
 /// Horizontal Mon–Sun timeline. Y-axis = time of day. Bubble size = GL, color = food group.
+///
+/// Emoji items are tappable — host views provide an `onTap` handler to route
+/// taps to a detail sheet. Default is a no-op so existing call sites still
+/// compile.
 struct WeeklyRiverView: View {
     let entries: [FoodLogEntry]
+    var onTap: (FoodLogEntry) -> Void = { _ in }
+
+    init(entries: [FoodLogEntry], onTap: @escaping (FoodLogEntry) -> Void = { _ in }) {
+        self.entries = entries
+        self.onTap = onTap
+    }
 
     private let dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
@@ -59,6 +69,8 @@ struct WeeklyRiverView: View {
                             minSide: 20,
                             maxSide: 64
                         )
+                        .contentShape(Circle())
+                        .onTapGesture { onTap(entry) }
                         .position(x: x, y: y)
                     }
 
@@ -69,6 +81,7 @@ struct WeeklyRiverView: View {
                             .foregroundColor(.secondary)
                             .frame(width: colWidth)
                             .offset(x: colWidth * Double(i), y: geo.size.height - 16)
+                            .allowsHitTesting(false)
                     }
                 }
             }
