@@ -9,71 +9,44 @@ struct WeekTabView: View {
     )
     private var weekEntries: FetchedResults<FoodLogEntry>
 
-    @State private var showCLView = false
+    @State private var selectedEntry: FoodLogEntry?
 
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Weekly GL river
-                    WeeklyRiverView(entries: Array(weekEntries))
+                    // Weekly GL river — items tappable via onTap
+                    WeeklyRiverView(entries: Array(weekEntries), onTap: { selectedEntry = $0 })
                         .padding(.horizontal, 4)
 
                     Divider().padding(.horizontal)
 
-                    // CL toggle
-                    Toggle(isOn: $showCLView) {
-                        Label("Show Cholesterol Load", systemImage: "heart.fill")
-                            .font(.subheadline)
-                    }
+                    // CL bar (always shown — toggle removed)
+                    TugOfWarBarView(entries: Array(weekEntries))
+                        .padding(.horizontal)
+
+                    // Week summary (unified card)
+                    PeriodSummaryView(
+                        title: "Week Summary",
+                        entries: Array(weekEntries),
+                        daysInPeriod: 7
+                    )
                     .padding(.horizontal)
 
-                    if showCLView {
-                        TugOfWarBarView(entries: Array(weekEntries))
-                            .padding(.horizontal)
-                    }
-
-                    // Weekly stats
-                    WeeklyStatsView(entries: Array(weekEntries))
-                        .padding(.horizontal)
+                    // GL × CL Quadrant — embedded
+                    QuadrantPlotSection(
+                        entries: Array(weekEntries),
+                        onTap: { selectedEntry = $0 }
+                    )
+                    .padding(.horizontal)
                 }
                 .padding(.bottom, 20)
             }
             .navigationTitle("This Week")
-        }
-    }
-}
-
-struct WeeklyStatsView: View {
-    let entries: [FoodLogEntry]
-
-    private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
-    private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
-    private var avgDailyGL: Double { totalGL / 7.0 }
-    private var highGLCount: Int { entries.filter { $0.computedGL >= 20 }.count }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Week Summary")
-                .font(.subheadline).fontWeight(.semibold)
-
-            HStack {
-                StatChip(label: "Avg Daily GL", value: String(format: "%.0f", avgDailyGL),
-                         color: glGradientColor(fraction: avgDailyGL / dailyGLBudgetUI))
-                StatChip(label: "Total GL", value: String(format: "%.0f", totalGL), color: .primary)
-                StatChip(label: "Net CL", value: String(format: "%+.1f", netCL),
-                         color: netCL < 0 ? .green : .red)
-            }
-
-            if highGLCount > 0 {
-                Label("\(highGLCount) high-GL entries this week", systemImage: "exclamationmark.triangle")
-                    .font(.caption)
-                    .foregroundColor(.orange)
+            .sheet(item: $selectedEntry) { entry in
+                FoodEntryDetailSheet(entry: entry)
             }
         }
-        .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
     }
 }
 

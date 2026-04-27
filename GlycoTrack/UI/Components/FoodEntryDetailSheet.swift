@@ -1,13 +1,21 @@
 import SwiftUI
 
-/// Detail sheet shown when a user taps a food bubble in any visualization.
+/// Detail sheet shown when a user taps a food bubble in any visualization,
+/// or a row in the Log tab. Presents a read-only summary and an Edit button
+/// that opens `EditEntryView`.
 struct FoodEntryDetailSheet: View {
-    let entry: FoodLogEntry
+    @ObservedObject var entry: FoodLogEntry
     @Environment(\.dismiss) private var dismiss
 
-    private var group: FoodGroup { FoodGroup.from(string: entry.foodGroup) }
+    @State private var showEdit: Bool = false
+
     private var glLevel: GLThresholdLevel { GLThresholdLevel.from(gl: entry.computedGL) }
     private var clIsBeneficial: Bool { entry.computedCL < 0 }
+
+    private var timestampText: String {
+        guard let ts = entry.timestamp else { return "" }
+        return ts.formatted(date: .abbreviated, time: .shortened)
+    }
 
     var body: some View {
         NavigationView {
@@ -46,32 +54,40 @@ struct FoodEntryDetailSheet: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Done") { dismiss() }
                 }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Edit") { showEdit = true }
+                }
+            }
+            .sheet(isPresented: $showEdit) {
+                NavigationStack {
+                    EditEntryView(entry: entry)
+                }
             }
         }
     }
 
     private var header: some View {
-        HStack(spacing: 14) {
-            Circle()
-                .fill(group.color)
-                .frame(width: 44, height: 44)
-                .overlay(
-                    Image(systemName: "fork.knife")
-                        .foregroundColor(.white)
-                        .font(.system(size: 18, weight: .semibold))
-                )
-            VStack(alignment: .leading, spacing: 2) {
-                Text(entry.foodDescription)
-                    .font(.title3.weight(.semibold))
-                    .lineLimit(2)
-                HStack(spacing: 6) {
-                    Circle().fill(group.color).frame(width: 7, height: 7)
-                    Text(group.displayName)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 14) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 16)
+                        .fill(Color(.systemGray6))
+                        .frame(width: 84, height: 84)
+                    Text(FoodEmoji.resolve(entry: entry))
+                        .font(.system(size: 56))
                 }
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(entry.foodDescription)
+                        .font(.title3.weight(.semibold))
+                        .lineLimit(3)
+                    if !timestampText.isEmpty {
+                        Text(timestampText)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                Spacer(minLength: 0)
             }
-            Spacer(minLength: 0)
         }
     }
 
@@ -110,9 +126,6 @@ struct FoodEntryDetailSheet: View {
             detailRow("Quantity", entry.quantity.isEmpty ? "—" : entry.quantity)
             if entry.quantityGrams > 0 {
                 detailRow("Grams", String(format: "%.0f g", entry.quantityGrams))
-            }
-            if let ts = entry.timestamp {
-                detailRow("Logged", ts.formatted(date: .abbreviated, time: .shortened))
             }
             detailRow("Confidence", confidenceLabel)
             if let ref = entry.referenceFood, !ref.isEmpty {

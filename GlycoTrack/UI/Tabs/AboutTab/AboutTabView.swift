@@ -11,7 +11,6 @@ struct AboutTabView: View {
                     clMathSection
                     quadrantSection
                     tiersSection
-                    howMatchingWorks
                     sourcesSection
                     footnote
                 }
@@ -144,22 +143,6 @@ Most single-score tools collapse this into one number and hide the trade-off. Gl
                     .foregroundColor(.secondary)
                     .padding(.top, 4)
             }
-        }
-    }
-
-    private var howMatchingWorks: some View {
-        sectionCard(title: "How matching works", icon: "magnifyingglass") {
-            Text("""
-When you log a food, the matcher tries steps in order and stops at the first that's strong enough:
-
-1.  **Direct lookup** — exact, substring, or tight typo-fuzzy match.
-2.  **Component search** — scan the database for recognized food names contained in yours.
-3.  **AI decomposition** — if the name is composite (e.g. \"chicken caesar salad\"), Claude breaks it into weighted ingredients and each is looked up.
-4.  **Blend** — if AI names an ingredient the database doesn't have verbatim, the component search fills the gap.
-5.  **Give up** — nothing matched; values are zeroed and flagged.
-
-Daily totals are the sum of each entry's GL and CL. Flagged entries contribute 0, so unrecognized foods don't silently inflate or deflate your daily numbers.
-""")
         }
     }
 

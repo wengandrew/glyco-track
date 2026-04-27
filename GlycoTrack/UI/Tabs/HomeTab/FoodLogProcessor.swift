@@ -39,7 +39,6 @@ final class FoodLogProcessor: ObservableObject {
 
         for food in foods {
             let resolution = await matcher.resolve(food: food)
-            let foodGroup = FoodGroup.classify(food.food).rawValue
 
             _ = logRepo.create(
                 rawTranscript: transcript,
@@ -50,7 +49,6 @@ final class FoodLogProcessor: ObservableObject {
                 confidenceScore: resolution.confidence,
                 parsingMethod: resolution.tier.rawValue,
                 referenceFood: resolution.matchSummary,
-                foodGroup: foodGroup,
                 computedGL: resolution.totalGL,
                 computedCL: resolution.totalCL,
                 nutritionalProfile: resolution.primaryProfile

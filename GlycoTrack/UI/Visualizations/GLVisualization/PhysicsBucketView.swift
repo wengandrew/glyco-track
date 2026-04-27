@@ -9,46 +9,76 @@ import UIKit
 /// Tap any emoji to see food details.
 struct PhysicsBucketView: View {
     let entries: [FoodLogEntry]
+    /// Date this view represents. Changing this value forces a scene rebuild
+    /// even if the entry IDs happen to overlap between days.
+    let dateKey: Date?
     let budget: Double = dailyGLBudgetUI
 
     @State private var selectedEntry: FoodLogEntry?
-    @State private var sceneID = UUID()
-    @State private var scene: BucketScene?
+    /// Bumped to force a rebuild without an input change (Replay button, tab
+    /// re-appearance). Day/entries changes force a rebuild automatically via
+    /// `SceneKey` — this nonce only covers the "same inputs, replay anyway" cases.
+    @State private var replayNonce = UUID()
+
+    init(entries: [FoodLogEntry], dateKey: Date? = nil) {
+        self.entries = entries
+        self.dateKey = dateKey
+    }
 
     private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
     private var fillFraction: Double { min(totalGL / budget, 1.0) }
-    /// Stable signal for replay-on-new-log.
     private var entryIDs: [UUID] { entries.compactMap { $0.id } }
+    /// Day-bucket of `dateKey` (or distantPast if unset). Intra-day time changes
+    /// don't force extra rebuilds, but day-to-day navigation does.
+    private var dayKey: Date {
+        guard let dateKey else { return .distantPast }
+        return Calendar.current.startOfDay(for: dateKey)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             GeometryReader { geo in
+                // The scene key is a pure function of the reactive inputs.
+                //
+                // Why we use `.id(key)` on a child view + `@State` scene built at init,
+                // instead of `.task(id: key)` writing to the parent's `@State scene`:
+                //
+                //   `.task(id:)` cancels-and-restarts when id changes, but with a
+                //   synchronous body (no awaits / cancellation checks), BOTH the stale
+                //   and fresh tasks run to completion. Their finish order is undefined,
+                //   so the stale one can land last and overwrite the fresh scene. The
+                //   user-visible bug was "always one day behind on swipe".
+                //
+                //   `.id(key)` on a child view forces SwiftUI to tear down and re-init
+                //   that child whenever the key changes. The child's `@State` is reset,
+                //   its `init` is what creates the SKScene from `entries`, and the scene
+                //   construction happens synchronously on the main thread inside body
+                //   evaluation. No cross-task ordering, no race.
+                let key = SceneKey(
+                    replay: replayNonce,
+                    dayKey: dayKey,
+                    entryIDs: entryIDs,
+                    width: geo.size.width,
+                    height: geo.size.height
+                )
                 ZStack {
-                    if let scene = scene {
-                        SpriteView(
-                            scene: scene,
-                            options: [.allowsTransparency],
-                            debugOptions: []
-                        )
-                        .background(Color.clear)
-                        .id(sceneID) // force view rebuild when replaying
-                    } else {
-                        Color.clear
-                    }
+                    BucketSceneHost(
+                        entries: entries,
+                        size: geo.size,
+                        budget: budget,
+                        onTap: { selectedEntry = $0 }
+                    )
+                    .id(key)
 
                     if entries.isEmpty {
                         emptyStateOverlay
                     }
                 }
-                .task(id: SceneKey(id: sceneID, width: geo.size.width, height: geo.size.height)) {
-                    scene = makeScene(size: geo.size)
-                }
             }
             .aspectRatio(0.78, contentMode: .fit)
-            // Replay when a new entry is logged.
-            .onChange(of: entryIDs) { _ in sceneID = UUID() }
             // Replay when the view reappears (e.g. user switches back to Today).
-            .onAppear { sceneID = UUID() }
+            // Day/entries changes trigger replay automatically via the key above.
+            .onAppear { replayNonce = UUID() }
 
             // Fill bar + replay
             VStack(spacing: 4) {
@@ -66,7 +96,7 @@ struct PhysicsBucketView: View {
                     Text("0").font(.caption2).foregroundColor(.secondary)
                     Spacer()
                     Button {
-                        sceneID = UUID()
+                        replayNonce = UUID()
                     } label: {
                         Label("Replay", systemImage: "arrow.clockwise")
                             .font(.caption2)
@@ -96,19 +126,36 @@ struct PhysicsBucketView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+}
 
-    private func makeScene(size: CGSize) -> BucketScene {
-        let scene = BucketScene(size: size, entries: entries, budget: budget)
-        scene.scaleMode = .resizeFill
-        scene.onBubbleTapped = { entry in
-            selectedEntry = entry
-        }
-        return scene
+/// Wraps a `SpriteView` whose `BucketScene` is constructed synchronously at init.
+/// The parent uses `.id(SceneKey)` on this view, so SwiftUI tears it down and
+/// re-inits whenever any reactive input changes — guaranteeing the scene is
+/// always built from the latest `entries`. See `PhysicsBucketView` for rationale.
+private struct BucketSceneHost: View {
+    @State private var scene: BucketScene
+
+    init(entries: [FoodLogEntry], size: CGSize, budget: Double, onTap: @escaping (FoodLogEntry) -> Void) {
+        let s = BucketScene(size: size, entries: entries, budget: budget)
+        s.scaleMode = .resizeFill
+        s.onBubbleTapped = onTap
+        _scene = State(initialValue: s)
+    }
+
+    var body: some View {
+        SpriteView(
+            scene: scene,
+            options: [.allowsTransparency],
+            debugOptions: []
+        )
+        .background(Color.clear)
     }
 }
 
 private struct SceneKey: Hashable {
-    let id: UUID
+    let replay: UUID
+    let dayKey: Date
+    let entryIDs: [UUID]
     let width: CGFloat
     let height: CGFloat
 }

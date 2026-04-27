@@ -31,6 +31,10 @@ targets:
         TARGETED_DEVICE_FAMILY: "1"
         ENABLE_BITCODE: NO
         CODE_SIGN_ENTITLEMENTS: GlycoTrack/GlycoTrack.entitlements
+        # AppIcon comes from GlycoTrack/Resources/Assets.xcassets/AppIcon.appiconset.
+        # Xcode's asset catalog compiler synthesizes all required device sizes from
+        # the single 1024x1024 universal source we ship there.
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     entitlements:
       path: GlycoTrack/GlycoTrack.entitlements
       properties: {}

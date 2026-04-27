@@ -10,7 +10,6 @@ extension FoodLogEntry {
     @NSManaged public var computedGL: Double
     @NSManaged public var confidenceScore: Float
     @NSManaged public var foodDescription: String
-    @NSManaged public var foodGroup: String
     @NSManaged public var id: UUID?
     @NSManaged public var isEdited: Bool
     @NSManaged public var isSoftDeleted: Bool

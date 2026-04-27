@@ -9,13 +9,24 @@ import UIKit
 /// Each item is rendered as a food emoji; area is proportional to |CL|.
 struct WaterlineView: View {
     let entries: [FoodLogEntry]
+    /// Date this view represents. Same role as in PhysicsBucketView/BalanceScaleView —
+    /// changing the day forces the scene to rebuild even if entry IDs happen to overlap.
+    let dateKey: Date?
 
     @State private var selectedEntry: FoodLogEntry?
-    @State private var sceneID = UUID()
-    @State private var scene: WaterlineScene?
+    @State private var replayNonce = UUID()
+
+    init(entries: [FoodLogEntry], dateKey: Date? = nil) {
+        self.entries = entries
+        self.dateKey = dateKey
+    }
 
     private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
     private var entryIDs: [UUID] { entries.compactMap { $0.id } }
+    private var dayKey: Date {
+        guard let dateKey else { return .distantPast }
+        return Calendar.current.startOfDay(for: dateKey)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -27,33 +38,35 @@ struct WaterlineView: View {
             }
 
             GeometryReader { geo in
+                // See PhysicsBucketView for the rationale on `.id(key)` + child-view-with-
+                // @State (rather than `.task(id:)`).
+                let key = SceneKeyCL(
+                    replay: replayNonce,
+                    dayKey: dayKey,
+                    entryIDs: entryIDs,
+                    width: geo.size.width,
+                    height: geo.size.height
+                )
                 ZStack {
-                    if let scene {
-                        SpriteView(
-                            scene: scene,
-                            options: [.allowsTransparency]
-                        )
-                        .background(Color.clear)
-                        .id(sceneID)
-                    } else {
-                        Color.clear
-                    }
+                    WaterlineSceneHost(
+                        entries: entries,
+                        size: geo.size,
+                        onTap: { selectedEntry = $0 }
+                    )
+                    .id(key)
+
                     if entries.isEmpty { emptyOverlay }
-                }
-                .task(id: SceneKeyCL(id: sceneID, width: geo.size.width, height: geo.size.height)) {
-                    scene = makeScene(size: geo.size)
                 }
             }
             .aspectRatio(0.85, contentMode: .fit)
-            .onChange(of: entryIDs) { _ in sceneID = UUID() }
-            .onAppear { sceneID = UUID() }
+            .onAppear { replayNonce = UUID() }
 
             HStack {
                 Label("Harmful ↓", systemImage: "arrow.down.circle.fill")
                     .font(.caption2).foregroundColor(.red.opacity(0.8))
                 Spacer()
                 Button {
-                    sceneID = UUID()
+                    replayNonce = UUID()
                 } label: {
                     Label("Replay", systemImage: "arrow.clockwise")
                         .font(.caption2)
@@ -79,17 +92,35 @@ struct WaterlineView: View {
                 .font(.caption).foregroundColor(.secondary)
         }
     }
+}
 
-    private func makeScene(size: CGSize) -> WaterlineScene {
-        let scene = WaterlineScene(size: size, entries: entries)
-        scene.scaleMode = .resizeFill
-        scene.onItemTapped = { entry in selectedEntry = entry }
-        return scene
+/// Wraps a `SpriteView` whose `WaterlineScene` is constructed synchronously at init.
+/// The parent uses `.id(SceneKeyCL)` on this view — see `PhysicsBucketView` for rationale.
+private struct WaterlineSceneHost: View {
+    @State private var scene: WaterlineScene
+
+    init(entries: [FoodLogEntry], size: CGSize, onTap: @escaping (FoodLogEntry) -> Void) {
+        let s = WaterlineScene(size: size, entries: entries)
+        s.scaleMode = .resizeFill
+        s.onItemTapped = onTap
+        _scene = State(initialValue: s)
+    }
+
+    var body: some View {
+        SpriteView(scene: scene, options: [.allowsTransparency])
+            .background(Color.clear)
     }
 }
 
+/// Pure-function scene key shared by WaterlineView and BalanceScaleView.
+/// Including dayKey + entryIDs in the key (rather than a UUID bumped via `.onChange`)
+/// avoids the SwiftUI race where the id could be bumped during a render that still
+/// captured stale entries — the scene built in that render would then never be replaced
+/// even after entries finally updated.
 struct SceneKeyCL: Hashable {
-    let id: UUID
+    let replay: UUID
+    let dayKey: Date
+    let entryIDs: [UUID]
     let width: CGFloat
     let height: CGFloat
 }
@@ -112,7 +143,13 @@ final class WaterlineScene: SKScene {
     private var nodeToEntry: [ObjectIdentifier: FoodLogEntry] = [:]
     private var waterFill: SKShapeNode?
     private let netCL: CGFloat
-    private let buoyancyCategory: UInt32 = 1 << 0
+    // Per-frame buoyancy is applied via a separate bitmask so items that should
+    // float (harmful) are distinguished from items that should sink (beneficial).
+    // Default SKPhysicsBody.categoryBitMask is 0xFFFFFFFF, so we explicitly set
+    // both categories — relying on the default breaks the category check.
+    private let floatCategory: UInt32 = 1 << 0
+    private let sinkCategory: UInt32 = 1 << 1
+    private var waterTopY: CGFloat = 0
 
     init(size: CGSize, entries: [FoodLogEntry]) {
         self.entries = entries
@@ -176,6 +213,7 @@ final class WaterlineScene: SKScene {
         // Offset above/below the centerline.
         let halfHeight = rect.height / 2
         let waterTop = mid + clamped * halfHeight * 0.9
+        self.waterTopY = waterTop
         let waterRect = CGRect(x: rect.minX, y: rect.minY, width: rect.width, height: max(4, waterTop - rect.minY))
         let tint: SKColor = netCL > 0.5 ? SKColor(red: 0.95, green: 0.3, blue: 0.3, alpha: 0.14) :
                             netCL < -0.5 ? SKColor(red: 0.25, green: 0.7, blue: 0.4, alpha: 0.14) :
@@ -262,10 +300,8 @@ final class WaterlineScene: SKScene {
         let x = CGFloat.random(in: (rect.minX + marginX)...(rect.maxX - marginX))
         let y: CGFloat
         if cl > 0 {
-            // Harmful: spawn above waterline so gravity pulls it down across the line.
             y = CGFloat.random(in: (rect.midY + radius + 4)...(rect.maxY - radius - 4))
         } else {
-            // Beneficial: spawn below waterline so buoyancy lifts it up across the line.
             y = CGFloat.random(in: (rect.minY + radius + 4)...(rect.midY - radius - 4))
         }
         node.position = CGPoint(x: x, y: y)
@@ -277,11 +313,10 @@ final class WaterlineScene: SKScene {
         body.angularDamping = 0.9
         body.mass = max(0.1, magnitude * 0.04)
         body.allowsRotation = true
-        // Beneficial items: we apply per-frame upward buoyancy overpowering gravity
-        // so they float. Harmful items sink under gravity alone.
-        if cl < 0 {
-            body.categoryBitMask = buoyancyCategory
-        }
+        // Beneficial floats (cl < 0 → floatCategory); harmful sinks (cl > 0 → sinkCategory).
+        // BOTH branches must set the mask explicitly — the default (0xFFFFFFFF) matches
+        // every category, which leaks buoyancy onto items that should sink.
+        body.categoryBitMask = (cl < 0) ? floatCategory : sinkCategory
         node.physicsBody = body
 
         nodeToEntry[ObjectIdentifier(node)] = entry
@@ -292,15 +327,35 @@ final class WaterlineScene: SKScene {
     }
 
     override func update(_ currentTime: TimeInterval) {
-        // Apply upward buoyancy on beneficial items so they float above the waterline.
+        // Density-based buoyancy: beneficial items are modelled as low density (they
+        // rise when submerged); harmful items as high density (they sink under their
+        // own weight). Archimedes: force proportional to submerged volume —
+        // approximated here by how far below the waterline the item is.
+        let gravityMag = abs(physicsWorld.gravity.dy)
         for child in children {
-            guard child.name == "item",
-                  let body = child.physicsBody,
-                  body.categoryBitMask & buoyancyCategory != 0 else { continue }
-            // Force to cancel gravity + a bit more upward lift.
-            let gravityMag = abs(physicsWorld.gravity.dy)
-            let lift = body.mass * (gravityMag + 2.0)
-            body.applyForce(CGVector(dx: 0, dy: lift))
+            guard child.name == "item", let body = child.physicsBody else { continue }
+            let y = child.position.y
+            let submergedDepth = max(0, waterTopY - y)
+            // Scale depth to a 0...1 "submerged fraction". Beyond ~60pt submerged
+            // buoyancy saturates — prevents runaway force on fully-submerged items.
+            let submergedFrac = min(1.0, submergedDepth / 60.0)
+
+            switch body.categoryBitMask {
+            case floatCategory:
+                // Beneficial = low density → net upward force when below the surface,
+                // plus a small constant nudge so items that land exactly on the
+                // surface don't stall. Lift must overcome gravity to actually rise.
+                let liftAccel = gravityMag * 2.4 * submergedFrac + 0.6
+                body.applyForce(CGVector(dx: 0, dy: body.mass * liftAccel))
+            case sinkCategory:
+                // Harmful = high density → gravity alone already sinks it, so we
+                // just add mild extra downward pull while submerged so items settle
+                // quickly instead of hovering mid-water.
+                let sinkAccel = gravityMag * 0.4 * submergedFrac
+                body.applyForce(CGVector(dx: 0, dy: -body.mass * sinkAccel))
+            default:
+                break
+            }
         }
     }
 

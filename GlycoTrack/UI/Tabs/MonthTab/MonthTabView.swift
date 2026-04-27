@@ -8,6 +8,8 @@ struct MonthTabView: View {
         from: Calendar.current.dateComponents([.year, .month], from: Date())
     )!
 
+    @State private var selectedEntry: FoodLogEntry?
+
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
         predicate: NSPredicate(format: "isSoftDeleted == NO"),
@@ -44,13 +46,27 @@ struct MonthTabView: View {
                     }
                     .padding(.horizontal, 4)
 
-                    // Monthly stats
-                    MonthlyStatsView(entries: monthEntries)
-                        .padding(.horizontal)
+                    // Month summary (unified card)
+                    PeriodSummaryView(
+                        title: "Month Summary",
+                        entries: monthEntries,
+                        daysInPeriod: daysInDisplayedMonth
+                    )
+                    .padding(.horizontal)
+
+                    // GL × CL Quadrant — embedded
+                    QuadrantPlotSection(
+                        entries: monthEntries,
+                        onTap: { selectedEntry = $0 }
+                    )
+                    .padding(.horizontal)
                 }
                 .padding(.bottom, 20)
             }
             .navigationTitle("Month")
+            .sheet(item: $selectedEntry) { entry in
+                FoodEntryDetailSheet(entry: entry)
+            }
         }
     }
 
@@ -58,6 +74,13 @@ struct MonthTabView: View {
         let cal = Calendar.current
         return cal.component(.month, from: displayedMonth) == cal.component(.month, from: Date())
             && cal.component(.year, from: displayedMonth) == cal.component(.year, from: Date())
+    }
+
+    /// Number of days in the displayed month (28–31). Used as the divisor
+    /// for the Month Summary's Avg Daily GL stat.
+    private var daysInDisplayedMonth: Int {
+        let cal = Calendar.current
+        return cal.range(of: .day, in: .month, for: displayedMonth)?.count ?? 30
     }
 
     private var monthEntries: [FoodLogEntry] {
@@ -71,42 +94,5 @@ struct MonthTabView: View {
     private func entries(for date: Date) -> [FoodLogEntry] {
         let cal = Calendar.current
         return allEntries.filter { cal.isDate($0.timestamp ?? Date(), inSameDayAs: date) }
-    }
-}
-
-struct MonthlyStatsView: View {
-    let entries: [FoodLogEntry]
-
-    private var daysLogged: Int {
-        Set(entries.map { Calendar.current.startOfDay(for: $0.timestamp ?? Date()) }).count
-    }
-    private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
-    private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
-    private var avgDailyGL: Double { daysLogged > 0 ? totalGL / Double(daysLogged) : 0 }
-    private var lowConfidenceCount: Int { entries.filter { $0.confidenceScore < 0.7 }.count }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text("Month Summary")
-                .font(.subheadline).fontWeight(.semibold)
-
-            HStack {
-                StatChip(label: "Days Logged", value: "\(daysLogged)", color: .accentColor)
-                StatChip(label: "Avg Daily GL", value: String(format: "%.0f", avgDailyGL),
-                         color: glGradientColor(fraction: avgDailyGL / dailyGLBudgetUI))
-                StatChip(label: "Net CL", value: String(format: "%+.1f", netCL),
-                         color: netCL < 0 ? .green : .red)
-            }
-
-            if lowConfidenceCount > 0 {
-                Label("\(lowConfidenceCount) entries need review (low confidence)",
-                      systemImage: "exclamationmark.circle")
-                    .font(.caption)
-                    .foregroundColor(.orange)
-            }
-        }
-        .padding()
-        .background(Color(.systemGray6))
-        .cornerRadius(12)
     }
 }

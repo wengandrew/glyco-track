@@ -18,7 +18,6 @@ final class FoodLogRepository {
         confidenceScore: Float,
         parsingMethod: Int16,
         referenceFood: String?,
-        foodGroup: String,
         computedGL: Double,
         computedCL: Double,
         nutritionalProfile: NutritionalProfile?
@@ -34,7 +33,6 @@ final class FoodLogRepository {
         entry.confidenceScore = confidenceScore
         entry.parsingMethod = parsingMethod
         entry.referenceFood = referenceFood
-        entry.foodGroup = foodGroup
         entry.computedGL = computedGL
         entry.computedCL = computedCL
         entry.isEdited = false
