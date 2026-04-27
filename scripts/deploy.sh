@@ -92,6 +92,28 @@ ok "Target: $DEVICE_NAME  hw=$DEVICE_HW_UDID  cd=$DEVICE_CD_ID"
 
 ok "Target: $DEVICE_NAME ($DEVICE_HW_UDID)"
 
+# ── Sync local xcconfig from primary worktree if missing ──────────────────────
+# GlycoTrack/Config/GlycoTrack.local.xcconfig holds DEVELOPMENT_TEAM and the
+# Claude API key. It's gitignored, so fresh worktrees don't have it. If we're
+# in a linked worktree and it's missing here but present in the primary
+# worktree, copy it across so deploy "just works."
+LOCAL_XCCONFIG="GlycoTrack/Config/GlycoTrack.local.xcconfig"
+if [[ ! -f "$LOCAL_XCCONFIG" ]]; then
+  COMMON_GIT_DIR="$(git rev-parse --git-common-dir 2>/dev/null || true)"
+  if [[ -n "$COMMON_GIT_DIR" ]]; then
+    PRIMARY_ROOT="$(cd "$COMMON_GIT_DIR/.." && pwd)"
+    PRIMARY_XCCONFIG="$PRIMARY_ROOT/$LOCAL_XCCONFIG"
+    if [[ "$PRIMARY_ROOT" != "$ROOT" && -f "$PRIMARY_XCCONFIG" ]]; then
+      step "Syncing $LOCAL_XCCONFIG from primary worktree"
+      cp "$PRIMARY_XCCONFIG" "$LOCAL_XCCONFIG"
+      ok "Copied from $PRIMARY_ROOT"
+    fi
+  fi
+fi
+if [[ ! -f "$LOCAL_XCCONFIG" ]]; then
+  err "$LOCAL_XCCONFIG missing. Copy GlycoTrack.xcconfig.example and fill in DEVELOPMENT_TEAM + CLAUDE_API_KEY."
+fi
+
 # ── Inject build info (git branch/commit/timestamp) ───────────────────────────
 step "Injecting build info"
 ./scripts/inject_build_info.sh
