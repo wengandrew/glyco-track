@@ -309,7 +309,6 @@ final class WaterlineScene: SKScene {
         let body = SKPhysicsBody(circleOfRadius: radius)
         body.restitution = 0.25
         body.friction = 0.25
-        body.linearDamping = 0.9 // water-like resistance
         body.angularDamping = 0.9
         body.mass = max(0.1, magnitude * 0.04)
         body.allowsRotation = true
@@ -317,6 +316,17 @@ final class WaterlineScene: SKScene {
         // BOTH branches must set the mask explicitly — the default (0xFFFFFFFF) matches
         // every category, which leaks buoyancy onto items that should sink.
         body.categoryBitMask = (cl < 0) ? floatCategory : sinkCategory
+        // Floaters: gravity OFF so a small spring force can actually move them up
+        // toward the waterline. Previous attempts with gravity-on + Archimedean lift
+        // failed because the depth-scaled lift could not reliably overcome gravity
+        // through linearDamping = 0.9 for low-mass items. Lower damping too so the
+        // spring can do its work; harmful items keep the original water-like damping.
+        if cl < 0 {
+            body.affectedByGravity = false
+            body.linearDamping = 0.6
+        } else {
+            body.linearDamping = 0.9 // water-like resistance for sinkers
+        }
         node.physicsBody = body
 
         nodeToEntry[ObjectIdentifier(node)] = entry
@@ -327,30 +337,31 @@ final class WaterlineScene: SKScene {
     }
 
     override func update(_ currentTime: TimeInterval) {
-        // Density-based buoyancy: beneficial items are modelled as low density (they
-        // rise when submerged); harmful items as high density (they sink under their
-        // own weight). Archimedes: force proportional to submerged volume —
-        // approximated here by how far below the waterline the item is.
+        // Floaters: spring toward the waterline (gravity disabled on the body).
+        // Sinkers: gravity does the work; we just add a mild downward nudge while
+        // submerged so they settle quickly instead of hovering mid-water.
+        //
+        // Why a spring (not depth-scaled Archimedean lift)? Previous attempts that
+        // kept gravity on and applied an upward lift force never won net of
+        // linearDamping = 0.9 for low-mass items — the floaters never rose. With
+        // gravity disabled and a Hooke's-law restoring force, even a tiny mass
+        // accelerates back to the waterline; reduced damping (0.6) lets it actually
+        // travel before the medium drains kinetic energy.
         let gravityMag = abs(physicsWorld.gravity.dy)
+        let springConstant: CGFloat = 6.0
         for child in children {
             guard child.name == "item", let body = child.physicsBody else { continue }
             let y = child.position.y
-            let submergedDepth = max(0, waterTopY - y)
-            // Scale depth to a 0...1 "submerged fraction". Beyond ~60pt submerged
-            // buoyancy saturates — prevents runaway force on fully-submerged items.
-            let submergedFrac = min(1.0, submergedDepth / 60.0)
 
             switch body.categoryBitMask {
             case floatCategory:
-                // Beneficial = low density → net upward force when below the surface,
-                // plus a small constant nudge so items that land exactly on the
-                // surface don't stall. Lift must overcome gravity to actually rise.
-                let liftAccel = gravityMag * 2.4 * submergedFrac + 0.6
-                body.applyForce(CGVector(dx: 0, dy: body.mass * liftAccel))
+                // displacement > 0 → above water → pull down; displacement < 0 → below → pull up.
+                let displacement = y - waterTopY
+                let restoreAccel = -displacement * springConstant
+                body.applyForce(CGVector(dx: 0, dy: body.mass * restoreAccel))
             case sinkCategory:
-                // Harmful = high density → gravity alone already sinks it, so we
-                // just add mild extra downward pull while submerged so items settle
-                // quickly instead of hovering mid-water.
+                let submergedDepth = max(0, waterTopY - y)
+                let submergedFrac = min(1.0, submergedDepth / 60.0)
                 let sinkAccel = gravityMag * 0.4 * submergedFrac
                 body.applyForce(CGVector(dx: 0, dy: -body.mass * sinkAccel))
             default:

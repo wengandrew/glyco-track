@@ -2,30 +2,46 @@ import SwiftUI
 import CoreData
 
 struct WeekTabView: View {
+    @State private var selectedWeekStart: Date = WeekTabView.mondayWeekStart(for: Date())
+    @State private var selectedEntry: FoodLogEntry?
+
+    @FetchRequest private var weekEntries: FetchedResults<FoodLogEntry>
+
+    /// Earliest logged entry — used to clamp backward week navigation.
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
-        predicate: weekPredicate(),
+        predicate: NSPredicate(format: "isSoftDeleted == NO"),
         animation: .default
     )
-    private var weekEntries: FetchedResults<FoodLogEntry>
+    private var allEntriesAsc: FetchedResults<FoodLogEntry>
 
-    @State private var selectedEntry: FoodLogEntry?
+    init() {
+        _weekEntries = FetchRequest<FoodLogEntry>(
+            sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
+            predicate: Self.predicate(for: Self.mondayWeekStart(for: Date())),
+            animation: .default
+        )
+    }
 
     var body: some View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Weekly GL river — items tappable via onTap
-                    WeeklyRiverView(entries: Array(weekEntries), onTap: { selectedEntry = $0 })
-                        .padding(.horizontal, 4)
+                    weekNavigator
+                        .padding(.horizontal)
+
+                    WeeklyRiverView(
+                        entries: Array(weekEntries),
+                        weekStart: selectedWeekStart,
+                        onTap: { selectedEntry = $0 }
+                    )
+                    .padding(.horizontal, 4)
 
                     Divider().padding(.horizontal)
 
-                    // CL bar (always shown — toggle removed)
                     TugOfWarBarView(entries: Array(weekEntries))
                         .padding(.horizontal)
 
-                    // Week summary (unified card)
                     PeriodSummaryView(
                         title: "Week Summary",
                         entries: Array(weekEntries),
@@ -33,7 +49,6 @@ struct WeekTabView: View {
                     )
                     .padding(.horizontal)
 
-                    // GL × CL Quadrant — embedded
                     QuadrantPlotSection(
                         entries: Array(weekEntries),
                         onTap: { selectedEntry = $0 }
@@ -42,19 +57,125 @@ struct WeekTabView: View {
                 }
                 .padding(.bottom, 20)
             }
-            .navigationTitle("This Week")
+            .navigationTitle(navTitle)
             .sheet(item: $selectedEntry) { entry in
                 FoodEntryDetailSheet(entry: entry)
             }
+            .onChange(of: selectedWeekStart) { newValue in
+                weekEntries.nsPredicate = Self.predicate(for: newValue)
+            }
         }
     }
-}
 
-private func weekPredicate() -> NSPredicate {
-    let cal = Calendar.current
-    let now = Date()
-    let start = cal.date(from: cal.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now))!
-    let end = cal.date(byAdding: .weekOfYear, value: 1, to: start)!
-    return NSPredicate(format: "timestamp >= %@ AND timestamp < %@ AND isSoftDeleted == NO",
-                       start as NSDate, end as NSDate)
+    // MARK: - Week navigation
+
+    private var weekNavigator: some View {
+        HStack(spacing: 16) {
+            Button {
+                changeWeek(by: -1)
+            } label: {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(isEarliestWeek ? .secondary : .accentColor)
+                    .frame(width: 32, height: 32)
+                    .background(Color(.systemGray6))
+                    .clipShape(Circle())
+            }
+            .disabled(isEarliestWeek)
+
+            VStack(spacing: 0) {
+                Text(weekHeading)
+                    .font(.subheadline.weight(.semibold))
+                Text(weekSubheading)
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+            .frame(maxWidth: .infinity)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                changeWeek(to: Self.mondayWeekStart(for: Date()))
+            }
+
+            Button {
+                changeWeek(by: 1)
+            } label: {
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(isCurrentWeek ? .secondary : .accentColor)
+                    .frame(width: 32, height: 32)
+                    .background(Color(.systemGray6))
+                    .clipShape(Circle())
+            }
+            .disabled(isCurrentWeek)
+        }
+    }
+
+    private var isCurrentWeek: Bool {
+        Calendar.current.isDate(selectedWeekStart, inSameDayAs: Self.mondayWeekStart(for: Date()))
+    }
+
+    private var earliestLoggedWeekStart: Date? {
+        guard let first = allEntriesAsc.first, let ts = first.timestamp else { return nil }
+        return Self.mondayWeekStart(for: ts)
+    }
+
+    private var isEarliestWeek: Bool {
+        guard let earliest = earliestLoggedWeekStart else { return true }
+        return Calendar.current.isDate(selectedWeekStart, inSameDayAs: earliest)
+    }
+
+    private var navTitle: String {
+        isCurrentWeek ? "This Week" : weekRangeString
+    }
+
+    private var weekHeading: String {
+        isCurrentWeek ? "This Week" : weekRangeString
+    }
+
+    private var weekSubheading: String {
+        isCurrentWeek ? weekRangeString : "Tap to return to this week"
+    }
+
+    private var weekRangeString: String {
+        let cal = Calendar.current
+        let end = cal.date(byAdding: .day, value: 6, to: selectedWeekStart) ?? selectedWeekStart
+        let f = DateFormatter()
+        f.dateFormat = "MMM d"
+        return "\(f.string(from: selectedWeekStart)) – \(f.string(from: end))"
+    }
+
+    private func changeWeek(by delta: Int) {
+        guard let target = Calendar.current.date(byAdding: .weekOfYear, value: delta, to: selectedWeekStart) else { return }
+        changeWeek(to: target)
+    }
+
+    private func changeWeek(to date: Date) {
+        let target = Self.mondayWeekStart(for: date)
+        let currentWeekStart = Self.mondayWeekStart(for: Date())
+        var clamped = target > currentWeekStart ? currentWeekStart : target
+        if let earliest = earliestLoggedWeekStart, clamped < earliest {
+            clamped = earliest
+        }
+        withAnimation(.easeInOut(duration: 0.2)) {
+            selectedWeekStart = clamped
+        }
+    }
+
+    // MARK: - Calendar helpers
+
+    /// Start of week (Monday 00:00) for a given date — independent of the user's
+    /// locale-default first weekday. Always Monday so the column layout
+    /// (Mon..Sun) and the predicate window stay in sync.
+    static func mondayWeekStart(for date: Date) -> Date {
+        var cal = Calendar(identifier: .gregorian)
+        cal.firstWeekday = 2 // Monday
+        let comps = cal.dateComponents([.yearForWeekOfYear, .weekOfYear], from: date)
+        return cal.date(from: comps) ?? Calendar.current.startOfDay(for: date)
+    }
+
+    static func predicate(for weekStart: Date) -> NSPredicate {
+        let weekEnd = Calendar.current.date(byAdding: .weekOfYear, value: 1, to: weekStart) ?? weekStart
+        return NSPredicate(format: "timestamp >= %@ AND timestamp < %@ AND isSoftDeleted == NO",
+                           weekStart as NSDate, weekEnd as NSDate)
+    }
 }

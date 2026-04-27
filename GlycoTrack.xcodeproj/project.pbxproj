@@ -150,7 +150,6 @@
 		E6C16B19721941F485C06001 /* FoodMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMatcher.swift; sourceTree = "<group>"; };
 		E838C1BDD90901F73964B424 /* PeriodSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodSummaryView.swift; sourceTree = "<group>"; };
 		E872FBC247922AFD48D894E0 /* TugOfWarBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TugOfWarBarView.swift; sourceTree = "<group>"; };
-		EC6C50E55067161C1D7654B6 /* GlycoTrack.local.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GlycoTrack.local.xcconfig; sourceTree = "<group>"; };
 		EC98CA71D925406ACDA67295 /* SummaryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryTabView.swift; sourceTree = "<group>"; };
 		F3A6E1677A79798237CFB545 /* gi_database.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = gi_database.json; sourceTree = "<group>"; };
 		FA0635BF8C8072E15E778AD6 /* DebugTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTabView.swift; sourceTree = "<group>"; };
@@ -222,7 +221,6 @@
 			children = (
 				0E7AC5A8B6B5D9D3340E2D7A /* AppInfo.swift */,
 				0FEDAD6172CAF0ACDF326FB5 /* BuildInfo.generated.swift */,
-				EC6C50E55067161C1D7654B6 /* GlycoTrack.local.xcconfig */,
 				057B38EA6BEE010F76E24F96 /* GlycoTrack.xcconfig */,
 				6A1B66F0A6155C24C35BD9A5 /* GlycoTrack.xcconfig.example */,
 			);

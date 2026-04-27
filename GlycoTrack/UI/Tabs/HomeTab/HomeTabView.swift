@@ -3,8 +3,11 @@ import CoreData
 
 struct HomeTabView: View {
     @Environment(\.managedObjectContext) private var context
-    @StateObject private var voiceCapture = VoiceCapture()
-    @StateObject private var logProcessor: FoodLogProcessor
+
+    // Owned by RootTabView so the floating tab-bar Record button can drive
+    // recording. We observe both here for transcript / progress / error UI.
+    @ObservedObject var voiceCapture: VoiceCapture
+    @ObservedObject var logProcessor: FoodLogProcessor
 
     @FetchRequest private var entries: FetchedResults<FoodLogEntry>
 
@@ -20,8 +23,9 @@ struct HomeTabView: View {
     @State private var clPrototype: CLPrototype = .tugOfWar
     @State private var selectedEntry: FoodLogEntry?
 
-    init() {
-        _logProcessor = StateObject(wrappedValue: FoodLogProcessor())
+    init(voiceCapture: VoiceCapture, logProcessor: FoodLogProcessor) {
+        self.voiceCapture = voiceCapture
+        self.logProcessor = logProcessor
         _entries = FetchRequest<FoodLogEntry>(
             sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: false)],
             predicate: Self.predicate(for: Date()),
@@ -99,15 +103,15 @@ struct HomeTabView: View {
                 FoodEntryDetailSheet(entry: entry)
             }
         }
-        .onOpenURL { url in
-            if url.scheme == "glycotrack" && url.host == "record" {
-                // Logging a new item should snap the view back to today.
-                changeDate(to: Calendar.current.startOfDay(for: Date()))
-                Task { await toggleRecording() }
-            }
-        }
         .onChange(of: selectedDate) { newDate in
             entries.nsPredicate = Self.predicate(for: newDate)
+        }
+        .onChange(of: voiceCapture.isRecording) { recording in
+            // When the floating tab-bar Record button starts a new recording,
+            // snap the visualizations back to today.
+            if recording && !isToday {
+                changeDate(to: Calendar.current.startOfDay(for: Date()))
+            }
         }
     }
 
@@ -218,77 +222,52 @@ struct HomeTabView: View {
         }
     }
 
-    // MARK: - Recording
+    // MARK: - Recording status
 
+    /// The actual record button now lives in the floating tab bar
+    /// (`RootTabView`). This section is feedback-only: shows transcript,
+    /// processing progress, and any error.
+    @ViewBuilder
     private var recordingSection: some View {
-        VStack(spacing: 8) {
-            RecordButton(isRecording: voiceCapture.isRecording) {
-                // Ensure we're back on today when logging a new entry.
-                if !isToday {
-                    changeDate(to: Calendar.current.startOfDay(for: Date()))
-                }
-                Task { await toggleRecording() }
-            }
+        let hasContent =
+            voiceCapture.isRecording
+            || !voiceCapture.transcript.isEmpty
+            || logProcessor.isProcessing
+            || logProcessor.lastError != nil
 
-            if voiceCapture.isRecording {
-                Text("Listening...")
-                    .font(.caption)
-                    .foregroundColor(.red)
-            } else {
-                Text("Tap to log food by voice")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-
-            if voiceCapture.isRecording || !voiceCapture.transcript.isEmpty {
-                Text(voiceCapture.transcript)
-                    .font(.caption)
-                    .padding(.horizontal)
-                    .multilineTextAlignment(.center)
-            }
-
-            if logProcessor.isProcessing {
-                HStack {
-                    ProgressView()
-                    Text("Processing your food log…")
+        if hasContent {
+            VStack(spacing: 8) {
+                if voiceCapture.isRecording {
+                    Text("Listening…")
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.red)
+                }
+
+                if voiceCapture.isRecording || !voiceCapture.transcript.isEmpty {
+                    Text(voiceCapture.transcript)
+                        .font(.caption)
+                        .padding(.horizontal)
+                        .multilineTextAlignment(.center)
+                }
+
+                if logProcessor.isProcessing {
+                    HStack {
+                        ProgressView()
+                        Text("Processing your food log…")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+
+                if let err = logProcessor.lastError {
+                    Text("Could not process: \(err)")
+                        .font(.caption)
+                        .foregroundColor(.red)
+                        .padding(.horizontal)
                 }
             }
-
-            if logProcessor.lastError != nil {
-                Text("Could not process: \(logProcessor.lastError!)")
-                    .font(.caption)
-                    .foregroundColor(.red)
-                    .padding(.horizontal)
-            }
+            .padding(.top, 8)
         }
-        .padding(.top, 8)
-    }
-
-    private func toggleRecording() async {
-        if voiceCapture.isRecording {
-            voiceCapture.stopRecording()
-        } else {
-            voiceCapture.onTranscriptFinalized = { transcript in
-                Task {
-                    await logProcessor.process(transcript: transcript, context: context)
-                    updateWidgetData()
-                }
-            }
-            do {
-                try await voiceCapture.startRecording()
-            } catch {
-                // Error shown via voiceCapture.error
-            }
-        }
-    }
-
-    private func updateWidgetData() {
-        let defaults = UserDefaults(suiteName: "group.com.glycotrack.shared")
-        let repo = FoodLogRepository(context: context)
-        defaults?.set(repo.dailyGL(for: Date()), forKey: "todayGL")
-        defaults?.set(repo.countToday(), forKey: "todayEntryCount")
     }
 
     // MARK: - Predicate

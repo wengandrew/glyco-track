@@ -136,9 +136,14 @@ final class BalanceScene: SKScene {
     private var nodeToEntry: [ObjectIdentifier: FoodLogEntry] = [:]
 
     // Tuning
-    private let areaPerCLUnit: CGFloat = 350
-    private let minRadius: CGFloat = 13
+    private let areaPerCLUnit: CGFloat = 220
+    private let minRadius: CGFloat = 10
     private let itemMassPerCL: CGFloat = 0.6
+
+    // Beam-lock state — see scheduleItemDrops / unlockBeam.
+    private weak var pivotAnchorBody: SKPhysicsBody?
+    private var lockJoint: SKPhysicsJointFixed?
+    private var pinJoint: SKPhysicsJointPin?
 
     init(size: CGSize, entries: [FoodLogEntry]) {
         self.entries = entries
@@ -161,15 +166,15 @@ final class BalanceScene: SKScene {
 
     // Positions (derived from scene size)
     private var pivotPos: CGPoint { CGPoint(x: size.width / 2, y: size.height * 0.32) }
-    private var beamLength: CGFloat { size.width * 0.75 }
+    private var beamLength: CGFloat { size.width * 0.82 }
     private var beamThickness: CGFloat { 6 }
-    private var plateWidth: CGFloat { size.width * 0.28 }
+    private var plateWidth: CGFloat { size.width * 0.36 }
     private var plateThickness: CGFloat { 4 }
     /// Vertical distance from beam center up to each plate's slab. Plates sit
     /// ABOVE the beam so items falling from the top land in the cup formed by
     /// the slab + lips, instead of bouncing off the beam.
     private var plateLift: CGFloat { size.height * 0.08 }
-    private var lipHeight: CGFloat { size.height * 0.12 }
+    private var lipHeight: CGFloat { size.height * 0.18 }
     private var lipThickness: CGFloat { 2 }
 
     /// Build the static stand (post + base + pivot).
@@ -263,15 +268,34 @@ final class BalanceScene: SKScene {
         pivotBody.isDynamic = false
         pivot.physicsBody = pivotBody
         addChild(pivot)
+        pivotAnchorBody = pivotBody
 
-        // Pin joint at the pivot — beam rotates freely around it.
+        // Lock the beam horizontal during the drop phase so items accumulate
+        // without the beam swinging chaotically. The pin joint is added now
+        // (configured with limits + friction torque) but we ALSO add a fixed
+        // joint that prevents any rotation. The fixed joint is removed once
+        // all items have landed; see `unlockBeam`.
         if let bodyA = pivot.physicsBody, let bodyB = beam.physicsBody {
-            let joint = SKPhysicsJointPin.joint(withBodyA: bodyA, bodyB: bodyB, anchor: pivotPos)
-            joint.shouldEnableLimits = true
-            joint.lowerAngleLimit = -CGFloat.pi / 6   // ±30° tilt
-            joint.upperAngleLimit = CGFloat.pi / 6
-            joint.frictionTorque = 0.2
-            physicsWorld.add(joint)
+            let pin = SKPhysicsJointPin.joint(withBodyA: bodyA, bodyB: bodyB, anchor: pivotPos)
+            pin.shouldEnableLimits = true
+            pin.lowerAngleLimit = -CGFloat.pi / 6   // ±30° tilt
+            pin.upperAngleLimit = CGFloat.pi / 6
+            pin.frictionTorque = 0.2
+            physicsWorld.add(pin)
+            pinJoint = pin
+
+            let fixed = SKPhysicsJointFixed.joint(withBodyA: bodyA, bodyB: bodyB, anchor: pivotPos)
+            physicsWorld.add(fixed)
+            lockJoint = fixed
+        }
+    }
+
+    /// Remove the temporary fixed joint so the beam is free to tilt under the
+    /// accumulated mass on its plates.
+    private func unlockBeam() {
+        if let fixed = lockJoint {
+            physicsWorld.remove(fixed)
+            lockJoint = nil
         }
     }
 
@@ -306,13 +330,23 @@ final class BalanceScene: SKScene {
     // MARK: - Drops
 
     private func scheduleItemDrops() {
-        // Alternate heavier-first across both sides so the beam doesn't swing wildly
-        // before the other side loads up.
+        // Alternate heavier-first across both sides. The beam is locked horizontal
+        // during the drop phase (see buildBeamAndPlates), so items accumulate cleanly
+        // before any tilt happens.
         let sorted = entries.sorted { abs($0.computedCL) > abs($1.computedCL) }
+        var lastDropTime: Double = 0
         for (i, entry) in sorted.enumerated() {
-            run(.wait(forDuration: 0.3 + Double(i) * 0.22)) { [weak self] in
+            let t = 0.3 + Double(i) * 0.22
+            lastDropTime = t
+            run(.wait(forDuration: t)) { [weak self] in
                 self?.dropItem(for: entry)
             }
+        }
+
+        // Unlock the beam after all items have dropped + a 1.0s settle buffer.
+        let unlockDelay = lastDropTime + 1.0
+        run(.wait(forDuration: unlockDelay)) { [weak self] in
+            self?.unlockBeam()
         }
     }
 
@@ -346,7 +380,7 @@ final class BalanceScene: SKScene {
         // Spawn above the target plate.
         let side: CGFloat = cl > 0 ? 1 : -1
         let plateCenterX = pivotPos.x + side * (beamLength / 2 - plateWidth / 2)
-        let jitter = CGFloat.random(in: -plateWidth / 3 ... plateWidth / 3)
+        let jitter = CGFloat.random(in: -plateWidth / 8 ... plateWidth / 8)
         node.position = CGPoint(x: plateCenterX + jitter, y: size.height - radius - 4)
 
         let body = SKPhysicsBody(circleOfRadius: radius)
