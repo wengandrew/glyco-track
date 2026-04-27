@@ -1,4 +1,5 @@
 import SwiftUI
+import CoreData
 
 struct RootTabView: View {
     @Environment(\.managedObjectContext) private var context

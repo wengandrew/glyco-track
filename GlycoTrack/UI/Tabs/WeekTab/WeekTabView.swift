@@ -8,9 +8,11 @@ struct WeekTabView: View {
     @FetchRequest private var weekEntries: FetchedResults<FoodLogEntry>
 
     /// Earliest logged entry — used to clamp backward week navigation.
+    /// `timestamp != nil` so a stray nil-timestamp row can't become `.first`
+    /// and silently disable the back-chevron.
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
-        predicate: NSPredicate(format: "isSoftDeleted == NO"),
+        predicate: NSPredicate(format: "isSoftDeleted == NO AND timestamp != nil"),
         animation: .default
     )
     private var allEntriesAsc: FetchedResults<FoodLogEntry>
@@ -139,10 +141,14 @@ struct WeekTabView: View {
     private var weekRangeString: String {
         let cal = Calendar.current
         let end = cal.date(byAdding: .day, value: 6, to: selectedWeekStart) ?? selectedWeekStart
+        return "\(Self.monthDayFormatter.string(from: selectedWeekStart)) – \(Self.monthDayFormatter.string(from: end))"
+    }
+
+    private static let monthDayFormatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "MMM d"
-        return "\(f.string(from: selectedWeekStart)) – \(f.string(from: end))"
-    }
+        return f
+    }()
 
     private func changeWeek(by delta: Int) {
         guard let target = Calendar.current.date(byAdding: .weekOfYear, value: delta, to: selectedWeekStart) else { return }
