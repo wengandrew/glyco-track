@@ -33,6 +33,12 @@ private struct SSEDelta: Decodable {
     let text: String?
 }
 
+/// Minimal interface used by `TranscriptParser` so tests can stub canned
+/// responses without a real network call. `ClaudeAPIClient` conforms below.
+public protocol ClaudeAPISending: AnyObject {
+    func send(system: String, userMessage: String, maxTokens: Int) async throws -> String
+}
+
 public enum ClaudeAPIError: Error, LocalizedError {
     case missingAPIKey
     case invalidResponse(Int)
@@ -49,7 +55,7 @@ public enum ClaudeAPIError: Error, LocalizedError {
     }
 }
 
-public final class ClaudeAPIClient {
+public final class ClaudeAPIClient: ClaudeAPISending {
     public static let model = "claude-sonnet-4-6"
     private static let baseURL = URL(string: "https://api.anthropic.com/v1/messages")!
     private static let anthropicVersion = "2023-06-01"
