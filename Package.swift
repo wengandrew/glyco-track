@@ -35,5 +35,10 @@ let package = Package(
             dependencies: ["CLEngineCore"],
             path: "Tests/CLEngineCoreTests"
         ),
+        .testTarget(
+            name: "TranscriptParserCoreTests",
+            dependencies: ["TranscriptParserCore"],
+            path: "Tests/TranscriptParserCoreTests"
+        ),
     ]
 )

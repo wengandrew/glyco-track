@@ -61,11 +61,18 @@ Rules:
 - Use common singular food names that would appear in a standard nutrition database. Prefer simple forms ("beef" not "thin-sliced beef brisket"; "rice noodles" not "fresh flat rice noodles").
 - The ingredient grams should sum to roughly the total dish weight (±15%). Broth/water-heavy dishes can include "broth" as an ingredient.
 - Omit negligible ingredients (<3g) like salt, pepper, small garnishes. Keep the list to 2–6 key ingredients.
+- HEADLINE-CARB RULE: if the dish name contains a staple carb word — "noodle(s)", "pasta", "spaghetti", "rice", "bread", "bun", "tortilla", "flour", "dumpling", "pancake", "wrap", "roll" — the ingredient list MUST include that carb (or a more specific variant of it: "rice noodles", "wheat noodles", "white rice", "whole wheat flour"). Never omit the carb that's literally named in the dish; doing so silently zeroes the GL.
 - Return ONLY the JSON array. No prose, no markdown, no code fences.
 
 Examples:
 Input: "beef noodle soup" (250g)
 Output: [{"name":"beef","grams":60},{"name":"rice noodles","grams":90},{"name":"chicken broth","grams":90},{"name":"bok choy","grams":15}]
+
+Input: "hand pulled lamb noodle" (300g)
+Output: [{"name":"lamb","grams":100},{"name":"wheat noodles","grams":140},{"name":"bone broth","grams":50},{"name":"scallion","grams":10}]
+
+Input: "mixed rice with vegetables" (250g)
+Output: [{"name":"white rice","grams":150},{"name":"carrot","grams":40},{"name":"peas","grams":35},{"name":"corn","grams":25}]
 
 Input: "chicken caesar salad" (300g)
 Output: [{"name":"grilled chicken","grams":120},{"name":"romaine lettuce","grams":130},{"name":"caesar dressing","grams":30},{"name":"parmesan cheese","grams":15}]

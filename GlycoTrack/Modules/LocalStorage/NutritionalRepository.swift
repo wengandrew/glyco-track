@@ -152,15 +152,19 @@ final class NutritionalRepository {
         let queryWords = query.split(separator: " ").count
         // Two guards before accepting a contains-match:
         // 1. Word-boundary: "egg" must not match inside "veggie".
-        // 2. Word-count ratio: the query must cover ≥50% of the DB entry's
-        //    words. Without this, "sugar" (1 word) spuriously matches
-        //    "sugar snap peas" (3 words, ratio = 0.33). "white rice" matching
+        // 2. Word-count ratio: the query must cover MORE than half of the DB
+        //    entry's words. Strict `>` (not `>=`) is load-bearing — a 1-word
+        //    generic query against a 2-word specific entry hits exactly 0.5
+        //    and would otherwise match: "bread" → "rye bread", "juice" →
+        //    "pomegranate juice", "chicken" → "chicken drumstick" all observed
+        //    in production logs. Letting these fall through to T2/T3 is more
+        //    honest than silently picking a specific variant. "white rice" /
         //    "steamed white rice" (ratio = 0.67) still passes.
         // Prefer the shortest surviving match (fewest extra qualifier words).
         return candidates
             .filter { profile in
                 let dbWords = profile.foodName.split(separator: " ").count
-                return Double(queryWords) / Double(dbWords) >= 0.5
+                return Double(queryWords) / Double(dbWords) > 0.5
                     && _wordBoundaryContains(haystack: profile.foodName.lowercased(), needle: query)
             }
             .min(by: { $0.foodName.count < $1.foodName.count })
@@ -169,9 +173,20 @@ final class NutritionalRepository {
     private func fetchFuzzy(_ name: String) -> (NutritionalProfile, Int)? {
         let request = NutritionalProfile.fetchRequest()
         let all = (try? context.fetch(request)) ?? []
+        let queryPrep = Self.prepMethodTokens(in: name)
         var best: (NutritionalProfile, Int)?
         for profile in all {
-            let d = levenshtein(name, profile.foodName.lowercased())
+            let dbName = profile.foodName.lowercased()
+            // Refuse fuzzy bridges across different prep methods. "grilled
+            // chicken" → "fried chicken" has Lev = 4-ish but the CL profile
+            // is meaningfully different — silent fuzzing here is exactly the
+            // class of mislabel CLAUDE.md rule #1 forbids. If both names
+            // mention prep methods and they disagree, skip.
+            let dbPrep = Self.prepMethodTokens(in: dbName)
+            if !queryPrep.isEmpty && !dbPrep.isEmpty && queryPrep.isDisjoint(with: dbPrep) {
+                continue
+            }
+            let d = levenshtein(name, dbName)
             if d <= 3 {
                 if best == nil || d < best!.1 {
                     best = (profile, d)
@@ -179,6 +194,21 @@ final class NutritionalRepository {
             }
         }
         return best
+    }
+
+    /// Prep-method words that change a food's nutritional profile enough that
+    /// fuzzing across them is wrong. Kept conservative — words that don't
+    /// shift fat/cholesterol meaningfully (e.g. "chopped", "sliced") aren't
+    /// here.
+    private static let prepMethodWords: Set<String> = [
+        "grilled", "fried", "deep-fried", "baked", "steamed", "boiled",
+        "raw", "roasted", "smoked", "sauteed", "sautéed", "poached",
+        "broiled", "stewed", "braised", "pan-fried", "stir-fried",
+    ]
+
+    private static func prepMethodTokens(in name: String) -> Set<String> {
+        let tokens = name.lowercased().split { !$0.isLetter && $0 != "-" }.map(String.init)
+        return Set(tokens).intersection(prepMethodWords)
     }
 
     /// Word-boundary-aware contains. Ensures "ice" doesn't match inside "rice"
