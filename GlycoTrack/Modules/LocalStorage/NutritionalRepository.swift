@@ -22,9 +22,12 @@ struct ComponentMatch {
 @MainActor
 final class NutritionalRepository {
     private let context: NSManagedObjectContext
+    private let aliasIndex: AliasIndex
 
-    init(context: NSManagedObjectContext = PersistenceController.shared.context) {
+    init(context: NSManagedObjectContext = PersistenceController.shared.context,
+         aliasIndex: AliasIndex = .shared) {
         self.context = context
+        self.aliasIndex = aliasIndex
     }
 
     /// Tier 1: strict direct-match lookup on the full food name.
@@ -37,6 +40,18 @@ final class NutritionalRepository {
 
         if let exact = fetchExact(normalized) {
             return DirectMatch(profile: exact, confidence: 0.95)
+        }
+
+        // Alias hit: the query is exactly a declared alias of some canonical
+        // entry. "grilled chicken" → "chicken breast", "bread" → "white
+        // bread", "sugar" → "white sugar", "rice" → "white rice", "egg" →
+        // "eggs". Treated as a strong T1 signal — slightly below an exact
+        // canonical hit (0.95) but stronger than contains/fuzzy. Without this
+        // path the strict contains-gate (`> 0.5`) leaves single-word generic
+        // queries with no T1 home and they fall to T3 or T5 unnecessarily.
+        if let canonical = aliasIndex.canonical(forAlias: normalized),
+           let aliasMatch = fetchExact(canonical.lowercased()) {
+            return DirectMatch(profile: aliasMatch, confidence: 0.93)
         }
 
         // DB entry whose name CONTAINS the query — e.g. user says "white rice",
@@ -56,9 +71,11 @@ final class NutritionalRepository {
     }
 
     /// Tier 2: reverse-substring decomposition (Option B).
-    /// Returns DB entries whose foodName appears inside the user's query.
-    /// For "beef noodle soup" this surfaces "beef", "noodles", etc.
-    /// Excludes single-letter matches and tokens shorter than 3 chars.
+    /// Returns DB entries whose foodName (or any declared alias) appears
+    /// inside the user's query. For "beef noodle soup" this surfaces "beef",
+    /// "noodles", etc. For "grilled chicken caesar salad" this surfaces the
+    /// "grilled chicken" alias of `chicken breast` plus "caesar salad" if
+    /// present. Excludes tokens shorter than 3 chars.
     func findComponents(for foodName: String) -> [ComponentMatch] {
         let normalized = foodName.lowercased().trimmingCharacters(in: .whitespaces)
         guard normalized.count >= 3 else { return [] }
@@ -79,6 +96,18 @@ final class NutritionalRepository {
                 let existing = hits[dbName]
                 if existing == nil || existing!.coverage < dbName.count {
                     hits[dbName] = ComponentMatch(profile: profile, matchedToken: dbName, coverage: dbName.count)
+                }
+            }
+
+            // Aliases of this profile are also legitimate substring tokens.
+            // Without this, "grilled chicken caesar salad" would never see
+            // `chicken breast` as a component because the canonical name
+            // doesn't appear in the query — only its alias does.
+            for alias in aliasIndex.aliases(forCanonical: dbName) where alias.count >= 3 {
+                guard wordBoundaryContains(haystack: normalized, needle: alias) else { continue }
+                let existing = hits[alias]
+                if existing == nil || existing!.coverage < alias.count {
+                    hits[alias] = ComponentMatch(profile: profile, matchedToken: alias, coverage: alias.count)
                 }
             }
         }
