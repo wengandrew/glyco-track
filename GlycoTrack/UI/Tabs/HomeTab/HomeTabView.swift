@@ -274,7 +274,10 @@ struct HomeTabView: View {
 
     static func predicate(for date: Date) -> NSPredicate {
         let start = Calendar.current.startOfDay(for: date)
-        let end = Calendar.current.date(byAdding: .day, value: 1, to: start)!
+        // `Calendar.date(byAdding:.day, value: 1, to:)` returns nil only for
+        // pathological calendars; fall back to a 24-hour offset so the predicate
+        // is always well-formed.
+        let end = Calendar.current.date(byAdding: .day, value: 1, to: start) ?? start.addingTimeInterval(86400)
         return NSPredicate(format: "timestamp >= %@ AND timestamp < %@ AND isSoftDeleted == NO",
                            start as NSDate, end as NSDate)
     }
@@ -403,17 +406,5 @@ struct StatChip: View {
     }
 }
 
-// MARK: - Date formatters
-
-private extension DateFormatter {
-    static let short: DateFormatter = {
-        let f = DateFormatter()
-        f.dateFormat = "EEE, MMM d"
-        return f
-    }()
-    static let weekdayMonthDay: DateFormatter = {
-        let f = DateFormatter()
-        f.dateFormat = "EEEE, MMM d"
-        return f
-    }()
-}
+// Shared `DateFormatter.short` / `.weekdayMonthDay` live in
+// `UI/Theme/DateFormatters.swift`.

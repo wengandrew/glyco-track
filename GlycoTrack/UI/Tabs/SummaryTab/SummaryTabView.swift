@@ -4,9 +4,8 @@ struct SummaryTabView: View {
     @StateObject private var generator: SummaryGenerator
 
     init() {
-        let apiKey = Bundle.main.infoDictionary?["CLAUDE_API_KEY"] as? String ?? ""
         _generator = StateObject(wrappedValue: SummaryGenerator(
-            apiKey: apiKey,
+            apiKey: APIKey.claude,
             logRepository: FoodLogRepository()
         ))
     }

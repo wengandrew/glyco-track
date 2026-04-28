@@ -7,17 +7,13 @@ final class FoodLogProcessor: ObservableObject {
     @Published var isProcessing: Bool = false
     @Published var lastError: String?
 
-    private var apiKey: String {
-        Bundle.main.infoDictionary?["CLAUDE_API_KEY"] as? String ?? ""
-    }
-
     func process(transcript: String, context: NSManagedObjectContext) async {
         guard !isProcessing else { return }
         isProcessing = true
         lastError = nil
         defer { isProcessing = false }
 
-        let client = ClaudeAPIClient(apiKey: apiKey)
+        let client = ClaudeAPIClient(apiKey: APIKey.claude)
         let parser = TranscriptParser(client: client)
 
         let foods: [ParsedFood]

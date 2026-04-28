@@ -113,7 +113,23 @@ These features are degraded when sideloaded with a free developer account and ca
 
 ---
 
-## Design vs Implementation Divergences
+## Post-MVP Iterations (since 2026-04-20 device launch)
+
+Tracks merged PRs that materially shape the product after the initial MVP deployment.
+
+| PR | Title | What changed |
+|---|---|---|
+| #18 | Visualization overhaul | Emojis replaced food-group color tokens entirely; SpriteKit physics for daily GL bucket; date navigation across visualizations. |
+| #19 | Worktree sync rule | Added the rebase-on-start rule to CLAUDE.md so feature branches don't drift behind develop. |
+| #20 | Today tab polish + CL viz fixes | Tightened the Today tab; first round of physics tuning on Waterline / Balance scenes. |
+| #21 | Unified entry flow + waterline fix + build info | Every entry-tap routes through `FoodEntryDetailSheet` (no more direct edit-jump); `DebugTabView` surfaces git branch / commit / build timestamp via `BuildInfo.generated.swift`. |
+| #22 | Week tab + floating tab bar + CL physics | Replaced system `TabView` with two-pill custom bar (record button on right, iOS Weather app pattern); fixed Week tab axis labels and Mon-start week predicate; Waterline floaters now use spring-toward-waterline; Balance scale now locked horizontal until drops settle. |
+| #23 | Widget containerBackground | Adopted iOS 17 `.containerBackground(for: .widget)` so the widget renders instead of showing the "adopt containerBackground API" black-rectangle warning. |
+| (this PR) | Codebase cleanup | Removed force-unwraps in date math; deleted dead code in iOS-target `GIEngine.swift`; consolidated `DateFormatter`s into `UI/Theme/DateFormatters.swift`; introduced `APIKey` typed accessor; hoisted CL palette `SKColor`s to `UI/Theme/CLPalette.swift`. |
+
+---
+
+## Design vs Implementation Divergences (refreshed)
 
 | DESIGN.md says | Implementation does | Rationale |
 |---|---|---|
@@ -122,6 +138,54 @@ These features are degraded when sideloaded with a free developer account and ca
 | Tab 1 labelled "Home" | Tab labelled "Today" | More descriptive for a daily-logging app |
 | Voice streams audio to Claude in real-time | Apple Speech → transcript → Claude parses text | `SFSpeechRecognizer` runs locally; Claude receives text only |
 | Widget is strict mic button | Widget shows GL progress bar + mic deep-link | WidgetKit cannot access microphone |
+| Color = food group; food groups have a 6-color palette (DESIGN §6.3, §8) | **Food groups removed entirely.** Each food renders as a single emoji via `FoodEmoji.resolve(entry:)`; tier/confidence tinting kept for the row badge only. | Color-coding by food group never communicated as much as the emoji identity itself; testing showed users read the emoji first. |
+| GL × CL Quadrant is a 4-region plot in a modal sheet (DESIGN §8) | **Two-region plot embedded inline** on Today/Week/Month tabs (left/right, GL grows up from a 0 baseline) | Lower half would be permanently empty (GL is unsigned); modal added a tap to no purpose. |
+| 5 tabs (Home/Week/Month/Log/Summary) inside the system `TabView` (DESIGN §9) | 7 tabs (Today/Week/Month/Log/Summary/About/Debug) in a custom floating bar with a separated record-button pill on the right | Record action needed to be reachable from any tab; About + Debug are dev-facing. |
+| Daily GL budget hardcoded to 100 (DESIGN §3.1) | Constant `dailyGLBudgetUI` in `GLThreshold.swift`; `GIEngineCore` exposes its own `dailyGLBudget` for tests | Two homes is intentional — UI and engine want to evolve independently. iOS-target `GIEngine.swift` no longer redefines it. |
+| Tier 5 unrecognized foods (CLAUDE.md) | T5 returns GL=0/CL=0 with explicit "Not recognized" red badge | **Never** silently zero an unrecognized food into a high-confidence match; T5 is the load-bearing failure path. |
+
+---
+
+## Suggested Next Steps (prioritized)
+
+Concrete, mobile-app-developer-flavored proposals. Roughly grouped by impact ÷ effort. Pick top items per session; not a contract.
+
+### A. Reliability & data quality (do these first)
+
+1. **Expand `usda_nutrition.json` to ≥1,500 entries.** 377 is well below the DESIGN target of 7,793. Each gap forces the matcher to fall back to GI=55 with CL=0, silently halving accuracy. Consider a Python script in `scripts/` that pulls from USDA FoodData Central's CSV export and applies a curated whitelist.
+2. **Add `Tests/TranscriptParserCoreTests/`.** GIEngineCore + CLEngineCore have unit tests; TranscriptParserCore (the cascade decomposition prompts + JSON parsing) does not. Cover: `parse(transcript:)` happy path, malformed JSON response, empty transcript, multi-food extraction, ingredient decomposition shape.
+3. **CI via GitHub Actions** running `swift test` + `xcodebuild build … iOS Simulator` on every PR. Currently relies on local builds; one rebase-without-rebuild can land a broken `develop`.
+4. **Core Data migration plan.** The model is programmatic, so any new attribute is a manual `NSMappingModel` away from a wipe. Either document the "blow away local store on schema change" policy in CLAUDE.md, or wire up a lightweight migration test.
+
+### B. UX refinements (visible value to the user)
+
+5. **Settings screen with editable daily GL budget.** Some users have physician-prescribed budgets that differ from the default 100. Today the budget is constant. Stored in `UserDefaults`, default 100, surfaced on Today + Month + summary chips.
+6. **Lock-screen / StandBy widget** (`accessoryRectangular`, `accessoryCircular`). Widget extension already exists; iOS 17 lock-screen widget is one extra `WidgetFamily` case + a slimmer view.
+7. **Haptic feedback** when an item lands in the bucket / on a balance plate (`UIImpactFeedbackGenerator(style: .light)` from a SpriteKit contact callback). Free polish.
+8. **VoiceOver labels** on emoji items in the SpriteKit scenes. Currently every food in the bucket is a generic SKNode with no accessibility label — VoiceOver users can't read the visualizations.
+9. **"Refine" affordance on low-confidence rows.** Today the user sees a red badge but has to open the edit sheet and retype. Tap the badge → present a search-style picker against `NutritionalProfile` so the user can promote the entry to a known food in two taps.
+10. **Week-over-week comparison strip on the Week tab** ("This week vs last week: GL avg ↓7"). Reuses `PeriodSummaryView`; one extra `@FetchRequest` for the prior week.
+
+### C. Engineering hygiene
+
+11. **Unified logging via `os.Logger`** instead of `print(...)`. Categorized (`network`, `coreData`, `voice`), respects Release builds.
+12. **Extract `ClaudeAPIClient`** from `Modules/TranscriptParser/TranscriptParser.swift` into `Modules/ClaudeAPI/`. It's used independently by `SummaryGenerator` and the Edit-recompute path; living inside `TranscriptParser.swift` is a layering smell.
+13. **SwiftLint** with rules for `force_unwrapping` (warning), `line_length`, `function_body_length`, `large_tuple`. Catches the kind of issue this PR found by hand.
+14. **Profile first-launch seeding.** `PersistenceController.seedNutritionalProfiles()` parses two JSONs and inserts ~1,150 rows on first launch. Visible delay on weak hardware? Move to a background context with a progress hint.
+15. **Replace `Bundle.main.infoDictionary` lookups for non-API-key config.** `BuildInfo`, `AppInfo`, and any future runtime flag should follow the `APIKey` enum pattern (typed accessor, single home).
+
+### D. Strategic (multi-PR work, surface area changes)
+
+16. **HealthKit write integration.** Daily GL / CL aggregate writes to HealthKit so other apps (and the watch) can consume. Requires entitlement; gated to paid Apple Developer Program.
+17. **Apple Watch complication** showing today's GL ratio. Requires sharing the App Group + a tiny WatchKit target.
+18. **Background-refresh widget timeline** so the widget GL number updates without opening the app. Today the widget reads `UserDefaults` and that's only refreshed on log; combine with `WidgetCenter.shared.reloadTimelines(ofKind:)` after every log.
+19. **Soft-delete cleanup job** that hard-deletes entries with `isSoftDeleted == true` older than 30 days. Right now soft-deleted rows accumulate forever.
+20. **Cohort export** (CSV / Files-app integration). Personal-team users can't use CloudKit; an "Export logs" button writes a CSV they can email to themselves as a primitive backup.
+
+### E. Speculative / research-mode
+
+21. **Photo-based food logging via Vision + Claude vision API.** Already in DESIGN §17 but worth scoping a small spike.
+22. **On-device food-name embedding** (e.g. `NaturalLanguage` framework or a tiny CoreML model) to replace Levenshtein in T1/T2 with semantic match. "linguine" → "spaghetti" should resolve without falling all the way to Claude.
 
 ---
 
@@ -131,7 +195,7 @@ These features are degraded when sideloaded with a free developer account and ca
 |---|---|
 | GL unsigned | `computedGL` always `max(0, raw)`, Double |
 | CL signed | `computedCL` can be negative, Double |
-| Daily GL budget 100 | Hardcoded constant `dailyGLBudget = 100.0` |
+| Daily GL budget 100 | `dailyGLBudgetUI` in `UI/Theme/GLThreshold.swift`; SPM core has its own `dailyGLBudget` |
 | Midnight local TZ | `Calendar.current.startOfDay(for: Date())` |
 | No raw audio storage | `VoiceCapture` only keeps transcript string |
 | iOS 16+ | Core Data (not SwiftData), no `@Observable` macro |

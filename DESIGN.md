@@ -1,5 +1,14 @@
 # GlycoTrack — Complete Design Document (MVP)
 
+> **Note (2026-04-27):** This is the original MVP spec, preserved for the
+> "why" record. Several sections have since drifted from what's actually
+> shipped — most notably food groups and their color palette have been
+> removed in favor of single-emoji food identity, the GL × CL Quadrant is now
+> a 2-region inline plot rather than a 4-region modal, and the tab bar is a
+> custom floating two-pill bar (not the system `TabView`). For the
+> authoritative current state, see `CLAUDE.md` (architecture invariants) and
+> `PLAN.md` § "Design vs Implementation Divergences" (delta table).
+
 ## 1. Product Vision
 
 GlycoTrack is a voice-first food logging app for iOS that tracks dietary glycemic load (GL) and cholesterol load (CL) to help users manage diabetes and heart disease risk. Users speak what they ate via a home screen widget; the app handles all parsing, nutritional lookup, and analysis automatically.

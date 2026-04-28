@@ -22,12 +22,15 @@
 		2AB15550573722F27840C076 /* GlycoTrackWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C70C082CC09B5E60AF485E04 /* GlycoTrackWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		414C04B785EC7D63A03EF6BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA893F988E91457F91A4E3BF /* Assets.xcassets */; };
 		478432404A32D39AB16C3824 /* GlycoTrackWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E299D37D943223074C0464 /* GlycoTrackWidgetEntryView.swift */; };
+		47DF8C211D4056AD241C73C4 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1FFC9BAF159DD2432CE8FD /* APIKey.swift */; };
 		4BBADB6F44367C378B4CFA1E /* FoodMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C16B19721941F485C06001 /* FoodMatcher.swift */; };
 		541CADD963F1A6CF84ED8EE6 /* SummaryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC65AD31C004BA65B554B9B /* SummaryGenerator.swift */; };
 		54376F4567B22EA7489FADA9 /* WeekTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C81FF29DB0DB6B3386701CC /* WeekTabView.swift */; };
 		545495522F0ACC99E8F83289 /* PeriodSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E838C1BDD90901F73964B424 /* PeriodSummaryView.swift */; };
 		605851BDE11851A2BB4A67C2 /* FoodLogRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543CE564CFB84AEB79200F10 /* FoodLogRowView.swift */; };
 		6218DF6B76FCABF02538AFC0 /* GlycoTrackApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A1DA1067A0C7DDF9801DAD /* GlycoTrackApp.swift */; };
+		64A2CFB29B814A7EB74CCB05 /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F001037826FF0A6FEC6CC5 /* DateFormatters.swift */; };
+		667D790349266A31BDCB9006 /* CLPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98285973C6FD6F59B009AB47 /* CLPalette.swift */; };
 		684DC8143E5EE72D2A5F6895 /* ConfidenceBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A1C047AADFF5FEBE42735D /* ConfidenceBadge.swift */; };
 		7090F21A3809A883F654669C /* GlycoTrack.xcconfig.example in Resources */ = {isa = PBXBuildFile; fileRef = 6A1B66F0A6155C24C35BD9A5 /* GlycoTrack.xcconfig.example */; };
 		719519B850851D9B5DEA8F1C /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D3B3F5C4D80821160E5398 /* PersistenceController.swift */; };
@@ -118,12 +121,14 @@
 		530E5917BF567A086E970F68 /* GIEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIEngineTests.swift; sourceTree = "<group>"; };
 		543CE564CFB84AEB79200F10 /* FoodLogRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogRowView.swift; sourceTree = "<group>"; };
 		59395D21FE58801D6329E256 /* NutritionalProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NutritionalProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5A1FFC9BAF159DD2432CE8FD /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		615CCD25037FC347FCF34DD6 /* FoodEmoji.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodEmoji.swift; sourceTree = "<group>"; };
 		6A1B66F0A6155C24C35BD9A5 /* GlycoTrack.xcconfig.example */ = {isa = PBXFileReference; path = GlycoTrack.xcconfig.example; sourceTree = "<group>"; };
 		6CB33E089ABEA3AE532CD71B /* GlycoTrack.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GlycoTrack.entitlements; sourceTree = "<group>"; };
 		6CE7293044B6D9D1AFC681B2 /* GlycoTrackWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GlycoTrackWidget.entitlements; sourceTree = "<group>"; };
 		6FAFBFFF587D6C5D88FF7C59 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		700B603125BA314A19923286 /* GIEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIEngine.swift; sourceTree = "<group>"; };
+		70F001037826FF0A6FEC6CC5 /* DateFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
 		73D37631E30DEC9D009EB19A /* GlycoTrackWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlycoTrackWidget.swift; sourceTree = "<group>"; };
 		781609117D8A1D76D625FCF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7967B02D3586B1A48FCB7F6A /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
@@ -134,6 +139,7 @@
 		8F3473895D984D30A720E75A /* TranscriptParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptParser.swift; sourceTree = "<group>"; };
 		93C58B72C496B16CA9474321 /* usda_nutrition.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = usda_nutrition.json; sourceTree = "<group>"; };
 		97313B9C797857A9DBC2F462 /* LogTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTabView.swift; sourceTree = "<group>"; };
+		98285973C6FD6F59B009AB47 /* CLPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLPalette.swift; sourceTree = "<group>"; };
 		9A01D963993C173DCB3FDCA4 /* CLEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLEngineTests.swift; sourceTree = "<group>"; };
 		9EE14268BE85E30C9C9AD8E6 /* MonthlyHeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyHeatmapView.swift; sourceTree = "<group>"; };
 		A1D3B3F5C4D80821160E5398 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
@@ -150,6 +156,7 @@
 		E6C16B19721941F485C06001 /* FoodMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMatcher.swift; sourceTree = "<group>"; };
 		E838C1BDD90901F73964B424 /* PeriodSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodSummaryView.swift; sourceTree = "<group>"; };
 		E872FBC247922AFD48D894E0 /* TugOfWarBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TugOfWarBarView.swift; sourceTree = "<group>"; };
+		EC6C50E55067161C1D7654B6 /* GlycoTrack.local.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GlycoTrack.local.xcconfig; sourceTree = "<group>"; };
 		EC98CA71D925406ACDA67295 /* SummaryTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryTabView.swift; sourceTree = "<group>"; };
 		F3A6E1677A79798237CFB545 /* gi_database.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = gi_database.json; sourceTree = "<group>"; };
 		FA0635BF8C8072E15E778AD6 /* DebugTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTabView.swift; sourceTree = "<group>"; };
@@ -219,8 +226,10 @@
 		26E4F6740B61E7DC36AAF4F5 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				5A1FFC9BAF159DD2432CE8FD /* APIKey.swift */,
 				0E7AC5A8B6B5D9D3340E2D7A /* AppInfo.swift */,
 				0FEDAD6172CAF0ACDF326FB5 /* BuildInfo.generated.swift */,
+				EC6C50E55067161C1D7654B6 /* GlycoTrack.local.xcconfig */,
 				057B38EA6BEE010F76E24F96 /* GlycoTrack.xcconfig */,
 				6A1B66F0A6155C24C35BD9A5 /* GlycoTrack.xcconfig.example */,
 			);
@@ -425,6 +434,8 @@
 		C43FE1E0D54A2C9224B230B0 /* Theme */ = {
 			isa = PBXGroup;
 			children = (
+				98285973C6FD6F59B009AB47 /* CLPalette.swift */,
+				70F001037826FF0A6FEC6CC5 /* DateFormatters.swift */,
 				615CCD25037FC347FCF34DD6 /* FoodEmoji.swift */,
 				89EBF428741DFCAA8D11F55F /* GLThreshold.swift */,
 			);
@@ -617,14 +628,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47DF8C211D4056AD241C73C4 /* APIKey.swift in Sources */,
 				9B5DFF21C781B47BB549A779 /* AboutTabView.swift in Sources */,
 				110044A56CED7B5CD2A92F48 /* AppDelegate.swift in Sources */,
 				202785D3E83C239051A74580 /* AppInfo.swift in Sources */,
 				1D48FDE7367ECA42973C7886 /* BalanceScaleView.swift in Sources */,
 				A608B1F7399369772FD1344B /* BuildInfo.generated.swift in Sources */,
 				804D83DA123CD38186D70EE8 /* CLEngine.swift in Sources */,
+				667D790349266A31BDCB9006 /* CLPalette.swift in Sources */,
 				684DC8143E5EE72D2A5F6895 /* ConfidenceBadge.swift in Sources */,
 				A36A7351E36BA048DD17325C /* CoreDataIdentifiable.swift in Sources */,
+				64A2CFB29B814A7EB74CCB05 /* DateFormatters.swift in Sources */,
 				1868EC6D468D84FF94BC176B /* DebugTabView.swift in Sources */,
 				C6ABC4E02105C1E68D1FB675 /* FoodEmoji.swift in Sources */,
 				FB46D371641D34F4BAB2C512 /* FoodEntryDetailSheet.swift in Sources */,

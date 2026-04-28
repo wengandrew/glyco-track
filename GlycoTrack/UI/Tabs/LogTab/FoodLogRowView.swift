@@ -53,7 +53,7 @@ struct FoodLogRowView: View {
 
     /// "MM/dd/yyyy" for the entry's date. Display-only.
     private static func dateLabel(for timestamp: Date?) -> String {
-        Self.dateFormatter.string(from: timestamp ?? Date())
+        DateFormatter.numericMonthDayYear.string(from: timestamp ?? Date())
     }
 
     /// Hour rounded DOWN to the nearest hour, formatted as "5pm" / "7am" / "12am".
@@ -70,9 +70,4 @@ struct FoodLogRowView: View {
         return "\(display12)\(isAM ? "am" : "pm")"
     }
 
-    private static let dateFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.dateFormat = "MM/dd/yyyy"
-        return f
-    }()
 }
