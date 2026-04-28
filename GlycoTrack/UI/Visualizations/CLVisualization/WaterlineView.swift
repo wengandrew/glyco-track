@@ -215,8 +215,8 @@ final class WaterlineScene: SKScene {
         let waterTop = mid + clamped * halfHeight * 0.9
         self.waterTopY = waterTop
         let waterRect = CGRect(x: rect.minX, y: rect.minY, width: rect.width, height: max(4, waterTop - rect.minY))
-        let tint: SKColor = netCL > 0.5 ? SKColor(red: 0.95, green: 0.3, blue: 0.3, alpha: 0.14) :
-                            netCL < -0.5 ? SKColor(red: 0.25, green: 0.7, blue: 0.4, alpha: 0.14) :
+        let tint: SKColor = netCL > 0.5 ? SKColor.clHarmful.withAlphaComponent(0.14) :
+                            netCL < -0.5 ? SKColor.clBeneficial.withAlphaComponent(0.14) :
                                            SKColor(white: 0.6, alpha: 0.10)
         let fill = SKShapeNode(rect: waterRect, cornerRadius: 10)
         fill.fillColor = tint
@@ -281,8 +281,8 @@ final class WaterlineScene: SKScene {
 
         let disc = SKShapeNode(circleOfRadius: radius)
         disc.fillColor = SKColor(white: 1.0, alpha: 0.9)
-        disc.strokeColor = cl > 0 ? SKColor(red: 0.9, green: 0.3, blue: 0.3, alpha: 0.7) :
-                                    SKColor(red: 0.25, green: 0.7, blue: 0.4, alpha: 0.7)
+        disc.strokeColor = (cl > 0 ? SKColor.clHarmful : SKColor.clBeneficial)
+            .withAlphaComponent(0.7)
         disc.lineWidth = 1.2
         disc.zPosition = 0
         node.addChild(disc)

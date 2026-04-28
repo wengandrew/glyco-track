@@ -4,9 +4,7 @@ import CoreData
 struct MonthTabView: View {
     @Environment(\.managedObjectContext) private var context
 
-    @State private var displayedMonth: Date = Calendar.current.date(
-        from: Calendar.current.dateComponents([.year, .month], from: Date())
-    )!
+    @State private var displayedMonth: Date = Calendar.current.startOfMonth(for: Date())
 
     @State private var selectedEntry: FoodLogEntry?
 
@@ -24,7 +22,7 @@ struct MonthTabView: View {
                     // Month navigation
                     HStack {
                         Button {
-                            displayedMonth = Calendar.current.date(byAdding: .month, value: -1, to: displayedMonth)!
+                            shiftMonth(by: -1)
                         } label: {
                             Image(systemName: "chevron.left")
                         }
@@ -33,7 +31,7 @@ struct MonthTabView: View {
                             .font(.headline)
                         Spacer()
                         Button {
-                            displayedMonth = Calendar.current.date(byAdding: .month, value: 1, to: displayedMonth)!
+                            shiftMonth(by: 1)
                         } label: {
                             Image(systemName: "chevron.right")
                         }
@@ -94,5 +92,20 @@ struct MonthTabView: View {
     private func entries(for date: Date) -> [FoodLogEntry] {
         let cal = Calendar.current
         return allEntries.filter { cal.isDate($0.timestamp ?? Date(), inSameDayAs: date) }
+    }
+
+    private func shiftMonth(by delta: Int) {
+        if let next = Calendar.current.date(byAdding: .month, value: delta, to: displayedMonth) {
+            displayedMonth = next
+        }
+    }
+}
+
+extension Calendar {
+    /// Start of the month containing `date` (day-1 at 00:00). Falls back to the
+    /// start of the day if the year/month components can't be reassembled, so
+    /// no caller has to force-unwrap.
+    func startOfMonth(for date: Date) -> Date {
+        self.date(from: dateComponents([.year, .month], from: date)) ?? startOfDay(for: date)
     }
 }

@@ -141,14 +141,9 @@ struct WeekTabView: View {
     private var weekRangeString: String {
         let cal = Calendar.current
         let end = cal.date(byAdding: .day, value: 6, to: selectedWeekStart) ?? selectedWeekStart
-        return "\(Self.monthDayFormatter.string(from: selectedWeekStart)) – \(Self.monthDayFormatter.string(from: end))"
+        let f = DateFormatter.monthDay
+        return "\(f.string(from: selectedWeekStart)) – \(f.string(from: end))"
     }
-
-    private static let monthDayFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.dateFormat = "MMM d"
-        return f
-    }()
 
     private func changeWeek(by delta: Int) {
         guard let target = Calendar.current.date(byAdding: .weekOfYear, value: delta, to: selectedWeekStart) else { return }

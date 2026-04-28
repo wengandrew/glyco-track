@@ -145,8 +145,7 @@ struct EditEntryView: View {
         // soup") recompute correctly on edit too. Decomposition may hit the
         // Claude API — the Save button remains enabled; the sheet dismisses
         // once the recompute is done.
-        let apiKey = Bundle.main.infoDictionary?["CLAUDE_API_KEY"] as? String ?? ""
-        let client = ClaudeAPIClient(apiKey: apiKey)
+        let client = ClaudeAPIClient(apiKey: APIKey.claude)
         let parser = TranscriptParser(client: client)
         let matcher = FoodMatcher(repo: NutritionalRepository(context: context), parser: parser)
 

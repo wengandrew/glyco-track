@@ -11,10 +11,12 @@ struct MonthlyHeatmapView: View {
     private var calendarDays: [Date?] {
         let cal = Calendar.current
         let components = cal.dateComponents([.year, .month], from: month)
-        guard let firstDay = cal.date(from: components) else { return [] }
+        guard let firstDay = cal.date(from: components),
+              let range = cal.range(of: .day, in: .month, for: firstDay) else {
+            return []
+        }
         let weekday = cal.component(.weekday, from: firstDay)
         let leadingBlanks = (weekday + 5) % 7 // Monday-first offset
-        let range = cal.range(of: .day, in: .month, for: firstDay)!
         var days: [Date?] = Array(repeating: nil, count: leadingBlanks)
         for day in range {
             days.append(cal.date(byAdding: .day, value: day - 1, to: firstDay))

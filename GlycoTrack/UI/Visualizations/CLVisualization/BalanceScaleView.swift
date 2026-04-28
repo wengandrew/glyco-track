@@ -366,8 +366,8 @@ final class BalanceScene: SKScene {
 
         let disc = SKShapeNode(circleOfRadius: radius)
         disc.fillColor = SKColor(white: 1.0, alpha: 0.95)
-        disc.strokeColor = cl > 0 ? SKColor(red: 0.85, green: 0.3, blue: 0.3, alpha: 0.7) :
-                                    SKColor(red: 0.25, green: 0.65, blue: 0.4, alpha: 0.7)
+        disc.strokeColor = (cl > 0 ? SKColor.clHarmful : SKColor.clBeneficial)
+            .withAlphaComponent(0.7)
         disc.lineWidth = 1.2
         node.addChild(disc)
 
