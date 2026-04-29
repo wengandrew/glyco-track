@@ -140,6 +140,32 @@ Use `@ObservedObject var entry: FoodLogEntry` (not `let`) in any view that displ
 
 There is **no `.xcdatamodeld` file**. The schema is defined programmatically in `GlycoTrack/Models/GlycoTrackManagedObjectModel.swift` to work around an Xcode 26 CDMFoundation crash. To add or rename an attribute, edit `GlycoTrackManagedObjectModel.swift` and the corresponding `FoodLogEntry+CoreDataProperties.swift` or `NutritionalProfile+CoreDataProperties.swift`. Soft-delete is via `isSoftDeleted` (not `isDeleted`, which conflicts with `NSManagedObject`).
 
+#### Schema-change policy: wipe-on-mismatch
+
+The programmatic model means **schema changes are not auto-migratable**. There's no `.xcdatamodel` for Core Data to diff against the persistent store; `NSPersistentContainer.loadPersistentStores` will fail with an incompatibility error (or, worse, succeed and silently corrupt) if the in-code schema drifts from what's on disk.
+
+**Current policy: any schema change wipes local data on the developer's device.** Acceptable today because (a) there's no paid Apple Developer Program account yet, so App Store distribution isn't possible; (b) the only "real" install is the user's sideloaded build, which already gets reinstalled weekly when the 7-day sideload cert expires; (c) the GI/USDA reference data re-seeds from JSON on a fresh store, and `FoodLogEntry` history is the only durable user data and is small enough to be re-loggable.
+
+**When to revisit:** the moment any of these change, this policy needs a real migration plan:
+- Paid Apple Developer Program account → TestFlight or App Store distribution
+- Multiple users with retained logs they care about
+- A schema change that's not purely additive (renames, deletes, type changes)
+
+**Checklist when changing the schema today:**
+1. Edit `GlycoTrackManagedObjectModel.swift` — add the `NSAttributeDescription` to the right entity, set `isOptional`, `attributeType`, `defaultValue`.
+2. Edit the corresponding `+CoreDataProperties.swift` so the Swift API matches.
+3. Bump nothing — there is no version number to bump, and there is no migration to write.
+4. Tell the user (or document in the PR) that the next build wipes their local store on first launch. The next launch after that re-seeds the reference databases automatically.
+5. If you're worried about losing logged entries, export them via the Debug tab first (or run a one-time migration script before the schema change lands).
+
+**When we eventually need real migrations,** the most likely path is:
+- Switch to a real `.xcdatamodeld` (assuming the Xcode 26 CDMFoundation bug is fixed by then)
+- Add `NSPersistentContainer` migration options: `NSMigratePersistentStoresAutomaticallyOption: true`, `NSInferMappingModelAutomaticallyOption: true`
+- Add a versioned model document with each schema change, or write `NSMappingModel`s for non-inferrable changes
+- Add a migration test (boot a known-old store, verify it migrates and reads correctly)
+
+Don't preemptively write any of that — adding it now without a forcing function would just be infrastructure to maintain. The wipe-on-change policy is the right default until real users with retained data exist.
+
 ### Reference databases
 
 Two JSON files are bundled as app resources and seeded into Core Data at first launch by `PersistenceController.seedNutritionalProfiles()`:
