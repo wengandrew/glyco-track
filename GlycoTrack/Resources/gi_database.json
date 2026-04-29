@@ -5809,5 +5809,29 @@
       "monkfruit",
       "monk fruit extract"
     ]
+  },
+  {
+    "name": "whole wheat spaghetti",
+    "gi": 37,
+    "aliases": [
+      "wholemeal spaghetti",
+      "wheat spaghetti"
+    ]
+  },
+  {
+    "name": "tomato sauce",
+    "gi": 38,
+    "aliases": [
+      "pasta sauce",
+      "marinara"
+    ]
+  },
+  {
+    "name": "honey wheat bread",
+    "gi": 72,
+    "aliases": [
+      "honey wheat",
+      "honey wheat loaf"
+    ]
   }
 ]
