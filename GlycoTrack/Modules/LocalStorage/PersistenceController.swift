@@ -6,7 +6,10 @@ final class PersistenceController {
 
     let container: NSPersistentContainer
 
-    private init(inMemory: Bool = false) {
+    /// `inMemory: true` is for tests — skips the persistent store on disk and
+    /// the auto-seed background task so callers can `await seedNutritionalProfiles()`
+    /// synchronously. Internal-not-private so test targets can reach it.
+    init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "GlycoTrack",
                                            managedObjectModel: .glycoTrackModel())
         if inMemory {
@@ -18,7 +21,9 @@ final class PersistenceController {
             }
         }
         container.viewContext.automaticallyMergesChangesFromParent = true
-        seedDatabaseIfNeeded()
+        if !inMemory {
+            seedDatabaseIfNeeded()
+        }
     }
 
     var context: NSManagedObjectContext { container.viewContext }
@@ -34,7 +39,8 @@ final class PersistenceController {
         }
     }
 
-    private func seedNutritionalProfiles() async {
+    /// Internal so test targets can `await` it after an in-memory init.
+    func seedNutritionalProfiles() async {
         let bgContext = container.newBackgroundContext()
 
         guard
