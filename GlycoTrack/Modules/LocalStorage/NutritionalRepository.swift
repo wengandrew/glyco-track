@@ -38,6 +38,30 @@ final class NutritionalRepository {
         let normalized = foodName.lowercased().trimmingCharacters(in: .whitespaces)
         guard !normalized.isEmpty else { return nil }
 
+        if let direct = matchDirect(normalized) {
+            return direct
+        }
+
+        // No direct hit on the full query — but the query might carry a
+        // "whole grain" / "brown" qualifier that the DB doesn't index by
+        // shape. "whole wheat spaghetti" doesn't exist as an entry, but
+        // stripping the qualifier resolves "spaghetti" to `white pasta`,
+        // and the promotion table swaps that for `whole wheat pasta`. Same
+        // for "brown jasmine rice" → falls back to brown rice when the
+        // exact shape isn't in the DB. Confidence is inherited from the
+        // inner match — the qualifier didn't weaken the signal.
+        let qualifier = Self.detectGrainQualifier(in: normalized)
+        if qualifier.hasAny, let inner = matchDirect(qualifier.stripped) {
+            let promoted = promote(profile: inner.profile, qualifier: qualifier) ?? inner.profile
+            return DirectMatch(profile: promoted, confidence: inner.confidence)
+        }
+
+        return nil
+    }
+
+    /// Standard T1 cascade on a single normalized query string. Does not
+    /// strip qualifiers — `findBestMatch` handles that as a fallback.
+    private func matchDirect(_ normalized: String) -> DirectMatch? {
         if let exact = fetchExact(normalized) {
             return DirectMatch(profile: exact, confidence: 0.95)
         }
@@ -68,6 +92,72 @@ final class NutritionalRepository {
         }
 
         return nil
+    }
+
+    // MARK: - Whole-grain / brown qualifier promotion
+
+    /// Qualifier prefixes that indicate the user wants the whole-grain
+    /// version of a refined-grain canonical entry. Order matters only for
+    /// the longest-match-first strip below; the set itself is unordered.
+    private static let wholeGrainQualifierPrefixes: [String] = [
+        "whole wheat ", "whole-wheat ",
+        "whole grain ", "whole-grain ",
+        "wholegrain ", "wholemeal ",
+    ]
+
+    /// Promotion table: stripped canonical → whole-grain or brown sibling.
+    /// Both keys and values are foodName as stored in NutritionalProfile
+    /// (lowercased for the lookup). New entries should be added when a new
+    /// refined↔whole-grain pair appears in the DB.
+    private static let wholeGrainPromotion: [String: String] = [
+        "white rice": "brown rice",
+        "white bread": "whole wheat bread",
+        "white pasta": "whole wheat pasta",
+        "white flour": "whole wheat flour",
+        "tortilla": "whole wheat tortilla",
+        "flour tortilla": "whole wheat tortilla",
+    ]
+
+    struct GrainQualifier {
+        let stripped: String
+        let hasWholeGrain: Bool
+        let hasBrown: Bool
+        var hasAny: Bool { hasWholeGrain || hasBrown }
+    }
+
+    /// Detects and strips a leading whole-grain or brown qualifier on the
+    /// query. "whole wheat spaghetti" → ("spaghetti", wholeGrain), "brown
+    /// rice" → ("rice", brown). Both qualifiers can stack ("brown whole
+    /// wheat …" — unusual but tolerated). Returns the original string when
+    /// no qualifier is present.
+    static func detectGrainQualifier(in normalized: String) -> GrainQualifier {
+        var s = normalized
+        var wg = false
+        var brown = false
+
+        // Strip whole-grain prefixes first (multi-word) so "whole grain
+        // brown rice" doesn't misfire on "brown".
+        for prefix in wholeGrainQualifierPrefixes where s.hasPrefix(prefix) {
+            s = String(s.dropFirst(prefix.count)).trimmingCharacters(in: .whitespaces)
+            wg = true
+            break
+        }
+        if s.hasPrefix("brown ") {
+            s = String(s.dropFirst("brown ".count)).trimmingCharacters(in: .whitespaces)
+            brown = true
+        }
+        return GrainQualifier(stripped: s, hasWholeGrain: wg, hasBrown: brown)
+    }
+
+    /// Returns the promoted profile when the inner match's canonical name
+    /// has a whole-grain / brown sibling in the DB. nil when no promotion
+    /// applies (qualifier was on a food without a sibling entry, e.g.
+    /// "brown jasmine rice" — fall back to the inner match unchanged).
+    private func promote(profile: NutritionalProfile, qualifier: GrainQualifier) -> NutritionalProfile? {
+        guard qualifier.hasAny else { return nil }
+        let key = profile.foodName.lowercased()
+        guard let promotedName = Self.wholeGrainPromotion[key] else { return nil }
+        return fetchExact(promotedName)
     }
 
     /// Tier 2: reverse-substring decomposition (Option B).
