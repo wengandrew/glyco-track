@@ -28,7 +28,12 @@ enum GLThresholdLevel {
     }
 }
 
-let dailyGLBudgetUI: Double = 100.0
+/// Convenience accessor for non-view code (used as a `Double` rather than a
+/// view-bound `@AppStorage`). For SwiftUI views that need to re-render when
+/// the user changes their budget, declare
+/// `@AppStorage(AppSettings.dailyGLBudgetKey) private var glBudget: Double = AppSettings.defaultDailyGLBudget`
+/// instead — this global is a snapshot at access time, not a reactive binding.
+var dailyGLBudgetUI: Double { AppSettings.dailyGLBudget }
 
 /// Maps a GL fraction (0–1+) to a gradient color.
 func glGradientColor(fraction: Double) -> Color {

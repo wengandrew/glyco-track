@@ -22,6 +22,11 @@ struct HomeTabView: View {
     @State private var selectedDate: Date = Calendar.current.startOfDay(for: Date())
     @State private var clPrototype: CLPrototype = .tugOfWar
     @State private var selectedEntry: FoodLogEntry?
+    @State private var showSettings: Bool = false
+
+    /// Reactive binding to the user's GL budget so the bucket / status chip
+    /// re-render when the value changes in Settings.
+    @AppStorage(AppSettings.dailyGLBudgetKey) private var glBudget: Double = AppSettings.defaultDailyGLBudget
 
     init(voiceCapture: VoiceCapture, logProcessor: FoodLogProcessor) {
         self.voiceCapture = voiceCapture
@@ -48,7 +53,7 @@ struct HomeTabView: View {
                         subtitle: "Carbs · diabetes risk",
                         accent: .glAccent,
                         icon: "drop.fill",
-                        trailing: { GLStatusLabel(total: totalGL, budget: dailyGLBudgetUI) }
+                        trailing: { GLStatusLabel(total: totalGL, budget: glBudget) }
                     ) {
                         dateNavigator
                         PhysicsBucketView(
@@ -99,8 +104,21 @@ struct HomeTabView: View {
                 .padding(.bottom, 24)
             }
             .navigationTitle(titleForNav)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        showSettings = true
+                    } label: {
+                        Image(systemName: "gearshape")
+                            .accessibilityLabel("Settings")
+                    }
+                }
+            }
             .sheet(item: $selectedEntry) { entry in
                 FoodEntryDetailSheet(entry: entry)
+            }
+            .sheet(isPresented: $showSettings) {
+                SettingsView()
             }
         }
         .onChange(of: selectedDate) { newDate in
@@ -371,13 +389,15 @@ extension Color {
 struct TodayEntrySummary: View {
     let entries: [FoodLogEntry]
 
+    @AppStorage(AppSettings.dailyGLBudgetKey) private var glBudget: Double = AppSettings.defaultDailyGLBudget
+
     private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
     private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
 
     var body: some View {
         HStack {
             StatChip(label: "Total GL", value: String(format: "%.1f", totalGL),
-                     color: glGradientColor(fraction: totalGL / dailyGLBudgetUI))
+                     color: glGradientColor(fraction: totalGL / glBudget))
             StatChip(label: "Net CL", value: String(format: "%+.2f", netCL),
                      color: netCL < 0 ? .green : .red)
             StatChip(label: "Foods", value: "\(entries.count)", color: .accentColor)

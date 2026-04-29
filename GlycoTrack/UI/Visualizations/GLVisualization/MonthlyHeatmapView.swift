@@ -97,8 +97,10 @@ struct DayCell: View {
     let date: Date
     let entries: [FoodLogEntry]
 
+    @AppStorage(AppSettings.dailyGLBudgetKey) private var glBudget: Double = AppSettings.defaultDailyGLBudget
+
     private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
-    private var fraction: Double { min(totalGL / dailyGLBudgetUI, 1.0) }
+    private var fraction: Double { min(totalGL / glBudget, 1.0) }
     private var isToday: Bool { Calendar.current.isDateInToday(date) }
 
     var body: some View {

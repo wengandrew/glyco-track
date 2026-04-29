@@ -13,6 +13,8 @@ struct PeriodSummaryView: View {
     /// to avoid division by zero.
     let daysInPeriod: Int?
 
+    @AppStorage(AppSettings.dailyGLBudgetKey) private var glBudget: Double = AppSettings.defaultDailyGLBudget
+
     init(title: String, entries: [FoodLogEntry], daysInPeriod: Int? = nil) {
         self.title = title
         self.entries = entries
@@ -44,7 +46,7 @@ struct PeriodSummaryView: View {
                 StatChip(
                     label: "Avg Daily GL",
                     value: String(format: "%.0f", avgDailyGL),
-                    color: glGradientColor(fraction: avgDailyGL / dailyGLBudgetUI)
+                    color: glGradientColor(fraction: avgDailyGL / glBudget)
                 )
                 StatChip(
                     label: "Total GL",
