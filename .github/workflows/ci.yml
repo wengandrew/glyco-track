@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: [develop, main]
+  pull_request:
+    branches: [develop, main]
+
+# Cancel older runs of the same PR/branch when a new push lands.
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  swift-test:
+    # Pure-Swift logic tests via SPM (Package.swift). Covers GIEngineCore,
+    # CLEngineCore, TranscriptParserCore. Fast and Linux-portable in
+    # principle; we run on macOS so we share the toolchain with the iOS job.
+    name: swift test (SPM)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show Swift version
+        run: swift --version
+
+      - name: Run SPM tests
+        run: swift test --parallel
+
+  ios-build:
+    # iOS Simulator build — verifies the iOS app target and widget compile.
+    # Once the matcher regression test target lands on develop, this job
+    # should be extended with `xcodebuild test` against
+    # `-destination 'platform=iOS Simulator,name=iPhone 16'` (or similar).
+    name: xcodebuild iOS Simulator build
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        # Pin to whatever Xcode the runner ships with by default. The
+        # project's deployment target is iOS 16, so any Xcode 15+ works.
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Install xcodegen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        # The pbxproj is committed, but regenerating from project.yml catches
+        # drift between the two.
+        run: xcodegen generate
+
+      - name: Build for iOS Simulator
+        run: |
+          xcodebuild \
+            -project GlycoTrack.xcodeproj \
+            -scheme GlycoTrack \
+            -configuration Debug \
+            -destination 'generic/platform=iOS Simulator' \
+            -skipMacroValidation \
+            build
