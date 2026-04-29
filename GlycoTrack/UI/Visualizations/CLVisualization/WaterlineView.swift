@@ -127,9 +127,11 @@ struct SceneKeyCL: Hashable {
 
 // MARK: - Scene
 
-final class WaterlineScene: SKScene {
+final class WaterlineScene: SKScene, SKPhysicsContactDelegate {
     private let entries: [FoodLogEntry]
     var onItemTapped: ((FoodLogEntry) -> Void)?
+
+    private let haptics = SceneHaptics()
 
     private let containerInset: CGFloat = 8
     /// Scale factor converting |CL| units to points² of emoji area.
@@ -164,11 +166,16 @@ final class WaterlineScene: SKScene {
         view.allowsTransparency = true
 
         physicsWorld.gravity = CGVector(dx: 0, dy: -6.0)
+        physicsWorld.contactDelegate = self
 
         buildContainer()
         drawWater()
         drawZeroLine()
         scheduleItemDrops()
+    }
+
+    func didBegin(_ contact: SKPhysicsContact) {
+        haptics.handleContact(contact)
     }
 
     private var containerRect: CGRect {
@@ -316,6 +323,10 @@ final class WaterlineScene: SKScene {
         // BOTH branches must set the mask explicitly — the default (0xFFFFFFFF) matches
         // every category, which leaks buoyancy onto items that should sink.
         body.categoryBitMask = (cl < 0) ? floatCategory : sinkCategory
+        // Enable contact callbacks so SceneHaptics fires on first wall touch.
+        // contactTestBitMask is independent of categoryBitMask (which the
+        // buoyancy logic above keys off), so this doesn't disturb sink/float.
+        body.contactTestBitMask = 0xFFFFFFFF
         // Floaters: gravity OFF so a small spring force can actually move them up
         // toward the waterline. Previous attempts with gravity-on + Archimedean lift
         // failed because the depth-scaled lift could not reliably overcome gravity

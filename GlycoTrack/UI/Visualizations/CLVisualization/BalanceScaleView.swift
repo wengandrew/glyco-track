@@ -128,12 +128,13 @@ private struct BalanceSceneHost: View {
 
 // MARK: - Scene
 
-final class BalanceScene: SKScene {
+final class BalanceScene: SKScene, SKPhysicsContactDelegate {
     private let entries: [FoodLogEntry]
     var onItemTapped: ((FoodLogEntry) -> Void)?
 
     private var beamNode: SKNode?
     private var nodeToEntry: [ObjectIdentifier: FoodLogEntry] = [:]
+    private let haptics = SceneHaptics()
 
     // Tuning
     private let areaPerCLUnit: CGFloat = 220
@@ -158,10 +159,15 @@ final class BalanceScene: SKScene {
 
         physicsWorld.gravity = CGVector(dx: 0, dy: -8.0)
         physicsWorld.speed = 1.0
+        physicsWorld.contactDelegate = self
 
         buildStand()
         buildBeamAndPlates()
         scheduleItemDrops()
+    }
+
+    func didBegin(_ contact: SKPhysicsContact) {
+        haptics.handleContact(contact)
     }
 
     // Positions (derived from scene size)
@@ -390,6 +396,8 @@ final class BalanceScene: SKScene {
         body.angularDamping = 0.5
         body.mass = max(0.15, magnitude * itemMassPerCL)
         body.allowsRotation = true
+        // Enable contact callbacks so SceneHaptics fires on first plate touch.
+        body.contactTestBitMask = 0xFFFFFFFF
         node.physicsBody = body
 
         nodeToEntry[ObjectIdentifier(node)] = entry
