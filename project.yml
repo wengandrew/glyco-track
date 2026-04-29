@@ -58,15 +58,27 @@ targets:
       properties: {}
 
   GlycoTrackTests:
+    # iOS XCTest bundle. Hosts only tests that need the iOS app target
+    # (NutritionalRepository, PersistenceController — anything that touches
+    # Core Data or @MainActor types). Pure-Swift engine tests live under
+    # Tests/GIEngineCoreTests / CLEngineCoreTests / TranscriptParserCoreTests
+    # and run via `swift test` against the SPM Package.swift targets — they
+    # use `@testable import GIEngineCore` etc. which aren't visible to the
+    # iOS app build.
     type: bundle.unit-test
     platform: iOS
     deploymentTarget: "16.0"
     sources:
-      - Tests/GIEngineCoreTests
-      - Tests/CLEngineCoreTests
+      - Tests/MatchingTests
+    resources:
+      # Both JSONs ship in the test bundle so PersistenceController's seed
+      # path (Bundle.main.url(forResource:)) finds them when running tests.
+      # The app target carries its own copies; this is intentional duplication.
+      - GlycoTrack/Resources/gi_database.json
+      - GlycoTrack/Resources/usda_nutrition.json
     dependencies:
       - target: GlycoTrack
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.glycotrack.tests
-        INFOPLIST_FILE: ""
+        GENERATE_INFOPLIST_FILE: YES

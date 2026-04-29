@@ -39,7 +39,6 @@
 		804D83DA123CD38186D70EE8 /* CLEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC319390AA669EE258FAD6F /* CLEngine.swift */; };
 		8752ED4DBEBBC618DAC73AE4 /* SummaryTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC98CA71D925406ACDA67295 /* SummaryTabView.swift */; };
 		87E30E1423D23F446A917C62 /* TugOfWarBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E872FBC247922AFD48D894E0 /* TugOfWarBarView.swift */; };
-		8A3D62A8EB05FA59517C1A5D /* GIEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 530E5917BF567A086E970F68 /* GIEngineTests.swift */; };
 		8D4D572E5D5FF46BE470D20F /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FAFBFFF587D6C5D88FF7C59 /* NotificationManager.swift */; };
 		8DE167AB3585707279F2E20F /* TranscriptParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3473895D984D30A720E75A /* TranscriptParser.swift */; };
 		9B5DFF21C781B47BB549A779 /* AboutTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D5632A1067440926BF4B /* AboutTabView.swift */; };
@@ -55,11 +54,11 @@
 		AF6E60B55D052923B8D08A9E /* LogTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97313B9C797857A9DBC2F462 /* LogTabView.swift */; };
 		B076FCA27DDFC7ECFBB6F792 /* VoiceCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA784CDE9FCC292E4B80263 /* VoiceCapture.swift */; };
 		C6ABC4E02105C1E68D1FB675 /* FoodEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CCD25037FC347FCF34DD6 /* FoodEmoji.swift */; };
+		CB15F2A5E2E57901736EBFB8 /* NutritionalRepositoryRegressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C49AC2B0AF9614FBD23DF6D /* NutritionalRepositoryRegressionTests.swift */; };
 		CBD927A2BB34C614106D5634 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B61B27E6D6C9ADE92E928E7 /* RecordButton.swift */; };
 		DA63E52FA18B99E8347E4BFD /* FoodLogProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3327A014C9B87AE78FAF29B4 /* FoodLogProcessor.swift */; };
 		DF7D2A9B939803522A97A911 /* FoodLogEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D923FFC3F1352123547E74 /* FoodLogEntry+CoreDataProperties.swift */; };
 		EB32167E33EDB53104ED047A /* WaterlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FE2BAD16F926DFCAABF71F /* WaterlineView.swift */; };
-		EFEC5E76D7399178E86EC047 /* CLEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A01D963993C173DCB3FDCA4 /* CLEngineTests.swift */; };
 		F0EFA312B13AFE888D07FC06 /* gi_database.json in Resources */ = {isa = PBXBuildFile; fileRef = F3A6E1677A79798237CFB545 /* gi_database.json */; };
 		FB454231AE125E83DD9D289E /* usda_nutrition.json in Resources */ = {isa = PBXBuildFile; fileRef = 93C58B72C496B16CA9474321 /* usda_nutrition.json */; };
 		FB46D371641D34F4BAB2C512 /* FoodEntryDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23018FEA9E10DA00AE3A54F0 /* FoodEntryDetailSheet.swift */; };
@@ -119,7 +118,6 @@
 		4C81FF29DB0DB6B3386701CC /* WeekTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekTabView.swift; sourceTree = "<group>"; };
 		4DFF15FD7B99E00160837027 /* FoodGraphic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodGraphic.swift; sourceTree = "<group>"; };
 		51938CF5F6DF886635DF3426 /* FoodLogEntry+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodLogEntry+CoreDataClass.swift"; sourceTree = "<group>"; };
-		530E5917BF567A086E970F68 /* GIEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIEngineTests.swift; sourceTree = "<group>"; };
 		543CE564CFB84AEB79200F10 /* FoodLogRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogRowView.swift; sourceTree = "<group>"; };
 		59395D21FE58801D6329E256 /* NutritionalProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NutritionalProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		5A1FFC9BAF159DD2432CE8FD /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
@@ -142,7 +140,7 @@
 		93C58B72C496B16CA9474321 /* usda_nutrition.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = usda_nutrition.json; sourceTree = "<group>"; };
 		97313B9C797857A9DBC2F462 /* LogTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTabView.swift; sourceTree = "<group>"; };
 		98285973C6FD6F59B009AB47 /* CLPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLPalette.swift; sourceTree = "<group>"; };
-		9A01D963993C173DCB3FDCA4 /* CLEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLEngineTests.swift; sourceTree = "<group>"; };
+		9C49AC2B0AF9614FBD23DF6D /* NutritionalRepositoryRegressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionalRepositoryRegressionTests.swift; sourceTree = "<group>"; };
 		9EE14268BE85E30C9C9AD8E6 /* MonthlyHeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyHeatmapView.swift; sourceTree = "<group>"; };
 		A1D3B3F5C4D80821160E5398 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		ABC65AD31C004BA65B554B9B /* SummaryGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryGenerator.swift; sourceTree = "<group>"; };
@@ -215,15 +213,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		1CCCB9A2628691F2031B2489 /* CLEngineCoreTests */ = {
-			isa = PBXGroup;
-			children = (
-				9A01D963993C173DCB3FDCA4 /* CLEngineTests.swift */,
-			);
-			name = CLEngineCoreTests;
-			path = Tests/CLEngineCoreTests;
-			sourceTree = "<group>";
-		};
 		26E4F6740B61E7DC36AAF4F5 /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +224,15 @@
 			);
 			name = Config;
 			path = GlycoTrack/Config;
+			sourceTree = "<group>";
+		};
+		27D7B4645EE752B7AAED0BF7 /* MatchingTests */ = {
+			isa = PBXGroup;
+			children = (
+				9C49AC2B0AF9614FBD23DF6D /* NutritionalRepositoryRegressionTests.swift */,
+			);
+			name = MatchingTests;
+			path = Tests/MatchingTests;
 			sourceTree = "<group>";
 		};
 		28C03B199C5E89F8003EEE65 /* NotificationManager */ = {
@@ -257,11 +255,10 @@
 		39823AAD632E9392A52B3E94 = {
 			isa = PBXGroup;
 			children = (
-				1CCCB9A2628691F2031B2489 /* CLEngineCoreTests */,
 				26E4F6740B61E7DC36AAF4F5 /* Config */,
-				56E978AE1632CE32B31B7D01 /* GIEngineCoreTests */,
 				4C011D1A6756146010FF7F6C /* GlycoTrack */,
 				57CEEC2E203299F5EBB31FBB /* GlycoTrackWidget */,
+				27D7B4645EE752B7AAED0BF7 /* MatchingTests */,
 				4425B4A495DC6820218F68CC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -327,15 +324,6 @@
 				F87E274EE5AB3E12CFC32258 /* GLVisualization */,
 			);
 			path = Visualizations;
-			sourceTree = "<group>";
-		};
-		56E978AE1632CE32B31B7D01 /* GIEngineCoreTests */ = {
-			isa = PBXGroup;
-			children = (
-				530E5917BF567A086E970F68 /* GIEngineTests.swift */,
-			);
-			name = GIEngineCoreTests;
-			path = Tests/GIEngineCoreTests;
 			sourceTree = "<group>";
 		};
 		57CEEC2E203299F5EBB31FBB /* GlycoTrackWidget */ = {
@@ -684,8 +672,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFEC5E76D7399178E86EC047 /* CLEngineTests.swift in Sources */,
-				8A3D62A8EB05FA59517C1A5D /* GIEngineTests.swift in Sources */,
+				CB15F2A5E2E57901736EBFB8 /* NutritionalRepositoryRegressionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,7 +696,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = "";
+				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -746,7 +733,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = "";
+				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
