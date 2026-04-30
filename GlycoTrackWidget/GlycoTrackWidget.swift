@@ -43,6 +43,13 @@ struct GlycoTrackWidget: Widget {
         }
         .configurationDisplayName("GlycoTrack")
         .description("Log food by voice and track today's GL progress.")
-        .supportedFamilies([.systemSmall, .systemMedium])
+        // accessory* families are iOS 16+ for Lock Screen and iOS 17+ for
+        // StandBy. The entry view branches on `widgetFamily` so each gets a
+        // layout sized for its constraints (monochrome on Lock Screen,
+        // ~58pt circle on accessoryCircular, etc.).
+        .supportedFamilies([
+            .systemSmall, .systemMedium,
+            .accessoryRectangular, .accessoryCircular, .accessoryInline
+        ])
     }
 }
