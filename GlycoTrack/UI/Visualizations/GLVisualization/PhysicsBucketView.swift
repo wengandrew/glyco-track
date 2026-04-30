@@ -12,7 +12,13 @@ struct PhysicsBucketView: View {
     /// Date this view represents. Changing this value forces a scene rebuild
     /// even if the entry IDs happen to overlap between days.
     let dateKey: Date?
-    let budget: Double = dailyGLBudgetUI
+
+    /// Reactive binding to the user's GL budget. Reading this in `body` makes
+    /// the view re-evaluate when Settings writes to UserDefaults; including
+    /// `budget` in `SceneKey` (below) then forces a host re-init so the bucket
+    /// geometry — `areaPerUnit` and the "78% fill at full budget" rule —
+    /// re-derives to match.
+    @AppStorage(AppSettings.dailyGLBudgetKey) private var budget: Double = AppSettings.defaultDailyGLBudget
 
     @State private var selectedEntry: FoodLogEntry?
     /// Bumped to force a rebuild without an input change (Replay button, tab
@@ -59,7 +65,8 @@ struct PhysicsBucketView: View {
                     dayKey: dayKey,
                     entryIDs: entryIDs,
                     width: geo.size.width,
-                    height: geo.size.height
+                    height: geo.size.height,
+                    budget: budget
                 )
                 ZStack {
                     BucketSceneHost(
@@ -158,6 +165,7 @@ private struct SceneKey: Hashable {
     let entryIDs: [UUID]
     let width: CGFloat
     let height: CGFloat
+    let budget: Double
 }
 
 struct GLStatusLabel: View {

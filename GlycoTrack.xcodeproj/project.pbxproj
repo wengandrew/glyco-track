@@ -23,6 +23,7 @@
 		414C04B785EC7D63A03EF6BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA893F988E91457F91A4E3BF /* Assets.xcassets */; };
 		478432404A32D39AB16C3824 /* GlycoTrackWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E299D37D943223074C0464 /* GlycoTrackWidgetEntryView.swift */; };
 		47DF8C211D4056AD241C73C4 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1FFC9BAF159DD2432CE8FD /* APIKey.swift */; };
+		4B8A74359D0BC603BFE227EE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19884C5A1F294CFAF5B9377E /* SettingsView.swift */; };
 		4BBADB6F44367C378B4CFA1E /* FoodMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C16B19721941F485C06001 /* FoodMatcher.swift */; };
 		4DEBE8B1F01F6B2FED02B67F /* EntryRefiner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598246F40ECB3227E460D94B /* EntryRefiner.swift */; };
 		541CADD963F1A6CF84ED8EE6 /* SummaryGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC65AD31C004BA65B554B9B /* SummaryGenerator.swift */; };
@@ -43,6 +44,7 @@
 		87E30E1423D23F446A917C62 /* TugOfWarBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E872FBC247922AFD48D894E0 /* TugOfWarBarView.swift */; };
 		8D4D572E5D5FF46BE470D20F /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FAFBFFF587D6C5D88FF7C59 /* NotificationManager.swift */; };
 		8DE167AB3585707279F2E20F /* TranscriptParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3473895D984D30A720E75A /* TranscriptParser.swift */; };
+		9491AED8AF3A2B58D9EF3E99 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5C279391B47DE4370E1D1E /* AppSettings.swift */; };
 		9B5DFF21C781B47BB549A779 /* AboutTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3D5632A1067440926BF4B /* AboutTabView.swift */; };
 		9C86560AAEE898D9CDD72E79 /* WeeklyRiverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3189DE380188C47D779FEAD /* WeeklyRiverView.swift */; };
 		A0D08903B4672E77482B3F08 /* MonthTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA271AA762FA671A084415B /* MonthTabView.swift */; };
@@ -110,11 +112,13 @@
 		0FEDAD6172CAF0ACDF326FB5 /* BuildInfo.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildInfo.generated.swift; sourceTree = "<group>"; };
 		15FE2BAD16F926DFCAABF71F /* WaterlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterlineView.swift; sourceTree = "<group>"; };
 		17D923FFC3F1352123547E74 /* FoodLogEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodLogEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		19884C5A1F294CFAF5B9377E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1C1D2709199DB48FFDDC1551 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		23018FEA9E10DA00AE3A54F0 /* FoodEntryDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodEntryDetailSheet.swift; sourceTree = "<group>"; };
 		25F3D5632A1067440926BF4B /* AboutTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTabView.swift; sourceTree = "<group>"; };
 		2A08955505DB5680BD34ED5F /* GlycoTrackTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GlycoTrackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A10769B1466E35CD89B88F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		2B5C279391B47DE4370E1D1E /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		3327A014C9B87AE78FAF29B4 /* FoodLogProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogProcessor.swift; sourceTree = "<group>"; };
 		3EFFE9E12E7B018C5B61AD03 /* CoreDataIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataIdentifiable.swift; sourceTree = "<group>"; };
 		4C263514B81487DA19F869F3 /* food_emoji_map.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = food_emoji_map.json; sourceTree = "<group>"; };
@@ -173,6 +177,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		008BF44D1596CF8F670C753A /* SettingsTab */ = {
+			isa = PBXGroup;
+			children = (
+				19884C5A1F294CFAF5B9377E /* SettingsView.swift */,
+			);
+			path = SettingsTab;
+			sourceTree = "<group>";
+		};
 		011554621AC07C4065FA6C6E /* SummaryTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -412,6 +424,7 @@
 				30039DD6FA24355C9583C606 /* HomeTab */,
 				85EFEA01B6A4A13122D425E9 /* LogTab */,
 				53B768E866AB79AFE345AB8E /* MonthTab */,
+				008BF44D1596CF8F670C753A /* SettingsTab */,
 				011554621AC07C4065FA6C6E /* SummaryTab */,
 				5B5B97014145D01313A29F3D /* WeekTab */,
 			);
@@ -426,6 +439,14 @@
 				A1D3B3F5C4D80821160E5398 /* PersistenceController.swift */,
 			);
 			path = LocalStorage;
+			sourceTree = "<group>";
+		};
+		B75FC03D2B10EF616C3EBFAD /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				2B5C279391B47DE4370E1D1E /* AppSettings.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		C43FE1E0D54A2C9224B230B0 /* Theme */ = {
@@ -447,6 +468,7 @@
 				AD0D3FF4826E401D2E54F776 /* LocalStorage */,
 				D4233448CE2F22C1D05AA497 /* Matching */,
 				28C03B199C5E89F8003EEE65 /* NotificationManager */,
+				B75FC03D2B10EF616C3EBFAD /* Settings */,
 				7C86535619DB63F407705911 /* SummaryGenerator */,
 				8415DC493B77342D6DFCE39D /* TranscriptParser */,
 				7FC8FB7AE2CC0000D95EE7EA /* VoiceCapture */,
@@ -634,6 +656,7 @@
 				62AA37B27A1E46DBC2EACEF2 /* AliasIndex.swift in Sources */,
 				110044A56CED7B5CD2A92F48 /* AppDelegate.swift in Sources */,
 				202785D3E83C239051A74580 /* AppInfo.swift in Sources */,
+				9491AED8AF3A2B58D9EF3E99 /* AppSettings.swift in Sources */,
 				1D48FDE7367ECA42973C7886 /* BalanceScaleView.swift in Sources */,
 				A608B1F7399369772FD1344B /* BuildInfo.generated.swift in Sources */,
 				804D83DA123CD38186D70EE8 /* CLEngine.swift in Sources */,
@@ -672,6 +695,7 @@
 				CBD927A2BB34C614106D5634 /* RecordButton.swift in Sources */,
 				A2F0B85F167633430502507F /* RootTabView.swift in Sources */,
 				FB71C7ACDC1E52D738B13775 /* SceneHaptics.swift in Sources */,
+				4B8A74359D0BC603BFE227EE /* SettingsView.swift in Sources */,
 				541CADD963F1A6CF84ED8EE6 /* SummaryGenerator.swift in Sources */,
 				8752ED4DBEBBC618DAC73AE4 /* SummaryTabView.swift in Sources */,
 				8DE167AB3585707279F2E20F /* TranscriptParser.swift in Sources */,
