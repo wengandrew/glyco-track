@@ -129,9 +129,7 @@ private struct BalanceSceneHost: View {
     private var summaryLabel: String {
         if entries.isEmpty { return "Balance scale. No foods logged." }
         let direction: String
-        if abs(netCL) < 0.05 { direction = "balanced" }
-        else if netCL < 0 { direction = "tipped beneficial" }
-        else { direction = "tipped harmful" }
+        if abs(netCL) < 0.05 { direction = "balanced" } else if netCL < 0 { direction = "tipped beneficial" } else { direction = "tipped harmful" }
         return "Balance scale. Harmful side \(String(format: "%.1f", harmfulSum)) CL, beneficial side \(String(format: "%.1f", beneficialSum)) CL. Net \(String(format: "%+.1f", netCL)), \(direction)."
     }
 

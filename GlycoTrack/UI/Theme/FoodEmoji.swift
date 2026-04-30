@@ -186,7 +186,7 @@ enum FoodEmoji {
         ("curry", "🍛"),
 
         // 11. Misc
-        ("fries", "🍟"), ("chip", "🍟"),
+        ("fries", "🍟"), ("chip", "🍟")
     ]
 
     private static func keyword(for text: String) -> String? {

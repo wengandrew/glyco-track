@@ -9,6 +9,11 @@ final class FoodLogRepository {
         self.context = context
     }
 
+    // FoodLogEntry has 11 distinct fields a caller has to specify on creation.
+    // Collapsing them into a parameter struct would just move the list one
+    // layer in — every caller still has to fill every field. Worth revisiting
+    // if the entry grows past ~12 fields or if more than two callers emerge.
+    // swiftlint:disable:next function_parameter_count
     func create(
         rawTranscript: String,
         foodDescription: String,

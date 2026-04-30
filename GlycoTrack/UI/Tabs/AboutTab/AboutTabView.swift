@@ -1,3 +1,10 @@
+// swiftlint:disable line_length
+//
+// AboutTabView is mostly multi-paragraph educational copy inside `Text("""…""")`
+// blocks. Reflowing those at 160 chars would just insert mid-sentence line
+// breaks the reader doesn't see anyway — the visible width is whatever
+// SwiftUI's layout engine decides at runtime. Disable file-wide.
+
 import SwiftUI
 
 struct AboutTabView: View {

@@ -102,7 +102,7 @@ final class NutritionalRepository {
     private static let wholeGrainQualifierPrefixes: [String] = [
         "whole wheat ", "whole-wheat ",
         "whole grain ", "whole-grain ",
-        "wholegrain ", "wholemeal ",
+        "wholegrain ", "wholemeal "
     ]
 
     /// Promotion table: stripped canonical → whole-grain or brown sibling.
@@ -115,7 +115,7 @@ final class NutritionalRepository {
         "white pasta": "whole wheat pasta",
         "white flour": "whole wheat flour",
         "tortilla": "whole wheat tortilla",
-        "flour tortilla": "whole wheat tortilla",
+        "flour tortilla": "whole wheat tortilla"
     ]
 
     struct GrainQualifier {
@@ -322,7 +322,7 @@ final class NutritionalRepository {
     private static let prepMethodWords: Set<String> = [
         "grilled", "fried", "deep-fried", "baked", "steamed", "boiled",
         "raw", "roasted", "smoked", "sauteed", "sautéed", "poached",
-        "broiled", "stewed", "braised", "pan-fried", "stir-fried",
+        "broiled", "stewed", "braised", "pan-fried", "stir-fried"
     ]
 
     private static func prepMethodTokens(in name: String) -> Set<String> {

@@ -113,9 +113,7 @@ private struct WaterlineSceneHost: View {
     private var summaryLabel: String {
         if entries.isEmpty { return "Waterline tank. No foods logged." }
         let direction: String
-        if abs(netCL) < 0.05 { direction = "near zero" }
-        else if netCL < 0 { direction = "net beneficial" }
-        else { direction = "net harmful" }
+        if abs(netCL) < 0.05 { direction = "near zero" } else if netCL < 0 { direction = "net beneficial" } else { direction = "net harmful" }
         return "Waterline tank. Net CL \(String(format: "%+.1f", netCL)), \(direction)."
     }
 

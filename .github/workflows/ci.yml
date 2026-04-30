@@ -12,6 +12,27 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  lint:
+    # SwiftLint with the project's `.swiftlint.yml` config. Today's config is
+    # tuned so develop is at zero errors and ~8 force_unwrapping warnings —
+    # the warnings annotate but don't block. Errors block. Configured in
+    # `.swiftlint.yml`; rule rationale lives there.
+    name: swiftlint
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: Show SwiftLint version
+        run: swiftlint version
+
+      - name: Run SwiftLint
+        # No `--strict` — warnings are intentional under our config (e.g.
+        # force_unwrapping is warning-level per PLAN C.13). Errors block.
+        run: swiftlint --reporter github-actions-logging
+
   swift-test:
     # Pure-Swift logic tests via SPM (Package.swift). Covers GIEngineCore,
     # CLEngineCore, TranscriptParserCore. Fast and Linux-portable in

@@ -127,4 +127,3 @@ struct DayCell: View {
         .aspectRatio(1, contentMode: .fit)
     }
 }
-

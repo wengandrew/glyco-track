@@ -1,0 +1,111 @@
+# SwiftLint config for GlycoTrack.
+#
+# Intentionally minimal — PLAN C.13 named four rules, those are the ones we
+# actually care about right now:
+#
+#   - force_unwrapping (warning)
+#   - line_length
+#   - function_body_length
+#   - large_tuple
+#
+# Most default rules are disabled to avoid a wall-of-warnings on day one
+# that nobody reads. Add new rules deliberately, with thresholds that match
+# what we actually want enforced — not whatever SwiftLint's defaults are.
+#
+# Run locally: `swiftlint` from the repo root.
+# CI runs the same binary; see `.github/workflows/ci.yml`.
+# Rule docs: https://realm.github.io/SwiftLint/rule-directory.html
+
+included:
+  - GlycoTrack
+  - GlycoTrackWidget
+  - Sources
+  - Tests
+
+excluded:
+  - .build
+  - build
+  - DerivedData
+  - .claude
+  - GlycoTrack.xcodeproj
+  - scripts
+  # Regenerated on every build by inject_build_info.sh.
+  - GlycoTrack/Config/BuildInfo.generated.swift
+
+# Default-on rules we don't want enforced. Each entry is here for a
+# specific reason — don't disable casually.
+disabled_rules:
+  # Trailing closures in SwiftUI .toolbar/.sheet/.accessibility chains are
+  # idiomatic; named-argument form would obscure intent.
+  - multiple_closures_with_trailing_closure
+  # We use TODO/FIXME in code as honest signposts; PRs and PLAN.md track
+  # follow-up work, not the linter.
+  - todo
+  # Triggers on aligned dictionary literals (DebugTabView's value list).
+  # The alignment is a deliberate readability choice.
+  - colon
+  # Too aggressive for math variables — `let dx = ...`, `let cl = ...`,
+  # `let i = ...` are all fine in context. Maintaining a long excludes-list
+  # is more churn than it's worth.
+  - identifier_name
+  # SwiftUI view bodies legitimately produce deep nesting; we'd rather see
+  # type-body-length flag a real problem than a `Group { VStack { … }}`
+  # tower's nesting depth flag a non-problem.
+  - nesting
+  # `for x in xs { if cond { … } }` is sometimes clearer than the equivalent
+  # `for x in xs where cond { … }` — especially with multi-condition guards
+  # or when the loop body is more than one line.
+  - for_where
+  # We use file-level disable comments (`// swiftlint:disable line_length`)
+  # at the top of files where long-line strings are intentional. The blanket
+  # form is more readable than peppering each long line with `:next`.
+  - blanket_disable_command
+
+# PLAN C.13 rules we want even though they're off by default.
+opt_in_rules:
+  - force_unwrapping
+
+# --- Tuning -----------------------------------------------------------------
+
+# `line_length` accommodates SwiftUI's wide chains and the long body strings
+# in AboutTabView. Anything over 220 is genuinely too long.
+line_length:
+  warning: 160
+  error: 220
+  ignores_urls: true
+  ignores_comments: true
+  ignores_function_declarations: true
+  ignores_interpolated_strings: true
+
+# Default function_body_length warns at 50 — many of our SwiftUI view
+# bodies and SKScene factories run longer for legitimate reasons. Bump
+# warning to 100 so it catches actual sprawl, not tasteful long views.
+function_body_length:
+  warning: 100
+  error: 200
+
+type_body_length:
+  warning: 500
+  error: 800
+
+file_length:
+  warning: 800
+  error: 1200
+  ignore_comment_only_lines: true
+
+# >3-arity tuples should probably be a struct. Hard error at 4+ — those
+# always read better named.
+large_tuple:
+  warning: 3
+  error: 4
+
+# Force-unwrap is warning-only, per PLAN C.13. Use a one-line exemption
+# (`// swiftlint:disable:next force_unwrapping`) for the rare necessary case.
+force_unwrapping:
+  severity: warning
+
+cyclomatic_complexity:
+  warning: 15
+  error: 30
+
+reporter: "xcode"
