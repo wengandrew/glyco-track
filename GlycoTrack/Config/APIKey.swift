@@ -12,8 +12,7 @@ enum APIKey {
     /// Raw key as configured. Whitespace is trimmed because the xcconfig
     /// pipeline preserves any trailing newline. Empty string means missing.
     static var claude: String {
-        let raw = Bundle.main.infoDictionary?["CLAUDE_API_KEY"] as? String ?? ""
-        return raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        BundleConfig.string("CLAUDE_API_KEY", trimmed: true)
     }
 
     /// True when a non-empty key is configured. Use this to gate Claude-backed
