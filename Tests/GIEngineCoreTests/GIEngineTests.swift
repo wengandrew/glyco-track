@@ -19,7 +19,7 @@ final class GIEngineTests: XCTestCase {
             GIRecord(name: "eggs", gi: 0, aliases: ["egg", "scrambled eggs"]),
             GIRecord(name: "butter", gi: 0, aliases: []),
             GIRecord(name: "brown rice", gi: 50, aliases: ["wholegrain rice"]),
-            GIRecord(name: "glucose", gi: 100, aliases: ["dextrose"]),
+            GIRecord(name: "glucose", gi: 100, aliases: ["dextrose"])
         ]
         database = GIDatabase(records: records)
         engine = GIEngine(database: database)

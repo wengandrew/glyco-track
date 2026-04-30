@@ -1,3 +1,12 @@
+// swiftlint:disable line_length
+//
+// The system prompts in this file are intentional walls of text — both
+// the rules block and the few-shot examples are calibrated together as a
+// unit, and reflowing them would break the JSON layout of the examples.
+// Wrapping them at 220 chars would obscure the contract more than it'd
+// help any reader. Disable line_length file-wide here, not in
+// .swiftlint.yml, so the choice is visible at the call site.
+
 import Foundation
 
 // iOS app target wrapper — mirrors TranscriptParserCore SPM module.

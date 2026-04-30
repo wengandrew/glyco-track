@@ -131,7 +131,7 @@ struct DebugTabView: View {
                 "computedCL":         e.computedCL,
                 "isEdited":           e.isEdited,
                 "isSoftDeleted":      e.isSoftDeleted,
-                "nutritionalProfile": e.nutritionalProfile?.foodName ?? "nil",
+                "nutritionalProfile": e.nutritionalProfile?.foodName ?? "nil"
             ]
         }
 
@@ -147,7 +147,7 @@ struct DebugTabView: View {
                 "pufaPer100g":         p.pufaPer100g,
                 "mufaPer100g":         p.mufaPer100g,
                 "giSource":            p.giSource,
-                "nutritionSource":     p.nutritionSource,
+                "nutritionSource":     p.nutritionSource
             ]
         }
 

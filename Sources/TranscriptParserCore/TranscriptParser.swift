@@ -1,3 +1,8 @@
+// swiftlint:disable line_length
+//
+// The system prompts in this file are intentional walls of text — see the
+// matching note in `GlycoTrack/Modules/TranscriptParser/TranscriptParser.swift`.
+
 import Foundation
 
 public struct ParsedFood: Codable, Equatable {
