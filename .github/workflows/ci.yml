@@ -27,12 +27,12 @@ jobs:
       - name: Run SPM tests
         run: swift test --parallel
 
-  ios-build:
-    # iOS Simulator build — verifies the iOS app target and widget compile.
-    # Once the matcher regression test target lands on develop, this job
-    # should be extended with `xcodebuild test` against
-    # `-destination 'platform=iOS Simulator,name=iPhone 16'` (or similar).
-    name: xcodebuild iOS Simulator build
+  ios-build-and-test:
+    # iOS Simulator build + the matcher regression test bundle. The iOS
+    # XCTest target (GlycoTrackTests) hosts the suite that exercises
+    # NutritionalRepository against a real in-memory Core Data store seeded
+    # from the bundled JSONs — see Tests/MatchingTests/.
+    name: xcodebuild iOS Simulator
     runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
@@ -53,6 +53,23 @@ jobs:
         # drift between the two.
         run: xcodegen generate
 
+      - name: Pick simulator destination
+        # Pull the first available iPhone simulator off the runner so we
+        # don't hardcode a model name that may rotate out of the macos-15
+        # image (e.g. "iPhone 16" became "iPhone 17" on this runner image).
+        id: sim
+        run: |
+          NAME=$(xcrun simctl list devices available 2>/dev/null \
+            | grep -Eo 'iPhone [0-9]+( Pro)?( Max)?' \
+            | head -n1)
+          if [ -z "$NAME" ]; then
+            echo "No iPhone simulator available on this runner" >&2
+            xcrun simctl list devices available
+            exit 1
+          fi
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          echo "Using simulator: $NAME"
+
       - name: Build for iOS Simulator
         run: |
           xcodebuild \
@@ -62,3 +79,15 @@ jobs:
             -destination 'generic/platform=iOS Simulator' \
             -skipMacroValidation \
             build
+
+      - name: Run iOS tests
+        # Boots the simulator and runs the GlycoTrackTests XCTest bundle —
+        # currently the matcher regression suite (12 tests).
+        run: |
+          xcodebuild \
+            -project GlycoTrack.xcodeproj \
+            -scheme GlycoTrack \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,name=${{ steps.sim.outputs.name }}" \
+            -skipMacroValidation \
+            test
