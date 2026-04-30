@@ -98,17 +98,48 @@ struct WaterlineView: View {
 /// The parent uses `.id(SceneKeyCL)` on this view — see `PhysicsBucketView` for rationale.
 private struct WaterlineSceneHost: View {
     @State private var scene: WaterlineScene
+    let entries: [FoodLogEntry]
 
     init(entries: [FoodLogEntry], size: CGSize, onTap: @escaping (FoodLogEntry) -> Void) {
         let s = WaterlineScene(size: size, entries: entries)
         s.scaleMode = .resizeFill
         s.onItemTapped = onTap
         _scene = State(initialValue: s)
+        self.entries = entries
+    }
+
+    private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
+
+    private var summaryLabel: String {
+        if entries.isEmpty { return "Waterline tank. No foods logged." }
+        let direction: String
+        if abs(netCL) < 0.05 { direction = "near zero" }
+        else if netCL < 0 { direction = "net beneficial" }
+        else { direction = "net harmful" }
+        return "Waterline tank. Net CL \(String(format: "%+.1f", netCL)), \(direction)."
     }
 
     var body: some View {
         SpriteView(scene: scene, options: [.allowsTransparency])
             .background(Color.clear)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(summaryLabel)
+            .accessibilityChildren {
+                ForEach(entries, id: \.objectID) { entry in
+                    Text(itemLabel(for: entry))
+                        .accessibilityLabel(itemLabel(for: entry))
+                }
+            }
+    }
+
+    /// Beneficial CL items rise to the surface, harmful ones sink — the
+    /// readout calls out which so a VoiceOver swipe through the tank
+    /// preserves the same semantic encoding the visual gives sighted users.
+    private func itemLabel(for entry: FoodLogEntry) -> String {
+        let name = entry.referenceFood ?? entry.foodDescription
+        let cl = entry.computedCL
+        let role = cl > 0.05 ? "sinks, harmful" : (cl < -0.05 ? "floats, beneficial" : "neutral")
+        return "\(name), CL \(String(format: "%+.1f", cl)), \(role)"
     }
 }
 
