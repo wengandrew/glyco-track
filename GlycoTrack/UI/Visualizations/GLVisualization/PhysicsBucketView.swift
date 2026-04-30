@@ -181,10 +181,12 @@ struct GLStatusLabel: View {
 
 // MARK: - SpriteKit Scene
 
-final class BucketScene: SKScene {
+final class BucketScene: SKScene, SKPhysicsContactDelegate {
     private let entries: [FoodLogEntry]
     private let budget: Double
     var onBubbleTapped: ((FoodLogEntry) -> Void)?
+
+    private let haptics = SceneHaptics()
 
     // Bucket geometry as fractions of scene size.
     private let bucketWidthFrac: CGFloat = 0.82
@@ -221,9 +223,14 @@ final class BucketScene: SKScene {
 
         physicsWorld.gravity = CGVector(dx: 0, dy: -9.0)
         physicsWorld.speed = 1.0
+        physicsWorld.contactDelegate = self
 
         buildBucket()
         scheduleBubbleDrops()
+    }
+
+    func didBegin(_ contact: SKPhysicsContact) {
+        haptics.handleContact(contact)
     }
 
     private func buildBucket() {
@@ -332,6 +339,10 @@ final class BucketScene: SKScene {
         body.angularDamping = 0.5
         body.mass = max(0.1, CGFloat(entry.computedGL) * 0.04)
         body.allowsRotation = true
+        // Enable contact callbacks (default mask is 0). 0xFFFFFFFF matches
+        // every category — we don't need granularity here, just "this body
+        // touched something".
+        body.contactTestBitMask = 0xFFFFFFFF
         node.physicsBody = body
 
         nodeToEntry[ObjectIdentifier(node)] = entry

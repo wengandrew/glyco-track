@@ -64,6 +64,7 @@
 		F0EFA312B13AFE888D07FC06 /* gi_database.json in Resources */ = {isa = PBXBuildFile; fileRef = F3A6E1677A79798237CFB545 /* gi_database.json */; };
 		FB454231AE125E83DD9D289E /* usda_nutrition.json in Resources */ = {isa = PBXBuildFile; fileRef = 93C58B72C496B16CA9474321 /* usda_nutrition.json */; };
 		FB46D371641D34F4BAB2C512 /* FoodEntryDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23018FEA9E10DA00AE3A54F0 /* FoodEntryDetailSheet.swift */; };
+		FB71C7ACDC1E52D738B13775 /* SceneHaptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947F0836C6D9B39CB6E6D8B6 /* SceneHaptics.swift */; };
 		FDAF173A39DFC255AD53B092 /* NutritionalProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59395D21FE58801D6329E256 /* NutritionalProfile+CoreDataProperties.swift */; };
 		FFB06BADA9A57D4B77A32E83 /* GlycoTrackManagedObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD13817AA8357C13A945A37D /* GlycoTrackManagedObjectModel.swift */; };
 /* End PBXBuildFile section */
@@ -142,6 +143,7 @@
 		8BB625239657C5BDAE0A0CA5 /* AliasIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasIndex.swift; sourceTree = "<group>"; };
 		8F3473895D984D30A720E75A /* TranscriptParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptParser.swift; sourceTree = "<group>"; };
 		93C58B72C496B16CA9474321 /* usda_nutrition.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = usda_nutrition.json; sourceTree = "<group>"; };
+		947F0836C6D9B39CB6E6D8B6 /* SceneHaptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneHaptics.swift; sourceTree = "<group>"; };
 		97313B9C797857A9DBC2F462 /* LogTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTabView.swift; sourceTree = "<group>"; };
 		98285973C6FD6F59B009AB47 /* CLPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLPalette.swift; sourceTree = "<group>"; };
 		9C49AC2B0AF9614FBD23DF6D /* NutritionalRepositoryRegressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionalRepositoryRegressionTests.swift; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 			isa = PBXGroup;
 			children = (
 				BF7A560C4BA26D536A7CDCCA /* QuadrantPlotView.swift */,
+				947F0836C6D9B39CB6E6D8B6 /* SceneHaptics.swift */,
 				C978FCA7B0AB262DB4B600E1 /* CLVisualization */,
 				F87E274EE5AB3E12CFC32258 /* GLVisualization */,
 			);
@@ -680,6 +683,7 @@
 				0D0BF3101ED86D94884B99DF /* QuadrantPlotView.swift in Sources */,
 				CBD927A2BB34C614106D5634 /* RecordButton.swift in Sources */,
 				A2F0B85F167633430502507F /* RootTabView.swift in Sources */,
+				FB71C7ACDC1E52D738B13775 /* SceneHaptics.swift in Sources */,
 				4B8A74359D0BC603BFE227EE /* SettingsView.swift in Sources */,
 				541CADD963F1A6CF84ED8EE6 /* SummaryGenerator.swift in Sources */,
 				8752ED4DBEBBC618DAC73AE4 /* SummaryTabView.swift in Sources */,
