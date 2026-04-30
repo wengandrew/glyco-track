@@ -5,12 +5,23 @@ import SwiftUI
 /// that opens `EditEntryView`.
 struct FoodEntryDetailSheet: View {
     @ObservedObject var entry: FoodLogEntry
+    @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) private var dismiss
 
     @State private var showEdit: Bool = false
+    @State private var showPicker: Bool = false
 
     private var glLevel: GLThresholdLevel { GLThresholdLevel.from(gl: entry.computedGL) }
     private var clIsBeneficial: Bool { entry.computedCL < 0 }
+
+    /// True for any entry whose match the matcher itself flagged as imperfect:
+    /// unrecognized (T5) or any tier with confidence below 0.70. Drives the
+    /// "Refine" toolbar button so high-confidence direct hits don't clutter
+    /// the toolbar with an option that almost no user would reach for.
+    private var canRefine: Bool {
+        entry.parsingMethod == MatchTier.unrecognized.rawValue
+            || entry.confidenceScore < 0.70
+    }
 
     private var timestampText: String {
         guard let ts = entry.timestamp else { return "" }
@@ -55,13 +66,39 @@ struct FoodEntryDetailSheet: View {
                     Button("Done") { dismiss() }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Edit") { showEdit = true }
+                    Menu {
+                        Button {
+                            showEdit = true
+                        } label: {
+                            Label("Edit details", systemImage: "pencil")
+                        }
+                        if canRefine {
+                            Button {
+                                showPicker = true
+                            } label: {
+                                Label("Refine match", systemImage: "wand.and.stars")
+                            }
+                        }
+                    } label: {
+                        // Single trailing button collapses Edit + Refine when
+                        // both are available, so the toolbar stays calm on a
+                        // narrow detail sheet. Falls back to a plain Edit
+                        // glyph + tap-to-menu for high-confidence rows.
+                        Image(systemName: "ellipsis.circle")
+                            .accessibilityLabel("More actions")
+                    }
                 }
             }
             .sheet(isPresented: $showEdit) {
                 NavigationStack {
                     EditEntryView(entry: entry)
                 }
+            }
+            .sheet(isPresented: $showPicker) {
+                FoodPickerView { profile in
+                    EntryRefiner.refine(entry: entry, to: profile, context: context)
+                }
+                .environment(\.managedObjectContext, context)
             }
         }
     }
