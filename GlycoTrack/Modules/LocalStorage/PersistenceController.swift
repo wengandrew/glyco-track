@@ -1,5 +1,6 @@
 import CoreData
 import Foundation
+import os
 
 final class PersistenceController {
     static let shared = PersistenceController()
@@ -39,10 +40,20 @@ final class PersistenceController {
         }
     }
 
+    /// Number of profiles to insert per save. Saving in batches (and resetting
+    /// the context between batches) keeps the row-buffer the bg context holds
+    /// bounded — at full ~7,793-USDA scale a single save was projected to peak
+    /// well into hundreds of MB. At the current ~1,150 rows it's overkill but
+    /// cheap, and forward-compatible with the planned USDA expansion (PLAN A.1).
+    private static let seedBatchSize = 500
+
     /// Internal so test targets can `await` it after an in-memory init.
     func seedNutritionalProfiles() async {
-        let bgContext = container.newBackgroundContext()
+        let signpost = OSSignposter(subsystem: "com.glycotrack.app", category: "coreData")
+        let logger = Logger(subsystem: "com.glycotrack.app", category: "coreData")
+        let overall = signpost.beginInterval("seed", id: signpost.makeSignpostID())
 
+        let loadStart = Date()
         guard
             let giURL = Bundle.main.url(forResource: "gi_database", withExtension: "json"),
             let usdaURL = Bundle.main.url(forResource: "usda_nutrition", withExtension: "json"),
@@ -50,9 +61,22 @@ final class PersistenceController {
             let usdaData = try? Data(contentsOf: usdaURL),
             let giEntries = try? JSONDecoder().decode([GIEntry].self, from: giData),
             let usdaEntries = try? JSONDecoder().decode([USDAEntry].self, from: usdaData)
-        else { return }
+        else {
+            signpost.endInterval("seed", overall)
+            logger.error("Seed bailed: missing or unreadable JSON resources")
+            return
+        }
+        let loadMs = Date().timeIntervalSince(loadStart) * 1000
 
         let usdaMap = Dictionary(usdaEntries.map { ($0.name.lowercased(), $0) }, uniquingKeysWith: { a, _ in a })
+        let giNames = Set(giEntries.map { $0.name.lowercased() })
+
+        let bgContext = container.newBackgroundContext()
+        // Avoid undo-stack growth under bulk inserts. We never undo the seed.
+        bgContext.undoManager = nil
+
+        let insertStart = Date()
+        var inserted = 0
 
         bgContext.performAndWait {
             for gi in giEntries {
@@ -70,10 +94,14 @@ final class PersistenceController {
                 profile.solubleFiberPer100g = usda?.fiber ?? 0
                 profile.pufaPer100g = usda?.pufa ?? 0
                 profile.mufaPer100g = usda?.mufa ?? 0
+
+                inserted += 1
+                if inserted % Self.seedBatchSize == 0 {
+                    Self.flushSeedBatch(bgContext, logger: logger)
+                }
             }
 
             // Seed USDA-only entries (no GI data)
-            let giNames = Set(giEntries.map { $0.name.lowercased() })
             for usda in usdaEntries where !giNames.contains(usda.name.lowercased()) {
                 let profile = NutritionalProfile(context: bgContext)
                 profile.id = UUID()
@@ -87,9 +115,37 @@ final class PersistenceController {
                 profile.solubleFiberPer100g = usda.fiber
                 profile.pufaPer100g = usda.pufa
                 profile.mufaPer100g = usda.mufa
+
+                inserted += 1
+                if inserted % Self.seedBatchSize == 0 {
+                    Self.flushSeedBatch(bgContext, logger: logger)
+                }
             }
 
-            try? bgContext.save()
+            // Final partial batch.
+            Self.flushSeedBatch(bgContext, logger: logger)
+        }
+
+        let insertMs = Date().timeIntervalSince(insertStart) * 1000
+        signpost.endInterval("seed", overall)
+        logger.info("""
+            Seed complete: \(inserted, privacy: .public) profiles, \
+            load=\(loadMs, format: .fixed(precision: 1), privacy: .public)ms, \
+            insert=\(insertMs, format: .fixed(precision: 1), privacy: .public)ms
+            """)
+    }
+
+    /// Save the bg context and reset it. Resetting drops the row buffer Core
+    /// Data accumulates as objects are inserted, keeping memory bounded across
+    /// the full seed. Cheap because we never reference the inserted objects
+    /// after this returns — the seed is fire-and-forget.
+    private static func flushSeedBatch(_ context: NSManagedObjectContext, logger: Logger) {
+        guard context.hasChanges else { return }
+        do {
+            try context.save()
+            context.reset()
+        } catch {
+            logger.error("Seed batch save failed: \(error.localizedDescription, privacy: .public)")
         }
     }
 }
