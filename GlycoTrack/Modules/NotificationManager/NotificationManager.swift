@@ -16,6 +16,7 @@ final class NotificationManager: NSObject, UNUserNotificationCenterDelegate {
         do {
             return try await center.requestAuthorization(options: [.alert, .sound, .badge])
         } catch {
+            Log.notifications.error("Authorization request failed: \(error.localizedDescription, privacy: .public)")
             return false
         }
     }

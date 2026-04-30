@@ -17,6 +17,12 @@ final class PersistenceController {
         }
         container.loadPersistentStores { _, error in
             if let error {
+                // .fault so a Console.app filter on this category surfaces the
+                // failure even after the crash dialog dismisses. The crash
+                // itself is non-negotiable — without the persistent store,
+                // every Core Data op above this layer would otherwise fail
+                // silently in unpredictable ways.
+                Log.coreData.fault("Core Data failed to load: \(error.localizedDescription, privacy: .public)")
                 fatalError("Core Data failed to load: \(error)")
             }
         }
@@ -89,7 +95,11 @@ final class PersistenceController {
                 profile.mufaPer100g = usda.mufa
             }
 
-            try? bgContext.save()
+            do {
+                try bgContext.save()
+            } catch {
+                Log.coreData.error("Seed save failed: \(error.localizedDescription, privacy: .public)")
+            }
         }
     }
 }

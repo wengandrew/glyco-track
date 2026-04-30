@@ -75,6 +75,7 @@ final class SummaryGenerator: ObservableObject {
             }
             lastGeneratedAt = Date()
         } catch {
+            Log.summary.error("Summary stream failed: \(error.localizedDescription, privacy: .public)")
             summary = "Unable to generate summary right now. Please try again later."
         }
     }
