@@ -6,6 +6,10 @@ struct WeekTabView: View {
     @State private var selectedEntry: FoodLogEntry?
 
     @FetchRequest private var weekEntries: FetchedResults<FoodLogEntry>
+    /// Same shape as `weekEntries` but for the seven days *before* the
+    /// selected week. Drives `WeekComparisonStrip`'s deltas. Predicate is
+    /// updated alongside `weekEntries` whenever `selectedWeekStart` changes.
+    @FetchRequest private var priorWeekEntries: FetchedResults<FoodLogEntry>
 
     /// Earliest logged entry — used to clamp backward week navigation.
     /// `timestamp != nil` so a stray nil-timestamp row can't become `.first`
@@ -18,9 +22,15 @@ struct WeekTabView: View {
     private var allEntriesAsc: FetchedResults<FoodLogEntry>
 
     init() {
+        let weekStart = Self.mondayWeekStart(for: Date())
         _weekEntries = FetchRequest<FoodLogEntry>(
             sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
-            predicate: Self.predicate(for: Self.mondayWeekStart(for: Date())),
+            predicate: Self.predicate(for: weekStart),
+            animation: .default
+        )
+        _priorWeekEntries = FetchRequest<FoodLogEntry>(
+            sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
+            predicate: Self.predicate(for: Self.priorWeekStart(for: weekStart)),
             animation: .default
         )
     }
@@ -51,6 +61,13 @@ struct WeekTabView: View {
                     )
                     .padding(.horizontal)
 
+                    WeekComparisonStrip(
+                        currentEntries: Array(weekEntries),
+                        priorEntries: Array(priorWeekEntries),
+                        daysInPeriod: 7
+                    )
+                    .padding(.horizontal)
+
                     QuadrantPlotSection(
                         entries: Array(weekEntries),
                         onTap: { selectedEntry = $0 }
@@ -65,6 +82,7 @@ struct WeekTabView: View {
             }
             .onChange(of: selectedWeekStart) { newValue in
                 weekEntries.nsPredicate = Self.predicate(for: newValue)
+                priorWeekEntries.nsPredicate = Self.predicate(for: Self.priorWeekStart(for: newValue))
             }
         }
     }
@@ -172,6 +190,12 @@ struct WeekTabView: View {
         cal.firstWeekday = 2 // Monday
         let comps = cal.dateComponents([.yearForWeekOfYear, .weekOfYear], from: date)
         return cal.date(from: comps) ?? Calendar.current.startOfDay(for: date)
+    }
+
+    /// Monday of the week immediately before `weekStart` — used by the
+    /// week-over-week comparison strip.
+    static func priorWeekStart(for weekStart: Date) -> Date {
+        Calendar.current.date(byAdding: .weekOfYear, value: -1, to: weekStart) ?? weekStart
     }
 
     static func predicate(for weekStart: Date) -> NSPredicate {
