@@ -57,6 +57,7 @@
 		A9EF6E86BA2596BFE3A1E5DF /* NutritionalProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4859E2F701A70D2FDD7A83 /* NutritionalProfile+CoreDataClass.swift */; };
 		AF6E60B55D052923B8D08A9E /* LogTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97313B9C797857A9DBC2F462 /* LogTabView.swift */; };
 		B076FCA27DDFC7ECFBB6F792 /* VoiceCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA784CDE9FCC292E4B80263 /* VoiceCapture.swift */; };
+		B8750ABB94F82072EC7BD028 /* ClaudeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AD332E63555F5AA1137AAF /* ClaudeAPIClient.swift */; };
 		C6ABC4E02105C1E68D1FB675 /* FoodEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CCD25037FC347FCF34DD6 /* FoodEmoji.swift */; };
 		CB15F2A5E2E57901736EBFB8 /* NutritionalRepositoryRegressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C49AC2B0AF9614FBD23DF6D /* NutritionalRepositoryRegressionTests.swift */; };
 		CBD927A2BB34C614106D5634 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B61B27E6D6C9ADE92E928E7 /* RecordButton.swift */; };
@@ -111,6 +112,7 @@
 		0E7AC5A8B6B5D9D3340E2D7A /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		0FEDAD6172CAF0ACDF326FB5 /* BuildInfo.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildInfo.generated.swift; sourceTree = "<group>"; };
 		15FE2BAD16F926DFCAABF71F /* WaterlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterlineView.swift; sourceTree = "<group>"; };
+		16AD332E63555F5AA1137AAF /* ClaudeAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeAPIClient.swift; sourceTree = "<group>"; };
 		17D923FFC3F1352123547E74 /* FoodLogEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodLogEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		19884C5A1F294CFAF5B9377E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		1C1D2709199DB48FFDDC1551 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -366,6 +368,14 @@
 			path = WeekTab;
 			sourceTree = "<group>";
 		};
+		5EE99A320FC8136D37962843 /* ClaudeAPI */ = {
+			isa = PBXGroup;
+			children = (
+				16AD332E63555F5AA1137AAF /* ClaudeAPIClient.swift */,
+			);
+			path = ClaudeAPI;
+			sourceTree = "<group>";
+		};
 		67F9A379F8E591F1AE075703 /* DebugTab */ = {
 			isa = PBXGroup;
 			children = (
@@ -463,6 +473,7 @@
 		C46E2A104F0EF09219B14077 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				5EE99A320FC8136D37962843 /* ClaudeAPI */,
 				04B87E4CF1E807CCC03359EB /* CLEngine */,
 				96D991C8B162E8A8541D0CFE /* GIEngine */,
 				AD0D3FF4826E401D2E54F776 /* LocalStorage */,
@@ -661,6 +672,7 @@
 				A608B1F7399369772FD1344B /* BuildInfo.generated.swift in Sources */,
 				804D83DA123CD38186D70EE8 /* CLEngine.swift in Sources */,
 				667D790349266A31BDCB9006 /* CLPalette.swift in Sources */,
+				B8750ABB94F82072EC7BD028 /* ClaudeAPIClient.swift in Sources */,
 				684DC8143E5EE72D2A5F6895 /* ConfidenceBadge.swift in Sources */,
 				A36A7351E36BA048DD17325C /* CoreDataIdentifiable.swift in Sources */,
 				64A2CFB29B814A7EB74CCB05 /* DateFormatters.swift in Sources */,
