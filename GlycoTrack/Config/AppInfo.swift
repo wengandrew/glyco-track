@@ -2,10 +2,10 @@ import Foundation
 
 enum AppInfo {
     static var version: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
+        BundleConfig.string("CFBundleShortVersionString", default: "unknown")
     }
     static var build: String {
-        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "unknown"
+        BundleConfig.string("CFBundleVersion", default: "unknown")
     }
     static var gitBranch: String { BuildInfo.gitBranch }
     static var gitCommit: String { BuildInfo.gitCommit }
