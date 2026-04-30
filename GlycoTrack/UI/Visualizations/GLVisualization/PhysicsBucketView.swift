@@ -134,12 +134,25 @@ struct PhysicsBucketView: View {
 /// always built from the latest `entries`. See `PhysicsBucketView` for rationale.
 private struct BucketSceneHost: View {
     @State private var scene: BucketScene
+    let entries: [FoodLogEntry]
+    let budget: Double
 
     init(entries: [FoodLogEntry], size: CGSize, budget: Double, onTap: @escaping (FoodLogEntry) -> Void) {
         let s = BucketScene(size: size, entries: entries, budget: budget)
         s.scaleMode = .resizeFill
         s.onBubbleTapped = onTap
         _scene = State(initialValue: s)
+        self.entries = entries
+        self.budget = budget
+    }
+
+    private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
+
+    private var summaryLabel: String {
+        if entries.isEmpty { return "GL bucket. No foods logged." }
+        let count = entries.count
+        let pluralFood = count == 1 ? "food" : "foods"
+        return "GL bucket. \(count) \(pluralFood), total \(Int(totalGL.rounded())) out of \(Int(budget)) GL."
     }
 
     var body: some View {
@@ -149,6 +162,31 @@ private struct BucketSceneHost: View {
             debugOptions: []
         )
         .background(Color.clear)
+        // Make the SpriteView an accessibility container that summarizes the
+        // bucket's contents and exposes each item as a navigable child.
+        // SpriteKit nodes don't surface to VoiceOver on their own — without
+        // this wrapper the visualization is opaque to assistive tech.
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(summaryLabel)
+        .accessibilityChildren {
+            ForEach(entries, id: \.objectID) { entry in
+                Text(BucketSceneHost.itemAccessibilityLabel(for: entry))
+                    .accessibilityLabel(BucketSceneHost.itemAccessibilityLabel(for: entry))
+            }
+        }
+    }
+
+    /// Formats a single food row for VoiceOver. Excludes precise grams (the
+    /// user can open the detail sheet for that); foregrounds the numbers
+    /// most relevant to a daily-budget mental model.
+    static func itemAccessibilityLabel(for entry: FoodLogEntry) -> String {
+        // referenceFood is the matched canonical food (e.g. "white rice");
+        // foodDescription is the raw transcript snippet (e.g. "rice with
+        // chicken"). Prefer the former when matched, fall back to the
+        // latter so unrecognized entries are still readable.
+        let name = entry.referenceFood ?? entry.foodDescription
+        let gl = entry.computedGL
+        return "\(name), GL \(String(format: "%.1f", gl))"
     }
 }
 

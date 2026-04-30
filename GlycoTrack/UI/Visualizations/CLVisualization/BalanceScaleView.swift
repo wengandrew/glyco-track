@@ -112,17 +112,50 @@ struct BalanceScaleView: View {
 /// whenever any reactive input changes — see `PhysicsBucketView` for rationale.
 private struct BalanceSceneHost: View {
     @State private var scene: BalanceScene
+    let entries: [FoodLogEntry]
 
     init(entries: [FoodLogEntry], size: CGSize, onTap: @escaping (FoodLogEntry) -> Void) {
         let s = BalanceScene(size: size, entries: entries)
         s.scaleMode = .resizeFill
         s.onItemTapped = onTap
         _scene = State(initialValue: s)
+        self.entries = entries
+    }
+
+    private var harmfulSum: Double { entries.reduce(0) { $0 + max(0, $1.computedCL) } }
+    private var beneficialSum: Double { entries.reduce(0) { $0 + max(0, -$1.computedCL) } }
+    private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
+
+    private var summaryLabel: String {
+        if entries.isEmpty { return "Balance scale. No foods logged." }
+        let direction: String
+        if abs(netCL) < 0.05 { direction = "balanced" }
+        else if netCL < 0 { direction = "tipped beneficial" }
+        else { direction = "tipped harmful" }
+        return "Balance scale. Harmful side \(String(format: "%.1f", harmfulSum)) CL, beneficial side \(String(format: "%.1f", beneficialSum)) CL. Net \(String(format: "%+.1f", netCL)), \(direction)."
     }
 
     var body: some View {
         SpriteView(scene: scene, options: [.allowsTransparency])
             .background(Color.clear)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(summaryLabel)
+            .accessibilityChildren {
+                ForEach(entries, id: \.objectID) { entry in
+                    Text(itemLabel(for: entry))
+                        .accessibilityLabel(itemLabel(for: entry))
+                }
+            }
+    }
+
+    /// Each entry's CL is signed: positive harmful, negative beneficial. The
+    /// readout labels which side it lands on so a VoiceOver swipe through
+    /// the bucket is self-describing.
+    private func itemLabel(for entry: FoodLogEntry) -> String {
+        let name = entry.referenceFood ?? entry.foodDescription
+        let cl = entry.computedCL
+        let side = cl > 0.05 ? "harmful" : (cl < -0.05 ? "beneficial" : "neutral")
+        return "\(name), CL \(String(format: "%+.1f", cl)), \(side)"
     }
 }
 
