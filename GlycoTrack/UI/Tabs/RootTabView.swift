@@ -151,7 +151,10 @@ struct RootTabView: View {
             do {
                 try await voiceCapture.startRecording()
             } catch {
-                // Error surfaced via voiceCapture.error
+                // The user-facing message surfaces via voiceCapture.error
+                // (driven by VoiceCapture's own state); diagnostic detail
+                // goes to Console.app for the developer.
+                Log.voice.error("startRecording failed: \(error.localizedDescription, privacy: .public)")
             }
         }
     }

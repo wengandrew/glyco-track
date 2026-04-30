@@ -62,6 +62,7 @@
 		C822130303E9CA3483908361 /* BundleConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AADF94EA7AB536744B8B73 /* BundleConfig.swift */; };
 		CB15F2A5E2E57901736EBFB8 /* NutritionalRepositoryRegressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C49AC2B0AF9614FBD23DF6D /* NutritionalRepositoryRegressionTests.swift */; };
 		CBD927A2BB34C614106D5634 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B61B27E6D6C9ADE92E928E7 /* RecordButton.swift */; };
+		D10934C56FD689EEBD17732B /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D519279615097BF4BD72FEC6 /* Log.swift */; };
 		DA63E52FA18B99E8347E4BFD /* FoodLogProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3327A014C9B87AE78FAF29B4 /* FoodLogProcessor.swift */; };
 		DF7D2A9B939803522A97A911 /* FoodLogEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D923FFC3F1352123547E74 /* FoodLogEntry+CoreDataProperties.swift */; };
 		EB32167E33EDB53104ED047A /* WaterlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FE2BAD16F926DFCAABF71F /* WaterlineView.swift */; };
@@ -163,6 +164,7 @@
 		BF7A560C4BA26D536A7CDCCA /* QuadrantPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadrantPlotView.swift; sourceTree = "<group>"; };
 		C6A1C047AADFF5FEBE42735D /* ConfidenceBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfidenceBadge.swift; sourceTree = "<group>"; };
 		C70C082CC09B5E60AF485E04 /* GlycoTrackWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = GlycoTrackWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D519279615097BF4BD72FEC6 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		C8AADF94EA7AB536744B8B73 /* BundleConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleConfig.swift; sourceTree = "<group>"; };
 		DA2306B0E783E13C7D020642 /* HomeTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabView.swift; sourceTree = "<group>"; };
 		DA4859E2F701A70D2FDD7A83 /* NutritionalProfile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NutritionalProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -275,6 +277,14 @@
 				DA2306B0E783E13C7D020642 /* HomeTabView.swift */,
 			);
 			path = HomeTab;
+			sourceTree = "<group>";
+		};
+		34FB48A8AB92C767E0CB0D8C /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				D519279615097BF4BD72FEC6 /* Log.swift */,
+			);
+			path = Logging;
 			sourceTree = "<group>";
 		};
 		39823AAD632E9392A52B3E94 = {
@@ -480,6 +490,7 @@
 				04B87E4CF1E807CCC03359EB /* CLEngine */,
 				96D991C8B162E8A8541D0CFE /* GIEngine */,
 				AD0D3FF4826E401D2E54F776 /* LocalStorage */,
+				34FB48A8AB92C767E0CB0D8C /* Logging */,
 				D4233448CE2F22C1D05AA497 /* Matching */,
 				28C03B199C5E89F8003EEE65 /* NotificationManager */,
 				B75FC03D2B10EF616C3EBFAD /* Settings */,
@@ -697,6 +708,7 @@
 				6218DF6B76FCABF02538AFC0 /* GlycoTrackApp.swift in Sources */,
 				FFB06BADA9A57D4B77A32E83 /* GlycoTrackManagedObjectModel.swift in Sources */,
 				A97DBA1B9D41A7BADAA1E037 /* HomeTabView.swift in Sources */,
+				D10934C56FD689EEBD17732B /* Log.swift in Sources */,
 				AF6E60B55D052923B8D08A9E /* LogTabView.swift in Sources */,
 				A0D08903B4672E77482B3F08 /* MonthTabView.swift in Sources */,
 				1D23C9102CD3454A7EB2DC46 /* MonthlyHeatmapView.swift in Sources */,

@@ -20,6 +20,7 @@ final class FoodLogProcessor: ObservableObject {
         do {
             foods = try await parser.parse(transcript: transcript)
         } catch {
+            Log.network.error("TranscriptParser.parse failed: \(error.localizedDescription, privacy: .public)")
             lastError = error.localizedDescription
             return
         }

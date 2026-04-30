@@ -18,6 +18,12 @@ final class PersistenceController {
         }
         container.loadPersistentStores { _, error in
             if let error {
+                // .fault so a Console.app filter on this category surfaces the
+                // failure even after the crash dialog dismisses. The crash
+                // itself is non-negotiable — without the persistent store,
+                // every Core Data op above this layer would otherwise fail
+                // silently in unpredictable ways.
+                Log.coreData.fault("Core Data failed to load: \(error.localizedDescription, privacy: .public)")
                 fatalError("Core Data failed to load: \(error)")
             }
         }
@@ -50,7 +56,6 @@ final class PersistenceController {
     /// Internal so test targets can `await` it after an in-memory init.
     func seedNutritionalProfiles() async {
         let signpost = OSSignposter(subsystem: "com.glycotrack.app", category: "coreData")
-        let logger = Logger(subsystem: "com.glycotrack.app", category: "coreData")
         let overall = signpost.beginInterval("seed", id: signpost.makeSignpostID())
 
         let loadStart = Date()
@@ -63,7 +68,7 @@ final class PersistenceController {
             let usdaEntries = try? JSONDecoder().decode([USDAEntry].self, from: usdaData)
         else {
             signpost.endInterval("seed", overall)
-            logger.error("Seed bailed: missing or unreadable JSON resources")
+            Log.coreData.error("Seed bailed: missing or unreadable JSON resources")
             return
         }
         let loadMs = Date().timeIntervalSince(loadStart) * 1000
@@ -97,7 +102,7 @@ final class PersistenceController {
 
                 inserted += 1
                 if inserted % Self.seedBatchSize == 0 {
-                    Self.flushSeedBatch(bgContext, logger: logger)
+                    Self.flushSeedBatch(bgContext)
                 }
             }
 
@@ -118,17 +123,17 @@ final class PersistenceController {
 
                 inserted += 1
                 if inserted % Self.seedBatchSize == 0 {
-                    Self.flushSeedBatch(bgContext, logger: logger)
+                    Self.flushSeedBatch(bgContext)
                 }
             }
 
             // Final partial batch.
-            Self.flushSeedBatch(bgContext, logger: logger)
+            Self.flushSeedBatch(bgContext)
         }
 
         let insertMs = Date().timeIntervalSince(insertStart) * 1000
         signpost.endInterval("seed", overall)
-        logger.info("""
+        Log.coreData.info("""
             Seed complete: \(inserted, privacy: .public) profiles, \
             load=\(loadMs, format: .fixed(precision: 1), privacy: .public)ms, \
             insert=\(insertMs, format: .fixed(precision: 1), privacy: .public)ms
@@ -139,13 +144,13 @@ final class PersistenceController {
     /// Data accumulates as objects are inserted, keeping memory bounded across
     /// the full seed. Cheap because we never reference the inserted objects
     /// after this returns — the seed is fire-and-forget.
-    private static func flushSeedBatch(_ context: NSManagedObjectContext, logger: Logger) {
+    private static func flushSeedBatch(_ context: NSManagedObjectContext) {
         guard context.hasChanges else { return }
         do {
             try context.save()
             context.reset()
         } catch {
-            logger.error("Seed batch save failed: \(error.localizedDescription, privacy: .public)")
+            Log.coreData.error("Seed batch save failed: \(error.localizedDescription, privacy: .public)")
         }
     }
 }
