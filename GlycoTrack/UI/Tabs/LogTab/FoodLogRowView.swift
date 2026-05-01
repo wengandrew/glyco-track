@@ -16,14 +16,14 @@ struct FoodLogRowView: View {
                         .font(.subheadline)
                         .fontWeight(.medium)
                     Spacer()
-                    // Date + approximate hour (rounded down). Display-only — the
+                    // Date + minute-precision time. Display-only — the
                     // underlying `entry.timestamp` is preserved at full precision so
                     // edits, sorts, and predicates work normally.
                     VStack(alignment: .trailing, spacing: 0) {
                         Text(Self.dateLabel(for: entry.timestamp))
                             .font(.caption2)
                             .foregroundColor(.secondary)
-                        Text(Self.approximateHourLabel(for: entry.timestamp))
+                        Text(Self.timeLabel(for: entry.timestamp))
                             .font(.caption2)
                             .foregroundColor(.secondary)
                     }
@@ -56,18 +56,9 @@ struct FoodLogRowView: View {
         DateFormatter.numericMonthDayYear.string(from: timestamp ?? Date())
     }
 
-    /// Hour rounded DOWN to the nearest hour, formatted as "5pm" / "7am" / "12am".
-    /// Display-only — does not mutate `entry.timestamp`.
-    private static func approximateHourLabel(for timestamp: Date?) -> String {
-        let date = timestamp ?? Date()
-        let hour24 = Calendar.current.component(.hour, from: date) // 0…23
-        let isAM = hour24 < 12
-        let display12: Int = {
-            if hour24 == 0 { return 12 }       // midnight
-            if hour24 == 12 { return 12 }      // noon
-            return hour24 > 12 ? hour24 - 12 : hour24
-        }()
-        return "\(display12)\(isAM ? "am" : "pm")"
+    /// Minute-precision time, formatted as "7:34pm" / "12:05am". Display-only.
+    private static func timeLabel(for timestamp: Date?) -> String {
+        DateFormatter.hourMinute.string(from: timestamp ?? Date())
     }
 
 }

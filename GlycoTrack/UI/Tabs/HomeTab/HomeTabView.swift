@@ -101,7 +101,7 @@ struct HomeTabView: View {
                 }
                 .padding(.bottom, 24)
             }
-            .navigationTitle(titleForNav)
+            .navigationTitle("Your Day")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -206,10 +206,6 @@ struct HomeTabView: View {
         return Calendar.current.isDate(selectedDate, inSameDayAs: earliest)
     }
 
-    private var titleForNav: String {
-        isToday ? "Today" : DateFormatter.short.string(from: selectedDate)
-    }
-
     private var dateHeading: String {
         isToday ? "Today" : DateFormatter.weekdayMonthDay.string(from: selectedDate)
     }
@@ -266,15 +262,9 @@ struct MetricSection<Content: View, Trailing: View>: View {
             HStack(spacing: 12) {
                 ZStack {
                     Circle()
-                        .fill(
-                            LinearGradient(
-                                colors: [accent, accent.opacity(0.78)],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            )
-                        )
+                        .fill(accent)
                         .frame(width: 36, height: 36)
-                        .shadow(color: accent.opacity(0.35), radius: 6, x: 0, y: 3)
+                        .shadow(color: accent.opacity(0.25), radius: 4, x: 0, y: 2)
                     Image(systemName: icon)
                         .font(.system(size: 15, weight: .bold))
                         .foregroundColor(.white)
@@ -282,13 +272,7 @@ struct MetricSection<Content: View, Trailing: View>: View {
                 VStack(alignment: .leading, spacing: 1) {
                     Text(title)
                         .font(.system(.title2, design: .rounded, weight: .bold))
-                        .foregroundStyle(
-                            LinearGradient(
-                                colors: [.primary, accent.opacity(0.85)],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
+                        .foregroundColor(.primary)
                     Text(subtitle.uppercased())
                         .font(.system(size: 10, weight: .semibold, design: .rounded))
                         .tracking(0.6)
@@ -371,13 +355,7 @@ struct StatChip: View {
         VStack(spacing: 4) {
             Text(value)
                 .font(.system(size: 22, weight: .heavy, design: .rounded))
-                .foregroundStyle(
-                    LinearGradient(
-                        colors: [color, color.opacity(0.75)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                )
+                .foregroundColor(color)
             Text(label.uppercased())
                 .font(.system(size: 9, weight: .semibold, design: .rounded))
                 .tracking(0.5)

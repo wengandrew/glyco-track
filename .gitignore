@@ -13,6 +13,8 @@ xcuserdata/
 *.xcuserstate
 DerivedData/
 .build/
+# `scripts/deploy.sh` writes its build artifacts into a top-level `build/`.
+build/
 *.o
 *.d
 *.swp

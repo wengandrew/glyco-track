@@ -73,7 +73,7 @@ struct WeekTabView: View {
                 }
                 .padding(.bottom, 20)
             }
-            .navigationTitle(navTitle)
+            .navigationTitle("Your Week")
             .sheet(item: $selectedEntry) { entry in
                 FoodEntryDetailSheet(entry: entry)
             }
@@ -139,10 +139,6 @@ struct WeekTabView: View {
     private var isEarliestWeek: Bool {
         guard let earliest = earliestLoggedWeekStart else { return true }
         return Calendar.current.isDate(selectedWeekStart, inSameDayAs: earliest)
-    }
-
-    private var navTitle: String {
-        isCurrentWeek ? "This Week" : weekRangeString
     }
 
     private var weekHeading: String {

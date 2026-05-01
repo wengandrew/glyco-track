@@ -124,14 +124,8 @@ struct RootTabView: View {
                     Group {
                         if isSelected {
                             Circle()
-                                .fill(
-                                    LinearGradient(
-                                        colors: [Color.accentColor, Color.accentColor.opacity(0.78)],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
-                                .shadow(color: Color.accentColor.opacity(0.35), radius: 4, x: 0, y: 2)
+                                .fill(Color.accentColor)
+                                .shadow(color: Color.accentColor.opacity(0.25), radius: 3, x: 0, y: 2)
                         } else {
                             Circle().fill(Color.clear)
                         }

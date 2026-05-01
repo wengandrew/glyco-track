@@ -61,7 +61,7 @@ struct MonthTabView: View {
                 }
                 .padding(.bottom, 20)
             }
-            .navigationTitle("Month")
+            .navigationTitle("Your Month")
             .sheet(item: $selectedEntry) { entry in
                 FoodEntryDetailSheet(entry: entry)
             }
