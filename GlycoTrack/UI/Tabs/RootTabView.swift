@@ -13,30 +13,24 @@ struct RootTabView: View {
     @State private var selectedTab: Tab = .today
 
     enum Tab: Int, CaseIterable, Identifiable {
-        case today, week, month, log, summary, about, debug
+        case today, week, month, log
         var id: Int { rawValue }
 
         var title: String {
             switch self {
-            case .today:   return "Today"
-            case .week:    return "Week"
-            case .month:   return "Month"
-            case .log:     return "Log"
-            case .summary: return "Summary"
-            case .about:   return "About"
-            case .debug:   return "Debug"
+            case .today: return "Today"
+            case .week:  return "Week"
+            case .month: return "Month"
+            case .log:   return "Log"
             }
         }
 
         var systemImage: String {
             switch self {
-            case .today:   return "house.fill"
-            case .week:    return "calendar.badge.clock"
-            case .month:   return "calendar"
-            case .log:     return "list.bullet"
-            case .summary: return "text.magnifyingglass"
-            case .about:   return "info.circle"
-            case .debug:   return "wrench.and.screwdriver"
+            case .today: return "house.fill"
+            case .week:  return "calendar.badge.clock"
+            case .month: return "calendar"
+            case .log:   return "list.bullet"
             }
         }
     }
@@ -51,9 +45,12 @@ struct RootTabView: View {
                     Color.clear.frame(height: 76)
                 }
 
-            customTabBar
-                .padding(.horizontal, 12)
-                .padding(.bottom, 6)
+            VStack(spacing: 8) {
+                ListeningPill(voiceCapture: voiceCapture, logProcessor: logProcessor)
+                customTabBar
+            }
+            .padding(.horizontal, 12)
+            .padding(.bottom, 6)
         }
         .ignoresSafeArea(.keyboard, edges: .bottom)
         .onOpenURL { url in
@@ -75,37 +72,33 @@ struct RootTabView: View {
             MonthTabView()
         case .log:
             LogTabView()
-        case .summary:
-            SummaryTabView()
-        case .about:
-            AboutTabView()
-        case .debug:
-            DebugTabView()
         }
     }
 
     // MARK: - Custom tab bar
 
     private var customTabBar: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 12) {
             // Left pill: tab buttons
-            HStack(spacing: 0) {
+            HStack(spacing: 4) {
                 ForEach(Tab.allCases) { tab in
                     tabButton(for: tab)
                 }
             }
-            .padding(.horizontal, 6)
-            .padding(.vertical, 6)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 8)
             .background(.ultraThinMaterial, in: Capsule())
             .overlay(
-                Capsule().stroke(Color.primary.opacity(0.06), lineWidth: 0.5)
+                Capsule().stroke(Color.primary.opacity(0.07), lineWidth: 0.5)
             )
+            .shadow(color: Color.black.opacity(0.06), radius: 8, x: 0, y: 3)
 
             // Right pill: record button
             ZStack {
                 Circle()
                     .fill(.ultraThinMaterial)
-                    .overlay(Circle().stroke(Color.primary.opacity(0.06), lineWidth: 0.5))
+                    .overlay(Circle().stroke(Color.primary.opacity(0.07), lineWidth: 0.5))
+                    .shadow(color: Color.black.opacity(0.06), radius: 8, x: 0, y: 3)
 
                 CompactRecordButton(isRecording: voiceCapture.isRecording) {
                     selectedTab = .today
@@ -124,16 +117,30 @@ struct RootTabView: View {
             }
         } label: {
             Image(systemName: tab.systemImage)
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundColor(isSelected ? .accentColor : .secondary)
-                .frame(width: 38, height: 38)
+                .font(.system(size: 17, weight: .semibold))
+                .foregroundColor(isSelected ? .white : .secondary)
+                .frame(width: 40, height: 40)
                 .background(
-                    Circle()
-                        .fill(isSelected ? Color.accentColor.opacity(0.15) : Color.clear)
+                    Group {
+                        if isSelected {
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [Color.accentColor, Color.accentColor.opacity(0.78)],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .shadow(color: Color.accentColor.opacity(0.35), radius: 4, x: 0, y: 2)
+                        } else {
+                            Circle().fill(Color.clear)
+                        }
+                    }
                 )
                 .accessibilityLabel(tab.title)
         }
         .buttonStyle(.plain)
+        .animation(.spring(response: 0.28, dampingFraction: 0.8), value: isSelected)
     }
 
     // MARK: - Recording
@@ -142,10 +149,21 @@ struct RootTabView: View {
         if voiceCapture.isRecording {
             voiceCapture.stopRecording()
         } else {
+            // Reset stale transcript from a prior recording so the listening
+            // pill doesn't flash yesterday's text. Also wipe any prior error
+            // so the pill doesn't keep displaying it across sessions.
+            voiceCapture.transcript = ""
+            logProcessor.lastError = nil
+
             voiceCapture.onTranscriptFinalized = { transcript in
-                Task {
+                Task { @MainActor in
                     await logProcessor.process(transcript: transcript, context: context)
                     updateWidgetData()
+                    // Once the entry has been committed (or processing
+                    // failed and the error is surfaced), clear the
+                    // transcript so the pill collapses back to nothing
+                    // for the next recording.
+                    voiceCapture.transcript = ""
                 }
             }
             do {
@@ -164,6 +182,104 @@ struct RootTabView: View {
         let repo = FoodLogRepository(context: context)
         defaults?.set(repo.dailyGL(for: Date()), forKey: "todayGL")
         defaults?.set(repo.countToday(), forKey: "todayEntryCount")
+    }
+}
+
+/// Floating status pill that sits directly above the tab bar (next to the
+/// mic button) while a recording is in progress, the transcript is being
+/// processed, or processing has failed. Replaces the old in-flow recording
+/// section on the Today tab — page content no longer reflows when the user
+/// taps the mic.
+private struct ListeningPill: View {
+    @ObservedObject var voiceCapture: VoiceCapture
+    @ObservedObject var logProcessor: FoodLogProcessor
+
+    @State private var dotPulse: Bool = false
+
+    private var isVisible: Bool {
+        voiceCapture.isRecording
+            || logProcessor.isProcessing
+            || logProcessor.lastError != nil
+    }
+
+    var body: some View {
+        Group {
+            if isVisible {
+                HStack(spacing: 10) {
+                    indicator
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(headline)
+                            .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                            .foregroundColor(headlineColor)
+                        if !subline.isEmpty {
+                            Text(subline)
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                                .lineLimit(2)
+                        }
+                    }
+                    Spacer(minLength: 0)
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
+                .background(.ultraThinMaterial, in: Capsule())
+                .overlay(Capsule().stroke(Color.primary.opacity(0.06), lineWidth: 0.5))
+                .shadow(color: Color.black.opacity(0.10), radius: 8, x: 0, y: 4)
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .onAppear { dotPulse = true }
+                .onDisappear { dotPulse = false }
+                .onTapGesture {
+                    // Tap-to-dismiss when an error is showing — otherwise
+                    // it'd linger until the next recording.
+                    if logProcessor.lastError != nil {
+                        logProcessor.lastError = nil
+                    }
+                }
+            }
+        }
+        .animation(.spring(response: 0.32, dampingFraction: 0.85), value: isVisible)
+    }
+
+    @ViewBuilder
+    private var indicator: some View {
+        if voiceCapture.isRecording {
+            Circle()
+                .fill(Color.red)
+                .frame(width: 10, height: 10)
+                .scaleEffect(dotPulse ? 1.0 : 0.7)
+                .animation(.easeInOut(duration: 0.7).repeatForever(autoreverses: true), value: dotPulse)
+        } else if logProcessor.isProcessing {
+            ProgressView()
+                .controlSize(.small)
+        } else if logProcessor.lastError != nil {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundColor(.orange)
+        }
+    }
+
+    private var headline: String {
+        if voiceCapture.isRecording { return "Listening…" }
+        if logProcessor.isProcessing { return "Processing…" }
+        if logProcessor.lastError != nil { return "Couldn't log that" }
+        return ""
+    }
+
+    private var headlineColor: Color {
+        if logProcessor.lastError != nil { return .orange }
+        return .primary
+    }
+
+    private var subline: String {
+        if voiceCapture.isRecording {
+            return voiceCapture.transcript.isEmpty ? "Tap stop or pause briefly." : voiceCapture.transcript
+        }
+        if logProcessor.isProcessing {
+            return voiceCapture.transcript
+        }
+        if let err = logProcessor.lastError {
+            return err
+        }
+        return ""
     }
 }
 

@@ -113,6 +113,44 @@ These features are degraded when sideloaded with a free developer account and ca
 
 ---
 
+## UI Refresh — 2026-04-30 (in progress)
+
+A focused pass to simplify the surface area, remove half-finished prototypes, and apply a more distinctive visual identity. Single-PR scope.
+
+**Removals**
+- **Summary tab + `SummaryGenerator` module** — narrative AI summaries weren't carrying their weight against the visualizations. The tab is gone; the module is deleted (no other call sites).
+- **Tug-of-War CL viz** — three CL prototypes was one too many; Tug of War lost the prototype bake-off. `TugOfWarBarView.swift` deleted; references removed from Today + Week tabs.
+- **Debug tab + About tab from the tab bar** — neither is for end-users on the daily path. Both move into a single consolidated sheet (see below). The tab bar now shows only Today / Week / Month / Log.
+
+**Consolidation: Settings / About / Debug**
+- One gear button on the Today nav bar opens a single sheet.
+- Sheet uses a top-level segmented control (`Settings · About · Debug`) so a tap toggles between the three. Each pane re-uses its prior content largely as-is.
+- About content (educational copy on GL/CL math, tiers, sources) stays the same.
+
+**Today CL layout**
+- CL section default = **Balance**. Picker is gone.
+- **Waterline** is rendered as its own scroll-down section below Balance — the user scrolls to see the second view. Two lenses on the same data, no extra tab.
+
+**Listening / transcript polish**
+- "Listening…" feedback moves out of the page-flow card into a **floating pill above the tab bar** near the mic button. Page content no longer reflows on record.
+- Lingering transcript bug: `VoiceCapture.transcript` was never cleared after `stopRecording()`, so the in-flow card stuck around. Fix: clear `transcript` (and `FoodLogProcessor.lastError`) once the entry is committed; pill auto-dismisses after a short fade.
+
+**Accelerometer-driven gravity**
+- `PhysicsBucketView` and `WaterlineView` only. A shared `MotionGravityController` reads `CMMotionManager.deviceMotion.gravity` on the main run loop (~30 Hz) and maps it onto each scene's `physicsWorld.gravity` so items roll/settle in the direction of real gravity as the user tilts the phone.
+- Waterline water surface stays at the midline regardless of tilt — only items respond. (Tilting the surface convincingly is much harder; not worth the complexity.)
+
+**Waterline settling — faster**
+- Floater spring-toward-waterline currently uses `springConstant = 6.0` with `linearDamping = 0.6`. That's underdamped → long visible oscillation. Bump spring (≈12) and damping (≈0.85) to land closer to critical damping for the typical floater mass; result is a faster decisive rise + settle.
+
+**Visual styling — direction (a)**
+- Bold rounded SF typography for headers and big numbers (`.system(.title2, design: .rounded, weight: .bold)`).
+- GL accent (deep blue) and CL accent (crimson) used as **section identity**: gradient header bands, tinted backgrounds, accent-on-white chips.
+- More generous whitespace between sections; cards get a subtle shadow + larger corner radius.
+- Replace flat `Color(.systemGray6)` chips with gradient-filled accent chips for headline numbers.
+- Tab bar styling refined to match (slightly larger pill, accent halo behind selected icon).
+
+---
+
 ## Post-MVP Iterations (since 2026-04-20 device launch)
 
 Tracks merged PRs that materially shape the product after the initial MVP deployment.

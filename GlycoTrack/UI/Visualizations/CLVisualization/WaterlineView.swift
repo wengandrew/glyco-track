@@ -170,6 +170,13 @@ final class WaterlineScene: SKScene, SKPhysicsContactDelegate {
     private let minRadius: CGFloat = 14
     /// Scale reference for water level movement: |netCL| of this size reaches full swing.
     private let fullSwingCL: CGFloat = 20
+    /// Magnitude (points / s²) for the world gravity vector. The direction
+    /// is sampled from the accelerometer each frame so items roll naturally
+    /// as the user tilts the phone. The water surface itself stays at a
+    /// fixed Y — tilting it convincingly is more complexity than the
+    /// visualization is worth.
+    private let gravityMagnitude: CGFloat = 6.0
+    private var motionRetained: Bool = false
 
     private var nodeToEntry: [ObjectIdentifier: FoodLogEntry] = [:]
     private var waterFill: SKShapeNode?
@@ -194,13 +201,23 @@ final class WaterlineScene: SKScene, SKPhysicsContactDelegate {
         backgroundColor = .clear
         view.allowsTransparency = true
 
-        physicsWorld.gravity = CGVector(dx: 0, dy: -6.0)
+        physicsWorld.gravity = CGVector(dx: 0, dy: -gravityMagnitude)
         physicsWorld.contactDelegate = self
+
+        MotionGravityController.shared.retain()
+        motionRetained = true
 
         buildContainer()
         drawWater()
         drawZeroLine()
         scheduleItemDrops()
+    }
+
+    override func willMove(from view: SKView) {
+        if motionRetained {
+            MotionGravityController.shared.release()
+            motionRetained = false
+        }
     }
 
     func didBegin(_ contact: SKPhysicsContact) {
@@ -356,14 +373,18 @@ final class WaterlineScene: SKScene, SKPhysicsContactDelegate {
         // contactTestBitMask is independent of categoryBitMask (which the
         // buoyancy logic above keys off), so this doesn't disturb sink/float.
         body.contactTestBitMask = 0xFFFFFFFF
-        // Floaters: gravity OFF so a small spring force can actually move them up
-        // toward the waterline. Previous attempts with gravity-on + Archimedean lift
-        // failed because the depth-scaled lift could not reliably overcome gravity
-        // through linearDamping = 0.9 for low-mass items. Lower damping too so the
-        // spring can do its work; harmful items keep the original water-like damping.
+        // Floaters: gravity OFF so a spring force pulls them to the waterline.
+        // Previous attempts with gravity-on + Archimedean lift failed because the
+        // depth-scaled lift could not reliably overcome gravity through high
+        // damping for low-mass items.
+        //
+        // Damping 0.85 is closer to critical for a spring-mass with k=12 and the
+        // typical floater mass — lands the items quickly without visible overshoot.
+        // The earlier 0.6 was underdamped → long visible bobbing. Sinkers keep
+        // their original water-like resistance so they don't whiplash on landing.
         if cl < 0 {
             body.affectedByGravity = false
-            body.linearDamping = 0.6
+            body.linearDamping = 0.85
         } else {
             body.linearDamping = 0.9 // water-like resistance for sinkers
         }
@@ -377,18 +398,31 @@ final class WaterlineScene: SKScene, SKPhysicsContactDelegate {
     }
 
     override func update(_ currentTime: TimeInterval) {
+        // Match world gravity to real-world gravity each frame so items
+        // roll inside the tank as the user tilts the phone. The water
+        // surface itself stays at a fixed Y — only items respond to tilt.
+        let g = MotionGravityController.shared.currentGravity
+        physicsWorld.gravity = CGVector(dx: g.dx * gravityMagnitude,
+                                        dy: g.dy * gravityMagnitude)
+
         // Floaters: spring toward the waterline (gravity disabled on the body).
         // Sinkers: gravity does the work; we just add a mild downward nudge while
         // submerged so they settle quickly instead of hovering mid-water.
+        //
+        // Tuning: the previous (k=6, c=0.6) was underdamped — floaters oscillated
+        // visibly past the waterline before settling. The pair (k=12, c=0.85) is
+        // closer to critical damping for the typical floater mass and lands much
+        // faster without losing the "buoyant" feel — items rise decisively, then
+        // glue to the surface.
         //
         // Why a spring (not depth-scaled Archimedean lift)? Previous attempts that
         // kept gravity on and applied an upward lift force never won net of
         // linearDamping = 0.9 for low-mass items — the floaters never rose. With
         // gravity disabled and a Hooke's-law restoring force, even a tiny mass
-        // accelerates back to the waterline; reduced damping (0.6) lets it actually
-        // travel before the medium drains kinetic energy.
-        let gravityMag = abs(physicsWorld.gravity.dy)
-        let springConstant: CGFloat = 6.0
+        // accelerates back to the waterline; bumped damping (0.85) absorbs the
+        // overshoot energy faster.
+        let gravityMag = gravityMagnitude
+        let springConstant: CGFloat = 12.0
         for child in children {
             guard child.name == "item", let body = child.physicsBody else { continue }
             let y = child.position.y
@@ -433,12 +467,15 @@ struct CLNetLabel: View {
     let netCL: Double
 
     var body: some View {
-        HStack(spacing: 4) {
+        let color: Color = netCL > 0 ? .clAccent : .green
+        return HStack(spacing: 5) {
             Image(systemName: netCL > 0 ? "arrow.up.circle.fill" : "arrow.down.circle.fill")
-                .foregroundColor(netCL > 0 ? .red : .green)
-            Text(String(format: "CL %.1f", netCL))
-                .font(.subheadline).fontWeight(.semibold)
-                .foregroundColor(netCL > 0 ? .red : .green)
+                .foregroundColor(color)
+                .font(.system(size: 14, weight: .bold))
+            Text(String(format: "%+.1f", netCL))
+                .font(.system(.title3, design: .rounded, weight: .heavy))
+                .foregroundColor(color)
+                .monospacedDigit()
         }
     }
 }

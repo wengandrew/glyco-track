@@ -211,9 +211,17 @@ struct GLStatusLabel: View {
     let budget: Double
 
     var body: some View {
-        Text("\(Int(total)) / \(Int(budget)) GL")
-            .font(.subheadline).fontWeight(.semibold)
-            .foregroundColor(total > budget ? .red : .primary)
+        let over = total > budget
+        let primary: Color = over ? .red : .glAccent
+        return HStack(spacing: 0) {
+            Text("\(Int(total))")
+                .font(.system(.title3, design: .rounded, weight: .heavy))
+                .foregroundColor(primary)
+            Text(" / \(Int(budget))")
+                .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                .foregroundColor(.secondary)
+        }
+        .monospacedDigit()
     }
 }
 
@@ -225,6 +233,12 @@ final class BucketScene: SKScene, SKPhysicsContactDelegate {
     var onBubbleTapped: ((FoodLogEntry) -> Void)?
 
     private let haptics = SceneHaptics()
+    /// Magnitude of the gravity vector applied to the world (points / s²
+    /// in SpriteKit's odd unit system). The accelerometer-driven direction
+    /// is multiplied by this each frame so the bucket items roll toward
+    /// real-world gravity as the user tilts the device.
+    private let gravityMagnitude: CGFloat = 9.0
+    private var motionRetained: Bool = false
 
     // Bucket geometry as fractions of scene size.
     private let bucketWidthFrac: CGFloat = 0.82
@@ -259,16 +273,34 @@ final class BucketScene: SKScene, SKPhysicsContactDelegate {
         backgroundColor = .clear
         view.allowsTransparency = true
 
-        physicsWorld.gravity = CGVector(dx: 0, dy: -9.0)
+        physicsWorld.gravity = CGVector(dx: 0, dy: -gravityMagnitude)
         physicsWorld.speed = 1.0
         physicsWorld.contactDelegate = self
+
+        MotionGravityController.shared.retain()
+        motionRetained = true
 
         buildBucket()
         scheduleBubbleDrops()
     }
 
+    override func willMove(from view: SKView) {
+        if motionRetained {
+            MotionGravityController.shared.release()
+            motionRetained = false
+        }
+    }
+
     func didBegin(_ contact: SKPhysicsContact) {
         haptics.handleContact(contact)
+    }
+
+    override func update(_ currentTime: TimeInterval) {
+        // Match world gravity to real-world gravity each frame so items
+        // roll inside the bucket as the user tilts the phone.
+        let g = MotionGravityController.shared.currentGravity
+        physicsWorld.gravity = CGVector(dx: g.dx * gravityMagnitude,
+                                        dy: g.dy * gravityMagnitude)
     }
 
     private func buildBucket() {

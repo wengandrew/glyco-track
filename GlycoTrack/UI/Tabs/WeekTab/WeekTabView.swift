@@ -51,9 +51,6 @@ struct WeekTabView: View {
 
                     Divider().padding(.horizontal)
 
-                    TugOfWarBarView(entries: Array(weekEntries))
-                        .padding(.horizontal)
-
                     PeriodSummaryView(
                         title: "Week Summary",
                         entries: Array(weekEntries),
