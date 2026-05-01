@@ -38,7 +38,7 @@ struct HomeTabView: View {
     }
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(spacing: 18) {
                     let entryArray = Array(entries)

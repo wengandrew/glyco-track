@@ -15,7 +15,7 @@ struct LogTabView: View {
     @State private var showManualEntry = false
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List {
                 ForEach(entries) { entry in
                     FoodLogRowView(entry: entry)

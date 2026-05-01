@@ -36,7 +36,11 @@ struct WeekTabView: View {
     }
 
     var body: some View {
-        NavigationView {
+        // `NavigationStack` (iOS 16+) replaces the deprecated `NavigationView`.
+        // The old container intermittently dropped the large title on tab
+        // switch — most visibly on this tab because of its three @FetchRequest
+        // instances + heavy sub-tree (river + period + comparison + quadrant).
+        NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     weekNavigator

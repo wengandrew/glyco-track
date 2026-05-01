@@ -16,7 +16,7 @@ struct MonthTabView: View {
     private var allEntries: FetchedResults<FoodLogEntry>
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
                     // Month navigation
