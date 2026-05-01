@@ -113,7 +113,7 @@ These features are degraded when sideloaded with a free developer account and ca
 
 ---
 
-## UI Refresh — 2026-04-30 (in progress)
+## UI Refresh — 2026-04-30 (PR #44, this branch)
 
 A focused pass to simplify the surface area, remove half-finished prototypes, and apply a more distinctive visual identity. Single-PR scope.
 
@@ -164,7 +164,26 @@ Tracks merged PRs that materially shape the product after the initial MVP deploy
 | #22 | Week tab + floating tab bar + CL physics | Replaced system `TabView` with two-pill custom bar (record button on right, iOS Weather app pattern); fixed Week tab axis labels and Mon-start week predicate; Waterline floaters now use spring-toward-waterline; Balance scale now locked horizontal until drops settle. |
 | #23 | Widget containerBackground | Adopted iOS 17 `.containerBackground(for: .widget)` so the widget renders instead of showing the "adopt containerBackground API" black-rectangle warning. |
 | #24 | Codebase cleanup | Removed force-unwraps in date math; deleted dead code in iOS-target `GIEngine.swift`; consolidated `DateFormatter`s into `UI/Theme/DateFormatters.swift`; introduced `APIKey` typed accessor; hoisted CL palette `SKColor`s to `UI/Theme/CLPalette.swift`. |
-| (this PR) | Matcher tightening + decomposition prompt + parser tests | Findings from a prod log export (90 active entries) drove three matcher fixes: (a) T1 contains-match gate is now strict `> 0.5` so 1-word generics fall through to T3 instead of latching onto a specific variant (kills `bread→rye bread`, `juice→pomegranate juice`, `chicken→chicken drumstick`); (b) fuzzy match refuses to bridge across prep-method words (`grilled` vs `fried`, `baked` vs `steamed`, etc.) — same Levenshtein distance no longer disguises a different cooking technique with a different CL profile; (c) `decomposeIngredients` system prompt has a new HEADLINE-CARB RULE forcing the named carb (noodles/rice/pasta/bread/…) into the ingredient list, fixing the `hand pulled lamb noodle → lamb + broth` class of silent-GL=0 misses. New `Tests/TranscriptParserCoreTests/` covers parser happy path, malformed responses, prompt-rule regression, and decomposition contract (12 tests). |
+| #25 | Matcher tightening + decomposition prompt + parser tests | T1 contains-match gate `> 0.5`; fuzzy refuses to bridge prep-method words; HEADLINE-CARB RULE in `decomposeIngredients`; 12 new parser tests. |
+| #26 | GI-database alias wiring | Fixes a regression introduced by #25 — aliases (`pomegranate juice → pomegranate`) were being dropped at lookup. |
+| #27 | Whole-grain matcher fidelity + emoji-resolver overhaul | "whole wheat bread" no longer collapses to "white bread"; `FoodEmoji.resolve` rewritten with priority cascade. |
+| #28 | USDA expansion 377 → 501 + build script | `scripts/build_usda_nutrition.py` consumes FoodData Central CSVs; +124 curated entries. GI-DB coverage 367→488 / 776. |
+| #29 | iOS-target matcher regression tests (`Tests/MatchingTests/`) | Real Core Data store; pins `bread →∅`, `chicken →∅`, `grilled chicken ↛ fried chicken`. (Plan A.5) |
+| #30 | CI via GitHub Actions | `swift test` + `xcodebuild build` for iOS Simulator on every PR. (Plan A.3) |
+| #31 | Core Data schema-change policy in CLAUDE.md | Documents the wipe-on-mismatch policy and when it must change (paid Apple Developer account / multi-user). (Plan A.4) |
+| #32 | CI: iOS XCTest suite alongside the simulator build | `xcodebuild test` job added. |
+| #33 | Haptic feedback in physics scenes | `UIImpactFeedbackGenerator(.light)` from SpriteKit contact callbacks in bucket / balance / waterline. (Plan B.7) |
+| #34 | Settings sheet with editable daily GL budget | `AppSettings.dailyGLBudgetKey` + `@AppStorage`-driven UI; default 100, range 50–200, step 5. (Plan B.5) |
+| #35 | Week-over-week comparison strip on Week tab | Second `@FetchRequest` for prior week, deltas surfaced via `WeekComparisonStrip`. (Plan B.10) |
+| #36 | VoiceOver labels on emoji items in SpriteKit scenes | Each `SKLabelNode` now carries `accessibilityLabel`. (Plan B.8) |
+| #37 | "Refine" affordance on low-confidence rows | Tap badge → search-style picker against `NutritionalProfile`; promote in two taps. (Plan B.9) |
+| #38 | Lock-screen + StandBy widget variants | `accessoryRectangular`, `accessoryCircular`, `accessoryInline` added to `GlycoTrackWidget`. (Plan B.6) |
+| #39 | Extract `ClaudeAPIClient` into `Modules/ClaudeAPI/` | No longer lives inside `TranscriptParser.swift`. (Plan C.12) |
+| #40 | Unified logging via `os.Logger` | `Modules/Logging/Log.swift` exposes categorized loggers (`app`, `network`, `coreData`, `voice`, `notifications`); `print(...)` removed from production paths. (Plan C.11) |
+| #41 | Encapsulate `Bundle.main.infoDictionary` lookups | `BuildInfo` / `AppInfo` follow the typed-accessor `APIKey` pattern. (Plan C.15) |
+| #42 | Profile + batch first-launch seed | `PersistenceController.seedNutritionalProfiles()` runs on a background context with batched inserts. Also added `MotionGravityController` (accelerometer-driven gravity for Bucket + Waterline scenes). (Plan C.14) |
+| #43 | SwiftLint integration with CI enforcement | `.swiftlint.yml` (force_unwrapping warning, line_length, function_body_length, large_tuple, cyclomatic_complexity); CI job blocks merges on errors. (Plan C.13) |
+| #44 (this PR) | UI refresh — simplify tabs, accelerometer gravity, restyled visuals | Detailed in the "UI Refresh — 2026-04-30" section above. Also routes deploy.sh build artifacts to the main repo root so worktree builds don't pollute the worktree. |
 
 ---
 
@@ -179,53 +198,187 @@ Tracks merged PRs that materially shape the product after the initial MVP deploy
 | Widget is strict mic button | Widget shows GL progress bar + mic deep-link | WidgetKit cannot access microphone |
 | Color = food group; food groups have a 6-color palette (DESIGN §6.3, §8) | **Food groups removed entirely.** Each food renders as a single emoji via `FoodEmoji.resolve(entry:)`; tier/confidence tinting kept for the row badge only. | Color-coding by food group never communicated as much as the emoji identity itself; testing showed users read the emoji first. |
 | GL × CL Quadrant is a 4-region plot in a modal sheet (DESIGN §8) | **Two-region plot embedded inline** on Today/Week/Month tabs (left/right, GL grows up from a 0 baseline) | Lower half would be permanently empty (GL is unsigned); modal added a tap to no purpose. |
-| 5 tabs (Home/Week/Month/Log/Summary) inside the system `TabView` (DESIGN §9) | 7 tabs (Today/Week/Month/Log/Summary/About/Debug) in a custom floating bar with a separated record-button pill on the right | Record action needed to be reachable from any tab; About + Debug are dev-facing. |
-| Daily GL budget hardcoded to 100 (DESIGN §3.1) | Constant `dailyGLBudgetUI` in `GLThreshold.swift`; `GIEngineCore` exposes its own `dailyGLBudget` for tests | Two homes is intentional — UI and engine want to evolve independently. iOS-target `GIEngine.swift` no longer redefines it. |
+| 5 tabs (Home/Week/Month/Log/Summary) inside the system `TabView` (DESIGN §9) | **4 tabs** (Today / Week / Month / Log) in a custom floating bar; record-button pill separated on the right; Settings / About / Debug consolidated into a `MoreSheet` reachable via a gear button on the Today tab. | Record action needed to be reachable from any tab; Summary tab + `SummaryGenerator` removed entirely (PR #44); Tug-of-War CL viz removed (PR #44). |
+| Daily GL budget hardcoded to 100 (DESIGN §3.1) | **User-editable** via `AppSettings.dailyGLBudgetKey` (`UserDefaults`-backed `@AppStorage`, default 100, range 50–200, step 5) — surfaced in MoreSheet's Settings pane, observed across Today/Month/PeriodSummary chips. `GIEngineCore` keeps its own `dailyGLBudget` constant for unit-test stability. | PR #34 made the budget user-editable; the engine constant is intentionally separate so tests and UI evolve independently. |
 | Tier 5 unrecognized foods (CLAUDE.md) | T5 returns GL=0/CL=0 with explicit "Not recognized" red badge | **Never** silently zero an unrecognized food into a high-confidence match; T5 is the load-bearing failure path. |
 
 ---
 
-## Suggested Next Steps (prioritized)
+## Suggested Next Steps — superseded 2026-05-01
 
-Concrete, mobile-app-developer-flavored proposals. Roughly grouped by impact ÷ effort. Pick top items per session; not a contract.
+The "A. Reliability & data quality", "B. UX refinements", and "C. Engineering hygiene" sections from the previous revision have all shipped (PRs #25–#43; see Post-MVP Iterations table above). Status:
 
-### A. Reliability & data quality (do these first)
+- ✅ A.1 USDA expansion (377 → 501) — #28
+- ✅ A.2 TranscriptParserCoreTests — #25
+- ✅ A.3 CI via GitHub Actions — #30, #32
+- ✅ A.4 Core Data schema-change policy documented — #31 (full migration deferred until paid-team / multi-user, intentionally)
+- ✅ A.5 iOS-side matcher regression tests — #29
+- ✅ B.5 Editable daily GL budget — #34
+- ✅ B.6 Lock-screen / StandBy widget — #38
+- ✅ B.7 Haptics — #33
+- ✅ B.8 VoiceOver — #36
+- ✅ B.9 Refine affordance — #37
+- ✅ B.10 Week-over-week strip — #35
+- ✅ C.11 `os.Logger` — #40
+- ✅ C.12 ClaudeAPIClient extraction — #39
+- ✅ C.13 SwiftLint — #43
+- ✅ C.14 Seed profiling/batching — #42
+- ✅ C.15 `Bundle.main.infoDictionary` encapsulation — #41
 
-1. ⚙️ **Expand `usda_nutrition.json`.** First pass landed: 377 → 501 entries (124 curated additions covering all named prod-log gaps — `pine nuts`, `chana masala`, `corn on the cob`, `gooseberries`, `cantaloupe`, etc. — plus common proteins, cheeses, vegetables, and composite dishes). GI-database coverage rose from 367/776 to 488/776, cutting silent CL=0 cases by ~33%. New `scripts/build_usda_nutrition.py` consumes USDA FoodData Central SR Legacy CSVs (`--fdc-dir` flag) and merges them with `scripts/usda_supplement.json`; running with the FDC bundle locally is the path to push past 1,500 entries. Missing GI entries also added: `whole wheat spaghetti` (GI 37), `tomato sauce` (GI 38), `honey wheat bread` (GI 72).
-2. ✅ **Add `Tests/TranscriptParserCoreTests/`** — landed in this-PR. 12 tests cover `parse(transcript:)` happy/malformed/preamble/empty paths, `decomposeIngredients` shape, and a regression test pinning the `HEADLINE-CARB RULE` in the system prompt.
-3. **CI via GitHub Actions** running `swift test` + `xcodebuild build … iOS Simulator` on every PR. Currently relies on local builds; one rebase-without-rebuild can land a broken `develop`.
-4. **Core Data migration plan.** The model is programmatic, so any new attribute is a manual `NSMappingModel` away from a wipe. Either document the "blow away local store on schema change" policy in CLAUDE.md, or wire up a lightweight migration test.
-5. **iOS-side matcher regression tests.** This-PR's matcher tightening (gate, prep-method block) is currently only verified by hand against the prod log export. A `Tests/MatchingTests/` target with an in-memory Core Data store would let us pin `bread →∅`, `chicken →∅`, `grilled chicken ↛ fried chicken`, and `white rice → steamed white rice` as named regressions. Needs `PersistenceController.init(inMemory:)` to be `internal`.
+D. and E. items below are preserved (deferred).
 
-### B. UX refinements (visible value to the user)
+---
 
-5. **Settings screen with editable daily GL budget.** Some users have physician-prescribed budgets that differ from the default 100. Today the budget is constant. Stored in `UserDefaults`, default 100, surfaced on Today + Month + summary chips.
-6. **Lock-screen / StandBy widget** (`accessoryRectangular`, `accessoryCircular`). Widget extension already exists; iOS 17 lock-screen widget is one extra `WidgetFamily` case + a slimmer view.
-7. **Haptic feedback** when an item lands in the bucket / on a balance plate (`UIImpactFeedbackGenerator(style: .light)` from a SpriteKit contact callback). Free polish.
-8. **VoiceOver labels** on emoji items in the SpriteKit scenes. Currently every food in the bucket is a generic SKNode with no accessibility label — VoiceOver users can't read the visualizations.
-9. **"Refine" affordance on low-confidence rows.** Today the user sees a red badge but has to open the edit sheet and retype. Tap the badge → present a search-style picker against `NutritionalProfile` so the user can promote the entry to a known food in two taps.
-10. **Week-over-week comparison strip on the Week tab** ("This week vs last week: GL avg ↓7"). Reuses `PeriodSummaryView`; one extra `@FetchRequest` for the prior week.
+## Path to App Store — 2026-05-01 (active workstream)
 
-### C. Engineering hygiene
+Goal: **submit GlycoTrack 1.0 to the App Store**. The plan splits into (1) engineering work that lives in this repo and (2) deployment logistics that live in the user's Apple/business accounts. Both must converge before submission.
 
-11. **Unified logging via `os.Logger`** instead of `print(...)`. Categorized (`network`, `coreData`, `voice`), respects Release builds.
-12. **Extract `ClaudeAPIClient`** from `Modules/TranscriptParser/TranscriptParser.swift` into `Modules/ClaudeAPI/`. It's used independently by `SummaryGenerator` and the Edit-recompute path; living inside `TranscriptParser.swift` is a layering smell.
-13. **SwiftLint** with rules for `force_unwrapping` (warning), `line_length`, `function_body_length`, `large_tuple`. Catches the kind of issue this PR found by hand.
-14. **Profile first-launch seeding.** `PersistenceController.seedNutritionalProfiles()` parses two JSONs and inserts ~1,150 rows on first launch. Visible delay on weak hardware? Move to a background context with a progress hint.
-15. **Replace `Bundle.main.infoDictionary` lookups for non-API-key config.** `BuildInfo`, `AppInfo`, and any future runtime flag should follow the `APIKey` enum pattern (typed accessor, single home).
+### 1. App-side engineering work (Claude / repo)
 
-### D. Strategic (multi-PR work, surface area changes)
+Ordered roughly by submission-blocker → polish.
 
-16. **HealthKit write integration.** Daily GL / CL aggregate writes to HealthKit so other apps (and the watch) can consume. Requires entitlement; gated to paid Apple Developer Program.
-17. **Apple Watch complication** showing today's GL ratio. Requires sharing the App Group + a tiny WatchKit target.
-18. **Background-refresh widget timeline** so the widget GL number updates without opening the app. Today the widget reads `UserDefaults` and that's only refreshed on log; combine with `WidgetCenter.shared.reloadTimelines(ofKind:)` after every log.
-19. **Soft-delete cleanup job** that hard-deletes entries with `isSoftDeleted == true` older than 30 days. Right now soft-deleted rows accumulate forever.
-20. **Cohort export** (CSV / Files-app integration). Personal-team users can't use CloudKit; an "Export logs" button writes a CSV they can email to themselves as a primitive backup.
+#### 1A. Submission blockers
 
-### E. Speculative / research-mode
+These will cause App Store Connect to reject upload or App Review to bounce the build.
 
-21. **Photo-based food logging via Vision + Claude vision API.** Already in DESIGN §17 but worth scoping a small spike.
-22. **On-device food-name embedding** (e.g. `NaturalLanguage` framework or a tiny CoreML model) to replace Levenshtein in T1/T2 with semantic match. "linguine" → "spaghetti" should resolve without falling all the way to Claude.
+1. **Add `PrivacyInfo.xcprivacy`.** Required for any third-party SDK and for app submission since iOS 17.4 (May 2024). GlycoTrack must declare:
+   - `NSPrivacyTracking = false` (we don't track across apps/sites)
+   - `NSPrivacyCollectedDataTypes` — health/fitness data (food logs are user content; voice transcript is processed but not retained server-side; declare what Anthropic receives)
+   - `NSPrivacyAccessedAPITypes` — `UserDefaults`, `FileTimestamp`, `SystemBootTime` if any usage requires them. Run Xcode 15+ "Privacy Report" generator.
+   - File location: `GlycoTrack/PrivacyInfo.xcprivacy` plus `GlycoTrackWidget/PrivacyInfo.xcprivacy` (each target needs its own).
+
+2. **Replace empty `UILaunchScreen`** in `GlycoTrack/Info.plist`. Today it's `<dict/>`, which produces a blank white frame. Add either a SwiftUI launch image (preferred — single image asset on a colored background) or a minimal launch storyboard. The 1024×1024 app icon source is reusable.
+
+3. **Fix `UIRequiredDeviceCapabilities`.** Currently lists `armv7`, which is wrong for an iOS 16+ app. Either remove the key entirely (recommended — Apple infers from min iOS version) or set it to `arm64`. Submitting with `armv7` will fail Apple's binary-architecture validation.
+
+4. **Bump version + build numbers strategically.** `CFBundleShortVersionString = 1.0`, `CFBundleVersion = 1`. Move to a script-driven scheme (e.g. read from git tags) so each TestFlight upload increments `CFBundleVersion` automatically — App Store Connect rejects re-uploads with the same build number.
+
+5. **Decide on the widget.** Without App Groups (free team), the widget shows empty data. For App Store submission, either:
+   - (a) Add `com.apple.security.application-groups` entitlement to both targets and bundle the suite name (paid program required) — and ship the widget as a real feature, OR
+   - (b) Hide the widget extension from this 1.0 submission entirely (remove from `project.yml`'s app-extension target list), ship voice + visualizations only. Add it back in 1.1 once paid-team features are validated.
+
+   Recommendation: **(b) for 1.0** — fewer review surfaces to defend, then add widget + lock-screen variants in a 1.1 follow-up once App Groups is enabled.
+
+6. **Validate the Release build.** Today only Debug builds have been exercised on device. Add a step (and a CI job) to do `xcodebuild archive -configuration Release` against an iOS device destination. This catches Release-only differences (e.g. `#if DEBUG` blocks, optimization-related crashes, missing assets in Release Copy Bundle Resources phase).
+
+#### 1B. App Review risk-reducers
+
+These won't block upload but materially raise the chance of first-pass approval.
+
+7. **Add a clear permissions-onboarding flow.** First launch should explain *why* we need mic + speech recognition before triggering the system permission alerts. Apple rejects apps that ask for sensitive permissions without context. A single "Welcome to GlycoTrack" sheet with a "Continue" button that then calls `requestAuthorization()` is enough.
+
+8. **Add an in-app privacy policy + support contact.** App Store Connect requires a privacy policy URL, but the app should also link to it from the About pane (`MoreSheet`). Same for a support email. Without these, App Review treats the app as a dark pattern.
+
+9. **Health-claim disclaimers.** GlycoTrack tracks "diabetes risk" / "heart disease risk" — language Apple's medical-app guideline (App Store Review Guideline 1.4) treats as a regulated claim. Either:
+   - Soften copy across `AboutPaneView` and onboarding to describe GL/CL as *informational dietary metrics*, not medical-grade indicators, OR
+   - Add a prominent "GlycoTrack is not a medical device. Consult your physician for diabetes / cardiovascular guidance." disclaimer at app launch and at the top of the About pane.
+
+   Recommendation: do both. Soften DESIGN-doc-flavored copy in user-facing text + add a one-time disclaimer.
+
+10. **Polish empty / error states.** Specifically:
+    - Today tab on a freshly-installed phone with zero entries: currently shows an empty bucket with no explainer. Add a subtle "Tap the mic to log your first meal" hint.
+    - Network failure during voice→Claude parse: currently surfaces only as a red `ListeningPill`. Add a gentle retry / fallback path.
+    - First-launch seeding spinner: profiling landed in #42, but the user-visible state during the ~1–2s seed is ambiguous on cold install. Add a "Loading nutritional database…" overlay if the seed is in flight.
+
+11. **Crash reporting.** Apple's Crashlytics surrogate (XCMetrics / xcrun crashes) is fine for v1.0 — no SDK needed. Make sure `UIApplicationMain` doesn't swallow exceptions silently. (Optional: add `os_log_fault` taps in known critical paths.)
+
+12. **TestFlight metadata.** Beta App Description, Test Information notes ("To test voice logging, tap the mic and say 'two slices of toast'"), tester contact email. Lives in App Store Connect, but the prose lives in the repo as `docs/testflight_notes.md` for review-prep.
+
+#### 1C. Optional polish (non-blocking, defer to 1.1 if time-pressed)
+
+13. **HealthKit write integration** (existing PLAN D.16). Once paid team is set up, write daily GL / CL aggregates so they're consumable from the Watch / Health app. Requires `NSHealthUpdateUsageDescription`, entitlement, and an opt-in toggle in Settings.
+14. **Background-refresh widget timeline** (existing D.18) — only relevant if 1A.5 chose path (a).
+15. **Soft-delete cleanup job** (existing D.19) — pre-launch is the right time before users have ageing soft-deleted rows.
+16. **Cohort export to CSV** (existing D.20) — also a useful App Review test path for reviewers who want to inspect the data structure.
+
+### 2. User-side deployment logistics
+
+These are things the user does in Apple/business accounts and a browser, not in code.
+
+#### 2A. Apple Developer Program enrollment
+
+- **Today's state:** the app is signed with a *free* Apple ID team — sufficient for sideload to your own iPhone (with 7-day cert expiry), but **cannot submit to TestFlight or the App Store**. This is the single biggest gating step.
+- **Action:** enroll at [developer.apple.com/programs](https://developer.apple.com/programs/) — $99/year.
+  - **Individual** enrollment: simpler, faster (~24h), legal name appears on the App Store listing as the seller.
+  - **Organization** enrollment: D-U-N-S Number required (free, ~1–2 week lead time via [dnb.com](https://www.dnb.com/duns-number/get-a-duns.html)), business legal name appears as seller. Choose this if you want a brand identity not tied to your personal name, or plan to add team members later.
+  - **Recommendation:** if you have an LLC / sole proprietorship already, do Organization. Otherwise Individual is fine for v1.0; you can convert to Organization later (Apple supports it but the process is involved).
+- Once enrolled, your Team ID (10-character alphanumeric) replaces the personal-team value in `GlycoTrack.local.xcconfig`. Re-add the speech-recognition + app-groups entitlements at that point.
+
+#### 2B. App Store Connect setup
+
+- **Reserve the bundle ID.** `com.glycotrack.app` is what the project uses. In App Store Connect → Certificates, IDs & Profiles → Identifiers, register this exact string. Reserve early — bundle IDs are first-come.
+- **Reserve the app name.** App Store names are also first-come. "GlycoTrack" must be available on the App Store globally; check via [App Store search](https://apps.apple.com/us/app/) before locking in. Trademark is separate from App Store reservation; if you're serious about the brand, run a basic [USPTO TESS search](https://tmsearch.uspto.gov/) too.
+- **Create the app record** in App Store Connect → Apps → "+" → New App. You'll need:
+  - Platform: iOS
+  - Bundle ID: the one you registered above
+  - SKU: any unique string (e.g. `GLYCOTRACK_2026`)
+  - Primary language: English (U.S.)
+
+#### 2C. Required listing assets
+
+- **App Icon** — already done (1024×1024 in `Assets.xcassets/AppIcon.appiconset/`).
+- **Screenshots** — required at minimum for one device size:
+  - **6.7" iPhone (15 Pro Max / 14 Pro Max)** — 1290×2796, up to 10 images.
+  - **6.5" iPhone (11 Pro Max / XS Max)** — 1284×2778 or 1242×2688, up to 10 images. (Optional but improves coverage.)
+  - **iPad** screenshots only required if your `TARGETED_DEVICE_FAMILY` includes iPad. Today it's `"1"` (iPhone-only) — keep it that way for v1.0.
+- **App Preview video** — optional, but high-converting. 15–30 seconds, portrait, no system UI in shot.
+- **Description** — up to 4,000 characters. Should explain GL vs CL in plain language, walk through voice logging, and end with a soft disclaimer.
+- **Keywords** — 100 characters, comma-separated. Candidates: `glycemic,cholesterol,diabetes,heart,food,log,nutrition,GL,CL,diet`.
+- **Promotional Text** — 170 characters; updateable without resubmitting. Use for "What's new in 1.0" / launch-week messaging.
+- **Category** — primary: Health & Fitness. Secondary: Food & Drink.
+- **Age rating** — fill out the questionnaire. Likely 4+ (no objectionable content) but the medical-information question may push it to 12+ ("infrequent/mild medical/treatment information").
+
+#### 2D. Required URLs (host these somewhere)
+
+- **Privacy policy URL** — *required*. Cannot ship without one. Minimum cover: what data the app collects (voice transcripts → Anthropic, nothing else server-side), what stays on-device, no third-party tracking, Anthropic's data-handling link. A static GitHub Pages page is sufficient. [Iubenda](https://www.iubenda.com/) generates compliant text for ~$30/yr if you don't want to write it yourself.
+- **Support URL** — *required*. A simple GitHub Pages page or a `mailto:` redirect is sufficient.
+- **Marketing URL** — optional. Skip for v1.0.
+
+#### 2E. Export compliance + tax
+
+- **Encryption export compliance.** GlycoTrack uses HTTPS (Anthropic API + Apple Speech). Standard Apple exemption applies. Set `ITSAppUsesNonExemptEncryption = false` in `Info.plist`. (Avoids the per-build prompt in App Store Connect.)
+- **Tax + banking forms.** Required even for a free app you don't intend to monetize, because Apple wants you to be eligible to accept payment if you change your mind. Goes in App Store Connect → Agreements, Tax, and Banking. Free apps need only the Free Apps agreement signed.
+
+#### 2F. App Review information
+
+- **Demo account credentials** — n/a (no login).
+- **Notes for reviewer** — write a short note explaining: "GlycoTrack is voice-first. To test, tap the mic on the Today tab and say 'I had a slice of toast and a glass of orange juice.' The app uses the Anthropic Claude API to parse the transcript; an API key is bundled with the build for review purposes."
+- **Review API key** — Apple's review pipeline calls your network endpoints. Make sure your Anthropic API key has enough quota for review traffic (probably <100 calls).
+
+### 3. Basic launch sequence (recommended order)
+
+```
+Week 0  →  Decide on Individual vs Organization Apple Developer enrollment.
+            (If Organization, kick off D-U-N-S now — 1-2 week lead time.)
+Week 1  →  Pay $99, complete Apple Developer enrollment.
+            In parallel: ship engineering items 1A.1–1A.6 (privacy manifest,
+            launch screen, armv7 fix, version scheme, widget decision,
+            release-build validation).
+Week 2  →  Ship engineering items 1B.7–1B.10 (onboarding, disclaimers,
+            empty/error states). Set up TestFlight in App Store Connect.
+            Recruit 5–10 beta testers (friends + family + r/diabetes Reddit).
+Week 3-5 → TestFlight beta (Internal first, then External). Iterate on
+            feedback. Fix any reviewer-blocking findings.
+Week 6  →  Prepare metadata: screenshots, description, privacy policy URL,
+            support URL. Submit for App Review.
+            (Median review time as of 2026: 24-48 hours, occasionally up to
+            a week.)
+Week 6+ → If approved: schedule release for the date you want. If
+            rejected: read the reviewer note carefully, iterate, resubmit
+            (each round is 1-2 days).
+```
+
+### 4. Post-launch backlog (preserves D + E from previous revision)
+
+| Item | Notes |
+|---|---|
+| **D.16 HealthKit write** | Daily GL/CL aggregate to HealthKit. Paid team gated. |
+| **D.17 Apple Watch complication** | Tiny WatchKit target sharing the App Group. |
+| **D.18 Background widget refresh** | Conditional on shipping the widget at all (1A.5). |
+| **D.19 Soft-delete cleanup** | Hard-delete `isSoftDeleted == true` rows older than 30 days. |
+| **D.20 CSV export** | Files-app integration. Useful for App Review too. |
+| **E.21 Photo-based food logging** | Vision + Claude vision API. DESIGN §17. |
+| **E.22 On-device food-name embedding** | Replace Levenshtein with semantic match in T1/T2. |
 
 ---
 

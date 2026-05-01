@@ -84,6 +84,10 @@ See [DESIGN.md](DESIGN.md) for the full product design document.
 |--------|------|---------|
 | LocalStorage | `GlycoTrack/Modules/LocalStorage/` | Core Data CRUD |
 | VoiceCapture | `GlycoTrack/Modules/VoiceCapture/` | Speech recognition |
+| ClaudeAPI | `GlycoTrack/Modules/ClaudeAPI/` | Anthropic API wrapper (extracted in PR #39) |
+| Logging | `GlycoTrack/Modules/Logging/` | Categorized `os.Logger` instances |
+| Settings | `GlycoTrack/Modules/Settings/` | `AppSettings` keys + defaults (e.g. user-editable daily GL budget) |
+| Motion | `GlycoTrack/Modules/Motion/` | `MotionGravityController` — accelerometer-driven gravity for SpriteKit scenes |
 | NotificationManager | `GlycoTrack/Modules/NotificationManager/` | End-of-day push |
 
 ## Data Flow
@@ -97,7 +101,16 @@ See [DESIGN.md](DESIGN.md) for the full product design document.
 ## Running Tests
 
 ```bash
-swift test   # 26 tests, all pass
+swift test                                          # SPM core targets (engines + parser)
+xcodebuild test -project GlycoTrack.xcodeproj \
+  -scheme GlycoTrack \
+  -destination 'platform=iOS Simulator,name=iPhone 15'   # iOS-only suites (matcher regression tests)
 ```
 
-Tests cover GL/CL calculations against published nutritional tables and dietary pattern validation (Mediterranean vs. American fast food).
+Test coverage:
+- `Tests/GIEngineCoreTests/` — GL calculations against published nutritional tables.
+- `Tests/CLEngineCoreTests/` — CL calculations + Mediterranean-vs-American-fast-food dietary-pattern validation.
+- `Tests/TranscriptParserCoreTests/` — Claude API parser happy / malformed / preamble paths + decomposition contract + HEADLINE-CARB RULE regression.
+- `Tests/MatchingTests/` — iOS XCTest bundle running against a real in-memory Core Data store. Pins matcher regressions (e.g. `bread →∅`, `chicken →∅`, `grilled chicken ↛ fried chicken`).
+
+CI runs all of the above on every PR via `.github/workflows/ci.yml`, plus SwiftLint.
