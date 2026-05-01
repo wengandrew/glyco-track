@@ -20,9 +20,8 @@ struct HomeTabView: View {
     private var allEntriesAsc: FetchedResults<FoodLogEntry>
 
     @State private var selectedDate: Date = Calendar.current.startOfDay(for: Date())
-    @State private var clPrototype: CLPrototype = .tugOfWar
     @State private var selectedEntry: FoodLogEntry?
-    @State private var showSettings: Bool = false
+    @State private var showMore: Bool = false
 
     /// Reactive binding to the user's GL budget so the bucket / status chip
     /// re-render when the value changes in Settings.
@@ -42,8 +41,6 @@ struct HomeTabView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 18) {
-                    recordingSection
-
                     let entryArray = Array(entries)
                     let totalGL = entryArray.reduce(0) { $0 + $1.computedGL }
 
@@ -64,28 +61,29 @@ struct HomeTabView: View {
                     .contentShape(Rectangle())
                     .gesture(horizontalSwipe)
 
-                    // ── CL SECTION ───────────────────────────────
+                    // ── CL SECTION (Balance — primary lens) ─────
                     MetricSection(
                         title: "Cholesterol Load",
                         subtitle: "Fats & fiber · heart risk",
                         accent: .clAccent,
                         icon: "heart.fill"
                     ) {
-                        Picker("CL view", selection: $clPrototype) {
-                            ForEach(CLPrototype.allCases) { p in
-                                Text(p.shortLabel).tag(p)
-                            }
-                        }
-                        .pickerStyle(.segmented)
+                        BalanceScaleView(entries: entryArray, dateKey: selectedDate)
+                    }
+                    .contentShape(Rectangle())
+                    .gesture(horizontalSwipe)
 
-                        switch clPrototype {
-                        case .tugOfWar:
-                            TugOfWarBarView(entries: entryArray)
-                        case .waterline:
-                            WaterlineView(entries: entryArray, dateKey: selectedDate)
-                        case .balance:
-                            BalanceScaleView(entries: entryArray, dateKey: selectedDate)
-                        }
+                    // ── CL SECTION (Waterline — second lens) ────
+                    // Same data, different reading: floats vs sinks. Scrolled
+                    // to deliberately so the primary Balance view is the
+                    // headline; users who want the alternate view scroll for it.
+                    MetricSection(
+                        title: "Waterline",
+                        subtitle: "Same data, different reading",
+                        accent: .clAccent,
+                        icon: "drop.fill"
+                    ) {
+                        WaterlineView(entries: entryArray, dateKey: selectedDate)
                     }
                     .contentShape(Rectangle())
                     .gesture(horizontalSwipe)
@@ -103,22 +101,22 @@ struct HomeTabView: View {
                 }
                 .padding(.bottom, 24)
             }
-            .navigationTitle(titleForNav)
+            .navigationTitle("Your Day")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
-                        showSettings = true
+                        showMore = true
                     } label: {
                         Image(systemName: "gearshape")
-                            .accessibilityLabel("Settings")
+                            .accessibilityLabel("Settings, About, Debug")
                     }
                 }
             }
             .sheet(item: $selectedEntry) { entry in
                 FoodEntryDetailSheet(entry: entry)
             }
-            .sheet(isPresented: $showSettings) {
-                SettingsView()
+            .sheet(isPresented: $showMore) {
+                MoreSheet()
             }
         }
         .onChange(of: selectedDate) { newDate in
@@ -208,10 +206,6 @@ struct HomeTabView: View {
         return Calendar.current.isDate(selectedDate, inSameDayAs: earliest)
     }
 
-    private var titleForNav: String {
-        isToday ? "Today" : DateFormatter.short.string(from: selectedDate)
-    }
-
     private var dateHeading: String {
         isToday ? "Today" : DateFormatter.weekdayMonthDay.string(from: selectedDate)
     }
@@ -240,54 +234,6 @@ struct HomeTabView: View {
         }
     }
 
-    // MARK: - Recording status
-
-    /// The actual record button now lives in the floating tab bar
-    /// (`RootTabView`). This section is feedback-only: shows transcript,
-    /// processing progress, and any error.
-    @ViewBuilder
-    private var recordingSection: some View {
-        let hasContent =
-            voiceCapture.isRecording
-            || !voiceCapture.transcript.isEmpty
-            || logProcessor.isProcessing
-            || logProcessor.lastError != nil
-
-        if hasContent {
-            VStack(spacing: 8) {
-                if voiceCapture.isRecording {
-                    Text("Listening…")
-                        .font(.caption)
-                        .foregroundColor(.red)
-                }
-
-                if voiceCapture.isRecording || !voiceCapture.transcript.isEmpty {
-                    Text(voiceCapture.transcript)
-                        .font(.caption)
-                        .padding(.horizontal)
-                        .multilineTextAlignment(.center)
-                }
-
-                if logProcessor.isProcessing {
-                    HStack {
-                        ProgressView()
-                        Text("Processing your food log…")
-                            .font(.caption)
-                            .foregroundColor(.secondary)
-                    }
-                }
-
-                if let err = logProcessor.lastError {
-                    Text("Could not process: \(err)")
-                        .font(.caption)
-                        .foregroundColor(.red)
-                        .padding(.horizontal)
-                }
-            }
-            .padding(.top, 8)
-        }
-    }
-
     // MARK: - Predicate
 
     static func predicate(for date: Date) -> NSPredicate {
@@ -298,20 +244,6 @@ struct HomeTabView: View {
         let end = Calendar.current.date(byAdding: .day, value: 1, to: start) ?? start.addingTimeInterval(86400)
         return NSPredicate(format: "timestamp >= %@ AND timestamp < %@ AND isSoftDeleted == NO",
                            start as NSDate, end as NSDate)
-    }
-}
-
-// MARK: - Prototype enums
-
-enum CLPrototype: String, CaseIterable, Identifiable {
-    case tugOfWar, waterline, balance
-    var id: String { rawValue }
-    var shortLabel: String {
-        switch self {
-        case .tugOfWar:  return "Tug of War"
-        case .waterline: return "Waterline"
-        case .balance:   return "Balance"
-        }
     }
 }
 
@@ -326,37 +258,46 @@ struct MetricSection<Content: View, Trailing: View>: View {
     @ViewBuilder let content: () -> Content
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack(spacing: 8) {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(spacing: 12) {
                 ZStack {
                     Circle()
-                        .fill(accent.opacity(0.15))
-                        .frame(width: 28, height: 28)
+                        .fill(accent)
+                        .frame(width: 36, height: 36)
+                        .shadow(color: accent.opacity(0.25), radius: 4, x: 0, y: 2)
                     Image(systemName: icon)
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundColor(accent)
+                        .font(.system(size: 15, weight: .bold))
+                        .foregroundColor(.white)
                 }
-                VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: 1) {
                     Text(title)
-                        .font(.title3.weight(.bold))
-                    Text(subtitle)
-                        .font(.caption2)
+                        .font(.system(.title2, design: .rounded, weight: .bold))
+                        .foregroundColor(.primary)
+                    Text(subtitle.uppercased())
+                        .font(.system(size: 10, weight: .semibold, design: .rounded))
+                        .tracking(0.6)
                         .foregroundColor(.secondary)
                 }
                 Spacer()
                 trailing()
             }
-            .padding(.horizontal)
+            .padding(.horizontal, 18)
+            .padding(.top, 14)
 
             content()
-                .padding(.horizontal)
+                .padding(.horizontal, 14)
+                .padding(.bottom, 14)
         }
-        .padding(.vertical, 8)
         .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(accent.opacity(0.04))
-                .padding(.horizontal, 8)
+            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                .fill(Color(.secondarySystemBackground))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 22, style: .continuous)
+                        .stroke(accent.opacity(0.10), lineWidth: 1)
+                )
+                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 4)
         )
+        .padding(.horizontal, 12)
     }
 }
 
@@ -411,18 +352,25 @@ struct StatChip: View {
     let color: Color
 
     var body: some View {
-        VStack(spacing: 2) {
+        VStack(spacing: 4) {
             Text(value)
-                .font(.system(size: 18, weight: .bold, design: .rounded))
+                .font(.system(size: 22, weight: .heavy, design: .rounded))
                 .foregroundColor(color)
-            Text(label)
-                .font(.system(size: 10))
+            Text(label.uppercased())
+                .font(.system(size: 9, weight: .semibold, design: .rounded))
+                .tracking(0.5)
                 .foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, 10)
-        .background(Color(.systemGray6))
-        .cornerRadius(10)
+        .padding(.vertical, 14)
+        .background(
+            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                .fill(color.opacity(0.08))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .stroke(color.opacity(0.18), lineWidth: 0.8)
+                )
+        )
     }
 }
 

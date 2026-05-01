@@ -22,7 +22,21 @@ cd "$ROOT"
 SCHEME="GlycoTrack"
 BUNDLE_ID="com.glycotrack.app"
 CONFIG="Debug"
-BUILD_DIR="$ROOT/build"
+
+# Always root build artifacts in the *main* repo, never inside a worktree.
+# git-common-dir points to the primary .git dir regardless of which worktree
+# we're invoked from; its parent is the main repo root.
+_GIT_COMMON="$(git rev-parse --git-common-dir)"
+MAIN_ROOT="$(cd "$(dirname "$_GIT_COMMON")" && pwd)"
+if [[ "$MAIN_ROOT" == "$ROOT" ]]; then
+  # Running from the main worktree — use build/ directly.
+  BUILD_DIR="$MAIN_ROOT/build"
+else
+  # Linked worktree — use a named subdirectory so two worktrees can build
+  # in parallel without clobbering each other.
+  BUILD_DIR="$MAIN_ROOT/build/$(basename "$ROOT")"
+fi
+
 APP_PATH="$BUILD_DIR/Build/Products/$CONFIG-iphoneos/$SCHEME.app"
 
 # xcodebuild uses the hardware UDID (00008110-...)

@@ -1,7 +1,10 @@
 import SwiftUI
 import CoreData
 
-struct DebugTabView: View {
+/// Debug pane content. Hosted inside `MoreSheet`'s segmented control — no
+/// `NavigationStack` wrapper here. The pane exposes its export action via
+/// the binding `exportRequested` so `MoreSheet`'s toolbar button can trigger it.
+struct DebugPaneView: View {
     @Environment(\.managedObjectContext) private var context
 
     @FetchRequest(
@@ -16,25 +19,31 @@ struct DebugTabView: View {
     @State private var exportPayload: String?
     @State private var showShareSheet = false
 
+    /// Bindable trigger for the export action — MoreSheet's toolbar Export
+    /// button bumps the bool, which we observe and act on. Cleaner than
+    /// hoisting a closure through the NavigationView.
+    @Binding var exportRequested: Bool
+
+    init(exportRequested: Binding<Bool> = .constant(false)) {
+        self._exportRequested = exportRequested
+    }
+
     var body: some View {
-        NavigationStack {
-            List {
-                buildInfoSection
-                statsSection
-                foodLogSection
-                nutritionalProfileSection
+        List {
+            buildInfoSection
+            statsSection
+            foodLogSection
+            nutritionalProfileSection
+        }
+        .sheet(isPresented: $showShareSheet) {
+            if let payload = exportPayload {
+                ShareSheet(items: [payload])
             }
-            .navigationTitle("Debug")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button("Export JSON") { buildExport() }
-                }
-            }
-            .sheet(isPresented: $showShareSheet) {
-                if let payload = exportPayload {
-                    ShareSheet(items: [payload])
-                }
-            }
+        }
+        .onChange(of: exportRequested) { newValue in
+            guard newValue else { return }
+            buildExport()
+            exportRequested = false
         }
     }
 

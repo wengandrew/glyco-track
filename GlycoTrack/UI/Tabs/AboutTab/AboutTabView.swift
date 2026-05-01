@@ -1,30 +1,29 @@
 // swiftlint:disable line_length
 //
-// AboutTabView is mostly multi-paragraph educational copy inside `Text("""…""")`
+// AboutPaneView is mostly multi-paragraph educational copy inside `Text("""…""")`
 // blocks. Reflowing those at 160 chars would just insert mid-sentence line
 // breaks the reader doesn't see anyway — the visible width is whatever
 // SwiftUI's layout engine decides at runtime. Disable file-wide.
 
 import SwiftUI
 
-struct AboutTabView: View {
+/// About pane content. Hosted inside `MoreSheet`'s segmented control — no
+/// `NavigationView` wrapper here.
+struct AboutPaneView: View {
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 22) {
-                    heroSection
-                    whatItTracksSection
-                    glMathSection
-                    clMathSection
-                    quadrantSection
-                    tiersSection
-                    sourcesSection
-                    footnote
-                }
-                .padding(.horizontal)
-                .padding(.vertical, 16)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 22) {
+                heroSection
+                whatItTracksSection
+                glMathSection
+                clMathSection
+                quadrantSection
+                tiersSection
+                sourcesSection
+                footnote
             }
-            .navigationTitle("About")
+            .padding(.horizontal)
+            .padding(.vertical, 16)
         }
     }
 
@@ -33,7 +32,7 @@ struct AboutTabView: View {
     private var heroSection: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text("GlycoTrack")
-                .font(.largeTitle.weight(.bold))
+                .font(.system(.largeTitle, design: .rounded, weight: .bold))
             Text("Two numbers. Two kinds of risk. One honest picture of what you ate.")
                 .font(.callout)
                 .foregroundColor(.secondary)
@@ -185,7 +184,7 @@ Most single-score tools collapse this into one number and hide the trade-off. Gl
                 Image(systemName: icon)
                     .foregroundColor(accent)
                 Text(title)
-                    .font(.headline)
+                    .font(.system(.headline, design: .rounded, weight: .semibold))
             }
             content()
                 .font(.callout)
@@ -195,7 +194,7 @@ Most single-score tools collapse this into one number and hide the trade-off. Gl
         .padding(14)
         .background(
             RoundedRectangle(cornerRadius: 14)
-                .fill(Color(.systemGray6))
+                .fill(Color(.secondarySystemBackground))
         )
     }
 

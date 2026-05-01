@@ -22,17 +22,6 @@ public struct ClaudeResponse: Decodable {
     let content: [ClaudeContentBlock]
 }
 
-// SSE event types for streaming
-private struct SSEEvent: Decodable {
-    let type: String
-    let delta: SSEDelta?
-}
-
-private struct SSEDelta: Decodable {
-    let type: String?
-    let text: String?
-}
-
 /// Minimal interface used by `TranscriptParser` so tests can stub canned
 /// responses without a real network call. `ClaudeAPIClient` conforms below.
 public protocol ClaudeAPISending: AnyObject {
@@ -110,59 +99,4 @@ public final class ClaudeAPIClient: ClaudeAPISending {
         return text
     }
 
-    /// Stream text deltas via SSE (Server-Sent Events). Yields token strings as they arrive.
-    /// Use this for long-form responses (e.g. SummaryGenerator) where progressive display matters.
-    public func stream(system: String, userMessage: String, maxTokens: Int = 1024) -> AsyncThrowingStream<String, Error> {
-        AsyncThrowingStream { continuation in
-            Task {
-                do {
-                    let request = ClaudeRequest(
-                        model: Self.model,
-                        max_tokens: maxTokens,
-                        system: system,
-                        messages: [ClaudeMessage(role: "user", content: userMessage)],
-                        stream: true
-                    )
-
-                    var urlRequest = URLRequest(url: Self.baseURL)
-                    urlRequest.httpMethod = "POST"
-                    urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                    urlRequest.setValue(self.apiKey, forHTTPHeaderField: "x-api-key")
-                    urlRequest.setValue(Self.anthropicVersion, forHTTPHeaderField: "anthropic-version")
-                    urlRequest.httpBody = try JSONEncoder().encode(request)
-
-                    let (bytes, response): (URLSession.AsyncBytes, URLResponse)
-                    do {
-                        (bytes, response) = try await self.session.bytes(for: urlRequest)
-                    } catch {
-                        throw ClaudeAPIError.networkError(error)
-                    }
-
-                    guard let httpResponse = response as? HTTPURLResponse else {
-                        throw ClaudeAPIError.invalidResponse(0)
-                    }
-                    guard httpResponse.statusCode == 200 else {
-                        throw ClaudeAPIError.invalidResponse(httpResponse.statusCode)
-                    }
-
-                    for try await line in bytes.lines {
-                        // SSE lines with data payload start with "data: "
-                        guard line.hasPrefix("data: ") else { continue }
-                        let payload = String(line.dropFirst(6))
-                        guard payload != "[DONE]" else { break }
-                        guard let data = payload.data(using: .utf8),
-                              let event = try? JSONDecoder().decode(SSEEvent.self, from: data),
-                              event.type == "content_block_delta",
-                              event.delta?.type == "text_delta",
-                              let text = event.delta?.text
-                        else { continue }
-                        continuation.yield(text)
-                    }
-                    continuation.finish()
-                } catch {
-                    continuation.finish(throwing: error)
-                }
-            }
-        }
-    }
 }

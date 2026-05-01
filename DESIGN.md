@@ -1,13 +1,33 @@
 # GlycoTrack — Complete Design Document (MVP)
 
-> **Note (2026-04-27):** This is the original MVP spec, preserved for the
-> "why" record. Several sections have since drifted from what's actually
-> shipped — most notably food groups and their color palette have been
-> removed in favor of single-emoji food identity, the GL × CL Quadrant is now
-> a 2-region inline plot rather than a 4-region modal, and the tab bar is a
-> custom floating two-pill bar (not the system `TabView`). For the
-> authoritative current state, see `CLAUDE.md` (architecture invariants) and
-> `PLAN.md` § "Design vs Implementation Divergences" (delta table).
+> **Note (2026-04-27, refreshed 2026-05-01):** This is the original MVP spec,
+> preserved for the "why" record. Several sections have since drifted from
+> what's actually shipped — most notably:
+>
+> - **Food groups + their 6-color palette are removed.** Each food renders as
+>   a single emoji via `FoodEmoji.resolve(entry:)`. Tier/confidence still drive
+>   the row badge color.
+> - **The GL × CL Quadrant is now a 2-region inline plot** embedded on
+>   Today/Week/Month — not a 4-region modal sheet. (GL is unsigned, so the
+>   lower half would always be empty.)
+> - **The tab bar is a custom floating two-pill bar** (not the system
+>   `TabView`) with a separated record-button on the right.
+> - **The Summary tab and `SummaryGenerator` module are removed** (PR #44).
+>   Narrative AI summaries weren't carrying their weight against the
+>   visualizations.
+> - **The Tug-of-War CL viz is removed** (PR #44). The CL views in production
+>   are Balance (primary) and Waterline (scroll-down second lens).
+> - **Settings / About / Debug live in a single `MoreSheet`** behind a gear
+>   button on the Today tab — none are first-class tabs.
+> - **Daily GL budget is now user-editable** (Settings → daily GL budget,
+>   default 100, range 50–200) — the DESIGN-doc claim that it's hardcoded is
+>   stale (PR #34).
+> - **Voice pipeline is on-device speech → text → Claude**, not real-time
+>   audio streaming to Claude.
+>
+> For the authoritative current state, see `CLAUDE.md` (architecture
+> invariants) and `PLAN.md` § "Design vs Implementation Divergences" (delta
+> table) + § "Path to App Store" (active workstream).
 
 ## 1. Product Vision
 

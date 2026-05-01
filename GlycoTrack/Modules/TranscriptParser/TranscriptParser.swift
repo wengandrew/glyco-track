@@ -91,8 +91,8 @@ Output: [{"name":"beef patty","grams":110},{"name":"cheddar cheese","grams":25},
 """
 
 // `ClaudeAPIClient` lives in `Modules/ClaudeAPI/ClaudeAPIClient.swift` —
-// it's used by SummaryGenerator and the Edit-recompute path independently
-// of TranscriptParser, so it doesn't belong nested inside this file.
+// it's used by the Edit-recompute path independently of TranscriptParser,
+// so it doesn't belong nested inside this file.
 
 final class TranscriptParser {
     private let client: ClaudeAPIClient

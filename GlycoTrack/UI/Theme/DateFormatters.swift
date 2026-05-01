@@ -32,4 +32,14 @@ extension DateFormatter {
         f.dateFormat = "MM/dd/yyyy"
         return f
     }()
+
+    /// "7:34pm" / "12:05am" — minute-precision wall-clock time used in list rows.
+    /// Lowercase am/pm (`a` token's case follows `amSymbol`/`pmSymbol`).
+    static let hourMinute: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "h:mma"
+        f.amSymbol = "am"
+        f.pmSymbol = "pm"
+        return f
+    }()
 }
