@@ -13,7 +13,8 @@ xcuserdata/
 *.xcuserstate
 DerivedData/
 .build/
-# `scripts/deploy.sh` writes its build artifacts into a top-level `build/`.
+# `scripts/deploy.sh` writes build artifacts into `build/` at the main repo root.
+# Worktree builds use `build/<worktree-name>/` — all covered by this rule.
 build/
 *.o
 *.d
