@@ -92,17 +92,52 @@ The iOS wrappers mirror the SPM API exactly. Tests run against the SPM targets v
 VoiceCapture (SFSpeechRecognizer, on-device)
   → transcript string
   → FoodLogProcessor.process(transcript:context:)         [HomeTab/FoodLogProcessor.swift]
-    → TranscriptParser.parse() → [ParsedFood]
+    → TranscriptParser.parse(transcript:, currentTime:)
+        → [ParsedFood] each carrying optional `loggedAt: Date?`
     → FoodMatcher.resolve(food:) → FoodResolution          [Modules/Matching/FoodMatcher.swift]
         T1  NutritionalRepository.findBestMatch()  — exact / contains / fuzzy whole-name
         T2  NutritionalRepository.findComponents() — reverse-substring decomposition
         T3  TranscriptParser.decomposeIngredients() → Claude API → per-ingredient DB lookup
         T4  T3 + T2 fallback for unresolved ingredients
         T5  unrecognized → GL = 0, CL = 0, red badge
-    → FoodLogRepository.create() → FoodLogEntry (computedGL, computedCL, tier, confidence)
+    → FoodLogRepository.create(timestamp: food.loggedAt ?? recordedAt, …)
+        → FoodLogEntry (computedGL, computedCL, tier, confidence)
 ```
 
 `FoodLogProcessor` is `@MainActor ObservableObject`. `FoodMatcher`, `NutritionalRepository`, and `FoodLogRepository` are all `@MainActor` — see the Core Data threading rule below.
+
+#### Time-context resolution (`ParsedFood.loggedAt`)
+
+`TranscriptParser.parse(transcript:, currentTime:)` hands Claude a
+`"Current time: <ISO-8601>\nTranscript: …"` user message. Claude is
+prompted to populate `loggedAt` **only** when the transcript contains a
+detectable time phrase ("two hours ago", "yesterday at 5pm", "for
+breakfast", "this morning at 9am") and to **omit** the field otherwise.
+`FoodLogProcessor` then stamps the entry with
+`food.loggedAt ?? recordedAt`, where `recordedAt` is captured **once**
+at the top of `process()` so every food in the same recording shares a
+single "now" anchor.
+
+Two invariants guard this path — don't regress them:
+
+1. **Defensive future-time clamp.** Even though the prompt forbids
+   `loggedAt > currentTime`, the processor applies
+   `min(food.loggedAt, recordedAt)` as a belt-and-suspenders guard.
+   Keep this — Claude's prompt-following on time arithmetic isn't
+   bulletproof and a future-stamped entry would scramble the
+   "navigating into the future" guards in `HomeTabView` /
+   `WeekTabView`.
+
+2. **Tolerant decoding never throws.** Omitted field, explicit `null`,
+   or unparseable string all yield `nil` — never `throw`. Falling back
+   to the recording time is always preferable to dropping the entry,
+   and the parser tests
+   (`testParseTreatsExplicitNullLoggedAtAsNil`,
+   `testParseIgnoresMalformedLoggedAtString`) pin this behavior.
+
+The `loggedAt` field is also Equatable+Codable so the SPM core's
+`ParsedFood` can be shipped through any future serialization layer
+without losing the time context.
 
 ### GL/CL computation accuracy — critical rules
 
