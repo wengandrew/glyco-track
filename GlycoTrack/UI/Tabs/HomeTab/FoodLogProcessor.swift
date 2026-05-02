@@ -16,9 +16,15 @@ final class FoodLogProcessor: ObservableObject {
         let client = ClaudeAPIClient(apiKey: APIKey.claude)
         let parser = TranscriptParser(client: client)
 
+        // Anchor the parser's time-context resolution to the moment the user
+        // finished speaking. Captured once so every food in this transcript
+        // resolves "now" against the same instant — and so the fallback
+        // (omitted `loggedAt` → recording time) is consistent across foods.
+        let recordedAt = Date()
+
         let foods: [ParsedFood]
         do {
-            foods = try await parser.parse(transcript: transcript)
+            foods = try await parser.parse(transcript: transcript, currentTime: recordedAt)
         } catch {
             Log.network.error("TranscriptParser.parse failed: \(error.localizedDescription, privacy: .public)")
             lastError = error.localizedDescription
@@ -37,12 +43,19 @@ final class FoodLogProcessor: ObservableObject {
         for food in foods {
             let resolution = await matcher.resolve(food: food)
 
+            // `food.loggedAt` is set when Claude detected a time phrase in the
+            // transcript ("two hours ago", "yesterday at 5pm", …). Otherwise
+            // we fall back to the recording time. Defensive clamp to
+            // `recordedAt` in case Claude returns a future timestamp despite
+            // the prompt rule against it.
+            let resolved = food.loggedAt.map { min($0, recordedAt) } ?? recordedAt
+
             _ = logRepo.create(
                 rawTranscript: transcript,
                 foodDescription: food.food,
                 quantity: [food.quantity, food.unit].map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }.joined(separator: " "),
                 quantityGrams: food.grams,
-                timestamp: Date(),
+                timestamp: resolved,
                 confidenceScore: resolution.confidence,
                 parsingMethod: resolution.tier.rawValue,
                 referenceFood: resolution.matchSummary,
