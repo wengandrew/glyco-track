@@ -56,6 +56,8 @@ final class TranscriptParserTests: XCTestCase {
         XCTAssertEqual(foods[0].quantity, "1")
         XCTAssertEqual(foods[0].unit, "cup")
         XCTAssertEqual(foods[0].grams, 234)
+        // No `loggedAt` in the response → caller uses the recording time.
+        XCTAssertNil(foods[0].loggedAt)
     }
 
     func testParseMultipleFoods() async throws {
@@ -189,6 +191,120 @@ final class TranscriptParserTests: XCTestCase {
         let ingredients = await parser.decomposeIngredients(foodName: "x", totalGrams: 100)
 
         XCTAssertEqual(ingredients, [])
+    }
+
+    // MARK: - Time-context (`loggedAt`) decoding
+
+    func testParseDecodesLoggedAtWhenPresent() async throws {
+        // Claude includes `loggedAt` because the user said "two hours ago".
+        let stub = StubClaudeClient(nextResponse: """
+        [{"food":"oatmeal","quantity":"1","unit":"cup","grams":234,"loggedAt":"2026-05-02T12:30:00-07:00"}]
+        """)
+        let parser = TranscriptParser(client: stub)
+
+        let foods = try await parser.parse(transcript: "I had one cup of oatmeal two hours ago")
+
+        XCTAssertEqual(foods.count, 1)
+        XCTAssertNotNil(foods[0].loggedAt)
+        // 2026-05-02T12:30:00-07:00 == 2026-05-02T19:30:00Z.
+        let expected = ISO8601DateFormatter().date(from: "2026-05-02T19:30:00Z")
+        XCTAssertEqual(foods[0].loggedAt, expected)
+    }
+
+    func testParseDecodesLoggedAtPerFoodWhenDifferentTimes() async throws {
+        // Per-food anchoring: "toast at 8am and a banana at 10am" yields
+        // distinct timestamps on each food.
+        let stub = StubClaudeClient(nextResponse: """
+        [
+          {"food":"toast","quantity":"1","unit":"slice","grams":30,"loggedAt":"2026-05-02T08:00:00-07:00"},
+          {"food":"banana","quantity":"1","unit":"piece","grams":118,"loggedAt":"2026-05-02T10:00:00-07:00"}
+        ]
+        """)
+        let parser = TranscriptParser(client: stub)
+
+        let foods = try await parser.parse(transcript: "toast at 8am and a banana at 10am")
+
+        XCTAssertEqual(foods.count, 2)
+        XCTAssertNotNil(foods[0].loggedAt)
+        XCTAssertNotNil(foods[1].loggedAt)
+        XCTAssertNotEqual(foods[0].loggedAt, foods[1].loggedAt)
+    }
+
+    func testParseTreatsExplicitNullLoggedAtAsNil() async throws {
+        // Tolerance: if Claude emits `"loggedAt": null` instead of omitting
+        // the key, the parser should still treat it as absent.
+        let stub = StubClaudeClient(nextResponse: """
+        [{"food":"banana","quantity":"1","unit":"piece","grams":118,"loggedAt":null}]
+        """)
+        let parser = TranscriptParser(client: stub)
+
+        let foods = try await parser.parse(transcript: "banana")
+
+        XCTAssertEqual(foods.count, 1)
+        XCTAssertNil(foods[0].loggedAt)
+    }
+
+    func testParseIgnoresMalformedLoggedAtString() async throws {
+        // If Claude returns garbage in `loggedAt`, fall back to nil rather
+        // than throwing — better to use the recording time than to drop the
+        // whole entry. This is the same robustness contract the parser
+        // already has for surrounding-prose tolerance.
+        let stub = StubClaudeClient(nextResponse: """
+        [{"food":"banana","quantity":"1","unit":"piece","grams":118,"loggedAt":"yesterday"}]
+        """)
+        let parser = TranscriptParser(client: stub)
+
+        let foods = try await parser.parse(transcript: "banana")
+
+        XCTAssertEqual(foods.count, 1)
+        XCTAssertNil(foods[0].loggedAt)
+    }
+
+    // MARK: - Time-context (prompt + user-message contract)
+
+    func testParseUserMessageIncludesCurrentTimePrefix() async throws {
+        // The parser must hand Claude the current time so relative phrases
+        // can be resolved. Format: "Current time: <ISO8601>\nTranscript: ...".
+        let stub = StubClaudeClient(nextResponse: "[]")
+        let parser = TranscriptParser(client: stub)
+
+        let fixedNow = ISO8601DateFormatter().date(from: "2026-05-02T14:30:00Z") ?? Date()
+        _ = try await parser.parse(transcript: "I had oatmeal", currentTime: fixedNow)
+
+        let userMessage = stub.lastUserMessage ?? ""
+        XCTAssertTrue(userMessage.hasPrefix("Current time: "),
+                      "user message must lead with 'Current time:' so Claude can anchor relative time phrases — got: \(userMessage)")
+        XCTAssertTrue(userMessage.contains("2026-05-02T14:30:00"),
+                      "user message must include the supplied currentTime in ISO-8601 form — got: \(userMessage)")
+        XCTAssertTrue(userMessage.contains("Transcript: I had oatmeal"),
+                      "user message must include the trimmed transcript on its own line — got: \(userMessage)")
+    }
+
+    /// The system prompt must keep the time-context rules. Production behavior
+    /// hinges on Claude emitting `loggedAt` only when the user said something
+    /// time-anchored — drift here would either flood every entry with a
+    /// (probably-wrong) timestamp or drop the feature entirely.
+    func testSystemPromptIncludesTimeContextRules() async throws {
+        let stub = StubClaudeClient(nextResponse: "[]")
+        let parser = TranscriptParser(client: stub)
+
+        _ = try await parser.parse(transcript: "anything")
+
+        let system = stub.lastSystem ?? ""
+        XCTAssertTrue(system.contains("loggedAt"),
+                      "system prompt must define the loggedAt field")
+        XCTAssertTrue(system.contains("OPTIONAL") || system.contains("optional"),
+                      "system prompt must mark loggedAt as optional")
+        XCTAssertTrue(system.contains("OMIT") || system.contains("omit"),
+                      "system prompt must instruct Claude to omit loggedAt when no time is mentioned")
+        XCTAssertTrue(system.contains("ago"),
+                      "system prompt must explain relative-time resolution (e.g. 'X hours ago')")
+        XCTAssertTrue(system.contains("yesterday"),
+                      "system prompt must explain absolute relative dates ('yesterday at <time>')")
+        XCTAssertTrue(system.contains("breakfast") && system.contains("lunch") && system.contains("dinner"),
+                      "system prompt must define meal-name defaults (breakfast/lunch/dinner)")
+        XCTAssertTrue(system.contains("NEVER set `loggedAt` to a time after"),
+                      "system prompt must forbid future timestamps")
     }
 
     // MARK: - Headline-carb prompt rule
