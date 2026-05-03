@@ -26,10 +26,12 @@
 		47DF8C211D4056AD241C73C4 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1FFC9BAF159DD2432CE8FD /* APIKey.swift */; };
 		4B8A74359D0BC603BFE227EE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19884C5A1F294CFAF5B9377E /* SettingsView.swift */; };
 		4BBADB6F44367C378B4CFA1E /* FoodMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6C16B19721941F485C06001 /* FoodMatcher.swift */; };
+		4DBC54F5618FC4B59C5C8A10 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 7F42371B1563B54DC2A80E1C /* PrivacyInfo.xcprivacy */; };
 		4DEBE8B1F01F6B2FED02B67F /* EntryRefiner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598246F40ECB3227E460D94B /* EntryRefiner.swift */; };
 		54376F4567B22EA7489FADA9 /* WeekTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C81FF29DB0DB6B3386701CC /* WeekTabView.swift */; };
 		545495522F0ACC99E8F83289 /* PeriodSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E838C1BDD90901F73964B424 /* PeriodSummaryView.swift */; };
 		55862B63557DD894F3273BD0 /* MotionGravityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CEC2EC94C1446A480D2887 /* MotionGravityController.swift */; };
+		5E5ECE4677EFFF862EF50EB9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 93A9D5283F50E4B8D7100995 /* PrivacyInfo.xcprivacy */; };
 		605851BDE11851A2BB4A67C2 /* FoodLogRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543CE564CFB84AEB79200F10 /* FoodLogRowView.swift */; };
 		6218DF6B76FCABF02538AFC0 /* GlycoTrackApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A1DA1067A0C7DDF9801DAD /* GlycoTrackApp.swift */; };
 		62AA37B27A1E46DBC2EACEF2 /* AliasIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB625239657C5BDAE0A0CA5 /* AliasIndex.swift */; };
@@ -144,11 +146,13 @@
 		781609117D8A1D76D625FCF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7967B02D3586B1A48FCB7F6A /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		7CA784CDE9FCC292E4B80263 /* VoiceCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCapture.swift; sourceTree = "<group>"; };
+		7F42371B1563B54DC2A80E1C /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		81F322F37F03E9F100F38B95 /* GlycoTrack.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = GlycoTrack.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89EBF428741DFCAA8D11F55F /* GLThreshold.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLThreshold.swift; sourceTree = "<group>"; };
 		8B61B27E6D6C9ADE92E928E7 /* RecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		8BB625239657C5BDAE0A0CA5 /* AliasIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AliasIndex.swift; sourceTree = "<group>"; };
 		8F3473895D984D30A720E75A /* TranscriptParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptParser.swift; sourceTree = "<group>"; };
+		93A9D5283F50E4B8D7100995 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		93C58B72C496B16CA9474321 /* usda_nutrition.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = usda_nutrition.json; sourceTree = "<group>"; };
 		947F0836C6D9B39CB6E6D8B6 /* SceneHaptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneHaptics.swift; sourceTree = "<group>"; };
 		97313B9C797857A9DBC2F462 /* LogTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTabView.swift; sourceTree = "<group>"; };
@@ -312,6 +316,7 @@
 			children = (
 				6CB33E089ABEA3AE532CD71B /* GlycoTrack.entitlements */,
 				2A10769B1466E35CD89B88F9 /* Info.plist */,
+				93A9D5283F50E4B8D7100995 /* PrivacyInfo.xcprivacy */,
 				4BD3A45289044783C82B6A52 /* App */,
 				26E4F6740B61E7DC36AAF4F5 /* Config */,
 				08694E0F1CE4E7939273BB57 /* Models */,
@@ -360,6 +365,7 @@
 				73D37631E30DEC9D009EB19A /* GlycoTrackWidget.swift */,
 				04E299D37D943223074C0464 /* GlycoTrackWidgetEntryView.swift */,
 				781609117D8A1D76D625FCF3 /* Info.plist */,
+				7F42371B1563B54DC2A80E1C /* PrivacyInfo.xcprivacy */,
 			);
 			path = GlycoTrackWidget;
 			sourceTree = "<group>";
@@ -570,6 +576,7 @@
 			buildConfigurationList = 8495633135E3FD273C42D8AC /* Build configuration list for PBXNativeTarget "GlycoTrackWidget" */;
 			buildPhases = (
 				2AC15833DA0BF422618DF9F2 /* Sources */,
+				8C9425470BA6C53517AE5BE5 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -645,12 +652,21 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8C9425470BA6C53517AE5BE5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DBC54F5618FC4B59C5C8A10 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C8DC7A5DF5EB92C60E923D8A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				414C04B785EC7D63A03EF6BE /* Assets.xcassets in Resources */,
 				7090F21A3809A883F654669C /* GlycoTrack.xcconfig.example in Resources */,
+				5E5ECE4677EFFF862EF50EB9 /* PrivacyInfo.xcprivacy in Resources */,
 				72E8408FB1D9F7D5769B835E /* food_emoji_map.json in Resources */,
 				F0EFA312B13AFE888D07FC06 /* gi_database.json in Resources */,
 				FB454231AE125E83DD9D289E /* usda_nutrition.json in Resources */,

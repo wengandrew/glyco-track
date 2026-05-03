@@ -244,55 +244,57 @@ Ordered roughly by submission-blocker → polish.
 
 These will cause App Store Connect to reject upload or App Review to bounce the build.
 
-1. **Add `PrivacyInfo.xcprivacy`.** Required for any third-party SDK and for app submission since iOS 17.4 (May 2024). GlycoTrack must declare:
-   - `NSPrivacyTracking = false` (we don't track across apps/sites)
-   - `NSPrivacyCollectedDataTypes` — health/fitness data (food logs are user content; voice transcript is processed but not retained server-side; declare what Anthropic receives)
-   - `NSPrivacyAccessedAPITypes` — `UserDefaults`, `FileTimestamp`, `SystemBootTime` if any usage requires them. Run Xcode 15+ "Privacy Report" generator.
-   - File location: `GlycoTrack/PrivacyInfo.xcprivacy` plus `GlycoTrackWidget/PrivacyInfo.xcprivacy` (each target needs its own).
+1. ✅ **`PrivacyInfo.xcprivacy` added** (this PR). `GlycoTrack/PrivacyInfo.xcprivacy` and `GlycoTrackWidget/PrivacyInfo.xcprivacy` declare:
+   - `NSPrivacyTracking = false`, no tracking domains.
+   - `NSPrivacyCollectedDataTypes` — `OtherUserContent` (voice transcripts sent to Anthropic for parsing), not linked to user, not for tracking, purpose `AppFunctionality`. Widget collects nothing.
+   - `NSPrivacyAccessedAPITypes` — `UserDefaults` (CA92.1) on both targets. No `FileTimestamp` / `SystemBootTime` usage in the codebase (verified).
+   - Verified bundled into `.app` and `.appex` via `xcodebuild build -configuration Release`.
 
-2. **Replace empty `UILaunchScreen`** in `GlycoTrack/Info.plist`. Today it's `<dict/>`, which produces a blank white frame. Add either a SwiftUI launch image (preferred — single image asset on a colored background) or a minimal launch storyboard. The 1024×1024 app icon source is reusable.
+2. ✅ **`UILaunchScreen` replaced** (this PR). Now references `LaunchBackground` color asset (deep-blue brand color, sourced from `GL_BLUE` in `scripts/generate_app_icon.py`). Cold launch shows a solid brand color instead of a blank white frame. Logo image deferred — color-only is App-Store-acceptable for v1.0 and avoids needing a separate launch-logo asset.
 
-3. **Fix `UIRequiredDeviceCapabilities`.** Currently lists `armv7`, which is wrong for an iOS 16+ app. Either remove the key entirely (recommended — Apple infers from min iOS version) or set it to `arm64`. Submitting with `armv7` will fail Apple's binary-architecture validation.
+3. ✅ **`UIRequiredDeviceCapabilities` fixed** (this PR). Key removed entirely (Apple infers from min iOS 16). Was previously `armv7`, which would fail binary-architecture validation.
 
-4. **Bump version + build numbers strategically.** `CFBundleShortVersionString = 1.0`, `CFBundleVersion = 1`. Move to a script-driven scheme (e.g. read from git tags) so each TestFlight upload increments `CFBundleVersion` automatically — App Store Connect rejects re-uploads with the same build number.
+4. ✅ **`ITSAppUsesNonExemptEncryption = false` added** (this PR). Standard exemption for HTTPS-only network use; avoids the per-build prompt in App Store Connect.
 
-5. **Decide on the widget.** Without App Groups (free team), the widget shows empty data. For App Store submission, either:
+5. **Bump version + build numbers strategically.** `CFBundleShortVersionString = 1.0`, `CFBundleVersion = 1`. Move to a script-driven scheme (e.g. read from git tags) so each TestFlight upload increments `CFBundleVersion` automatically — App Store Connect rejects re-uploads with the same build number. **Deferred:** needs a design decision on the source-of-truth (git tags vs `agvtool` vs a bumped value in xcconfig).
+
+6. **Decide on the widget.** Without App Groups (free team), the widget shows empty data. For App Store submission, either:
    - (a) Add `com.apple.security.application-groups` entitlement to both targets and bundle the suite name (paid program required) — and ship the widget as a real feature, OR
    - (b) Hide the widget extension from this 1.0 submission entirely (remove from `project.yml`'s app-extension target list), ship voice + visualizations only. Add it back in 1.1 once paid-team features are validated.
 
-   Recommendation: **(b) for 1.0** — fewer review surfaces to defend, then add widget + lock-screen variants in a 1.1 follow-up once App Groups is enabled.
+   Recommendation: **(b) for 1.0** — fewer review surfaces to defend, then add widget + lock-screen variants in a 1.1 follow-up once App Groups is enabled. **Deferred:** wait for paid-team enrollment decision before pulling the widget target out of the build.
 
-6. **Validate the Release build.** Today only Debug builds have been exercised on device. Add a step (and a CI job) to do `xcodebuild archive -configuration Release` against an iOS device destination. This catches Release-only differences (e.g. `#if DEBUG` blocks, optimization-related crashes, missing assets in Release Copy Bundle Resources phase).
+7. ✅ **Release build validated** (this PR). `xcodebuild build -configuration Release -destination 'generic/platform=iOS Simulator'` builds clean against the new Info.plist + privacy manifests + asset-catalog color. Full archive against a device destination still pending paid-team enrollment (codesign needs a real Team ID).
 
 #### 1B. App Review risk-reducers
 
 These won't block upload but materially raise the chance of first-pass approval.
 
-7. **Add a clear permissions-onboarding flow.** First launch should explain *why* we need mic + speech recognition before triggering the system permission alerts. Apple rejects apps that ask for sensitive permissions without context. A single "Welcome to GlycoTrack" sheet with a "Continue" button that then calls `requestAuthorization()` is enough.
+8. **Add a clear permissions-onboarding flow.** First launch should explain *why* we need mic + speech recognition before triggering the system permission alerts. Apple rejects apps that ask for sensitive permissions without context. A single "Welcome to GlycoTrack" sheet with a "Continue" button that then calls `requestAuthorization()` is enough.
 
-8. **Add an in-app privacy policy + support contact.** App Store Connect requires a privacy policy URL, but the app should also link to it from the About pane (`MoreSheet`). Same for a support email. Without these, App Review treats the app as a dark pattern.
+9. **Add an in-app privacy policy + support contact.** App Store Connect requires a privacy policy URL, but the app should also link to it from the About pane (`MoreSheet`). Same for a support email. Without these, App Review treats the app as a dark pattern.
 
-9. **Health-claim disclaimers.** GlycoTrack tracks "diabetes risk" / "heart disease risk" — language Apple's medical-app guideline (App Store Review Guideline 1.4) treats as a regulated claim. Either:
+10. **Health-claim disclaimers.** GlycoTrack tracks "diabetes risk" / "heart disease risk" — language Apple's medical-app guideline (App Store Review Guideline 1.4) treats as a regulated claim. Either:
    - Soften copy across `AboutPaneView` and onboarding to describe GL/CL as *informational dietary metrics*, not medical-grade indicators, OR
    - Add a prominent "GlycoTrack is not a medical device. Consult your physician for diabetes / cardiovascular guidance." disclaimer at app launch and at the top of the About pane.
 
    Recommendation: do both. Soften DESIGN-doc-flavored copy in user-facing text + add a one-time disclaimer.
 
-10. **Polish empty / error states.** Specifically:
+11. **Polish empty / error states.** Specifically:
     - Today tab on a freshly-installed phone with zero entries: currently shows an empty bucket with no explainer. Add a subtle "Tap the mic to log your first meal" hint.
     - Network failure during voice→Claude parse: currently surfaces only as a red `ListeningPill`. Add a gentle retry / fallback path.
     - First-launch seeding spinner: profiling landed in #42, but the user-visible state during the ~1–2s seed is ambiguous on cold install. Add a "Loading nutritional database…" overlay if the seed is in flight.
 
-11. **Crash reporting.** Apple's Crashlytics surrogate (XCMetrics / xcrun crashes) is fine for v1.0 — no SDK needed. Make sure `UIApplicationMain` doesn't swallow exceptions silently. (Optional: add `os_log_fault` taps in known critical paths.)
+12. **Crash reporting.** Apple's Crashlytics surrogate (XCMetrics / xcrun crashes) is fine for v1.0 — no SDK needed. Make sure `UIApplicationMain` doesn't swallow exceptions silently. (Optional: add `os_log_fault` taps in known critical paths.)
 
-12. **TestFlight metadata.** Beta App Description, Test Information notes ("To test voice logging, tap the mic and say 'two slices of toast'"), tester contact email. Lives in App Store Connect, but the prose lives in the repo as `docs/testflight_notes.md` for review-prep.
+13. **TestFlight metadata.** Beta App Description, Test Information notes ("To test voice logging, tap the mic and say 'two slices of toast'"), tester contact email. Lives in App Store Connect, but the prose lives in the repo as `docs/testflight_notes.md` for review-prep.
 
 #### 1C. Optional polish (non-blocking, defer to 1.1 if time-pressed)
 
-13. **HealthKit write integration** (existing PLAN D.16). Once paid team is set up, write daily GL / CL aggregates so they're consumable from the Watch / Health app. Requires `NSHealthUpdateUsageDescription`, entitlement, and an opt-in toggle in Settings.
-14. **Background-refresh widget timeline** (existing D.18) — only relevant if 1A.5 chose path (a).
-15. **Soft-delete cleanup job** (existing D.19) — pre-launch is the right time before users have ageing soft-deleted rows.
-16. **Cohort export to CSV** (existing D.20) — also a useful App Review test path for reviewers who want to inspect the data structure.
+14. **HealthKit write integration** (existing PLAN D.16). Once paid team is set up, write daily GL / CL aggregates so they're consumable from the Watch / Health app. Requires `NSHealthUpdateUsageDescription`, entitlement, and an opt-in toggle in Settings.
+15. **Background-refresh widget timeline** (existing D.18) — only relevant if 1A.6 chose path (a).
+16. **Soft-delete cleanup job** (existing D.19) — pre-launch is the right time before users have ageing soft-deleted rows.
+17. **Cohort export to CSV** (existing D.20) — also a useful App Review test path for reviewers who want to inspect the data structure.
 
 ### 2. User-side deployment logistics
 
