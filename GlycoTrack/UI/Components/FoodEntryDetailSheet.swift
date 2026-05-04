@@ -91,7 +91,7 @@ struct FoodEntryDetailSheet: View {
             }
             .sheet(isPresented: $showEdit) {
                 NavigationStack {
-                    EditEntryView(entry: entry)
+                    EditEntryView(entry: entry, onDelete: { dismiss() })
                 }
             }
             .sheet(isPresented: $showPicker) {
