@@ -64,6 +64,35 @@ swift test --filter GIEngineTests/testWhiteRiceGL
 
 The `project.pbxproj` is committed and tracked. After adding or removing Swift files, run `xcodegen generate` and commit the updated `project.pbxproj`. The `contents.xcworkspacedata` file is also tracked — do not delete it.
 
+## TestFlight / Beta Distribution
+
+### Prerequisites (one-time account setup)
+1. Enroll in the **Apple Developer Program** at developer.apple.com ($99/year)
+2. In **App Store Connect → My Apps → "+"**, create a new app with bundle ID `com.glycotrack.app`
+3. Add your team ID to the gitignored local xcconfig:
+   ```
+   echo 'DEVELOPMENT_TEAM = XXXXXXXXXX' >> GlycoTrack/Config/GlycoTrack.local.xcconfig
+   ```
+   Find your 10-character team ID at developer.apple.com → Membership.
+
+### Building a TestFlight build
+```bash
+# Produces build/GlycoTrack.ipa (Release config, App Store signing)
+./scripts/archive.sh
+```
+
+### Uploading to TestFlight
+After `archive.sh` succeeds, upload via either:
+- **Xcode Organizer**: Window → Organizer → select the archive → Distribute App → App Store Connect → Upload
+- **Transporter** (Mac App Store): drag in the `.ipa`
+- **altool CLI**: `xcrun altool --upload-app -f build/GlycoTrack.ipa -t ios --apiKey <key> --apiIssuer <issuer>`
+
+### Inviting testers
+In App Store Connect → TestFlight → add tester emails. They receive an invite to install the TestFlight app and join the beta.
+
+### Build number
+Apple rejects uploads with a duplicate build number. Bump `CFBundleVersion` in `GlycoTrack/Info.plist` before each new upload (e.g. 1 → 2 → 3). `CFBundleShortVersionString` (the marketing version like "1.0") only needs to change for user-facing releases.
+
 ## Architecture
 
 ### Dual-axis health tracking
