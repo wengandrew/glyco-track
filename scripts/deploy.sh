@@ -163,6 +163,7 @@ xcodebuild \
   -destination "id=$DEVICE_HW_UDID" \
   -configuration "$CONFIG" \
   -derivedDataPath "$BUILD_DIR" \
+  -allowProvisioningUpdates \
   CODE_SIGN_STYLE=Automatic \
   2>&1 | tee "$BUILD_LOG" \
   | { xcbeautify 2>/dev/null || grep -E "(error:|BUILD (SUCCEEDED|FAILED))" || true; }
