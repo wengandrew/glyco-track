@@ -57,7 +57,7 @@ struct EditEntryView: View {
     @Environment(\.dismiss) private var dismiss
 
     let entry: FoodLogEntry
-    var onDelete: (() -> Void)? = nil
+    let onDelete: (() -> Void)?
 
     @State private var foodDescription: String
     @State private var quantity: String
