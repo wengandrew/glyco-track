@@ -57,11 +57,13 @@ struct EditEntryView: View {
     @Environment(\.dismiss) private var dismiss
 
     let entry: FoodLogEntry
+    var onDelete: (() -> Void)? = nil
 
     @State private var foodDescription: String
     @State private var quantity: String
     @State private var editedTimestamp: Date
     @State private var isSaving = false
+    @State private var showDeleteConfirmation = false
 
     init(entry: FoodLogEntry) {
         self.entry = entry
@@ -113,6 +115,28 @@ struct EditEntryView: View {
                             .textSelection(.enabled)
                     }
                 }
+
+                Section {
+                    Button(role: .destructive) {
+                        showDeleteConfirmation = true
+                    } label: {
+                        Text("Delete Entry")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                }
+            }
+            .confirmationDialog(
+                "Delete this entry?",
+                isPresented: $showDeleteConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Delete", role: .destructive) {
+                    FoodLogRepository(context: context).softDelete(entry)
+                    onDelete?()
+                    dismiss()
+                }
+            } message: {
+                Text("This entry will be removed from your log.")
             }
             .navigationTitle("Edit Entry")
             .navigationBarTitleDisplayMode(.inline)
