@@ -229,7 +229,7 @@ private struct ListeningPill: View {
                         logProcessor.lastError = nil
                     }
                 }
-                .onChange(of: logProcessor.lastError) { _, newError in
+                .onChange(of: logProcessor.lastError) { newError in
                     errorDismissTask?.cancel()
                     if newError != nil {
                         errorDismissTask = Task { @MainActor in
