@@ -65,8 +65,9 @@ struct EditEntryView: View {
     @State private var isSaving = false
     @State private var showDeleteConfirmation = false
 
-    init(entry: FoodLogEntry) {
+    init(entry: FoodLogEntry, onDelete: (() -> Void)? = nil) {
         self.entry = entry
+        self.onDelete = onDelete
         _foodDescription = State(initialValue: entry.foodDescription)
         _quantity = State(initialValue: entry.quantity)
         _editedTimestamp = State(initialValue: entry.timestamp ?? Date())
