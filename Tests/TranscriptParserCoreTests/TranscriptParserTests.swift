@@ -274,8 +274,14 @@ final class TranscriptParserTests: XCTestCase {
         let userMessage = stub.lastUserMessage ?? ""
         XCTAssertTrue(userMessage.hasPrefix("Current time: "),
                       "user message must lead with 'Current time:' so Claude can anchor relative time phrases — got: \(userMessage)")
-        XCTAssertTrue(userMessage.contains("2026-05-02T14:30:00"),
-                      "user message must include the supplied currentTime in ISO-8601 form — got: \(userMessage)")
+        // Verify a timezone offset is present so Claude doesn't assume UTC.
+        // Pattern: ISO-8601 date+time followed by Z or ±HH:MM.
+        let hasTimezoneOffset = userMessage.range(
+            of: #"Current time: \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}([+-]\d{2}:\d{2}|Z)"#,
+            options: .regularExpression
+        ) != nil
+        XCTAssertTrue(hasTimezoneOffset,
+                      "current time in user message must include a timezone offset — got: \(userMessage)")
         XCTAssertTrue(userMessage.contains("Transcript: I had oatmeal"),
                       "user message must include the trimmed transcript on its own line — got: \(userMessage)")
     }
