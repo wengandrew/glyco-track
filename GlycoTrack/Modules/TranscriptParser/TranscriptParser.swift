@@ -61,6 +61,9 @@ struct ParsedFood: Codable, Equatable {
 /// File-scoped helpers — kept private to avoid clashing with any other
 /// ISO8601 utility a sibling module might want to introduce.
 private enum ISO8601Helper {
+    // Parsing: timezone-agnostic — ISO8601DateFormatter honours the offset
+    // embedded in the string, so `timeZone` on the formatter only matters when
+    // the input has no offset (which Claude never produces here).
     private static let basic: ISO8601DateFormatter = {
         let f = ISO8601DateFormatter()
         f.formatOptions = [.withInternetDateTime]
@@ -73,12 +76,27 @@ private enum ISO8601Helper {
         return f
     }()
 
+    // Formatting: use the device's local timezone so Claude receives the
+    // correct wall-clock offset (e.g. "-05:00") and resolves "for breakfast"
+    // or "last night" against the right calendar day. Without this the
+    // formatter defaults to UTC, which produces timestamps like 03:00Z for
+    // a user in UTC-5 — Claude would then map "for breakfast" to 08:00Z
+    // (03:00 local), making every time-anchored entry hours off.
+    // autoupdatingCurrent (not current) ensures a mid-session DST or manual
+    // timezone change is reflected immediately.
+    private static let localFormatter: ISO8601DateFormatter = {
+        let f = ISO8601DateFormatter()
+        f.formatOptions = [.withInternetDateTime]
+        f.timeZone = TimeZone.autoupdatingCurrent
+        return f
+    }()
+
     static func parse(_ raw: String) -> Date? {
         basic.date(from: raw) ?? fractional.date(from: raw)
     }
 
     static func string(from date: Date) -> String {
-        basic.string(from: date)
+        localFormatter.string(from: date)
     }
 }
 

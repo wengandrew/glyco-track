@@ -274,8 +274,26 @@ final class TranscriptParserTests: XCTestCase {
         let userMessage = stub.lastUserMessage ?? ""
         XCTAssertTrue(userMessage.hasPrefix("Current time: "),
                       "user message must lead with 'Current time:' so Claude can anchor relative time phrases — got: \(userMessage)")
-        XCTAssertTrue(userMessage.contains("2026-05-02T14:30:00"),
-                      "user message must include the supplied currentTime in ISO-8601 form — got: \(userMessage)")
+
+        // Extract the ISO-8601 timestamp, verify it carries a timezone offset,
+        // and round-trip it back to a Date to confirm it encodes fixedNow.
+        let tsPattern = #"Current time: (\S+)"#
+        let tsMatch = userMessage.range(of: tsPattern, options: .regularExpression)
+        XCTAssertNotNil(tsMatch, "could not find timestamp in: \(userMessage)")
+        if let range = tsMatch {
+            let token = String(userMessage[range]).replacingOccurrences(of: "Current time: ", with: "")
+            // Must include a timezone designator (Z or ±HH:MM).
+            let hasOffset = token.range(of: #"[+-]\d{2}:\d{2}$|Z$"#, options: .regularExpression) != nil
+            XCTAssertTrue(hasOffset, "timestamp must include a timezone offset — got: \(token)")
+            // Parsing the token back must recover fixedNow exactly.
+            let parser = ISO8601DateFormatter()
+            parser.formatOptions = [.withInternetDateTime]
+            let recovered = parser.date(from: token)
+            XCTAssertNotNil(recovered, "timestamp in user message could not be parsed: \(token)")
+            XCTAssertEqual(recovered, fixedNow,
+                           "timestamp in user message must equal the supplied currentTime — got: \(token)")
+        }
+
         XCTAssertTrue(userMessage.contains("Transcript: I had oatmeal"),
                       "user message must include the trimmed transcript on its own line — got: \(userMessage)")
     }
