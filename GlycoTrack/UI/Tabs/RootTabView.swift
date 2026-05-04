@@ -189,6 +189,7 @@ private struct ListeningPill: View {
     @ObservedObject var logProcessor: FoodLogProcessor
 
     @State private var dotPulse: Bool = false
+    @State private var errorDismissTask: Task<Void, Never>? = nil
 
     private var isVisible: Bool {
         voiceCapture.isRecording
@@ -221,12 +222,28 @@ private struct ListeningPill: View {
                 .shadow(color: Color.black.opacity(0.10), radius: 8, x: 0, y: 4)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
                 .onAppear { dotPulse = true }
-                .onDisappear { dotPulse = false }
+                .onDisappear {
+                    dotPulse = false
+                    errorDismissTask?.cancel()
+                    errorDismissTask = nil
+                }
                 .onTapGesture {
-                    // Tap-to-dismiss when an error is showing — otherwise
-                    // it'd linger until the next recording.
                     if logProcessor.lastError != nil {
+                        errorDismissTask?.cancel()
+                        errorDismissTask = nil
                         logProcessor.lastError = nil
+                    }
+                }
+                .onChange(of: logProcessor.lastError) { newError in
+                    errorDismissTask?.cancel()
+                    errorDismissTask = nil
+                    if newError != nil {
+                        errorDismissTask = Task { @MainActor in
+                            try? await Task.sleep(for: .seconds(4))
+                            if !Task.isCancelled {
+                                logProcessor.lastError = nil
+                            }
+                        }
                     }
                 }
             }
