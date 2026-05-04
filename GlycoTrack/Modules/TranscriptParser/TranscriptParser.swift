@@ -82,10 +82,12 @@ private enum ISO8601Helper {
     // formatter defaults to UTC, which produces timestamps like 03:00Z for
     // a user in UTC-5 — Claude would then map "for breakfast" to 08:00Z
     // (03:00 local), making every time-anchored entry hours off.
+    // autoupdatingCurrent (not current) ensures a mid-session DST or manual
+    // timezone change is reflected immediately.
     private static let localFormatter: ISO8601DateFormatter = {
         let f = ISO8601DateFormatter()
         f.formatOptions = [.withInternetDateTime]
-        f.timeZone = TimeZone.current
+        f.timeZone = TimeZone.autoupdatingCurrent
         return f
     }()
 
