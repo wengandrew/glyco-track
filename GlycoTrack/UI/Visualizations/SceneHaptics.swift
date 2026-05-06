@@ -27,7 +27,7 @@ final class SceneHaptics {
 
     /// Fires an impact for the first contact involving each item node. The
     /// scene must tag item containers with `node.name == "item"` or `"bubble"`
-    /// (see PhysicsBucketView / BalanceScaleView / WaterlineView).
+    /// (see PhysicsBucketView / BalanceScaleView).
     func handleContact(_ contact: SKPhysicsContact) {
         // Walk both bodies — a single contact may involve two items (item-on-item
         // settle), but we only want one tick per *event*. Returning after the
