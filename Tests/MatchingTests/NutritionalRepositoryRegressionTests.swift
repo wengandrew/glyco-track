@@ -149,4 +149,131 @@ final class NutritionalRepositoryRegressionTests: XCTestCase {
         let result = repo.findBestMatch(for: "brown rice")
         XCTAssertEqual(result?.profile.foodName.lowercased(), "brown rice")
     }
+
+    // MARK: - Fuzzy match guardrails (log audit 2026-05-06)
+
+    /// "bialy" (Polish bread roll) was fuzzy-matching to "kale" at Levenshtein
+    /// distance 3. Completely different food categories — bread vs leafy green.
+    func testBialyDoesNotFuzzyMatchKale() {
+        let result = repo.findBestMatch(for: "bialy")
+        XCTAssertNotEqual(result?.profile.foodName.lowercased(), "kale",
+                          "Fuzzy match must not bridge 'bialy' (bread) to 'kale' (vegetable)")
+    }
+
+    /// "arepa" (cornmeal cake) was fuzzy-matching to "tea" at distance 3.
+    func testArepaDoesNotFuzzyMatchTea() {
+        let result = repo.findBestMatch(for: "arepa")
+        XCTAssertNotEqual(result?.profile.foodName.lowercased(), "tea",
+                          "Fuzzy match must not bridge 'arepa' (corn cake) to 'tea' (beverage)")
+    }
+
+    /// "milk" was fuzzy-matching to "elk" at distance 2. Dairy vs game meat.
+    func testMilkDoesNotFuzzyMatchElk() {
+        let result = repo.findBestMatch(for: "milk")
+        XCTAssertNotEqual(result?.profile.foodName.lowercased(), "elk",
+                          "Fuzzy match must not bridge 'milk' (dairy) to 'elk' (game meat)")
+    }
+
+    /// "sugar" was fuzzy-matching to "satay" at distance 3. Must resolve via
+    /// alias to "white sugar" instead.
+    func testSugarDoesNotFuzzyMatchSatay() {
+        let result = repo.findBestMatch(for: "sugar")
+        XCTAssertNotEqual(result?.profile.foodName.lowercased(), "satay",
+                          "Fuzzy match must not bridge 'sugar' to 'satay'")
+    }
+
+    /// "bread bun" was fuzzy-matching to "breadnut" at distance 1.
+    /// A bread roll and a tropical tree nut are different foods.
+    func testBreadBunDoesNotFuzzyMatchBreadnut() {
+        let result = repo.findBestMatch(for: "bread bun")
+        XCTAssertNotEqual(result?.profile.foodName.lowercased(), "breadnut",
+                          "Fuzzy match must not bridge 'bread bun' to 'breadnut'")
+    }
+
+    // MARK: - DB data completeness (log audit 2026-05-06)
+
+    /// Soba noodles exist in the GI database (GI=56) but had carbsPer100g=0
+    /// because no USDA entry existed. GL was silently zero for every soba log.
+    func testSobaNoodlesHasNonZeroCarbs() {
+        let result = repo.findBestMatch(for: "soba noodles")
+        XCTAssertNotNil(result)
+        XCTAssertGreaterThan(result!.profile.carbsPer100g, 0,
+                             "Soba noodles must have carbs data so GL is non-zero")
+    }
+
+    /// Gummy candy (GI=80) had no USDA match — pure sugar food reporting GL=0.
+    func testGummyCandyHasNonZeroCarbs() {
+        let result = repo.findBestMatch(for: "gummy candy")
+        XCTAssertNotNil(result)
+        XCTAssertGreaterThan(result!.profile.carbsPer100g, 0,
+                             "Gummy candy must have carbs data so GL is non-zero")
+    }
+
+    /// Wonton (GI=55) had no USDA match — dumplings reporting GL=0.
+    func testWontonHasNonZeroCarbs() {
+        let result = repo.findBestMatch(for: "wonton")
+        XCTAssertNotNil(result)
+        XCTAssertGreaterThan(result!.profile.carbsPer100g, 0,
+                             "Wonton must have carbs data so GL is non-zero")
+    }
+
+    /// Corn on the cob (GI=52, USDA carbs=21g) — verify data survives seeding.
+    func testCornOnTheCobHasNonZeroCarbs() {
+        let result = repo.findBestMatch(for: "corn on the cob")
+        XCTAssertNotNil(result)
+        XCTAssertGreaterThan(result!.profile.carbsPer100g, 0,
+                             "Corn on the cob must have carbs data")
+    }
+
+    /// Cantaloupe (GI=65, USDA carbs=8.16g) — verify data survives seeding.
+    func testCantaloupeHasNonZeroCarbs() {
+        let result = repo.findBestMatch(for: "cantaloupe")
+        XCTAssertNotNil(result)
+        XCTAssertGreaterThan(result!.profile.carbsPer100g, 0,
+                             "Cantaloupe must have carbs data")
+    }
+
+    /// Naan (GI=71, USDA carbs=50g) — verify data survives seeding.
+    func testNaanHasNonZeroCarbs() {
+        let result = repo.findBestMatch(for: "naan")
+        XCTAssertNotNil(result)
+        XCTAssertGreaterThan(result!.profile.carbsPer100g, 0,
+                             "Naan must have carbs data")
+    }
+
+    /// Bread sticks (GI=70) had no USDA match — reporting GL=0.
+    func testBreadSticksHasNonZeroCarbs() {
+        let result = repo.findBestMatch(for: "bread sticks")
+        XCTAssertNotNil(result)
+        XCTAssertGreaterThan(result!.profile.carbsPer100g, 0,
+                             "Bread sticks must have carbs data so GL is non-zero")
+    }
+
+    /// Pine nuts (GI=15) had CL=0 despite significant fat content.
+    func testPineNutsHasNonZeroCLData() {
+        let result = repo.findBestMatch(for: "pine nuts")
+        XCTAssertNotNil(result)
+        let p = result!.profile
+        let hasFatData = p.saturatedFatPer100g > 0 || p.pufaPer100g > 0 || p.mufaPer100g > 0
+        XCTAssertTrue(hasFatData,
+                      "Pine nuts must have fat macro data for CL computation")
+    }
+
+    /// Sesame oil had CL=0 despite being pure fat.
+    func testSesameOilHasNonZeroCLData() {
+        let result = repo.findBestMatch(for: "sesame oil")
+        XCTAssertNotNil(result)
+        let p = result!.profile
+        let hasFatData = p.saturatedFatPer100g > 0 || p.pufaPer100g > 0 || p.mufaPer100g > 0
+        XCTAssertTrue(hasFatData,
+                      "Sesame oil must have fat macro data for CL computation")
+    }
+
+    /// Laksa (GI=46) had no USDA match — noodle soup reporting GL=0.
+    func testLaksaHasNonZeroCarbs() {
+        let result = repo.findBestMatch(for: "laksa")
+        XCTAssertNotNil(result)
+        XCTAssertGreaterThan(result!.profile.carbsPer100g, 0,
+                             "Laksa must have carbs data so GL is non-zero")
+    }
 }

@@ -93,7 +93,7 @@ final class PersistenceController {
                 profile.nutritionSource = "USDA FoodData Central"
 
                 let usda = usdaMap[gi.name.lowercased()]
-                profile.carbsPer100g = usda?.carbs ?? 0
+                profile.carbsPer100g = usda?.carbs ?? gi.carbs ?? 0
                 profile.saturatedFatPer100g = usda?.sfa ?? 0
                 profile.transFatPer100g = usda?.tfa ?? 0
                 profile.solubleFiberPer100g = usda?.fiber ?? 0
@@ -160,6 +160,7 @@ private struct GIEntry: Decodable {
     let name: String
     let gi: Int
     let aliases: [String]
+    let carbs: Double?
 }
 
 private struct USDAEntry: Decodable {

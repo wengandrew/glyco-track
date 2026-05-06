@@ -306,7 +306,9 @@ final class NutritionalRepository {
                 continue
             }
             let d = levenshtein(name, dbName)
-            if d <= 3 {
+            let maxLen = max(name.count, dbName.count)
+            let normalizedDist = maxLen > 0 ? Double(d) / Double(maxLen) : 1.0
+            if d <= 3 && normalizedDist <= 0.30 {
                 if best == nil || d < best!.1 {
                     best = (profile, d)
                 }

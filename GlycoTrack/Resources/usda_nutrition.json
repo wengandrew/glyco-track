@@ -117,6 +117,15 @@
     "mufa": 0.1
   },
   {
+    "name": "arepa",
+    "carbs": 43.0,
+    "sfa": 1.0,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.5,
+    "mufa": 1.0
+  },
+  {
     "name": "arrowroot",
     "carbs": 88.2,
     "sfa": 0.01,
@@ -351,6 +360,15 @@
     "mufa": 0.01
   },
   {
+    "name": "bialy",
+    "carbs": 52.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 0.3,
+    "mufa": 0.2
+  },
+  {
     "name": "bibimbap",
     "carbs": 21.0,
     "sfa": 0.89,
@@ -441,6 +459,15 @@
     "mufa": 12.0
   },
   {
+    "name": "bone broth",
+    "carbs": 0.5,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.05,
+    "mufa": 0.1
+  },
+  {
     "name": "bran",
     "carbs": 64.5,
     "sfa": 0.58,
@@ -495,6 +522,24 @@
     "mufa": 1.23
   },
   {
+    "name": "bread roll",
+    "carbs": 50.0,
+    "sfa": 1.5,
+    "tfa": 0.1,
+    "fiber": 2.0,
+    "pufa": 0.5,
+    "mufa": 1.5
+  },
+  {
+    "name": "bread sticks",
+    "carbs": 68.0,
+    "sfa": 1.8,
+    "tfa": 0.1,
+    "fiber": 2.5,
+    "pufa": 0.5,
+    "mufa": 3.5
+  },
+  {
     "name": "breadfruit",
     "carbs": 27.1,
     "sfa": 0.04,
@@ -502,6 +547,15 @@
     "fiber": 0.4,
     "pufa": 0.03,
     "mufa": 0.03
+  },
+  {
+    "name": "breadnut",
+    "carbs": 22.0,
+    "sfa": 0.3,
+    "tfa": 0.0,
+    "fiber": 4.0,
+    "pufa": 0.5,
+    "mufa": 0.3
   },
   {
     "name": "breakfast sandwich",
@@ -1539,6 +1593,15 @@
     "mufa": 3.81
   },
   {
+    "name": "elk",
+    "carbs": 0.0,
+    "sfa": 0.9,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.3,
+    "mufa": 0.5
+  },
+  {
     "name": "endive",
     "carbs": 3.4,
     "sfa": 0.05,
@@ -1962,6 +2025,15 @@
     "mufa": 0.01
   },
   {
+    "name": "gummy candy",
+    "carbs": 77.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
     "name": "gyro",
     "carbs": 26.0,
     "sfa": 6.0,
@@ -2284,6 +2356,15 @@
     "fiber": 6.5,
     "pufa": 0.18,
     "mufa": 0.16
+  },
+  {
+    "name": "laksa",
+    "carbs": 12.0,
+    "sfa": 5.0,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 1.0,
+    "mufa": 2.0
   },
   {
     "name": "lamb",
@@ -2943,6 +3024,15 @@
     "mufa": 5.5
   },
   {
+    "name": "pea soup",
+    "carbs": 11.0,
+    "sfa": 0.3,
+    "tfa": 0.0,
+    "fiber": 3.5,
+    "pufa": 0.2,
+    "mufa": 0.1
+  },
+  {
     "name": "peach",
     "carbs": 10.0,
     "sfa": 0.01,
@@ -3555,6 +3645,15 @@
     "mufa": 1.23
   },
   {
+    "name": "satay",
+    "carbs": 10.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 2.0,
+    "mufa": 3.5
+  },
+  {
     "name": "sauerkraut",
     "carbs": 4.3,
     "sfa": 0.01,
@@ -3616,6 +3715,15 @@
     "fiber": 0.1,
     "pufa": 0.41,
     "mufa": 0.12
+  },
+  {
+    "name": "sesame oil",
+    "carbs": 0.0,
+    "sfa": 14.2,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 41.7,
+    "mufa": 39.7
   },
   {
     "name": "sesame seeds",
@@ -3715,6 +3823,15 @@
     "fiber": 2.6,
     "pufa": 0.1,
     "mufa": 0.02
+  },
+  {
+    "name": "soba noodles",
+    "carbs": 21.4,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.3,
+    "mufa": 0.1
   },
   {
     "name": "sole",
@@ -4239,6 +4356,15 @@
     "mufa": 0.17
   },
   {
+    "name": "udon noodles",
+    "carbs": 22.0,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 0.9,
+    "pufa": 0.1,
+    "mufa": 0.05
+  },
+  {
     "name": "upma",
     "carbs": 22.0,
     "sfa": 0.98,
@@ -4480,6 +4606,15 @@
     "fiber": 1.8,
     "pufa": 0.21,
     "mufa": 0.05
+  },
+  {
+    "name": "wonton",
+    "carbs": 28.0,
+    "sfa": 1.5,
+    "tfa": 0.1,
+    "fiber": 1.0,
+    "pufa": 0.5,
+    "mufa": 0.8
   },
   {
     "name": "xylitol",
