@@ -20,7 +20,6 @@ struct HomeTabView: View {
     private var allEntriesAsc: FetchedResults<FoodLogEntry>
 
     @State private var selectedDate: Date = Calendar.current.startOfDay(for: Date())
-    @State private var selectedEntry: FoodLogEntry?
     @State private var showMore: Bool = false
 
     /// Reactive binding to the user's GL budget so the bucket / status chip
@@ -90,9 +89,6 @@ struct HomeTabView: View {
                             .accessibilityLabel("Settings, About, Debug")
                     }
                 }
-            }
-            .sheet(item: $selectedEntry) { entry in
-                FoodEntryDetailSheet(entry: entry)
             }
             .sheet(isPresented: $showMore) {
                 MoreSheet()

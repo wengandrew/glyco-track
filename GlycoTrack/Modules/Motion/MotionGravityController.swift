@@ -7,7 +7,7 @@ import CoreGraphics
 /// `CMMotionManager` is single-instance per app: spinning up multiple
 /// concurrent device-motion streams duplicates work and the OS warns. This
 /// controller owns the only manager and lets multiple scenes (currently
-/// `BucketScene` and `BalanceScene`) read the latest gravity vector each
+/// `BucketScene`) reads the latest gravity vector each
 /// frame via `currentGravity`. Updates start on the first subscriber and
 /// stop on the last, so we don't leave the IMU spinning when the user is on
 /// a non-physics tab.
