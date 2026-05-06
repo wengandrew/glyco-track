@@ -129,18 +129,16 @@ A focused pass to simplify the surface area, remove half-finished prototypes, an
 
 **Today CL layout**
 - CL section default = **Balance**. Picker is gone.
-- **Waterline** is rendered as its own scroll-down section below Balance — the user scrolls to see the second view. Two lenses on the same data, no extra tab.
+- ~~Waterline rendered as scroll-down section below Balance~~ — **removed in PR #53**. The Today tab now shows only the GL bucket and the CL balance scale.
 
 **Listening / transcript polish**
 - "Listening…" feedback moves out of the page-flow card into a **floating pill above the tab bar** near the mic button. Page content no longer reflows on record.
 - Lingering transcript bug: `VoiceCapture.transcript` was never cleared after `stopRecording()`, so the in-flow card stuck around. Fix: clear `transcript` (and `FoodLogProcessor.lastError`) once the entry is committed; pill auto-dismisses after a short fade.
 
 **Accelerometer-driven gravity**
-- `PhysicsBucketView` and `WaterlineView` only. A shared `MotionGravityController` reads `CMMotionManager.deviceMotion.gravity` on the main run loop (~30 Hz) and maps it onto each scene's `physicsWorld.gravity` so items roll/settle in the direction of real gravity as the user tilts the phone.
-- Waterline water surface stays at the midline regardless of tilt — only items respond. (Tilting the surface convincingly is much harder; not worth the complexity.)
+- `PhysicsBucketView` only (WaterlineView removed in PR #53). A shared `MotionGravityController` reads `CMMotionManager.deviceMotion.gravity` on the main run loop (~30 Hz) and maps it onto the bucket scene's `physicsWorld.gravity` so items roll/settle in the direction of real gravity as the user tilts the phone.
 
-**Waterline settling — faster**
-- Floater spring-toward-waterline currently uses `springConstant = 6.0` with `linearDamping = 0.6`. That's underdamped → long visible oscillation. Bump spring (≈12) and damping (≈0.85) to land closer to critical damping for the typical floater mass; result is a faster decisive rise + settle.
+~~**Waterline settling — faster**~~ — WaterlineView removed in PR #53; tuning notes preserved for reference only.
 
 **Visual styling — direction (a)**
 - Bold rounded SF typography for headers and big numbers (`.system(.title2, design: .rounded, weight: .bold)`).
@@ -185,7 +183,8 @@ Tracks merged PRs that materially shape the product after the initial MVP deploy
 | #43 | SwiftLint integration with CI enforcement | `.swiftlint.yml` (force_unwrapping warning, line_length, function_body_length, large_tuple, cyclomatic_complexity); CI job blocks merges on errors. (Plan C.13) |
 | #44 | UI refresh — simplify tabs, accelerometer gravity, restyled visuals | Detailed in the "UI Refresh — 2026-04-30" section above. Also routes deploy.sh build artifacts to the main repo root so worktree builds don't pollute the worktree. |
 | #45 | Fix intermittent navigation title rendering on tab switches | Replaced `NavigationView` (deprecated in iOS 16+) with `NavigationStack` in all four primary tab roots. The bug was most visible on Week (3 `@FetchRequest`s + heaviest sub-tree) but the antipattern was in every tab. Sheet-level `NavigationView` instances inside Edit/Add flows are modal and not torn down on tab switch — left for a follow-up. |
-| #46 (this PR) | Voice transcripts: detect time context, backdate entries | `ParsedFood` gains optional `loggedAt: Date?`. Parser hands Claude a `Current time:` prefix so it can resolve "two hours ago", "yesterday at 5pm", "for breakfast", per-food ("toast at 8am and a banana at 10am"), etc. into absolute ISO-8601 timestamps. `FoodLogProcessor` stamps entries with `food.loggedAt ?? recordedAt` and clamps with `min(…, recordedAt)` against future-time drift. 6 new parser tests pin decoding, prompt rules, and the user-message contract. |
+| #46 | Voice transcripts: detect time context, backdate entries | `ParsedFood` gains optional `loggedAt: Date?`. Parser hands Claude a `Current time:` prefix so it can resolve "two hours ago", "yesterday at 5pm", "for breakfast", per-food ("toast at 8am and a banana at 10am"), etc. into absolute ISO-8601 timestamps. `FoodLogProcessor` stamps entries with `food.loggedAt ?? recordedAt` and clamps with `min(…, recordedAt)` against future-time drift. 6 new parser tests pin decoding, prompt rules, and the user-message contract. |
+| #53 | Remove WaterlineView; remove GL×CL from Home tab; enlarge plot on Week/Month | `WaterlineView.swift` deleted entirely (buoyancy CL viz eliminated). `QuadrantPlotSection` removed from `HomeTabView` — Today tab now shows only GL bucket + CL balance scale. Plot height increased 200→320 on Week and Month tabs. Shared types (`SceneKeyCL`, `CLNetLabel`) migrated into `BalanceScaleView.swift`. Dead `selectedEntry` state and sheet wiring removed from `HomeTabView`. |
 
 ---
 
@@ -200,7 +199,7 @@ Tracks merged PRs that materially shape the product after the initial MVP deploy
 | Entry timestamp = `Date()` at log time (DESIGN §6.1: `loggedAt` separate from `timestamp`) | **Entry `timestamp` = `food.loggedAt ?? recordedAt`** — Claude resolves explicit/relative time phrases in the transcript ("two hours ago", "yesterday at 5pm", "for breakfast", per-food times) into absolute ISO-8601 stamps; transcripts with no time phrase still fall back to the recording time. PR #46. | Forced manual edits whenever a user logged retroactively; first-class time context turns "I had eggs two hours ago" into a usable entry without a follow-up tap. `loggedAt` is per-food so multi-food utterances with different times stay accurate. |
 | Widget is strict mic button | Widget shows GL progress bar + mic deep-link | WidgetKit cannot access microphone |
 | Color = food group; food groups have a 6-color palette (DESIGN §6.3, §8) | **Food groups removed entirely.** Each food renders as a single emoji via `FoodEmoji.resolve(entry:)`; tier/confidence tinting kept for the row badge only. | Color-coding by food group never communicated as much as the emoji identity itself; testing showed users read the emoji first. |
-| GL × CL Quadrant is a 4-region plot in a modal sheet (DESIGN §8) | **Two-region plot embedded inline** on Today/Week/Month tabs (left/right, GL grows up from a 0 baseline) | Lower half would be permanently empty (GL is unsigned); modal added a tap to no purpose. |
+| GL × CL Quadrant is a 4-region plot in a modal sheet (DESIGN §8) | **Two-region plot embedded inline** on Week and Month tabs only (left/right, GL grows up from a 0 baseline); removed from Today tab in PR #53 | Lower half would be permanently empty (GL is unsigned); modal added a tap to no purpose; Today tab focuses on daily GL bucket + CL balance scale. |
 | 5 tabs (Home/Week/Month/Log/Summary) inside the system `TabView` (DESIGN §9) | **4 tabs** (Today / Week / Month / Log) in a custom floating bar; record-button pill separated on the right; Settings / About / Debug consolidated into a `MoreSheet` reachable via a gear button on the Today tab. | Record action needed to be reachable from any tab; Summary tab + `SummaryGenerator` removed entirely (PR #44); Tug-of-War CL viz removed (PR #44). |
 | Daily GL budget hardcoded to 100 (DESIGN §3.1) | **User-editable** via `AppSettings.dailyGLBudgetKey` (`UserDefaults`-backed `@AppStorage`, default 100, range 50–200, step 5) — surfaced in MoreSheet's Settings pane, observed across Today/Month/PeriodSummary chips. `GIEngineCore` keeps its own `dailyGLBudget` constant for unit-test stability. | PR #34 made the budget user-editable; the engine constant is intentionally separate so tests and UI evolve independently. |
 | Tier 5 unrecognized foods (CLAUDE.md) | T5 returns GL=0/CL=0 with explicit "Not recognized" red badge | **Never** silently zero an unrecognized food into a high-confidence match; T5 is the load-bearing failure path. |

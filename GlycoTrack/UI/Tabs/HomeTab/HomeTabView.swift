@@ -20,7 +20,6 @@ struct HomeTabView: View {
     private var allEntriesAsc: FetchedResults<FoodLogEntry>
 
     @State private var selectedDate: Date = Calendar.current.startOfDay(for: Date())
-    @State private var selectedEntry: FoodLogEntry?
     @State private var showMore: Bool = false
 
     /// Reactive binding to the user's GL budget so the bucket / status chip
@@ -73,27 +72,6 @@ struct HomeTabView: View {
                     .contentShape(Rectangle())
                     .gesture(horizontalSwipe)
 
-                    // ── CL SECTION (Waterline — second lens) ────
-                    // Same data, different reading: floats vs sinks. Scrolled
-                    // to deliberately so the primary Balance view is the
-                    // headline; users who want the alternate view scroll for it.
-                    MetricSection(
-                        title: "Waterline",
-                        subtitle: "Same data, different reading",
-                        accent: .clAccent,
-                        icon: "drop.fill"
-                    ) {
-                        WaterlineView(entries: entryArray, dateKey: selectedDate)
-                    }
-                    .contentShape(Rectangle())
-                    .gesture(horizontalSwipe)
-
-                    // ── COMBINED: GL × CL Quadrant (embedded) ────
-                    QuadrantPlotSection(
-                        entries: entryArray,
-                        onTap: { selectedEntry = $0 }
-                    )
-
                     if !entryArray.isEmpty {
                         TodayEntrySummary(entries: entryArray)
                             .padding(.horizontal)
@@ -111,9 +89,6 @@ struct HomeTabView: View {
                             .accessibilityLabel("Settings, About, Debug")
                     }
                 }
-            }
-            .sheet(item: $selectedEntry) { entry in
-                FoodEntryDetailSheet(entry: entry)
             }
             .sheet(isPresented: $showMore) {
                 MoreSheet()

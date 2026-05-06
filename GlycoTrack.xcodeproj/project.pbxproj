@@ -66,7 +66,6 @@
 		D10934C56FD689EEBD17732B /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D519279615097BF4BD72FEC6 /* Log.swift */; };
 		DA63E52FA18B99E8347E4BFD /* FoodLogProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3327A014C9B87AE78FAF29B4 /* FoodLogProcessor.swift */; };
 		DF7D2A9B939803522A97A911 /* FoodLogEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D923FFC3F1352123547E74 /* FoodLogEntry+CoreDataProperties.swift */; };
-		EB32167E33EDB53104ED047A /* WaterlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15FE2BAD16F926DFCAABF71F /* WaterlineView.swift */; };
 		ED6BA4F58307142A70E8CC9F /* FoodPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF4CD9CCE735BCE308CECA4 /* FoodPickerView.swift */; };
 		F0EFA312B13AFE888D07FC06 /* gi_database.json in Resources */ = {isa = PBXBuildFile; fileRef = F3A6E1677A79798237CFB545 /* gi_database.json */; };
 		FB454231AE125E83DD9D289E /* usda_nutrition.json in Resources */ = {isa = PBXBuildFile; fileRef = 93C58B72C496B16CA9474321 /* usda_nutrition.json */; };
@@ -114,7 +113,6 @@
 		0825161931CF783350FA398E /* FoodLogRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogRepository.swift; sourceTree = "<group>"; };
 		0E7AC5A8B6B5D9D3340E2D7A /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		0FEDAD6172CAF0ACDF326FB5 /* BuildInfo.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildInfo.generated.swift; sourceTree = "<group>"; };
-		15FE2BAD16F926DFCAABF71F /* WaterlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterlineView.swift; sourceTree = "<group>"; };
 		16AD332E63555F5AA1137AAF /* ClaudeAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeAPIClient.swift; sourceTree = "<group>"; };
 		17D923FFC3F1352123547E74 /* FoodLogEntry+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FoodLogEntry+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		19884C5A1F294CFAF5B9377E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -501,7 +499,6 @@
 			isa = PBXGroup;
 			children = (
 				00020267E962B5166BFC7910 /* BalanceScaleView.swift */,
-				15FE2BAD16F926DFCAABF71F /* WaterlineView.swift */,
 			);
 			path = CLVisualization;
 			sourceTree = "<group>";
@@ -741,7 +738,6 @@
 				4B8A74359D0BC603BFE227EE /* SettingsView.swift in Sources */,
 				8DE167AB3585707279F2E20F /* TranscriptParser.swift in Sources */,
 				B076FCA27DDFC7ECFBB6F792 /* VoiceCapture.swift in Sources */,
-				EB32167E33EDB53104ED047A /* WaterlineView.swift in Sources */,
 				8244ACA7D299AF86DC32727C /* WeekComparisonStrip.swift in Sources */,
 				54376F4567B22EA7489FADA9 /* WeekTabView.swift in Sources */,
 				9C86560AAEE898D9CDD72E79 /* WeeklyRiverView.swift in Sources */,

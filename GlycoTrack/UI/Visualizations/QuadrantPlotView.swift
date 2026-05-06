@@ -133,7 +133,7 @@ struct QuadrantPlotSection: View {
                         .position(x: 14, y: h * 0.04)
                 }
             }
-            .frame(height: 200)
+            .frame(height: 320)
             .padding(.horizontal, 8)
 
             // Axis legend

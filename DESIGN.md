@@ -8,15 +8,17 @@
 >   a single emoji via `FoodEmoji.resolve(entry:)`. Tier/confidence still drive
 >   the row badge color.
 > - **The GL × CL Quadrant is now a 2-region inline plot** embedded on
->   Today/Week/Month — not a 4-region modal sheet. (GL is unsigned, so the
->   lower half would always be empty.)
+>   Week/Month only — not a 4-region modal sheet and not on Today. (GL is
+>   unsigned so the lower half would always be empty; Today focuses on the
+>   GL bucket + CL balance scale.) PR #53.
 > - **The tab bar is a custom floating two-pill bar** (not the system
 >   `TabView`) with a separated record-button on the right.
 > - **The Summary tab and `SummaryGenerator` module are removed** (PR #44).
 >   Narrative AI summaries weren't carrying their weight against the
 >   visualizations.
-> - **The Tug-of-War CL viz is removed** (PR #44). The CL views in production
->   are Balance (primary) and Waterline (scroll-down second lens).
+> - **The Tug-of-War CL viz and WaterlineView are removed** (TugOfWar: PR #44;
+>   Waterline: PR #53). The only CL visualization is now Balance (SpriteKit
+>   pinned beam).
 > - **Settings / About / Debug live in a single `MoreSheet`** behind a gear
 >   button on the Today tab — none are first-class tabs.
 > - **Daily GL budget is now user-editable** (Settings → daily GL budget,

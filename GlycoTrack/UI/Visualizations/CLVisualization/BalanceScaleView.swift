@@ -2,6 +2,31 @@ import SwiftUI
 import SpriteKit
 import UIKit
 
+struct SceneKeyCL: Hashable {
+    let replay: UUID
+    let dayKey: Date
+    let entryIDs: [UUID]
+    let width: CGFloat
+    let height: CGFloat
+}
+
+struct CLNetLabel: View {
+    let netCL: Double
+
+    var body: some View {
+        let color: Color = netCL > 0 ? .clAccent : .green
+        return HStack(spacing: 5) {
+            Image(systemName: netCL > 0 ? "arrow.up.circle.fill" : "arrow.down.circle.fill")
+                .foregroundColor(color)
+                .font(.system(size: 14, weight: .bold))
+            Text(String(format: "%+.1f", netCL))
+                .font(.system(.title3, design: .rounded, weight: .heavy))
+                .foregroundColor(color)
+                .monospacedDigit()
+        }
+    }
+}
+
 /// Balance Scale (CL Visualization).
 /// A pinned beam with two hanging plates. Food items drop onto the appropriate plate —
 /// beneficial (−CL) on the left, harmful (+CL) on the right. Beam rotates naturally
