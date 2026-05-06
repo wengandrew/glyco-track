@@ -976,7 +976,8 @@
   {
     "name": "risotto",
     "gi": 69,
-    "aliases": []
+    "aliases": [],
+    "carbs": 24.0
   },
   {
     "name": "sushi",
@@ -1498,7 +1499,8 @@
     "aliases": [
       "seltzer",
       "club soda"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "lemonade",
@@ -2273,7 +2275,8 @@
       "soft tortilla",
       "burrito wrap",
       "wrap"
-    ]
+    ],
+    "carbs": 50.0
   },
   {
     "name": "whole wheat tortilla",
@@ -2281,7 +2284,8 @@
     "aliases": [
       "whole grain tortilla",
       "wheat wrap"
-    ]
+    ],
+    "carbs": 43.0
   },
   {
     "name": "ezekiel bread",
@@ -2306,7 +2310,8 @@
     "gi": 63,
     "aliases": [
       "spelt loaf"
-    ]
+    ],
+    "carbs": 47.0
   },
   {
     "name": "brioche",
@@ -2324,7 +2329,8 @@
       "udon",
       "thick noodles",
       "japanese udon"
-    ]
+    ],
+    "carbs": 22.0
   },
   {
     "name": "soba noodles",
@@ -2333,7 +2339,8 @@
       "soba",
       "buckwheat noodles",
       "japanese soba"
-    ]
+    ],
+    "carbs": 21.4
   },
   {
     "name": "shirataki noodles",
@@ -2343,7 +2350,8 @@
       "miracle noodles",
       "zero carb noodles",
       "konnyaku noodles"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "cellophane noodles",
@@ -2353,7 +2361,8 @@
       "bean thread noodles",
       "mung bean noodles",
       "crystal noodles"
-    ]
+    ],
+    "carbs": 86.0
   },
   {
     "name": "bulgur",
@@ -2370,7 +2379,8 @@
     "aliases": [
       "whole wheat kernels",
       "wheat grains"
-    ]
+    ],
+    "carbs": 72.0
   },
   {
     "name": "spelt grain",
@@ -2378,7 +2388,8 @@
     "aliases": [
       "spelt",
       "dinkel wheat"
-    ]
+    ],
+    "carbs": 71.0
   },
   {
     "name": "teff",
@@ -2386,7 +2397,8 @@
     "aliases": [
       "teff grain",
       "tef"
-    ]
+    ],
+    "carbs": 73.0
   },
   {
     "name": "amaranth",
@@ -2394,14 +2406,16 @@
     "aliases": [
       "amaranth grain",
       "amaranth seeds"
-    ]
+    ],
+    "carbs": 65.3
   },
   {
     "name": "triticale",
     "gi": 42,
     "aliases": [
       "triticale grain"
-    ]
+    ],
+    "carbs": 72.0
   },
   {
     "name": "sorghum grain",
@@ -2409,7 +2423,8 @@
     "aliases": [
       "sorghum",
       "milo grain"
-    ]
+    ],
+    "carbs": 72.0
   },
   {
     "name": "wild rice",
@@ -2426,7 +2441,8 @@
       "forbidden rice",
       "purple rice",
       "chinese black rice"
-    ]
+    ],
+    "carbs": 76.0
   },
   {
     "name": "red rice",
@@ -2434,7 +2450,8 @@
     "aliases": [
       "red cargo rice",
       "thai red rice"
-    ]
+    ],
+    "carbs": 76.0
   },
   {
     "name": "glutinous rice",
@@ -2444,7 +2461,8 @@
       "sweet rice",
       "mochi rice",
       "glutinous"
-    ]
+    ],
+    "carbs": 81.0
   },
   {
     "name": "puffed rice",
@@ -2452,7 +2470,8 @@
     "aliases": [
       "rice puffs",
       "popped rice"
-    ]
+    ],
+    "carbs": 87.0
   },
   {
     "name": "crispbread",
@@ -2460,7 +2479,8 @@
     "aliases": [
       "scandinavian crispbread",
       "crispbreads"
-    ]
+    ],
+    "carbs": 65.0
   },
   {
     "name": "rye crispbread",
@@ -2469,7 +2489,8 @@
       "ryecrisp",
       "wasa cracker",
       "rye crackers"
-    ]
+    ],
+    "carbs": 62.0
   },
   {
     "name": "oat bran",
@@ -2485,7 +2506,8 @@
     "aliases": [
       "unprocessed wheat bran",
       "miller's bran"
-    ]
+    ],
+    "carbs": 64.5
   },
   {
     "name": "lo mein",
@@ -2494,7 +2516,8 @@
       "chinese noodles",
       "stir fried noodles",
       "chinese lo mein"
-    ]
+    ],
+    "carbs": 25.0
   },
   {
     "name": "chow mein",
@@ -2502,7 +2525,8 @@
     "aliases": [
       "fried noodles",
       "crispy noodles"
-    ]
+    ],
+    "carbs": 30.0
   },
   {
     "name": "spaetzle",
@@ -2511,7 +2535,8 @@
       "spätzle",
       "german egg noodles",
       "german pasta"
-    ]
+    ],
+    "carbs": 30.0
   },
   {
     "name": "frosted flakes",
@@ -2520,7 +2545,8 @@
       "frosties",
       "sugar frosted flakes",
       "kellogg's frosted flakes"
-    ]
+    ],
+    "carbs": 87.0
   },
   {
     "name": "shredded wheat",
@@ -2528,7 +2554,8 @@
     "aliases": [
       "shredded wheat biscuits",
       "whole wheat biscuits"
-    ]
+    ],
+    "carbs": 79.0
   },
   {
     "name": "weetabix",
@@ -2536,7 +2563,8 @@
     "aliases": [
       "weet-bix",
       "wheat biscuit cereal"
-    ]
+    ],
+    "carbs": 68.0
   },
   {
     "name": "cocoa puffs",
@@ -2545,7 +2573,8 @@
       "coco pops",
       "chocolate puffs cereal",
       "choco krispies"
-    ]
+    ],
+    "carbs": 83.3
   },
   {
     "name": "froot loops",
@@ -2553,7 +2582,8 @@
     "aliases": [
       "fruit loops",
       "rainbow cereal"
-    ]
+    ],
+    "carbs": 83.0
   },
   {
     "name": "frosted mini wheats",
@@ -2561,14 +2591,16 @@
     "aliases": [
       "mini wheats",
       "mini-wheats"
-    ]
+    ],
+    "carbs": 80.0
   },
   {
     "name": "lucky charms",
     "gi": 77,
     "aliases": [
       "lucky charms cereal"
-    ]
+    ],
+    "carbs": 83.0
   },
   {
     "name": "cinnamon toast crunch",
@@ -2576,7 +2608,8 @@
     "aliases": [
       "cinnamon squares cereal",
       "cinnamon crunch"
-    ]
+    ],
+    "carbs": 80.0
   },
   {
     "name": "grape nuts",
@@ -2584,7 +2617,8 @@
     "aliases": [
       "grape-nuts",
       "post grape nuts"
-    ]
+    ],
+    "carbs": 72.0
   },
   {
     "name": "all bran",
@@ -2593,7 +2627,8 @@
       "all-bran",
       "all bran buds",
       "kellogg's all bran"
-    ]
+    ],
+    "carbs": 46.0
   },
   {
     "name": "fiber one",
@@ -2601,7 +2636,8 @@
     "aliases": [
       "fibre one",
       "high fiber cereal"
-    ]
+    ],
+    "carbs": 57.0
   },
   {
     "name": "captain crunch",
@@ -2609,7 +2645,8 @@
     "aliases": [
       "cap'n crunch",
       "capn crunch"
-    ]
+    ],
+    "carbs": 79.0
   },
   {
     "name": "raisin bran",
@@ -2617,7 +2654,8 @@
     "aliases": [
       "raisin bran cereal",
       "bran with raisins"
-    ]
+    ],
+    "carbs": 71.0
   },
   {
     "name": "puffed wheat",
@@ -2625,7 +2663,8 @@
     "aliases": [
       "puffed wheat cereal",
       "wheat puffs"
-    ]
+    ],
+    "carbs": 80.0
   },
   {
     "name": "cocoa krispies",
@@ -2633,14 +2672,16 @@
     "aliases": [
       "coco krispies",
       "chocolate rice krispies"
-    ]
+    ],
+    "carbs": 85.0
   },
   {
     "name": "honey bunches of oats",
     "gi": 60,
     "aliases": [
       "HBO cereal"
-    ]
+    ],
+    "carbs": 80.0
   },
   {
     "name": "cream of wheat",
@@ -2649,7 +2690,8 @@
       "farina",
       "semolina porridge",
       "wheat cereal"
-    ]
+    ],
+    "carbs": 73.3
   },
   {
     "name": "kashi golean",
@@ -2657,7 +2699,8 @@
     "aliases": [
       "kashi cereal",
       "kashi go lean"
-    ]
+    ],
+    "carbs": 70.0
   },
   {
     "name": "blackberries",
@@ -2744,7 +2787,8 @@
     "gi": 25,
     "aliases": [
       "boysenberry"
-    ]
+    ],
+    "carbs": 12.2
   },
   {
     "name": "durian",
@@ -2769,7 +2813,8 @@
     "aliases": [
       "elderberry",
       "elder berries"
-    ]
+    ],
+    "carbs": 18.4
   },
   {
     "name": "gooseberries",
@@ -2788,7 +2833,8 @@
       "blackcurrant",
       "redcurrant",
       "white currants"
-    ]
+    ],
+    "carbs": 14.0
   },
   {
     "name": "dragon fruit",
@@ -2805,7 +2851,8 @@
     "gi": 49,
     "aliases": [
       "rambutan fruit"
-    ]
+    ],
+    "carbs": 21.0
   },
   {
     "name": "sapodilla",
@@ -2814,7 +2861,8 @@
       "chikoo",
       "sapota",
       "naseberry"
-    ]
+    ],
+    "carbs": 20.0
   },
   {
     "name": "cherimoya",
@@ -2823,14 +2871,16 @@
       "custard apple",
       "cherimoya fruit",
       "annona"
-    ]
+    ],
+    "carbs": 17.7
   },
   {
     "name": "quince",
     "gi": 35,
     "aliases": [
       "quince fruit"
-    ]
+    ],
+    "carbs": 15.3
   },
   {
     "name": "honeydew melon",
@@ -2874,7 +2924,8 @@
       "fresh coconut",
       "coconut meat",
       "young coconut"
-    ]
+    ],
+    "carbs": 15.0
   },
   {
     "name": "plantain chips",
@@ -2882,7 +2933,8 @@
     "aliases": [
       "fried plantain chips",
       "tostones chips"
-    ]
+    ],
+    "carbs": 55.0
   },
   {
     "name": "banana chips",
@@ -2890,7 +2942,8 @@
     "aliases": [
       "dried banana chips",
       "banana crisps"
-    ]
+    ],
+    "carbs": 58.0
   },
   {
     "name": "dried mango",
@@ -2899,7 +2952,8 @@
       "mango strips",
       "dried mango slices",
       "mango leather"
-    ]
+    ],
+    "carbs": 78.0
   },
   {
     "name": "dried figs",
@@ -2907,7 +2961,8 @@
     "aliases": [
       "fig rolls",
       "dried fig"
-    ]
+    ],
+    "carbs": 64.0
   },
   {
     "name": "dried cranberries",
@@ -2915,7 +2970,8 @@
     "aliases": [
       "craisins",
       "sweetened dried cranberries"
-    ]
+    ],
+    "carbs": 82.0
   },
   {
     "name": "grapefruit juice",
@@ -2923,7 +2979,8 @@
     "aliases": [
       "fresh squeezed grapefruit",
       "grapefruit drink"
-    ]
+    ],
+    "carbs": 9.2
   },
   {
     "name": "artichoke",
@@ -2968,7 +3025,8 @@
       "witloof",
       "belgian endive",
       "radicchio"
-    ]
+    ],
+    "carbs": 4.7
   },
   {
     "name": "fennel",
@@ -3097,7 +3155,8 @@
       "lotus rhizome",
       "lotus stem",
       "renkon"
-    ]
+    ],
+    "carbs": 17.2
   },
   {
     "name": "bamboo shoots",
@@ -3241,7 +3300,8 @@
       "white kidney beans",
       "white cannellini",
       "italian white beans"
-    ]
+    ],
+    "carbs": 17.0
   },
   {
     "name": "butter beans",
@@ -3249,7 +3309,8 @@
     "aliases": [
       "large lima beans",
       "fordhook lima beans"
-    ]
+    ],
+    "carbs": 20.0
   },
   {
     "name": "red lentils",
@@ -3258,7 +3319,8 @@
       "red dal",
       "masoor dal",
       "split red lentils"
-    ]
+    ],
+    "carbs": 20.0
   },
   {
     "name": "green lentils",
@@ -3267,7 +3329,8 @@
       "french lentils",
       "puy lentils",
       "du puy lentils"
-    ]
+    ],
+    "carbs": 20.0
   },
   {
     "name": "beluga lentils",
@@ -3275,7 +3338,8 @@
     "aliases": [
       "black lentils",
       "beluga black lentils"
-    ]
+    ],
+    "carbs": 20.0
   },
   {
     "name": "refried beans",
@@ -3283,7 +3347,8 @@
     "aliases": [
       "frijoles refritos",
       "mashed pinto beans"
-    ]
+    ],
+    "carbs": 14.5
   },
   {
     "name": "cowpeas",
@@ -3292,7 +3357,8 @@
       "black-eyed beans",
       "southern peas",
       "field peas"
-    ]
+    ],
+    "carbs": 23.5
   },
   {
     "name": "pigeon peas",
@@ -3302,14 +3368,16 @@
       "split pigeon peas",
       "arhar dal",
       "gandule beans"
-    ]
+    ],
+    "carbs": 23.0
   },
   {
     "name": "black bean soup",
     "gi": 30,
     "aliases": [
       "black bean stew"
-    ]
+    ],
+    "carbs": 11.5
   },
   {
     "name": "lentil pasta",
@@ -3317,7 +3385,8 @@
     "aliases": [
       "red lentil pasta",
       "lentil spaghetti"
-    ]
+    ],
+    "carbs": 53.0
   },
   {
     "name": "chickpea pasta",
@@ -3326,7 +3395,8 @@
       "legume pasta",
       "chickpea spaghetti",
       "bean pasta"
-    ]
+    ],
+    "carbs": 44.0
   },
   {
     "name": "dal",
@@ -3336,7 +3406,8 @@
       "lentil dal",
       "dhal",
       "daal"
-    ]
+    ],
+    "carbs": 18.0
   },
   {
     "name": "dried chickpeas",
@@ -3345,7 +3416,8 @@
       "roasted chickpeas",
       "crunchy chickpeas",
       "chickpea snacks"
-    ]
+    ],
+    "carbs": 61.0
   },
   {
     "name": "cheddar",
@@ -3463,7 +3535,8 @@
       "plant based yogurt",
       "vegan yogurt",
       "dairy free yogurt"
-    ]
+    ],
+    "carbs": 6.0
   },
   {
     "name": "coconut yogurt",
@@ -3471,7 +3544,8 @@
     "aliases": [
       "coconut milk yogurt",
       "vegan coconut yogurt"
-    ]
+    ],
+    "carbs": 7.0
   },
   {
     "name": "goat milk",
@@ -3479,7 +3553,8 @@
     "aliases": [
       "goat's milk",
       "fresh goat milk"
-    ]
+    ],
+    "carbs": 4.5
   },
   {
     "name": "lactose free milk",
@@ -3487,7 +3562,8 @@
     "aliases": [
       "lactose-free milk",
       "lactase-treated milk"
-    ]
+    ],
+    "carbs": 5.0
   },
   {
     "name": "evaporated milk",
@@ -3521,7 +3597,8 @@
       "whey protein powder",
       "whey",
       "whey isolate"
-    ]
+    ],
+    "carbs": 4.0
   },
   {
     "name": "chicken thigh",
@@ -3653,7 +3730,8 @@
       "chevon",
       "mutton",
       "kabrito"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "rabbit",
@@ -3661,7 +3739,8 @@
     "aliases": [
       "rabbit meat",
       "wild rabbit"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "elk",
@@ -3670,7 +3749,8 @@
       "elk meat",
       "wapiti",
       "elk steak"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "ostrich",
@@ -3678,7 +3758,8 @@
     "aliases": [
       "ostrich steak",
       "ostrich fillet"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "quail",
@@ -3687,7 +3768,8 @@
       "quail meat",
       "quail eggs",
       "roasted quail"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "corned beef",
@@ -3695,7 +3777,8 @@
     "aliases": [
       "corned beef hash",
       "salt beef"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "prosciutto",
@@ -3782,7 +3865,8 @@
     "aliases": [
       "abalone shellfish",
       "ear shell"
-    ]
+    ],
+    "carbs": 6.0
   },
   {
     "name": "pistachios",
@@ -3903,7 +3987,8 @@
       "matcha tea",
       "sencha",
       "green tea drink"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "black tea",
@@ -3911,7 +3996,8 @@
     "aliases": [
       "english breakfast tea",
       "tea unsweetened"
-    ]
+    ],
+    "carbs": 0.3
   },
   {
     "name": "herbal tea",
@@ -3922,7 +4008,8 @@
       "rooibos",
       "tisane",
       "herbal infusion"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "hot chocolate",
@@ -3931,7 +4018,8 @@
       "hot cocoa",
       "cocoa drink",
       "drinking chocolate"
-    ]
+    ],
+    "carbs": 20.0
   },
   {
     "name": "milk tea",
@@ -3941,7 +4029,8 @@
       "boba tea",
       "thai milk tea",
       "hong kong milk tea"
-    ]
+    ],
+    "carbs": 8.5
   },
   {
     "name": "tomato juice",
@@ -3950,7 +4039,8 @@
       "v8 juice",
       "clamato",
       "vegetable tomato juice"
-    ]
+    ],
+    "carbs": 3.9
   },
   {
     "name": "vegetable juice",
@@ -3959,7 +4049,8 @@
       "green juice",
       "mixed vegetable juice",
       "cold pressed juice"
-    ]
+    ],
+    "carbs": 4.0
   },
   {
     "name": "grape juice",
@@ -3968,7 +4059,8 @@
       "red grape juice",
       "concord grape juice",
       "white grape juice"
-    ]
+    ],
+    "carbs": 15.3
   },
   {
     "name": "cranberry juice",
@@ -3976,7 +4068,8 @@
     "aliases": [
       "cranberry cocktail",
       "cranberry drink"
-    ]
+    ],
+    "carbs": 12.0
   },
   {
     "name": "pineapple juice",
@@ -3984,7 +4077,8 @@
     "aliases": [
       "fresh pineapple juice",
       "canned pineapple juice"
-    ]
+    ],
+    "carbs": 12.4
   },
   {
     "name": "pomegranate juice",
@@ -3992,7 +4086,8 @@
     "aliases": [
       "pom juice",
       "fresh pomegranate juice"
-    ]
+    ],
+    "carbs": 13.1
   },
   {
     "name": "diet soda",
@@ -4003,7 +4098,8 @@
       "diet pepsi",
       "sugar-free soda",
       "zero calorie soda"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "matcha",
@@ -4012,7 +4108,8 @@
       "matcha latte",
       "matcha powder",
       "matcha drink"
-    ]
+    ],
+    "carbs": 0.6
   },
   {
     "name": "chai",
@@ -4022,7 +4119,8 @@
       "masala chai",
       "spiced tea",
       "chai latte"
-    ]
+    ],
+    "carbs": 20.0
   },
   {
     "name": "lemon water",
@@ -4031,7 +4129,8 @@
       "infused water",
       "lemon cucumber water",
       "detox water"
-    ]
+    ],
+    "carbs": 0.5
   },
   {
     "name": "watermelon juice",
@@ -4039,7 +4138,8 @@
     "aliases": [
       "watermelon agua fresca",
       "fresh watermelon juice"
-    ]
+    ],
+    "carbs": 7.6
   },
   {
     "name": "aloe vera juice",
@@ -4047,7 +4147,8 @@
     "aliases": [
       "aloe juice",
       "aloe vera drink"
-    ]
+    ],
+    "carbs": 5.0
   },
   {
     "name": "mango juice",
@@ -4055,14 +4156,16 @@
     "aliases": [
       "mango nectar",
       "mango drink"
-    ]
+    ],
+    "carbs": 14.0
   },
   {
     "name": "peach juice",
     "gi": 42,
     "aliases": [
       "peach nectar"
-    ]
+    ],
+    "carbs": 11.0
   },
   {
     "name": "beet juice",
@@ -4070,14 +4173,16 @@
     "aliases": [
       "beetroot juice",
       "red beet juice"
-    ]
+    ],
+    "carbs": 10.0
   },
   {
     "name": "carrot juice",
     "gi": 43,
     "aliases": [
       "fresh carrot juice"
-    ]
+    ],
+    "carbs": 9.3
   },
   {
     "name": "miso paste",
@@ -4087,7 +4192,8 @@
       "red miso",
       "miso",
       "shiro miso"
-    ]
+    ],
+    "carbs": 26.0
   },
   {
     "name": "gochujang",
@@ -4095,7 +4201,8 @@
     "aliases": [
       "korean red pepper paste",
       "korean chili paste"
-    ]
+    ],
+    "carbs": 45.0
   },
   {
     "name": "coconut aminos",
@@ -4103,7 +4210,8 @@
     "aliases": [
       "soy free soy sauce",
       "coconut sap sauce"
-    ]
+    ],
+    "carbs": 10.0
   },
   {
     "name": "pesto",
@@ -4112,14 +4220,16 @@
       "basil pesto",
       "pesto sauce",
       "genovese pesto"
-    ]
+    ],
+    "carbs": 4.0
   },
   {
     "name": "hollandaise sauce",
     "gi": 10,
     "aliases": [
       "hollandaise"
-    ]
+    ],
+    "carbs": 1.0
   },
   {
     "name": "blue cheese dressing",
@@ -4127,7 +4237,8 @@
     "aliases": [
       "blue cheese sauce",
       "bleu cheese dressing"
-    ]
+    ],
+    "carbs": 6.0
   },
   {
     "name": "thousand island dressing",
@@ -4135,7 +4246,8 @@
     "aliases": [
       "thousand island",
       "1000 island dressing"
-    ]
+    ],
+    "carbs": 15.0
   },
   {
     "name": "worcestershire sauce",
@@ -4144,7 +4256,8 @@
       "worcestershire",
       "HP sauce",
       "steak sauce"
-    ]
+    ],
+    "carbs": 19.0
   },
   {
     "name": "chipotle sauce",
@@ -4152,7 +4265,8 @@
     "aliases": [
       "chipotles in adobo",
       "chipotle mayo"
-    ]
+    ],
+    "carbs": 8.0
   },
   {
     "name": "harissa",
@@ -4161,7 +4275,8 @@
       "harissa paste",
       "north african chili paste",
       "tunisian harissa"
-    ]
+    ],
+    "carbs": 9.0
   },
   {
     "name": "mango chutney",
@@ -4170,7 +4285,8 @@
       "chutney",
       "indian chutney",
       "fruit chutney"
-    ]
+    ],
+    "carbs": 35.0
   },
   {
     "name": "apple cider vinegar",
@@ -4179,7 +4295,8 @@
       "ACV",
       "raw apple cider vinegar",
       "cider vinegar"
-    ]
+    ],
+    "carbs": 0.9
   },
   {
     "name": "hot sauce",
@@ -4189,7 +4306,8 @@
       "frank's red hot",
       "louisiana hot sauce",
       "cayenne sauce"
-    ]
+    ],
+    "carbs": 3.0
   },
   {
     "name": "sweet chili sauce",
@@ -4197,7 +4315,8 @@
     "aliases": [
       "thai sweet chili sauce",
       "sweet chilli sauce"
-    ]
+    ],
+    "carbs": 38.0
   },
   {
     "name": "plum sauce",
@@ -4205,7 +4324,8 @@
     "aliases": [
       "duck sauce",
       "asian plum sauce"
-    ]
+    ],
+    "carbs": 38.0
   },
   {
     "name": "alfredo sauce",
@@ -4213,7 +4333,8 @@
     "aliases": [
       "cream pasta sauce",
       "parmesan cream sauce"
-    ]
+    ],
+    "carbs": 4.0
   },
   {
     "name": "marinara sauce",
@@ -4222,7 +4343,8 @@
       "tomato sauce",
       "pasta sauce",
       "pomodoro sauce"
-    ]
+    ],
+    "carbs": 7.0
   },
   {
     "name": "angel food cake",
@@ -4230,7 +4352,8 @@
     "aliases": [
       "angel cake",
       "angel food"
-    ]
+    ],
+    "carbs": 58.0
   },
   {
     "name": "chocolate lava cake",
@@ -4238,7 +4361,8 @@
     "aliases": [
       "molten chocolate cake",
       "fondant au chocolat"
-    ]
+    ],
+    "carbs": 30.0
   },
   {
     "name": "cannoli",
@@ -4246,7 +4370,8 @@
     "aliases": [
       "sicilian cannoli",
       "italian pastry"
-    ]
+    ],
+    "carbs": 32.0
   },
   {
     "name": "profiteroles",
@@ -4254,7 +4379,8 @@
     "aliases": [
       "cream puffs",
       "choux pastry"
-    ]
+    ],
+    "carbs": 28.0
   },
   {
     "name": "churros",
@@ -4262,7 +4388,8 @@
     "aliases": [
       "spanish churros",
       "fried dough sticks"
-    ]
+    ],
+    "carbs": 44.0
   },
   {
     "name": "beignets",
@@ -4270,7 +4397,8 @@
     "aliases": [
       "french doughnuts",
       "new orleans beignets"
-    ]
+    ],
+    "carbs": 43.0
   },
   {
     "name": "funnel cake",
@@ -4278,7 +4406,8 @@
     "aliases": [
       "fair food funnel cake",
       "fried funnel cake"
-    ]
+    ],
+    "carbs": 40.0
   },
   {
     "name": "macaron",
@@ -4287,7 +4416,8 @@
       "french macaron",
       "macaroon",
       "french macaroon"
-    ]
+    ],
+    "carbs": 67.0
   },
   {
     "name": "pavlova",
@@ -4295,7 +4425,8 @@
     "aliases": [
       "new zealand pavlova",
       "meringue cake"
-    ]
+    ],
+    "carbs": 60.0
   },
   {
     "name": "mousse",
@@ -4303,7 +4434,8 @@
     "aliases": [
       "chocolate mousse",
       "french mousse"
-    ]
+    ],
+    "carbs": 18.0
   },
   {
     "name": "dark chocolate 85%",
@@ -4312,7 +4444,8 @@
       "85% dark chocolate",
       "extra dark chocolate",
       "very dark chocolate"
-    ]
+    ],
+    "carbs": 24.0
   },
   {
     "name": "milk chocolate",
@@ -4321,7 +4454,8 @@
       "chocolate bar",
       "hersheys",
       "milk choc"
-    ]
+    ],
+    "carbs": 57.0
   },
   {
     "name": "white chocolate",
@@ -4329,14 +4463,16 @@
     "aliases": [
       "white choc",
       "white chocolate bar"
-    ]
+    ],
+    "carbs": 59.0
   },
   {
     "name": "candy corn",
     "gi": 70,
     "aliases": [
       "halloween candy"
-    ]
+    ],
+    "carbs": 90.0
   },
   {
     "name": "jelly beans",
@@ -4344,7 +4480,8 @@
     "aliases": [
       "jellybeans",
       "jelly belly"
-    ]
+    ],
+    "carbs": 93.0
   },
   {
     "name": "gummy candy",
@@ -4353,7 +4490,8 @@
       "gummy worms",
       "gummy bears extra",
       "gummies"
-    ]
+    ],
+    "carbs": 77.0
   },
   {
     "name": "peanut butter cups",
@@ -4362,7 +4500,8 @@
       "reese's",
       "reese's pieces",
       "peanut butter chocolate"
-    ]
+    ],
+    "carbs": 52.0
   },
   {
     "name": "vanilla wafers",
@@ -4370,7 +4509,8 @@
     "aliases": [
       "nilla wafers",
       "vanilla cookies"
-    ]
+    ],
+    "carbs": 70.0
   },
   {
     "name": "digestive biscuits",
@@ -4379,7 +4519,8 @@
       "mcvitie's",
       "digestive cookies",
       "wheat biscuits"
-    ]
+    ],
+    "carbs": 62.0
   },
   {
     "name": "shortbread",
@@ -4388,7 +4529,8 @@
       "shortbread cookies",
       "butter cookies",
       "scottish shortbread"
-    ]
+    ],
+    "carbs": 65.0
   },
   {
     "name": "meringue",
@@ -4397,7 +4539,8 @@
       "merengue",
       "baked meringue",
       "egg white meringue"
-    ]
+    ],
+    "carbs": 80.0
   },
   {
     "name": "black forest cake",
@@ -4405,7 +4548,8 @@
     "aliases": [
       "schwarzwälder kirschtorte",
       "black forest gateau"
-    ]
+    ],
+    "carbs": 35.0
   },
   {
     "name": "lemon bars",
@@ -4413,21 +4557,24 @@
     "aliases": [
       "lemon squares",
       "lemon tart bars"
-    ]
+    ],
+    "carbs": 50.0
   },
   {
     "name": "pecan pie",
     "gi": 65,
     "aliases": [
       "southern pecan pie"
-    ]
+    ],
+    "carbs": 45.0
   },
   {
     "name": "key lime pie",
     "gi": 58,
     "aliases": [
       "lime pie"
-    ]
+    ],
+    "carbs": 32.0
   },
   {
     "name": "tres leches",
@@ -4435,7 +4582,8 @@
     "aliases": [
       "tres leches cake",
       "three milk cake"
-    ]
+    ],
+    "carbs": 30.0
   },
   {
     "name": "mochi ice cream",
@@ -4443,7 +4591,8 @@
     "aliases": [
       "mochi dessert",
       "filled mochi"
-    ]
+    ],
+    "carbs": 35.0
   },
   {
     "name": "animal crackers",
@@ -4451,7 +4600,8 @@
     "aliases": [
       "animal cookies",
       "barnum's animals"
-    ]
+    ],
+    "carbs": 72.0
   },
   {
     "name": "graham crackers",
@@ -4459,7 +4609,8 @@
     "aliases": [
       "graham cracker",
       "honey grahams"
-    ]
+    ],
+    "carbs": 77.0
   },
   {
     "name": "cheese crackers",
@@ -4468,7 +4619,8 @@
       "cheez-its",
       "goldfish crackers",
       "cheese snack crackers"
-    ]
+    ],
+    "carbs": 58.0
   },
   {
     "name": "rice crackers",
@@ -4477,7 +4629,8 @@
       "rice snacks",
       "japanese rice crackers",
       "arare"
-    ]
+    ],
+    "carbs": 82.0
   },
   {
     "name": "corn chips",
@@ -4485,7 +4638,8 @@
     "aliases": [
       "fritos",
       "corn crisps"
-    ]
+    ],
+    "carbs": 57.0
   },
   {
     "name": "pita chips",
@@ -4493,7 +4647,8 @@
     "aliases": [
       "baked pita chips",
       "pita crisps"
-    ]
+    ],
+    "carbs": 55.0
   },
   {
     "name": "seaweed snacks",
@@ -4502,14 +4657,16 @@
       "nori snacks",
       "roasted seaweed",
       "seaweed crisps"
-    ]
+    ],
+    "carbs": 25.0
   },
   {
     "name": "melba toast",
     "gi": 70,
     "aliases": [
       "thin toast crackers"
-    ]
+    ],
+    "carbs": 72.0
   },
   {
     "name": "matzo",
@@ -4519,7 +4676,8 @@
       "matzo crackers",
       "unleavened bread",
       "matzah"
-    ]
+    ],
+    "carbs": 84.0
   },
   {
     "name": "pork rinds",
@@ -4528,7 +4686,8 @@
       "chicharrones",
       "pork cracklings",
       "pork scratchings"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "veggie straws",
@@ -4536,7 +4695,8 @@
     "aliases": [
       "vegetable straws",
       "veggie chips"
-    ]
+    ],
+    "carbs": 60.0
   },
   {
     "name": "kale chips",
@@ -4544,7 +4704,8 @@
     "aliases": [
       "baked kale chips",
       "kale crisps"
-    ]
+    ],
+    "carbs": 42.0
   },
   {
     "name": "crackers whole grain",
@@ -4553,7 +4714,8 @@
       "whole grain crackers",
       "seeded crackers",
       "multigrain crackers"
-    ]
+    ],
+    "carbs": 65.0
   },
   {
     "name": "oat crackers",
@@ -4561,7 +4723,8 @@
     "aliases": [
       "oatcakes",
       "scottish oatcakes"
-    ]
+    ],
+    "carbs": 62.0
   },
   {
     "name": "corn cakes",
@@ -4569,7 +4732,8 @@
     "aliases": [
       "corn rice cakes",
       "popped corn cakes"
-    ]
+    ],
+    "carbs": 79.0
   },
   {
     "name": "shakshuka",
@@ -4636,7 +4800,8 @@
       "tabouli",
       "tabbouleh salad",
       "bulgur salad"
-    ]
+    ],
+    "carbs": 18.0
   },
   {
     "name": "fattoush",
@@ -4644,7 +4809,8 @@
     "aliases": [
       "fattoush salad",
       "arabic bread salad"
-    ]
+    ],
+    "carbs": 12.0
   },
   {
     "name": "borscht",
@@ -4653,7 +4819,8 @@
       "beet soup",
       "ukrainian borscht",
       "russian borscht"
-    ]
+    ],
+    "carbs": 5.0
   },
   {
     "name": "pierogi",
@@ -4662,7 +4829,8 @@
       "perogies",
       "varenyky",
       "pierogies"
-    ]
+    ],
+    "carbs": 35.0
   },
   {
     "name": "goulash",
@@ -4671,7 +4839,8 @@
       "hungarian goulash",
       "beef goulash",
       "beef stew hungarian"
-    ]
+    ],
+    "carbs": 8.0
   },
   {
     "name": "tagine",
@@ -4680,7 +4849,8 @@
       "moroccan tagine",
       "lamb tagine",
       "chicken tagine"
-    ]
+    ],
+    "carbs": 10.0
   },
   {
     "name": "rendang",
@@ -4688,7 +4858,8 @@
     "aliases": [
       "beef rendang",
       "indonesian rendang"
-    ]
+    ],
+    "carbs": 4.0
   },
   {
     "name": "nasi goreng",
@@ -4696,7 +4867,8 @@
     "aliases": [
       "indonesian fried rice",
       "malaysian fried rice"
-    ]
+    ],
+    "carbs": 26.0
   },
   {
     "name": "laksa",
@@ -4705,7 +4877,8 @@
       "noodle soup",
       "singapore laksa",
       "penang laksa"
-    ]
+    ],
+    "carbs": 12.0
   },
   {
     "name": "tom yum",
@@ -4714,7 +4887,8 @@
       "tom yum soup",
       "thai hot and sour soup",
       "tom yam"
-    ]
+    ],
+    "carbs": 4.0
   },
   {
     "name": "tom kha",
@@ -4723,7 +4897,8 @@
       "tom kha gai",
       "thai coconut soup",
       "galangal coconut soup"
-    ]
+    ],
+    "carbs": 5.0
   },
   {
     "name": "satay",
@@ -4733,7 +4908,8 @@
       "beef satay",
       "peanut satay",
       "saté"
-    ]
+    ],
+    "carbs": 10.0
   },
   {
     "name": "massaman curry",
@@ -4742,7 +4918,8 @@
       "massaman",
       "thai massaman curry",
       "beef massaman"
-    ]
+    ],
+    "carbs": 12.0
   },
   {
     "name": "shepherd's pie",
@@ -4750,7 +4927,8 @@
     "aliases": [
       "cottage pie",
       "mashed potato pie"
-    ]
+    ],
+    "carbs": 13.0
   },
   {
     "name": "clam chowder",
@@ -4759,7 +4937,8 @@
       "new england clam chowder",
       "seafood chowder",
       "fish chowder"
-    ]
+    ],
+    "carbs": 8.5
   },
   {
     "name": "paella",
@@ -4777,7 +4956,8 @@
       "tamales",
       "corn tamale",
       "masa tamale"
-    ]
+    ],
+    "carbs": 18.0
   },
   {
     "name": "pozole",
@@ -4785,7 +4965,8 @@
     "aliases": [
       "posole",
       "mexican hominy stew"
-    ]
+    ],
+    "carbs": 8.0
   },
   {
     "name": "enchilada",
@@ -4794,14 +4975,16 @@
       "enchiladas",
       "cheese enchilada",
       "chicken enchilada"
-    ]
+    ],
+    "carbs": 18.0
   },
   {
     "name": "chilaquiles",
     "gi": 62,
     "aliases": [
       "mexican tortilla casserole"
-    ]
+    ],
+    "carbs": 20.0
   },
   {
     "name": "chimichanga",
@@ -4809,7 +4992,8 @@
     "aliases": [
       "deep fried burrito",
       "crispy burrito"
-    ]
+    ],
+    "carbs": 22.0
   },
   {
     "name": "banh mi",
@@ -4818,7 +5002,8 @@
       "vietnamese sandwich",
       "bánh mì",
       "baguette vietnamese"
-    ]
+    ],
+    "carbs": 30.0
   },
   {
     "name": "wonton",
@@ -4827,7 +5012,8 @@
       "wontons",
       "wonton soup",
       "pork dumplings"
-    ]
+    ],
+    "carbs": 28.0
   },
   {
     "name": "dim sum",
@@ -4836,7 +5022,8 @@
       "yum cha",
       "chinese dumplings",
       "har gow"
-    ]
+    ],
+    "carbs": 25.0
   },
   {
     "name": "general tso chicken",
@@ -4845,7 +5032,8 @@
       "general tso's chicken",
       "orange chicken",
       "sesame chicken"
-    ]
+    ],
+    "carbs": 16.0
   },
   {
     "name": "kung pao chicken",
@@ -4853,7 +5041,8 @@
     "aliases": [
       "gong bao chicken",
       "kung po chicken"
-    ]
+    ],
+    "carbs": 10.0
   },
   {
     "name": "sweet and sour pork",
@@ -4861,7 +5050,8 @@
     "aliases": [
       "sweet and sour chicken",
       "sweet sour pork"
-    ]
+    ],
+    "carbs": 18.0
   },
   {
     "name": "miso soup",
@@ -4879,7 +5069,8 @@
       "bulgogi",
       "korean bbq beef",
       "korean grilled beef"
-    ]
+    ],
+    "carbs": 8.0
   },
   {
     "name": "japchae",
@@ -4888,7 +5079,8 @@
       "korean glass noodles",
       "japchae noodles",
       "stir fried glass noodles"
-    ]
+    ],
+    "carbs": 23.0
   },
   {
     "name": "kimchi",
@@ -4906,7 +5098,8 @@
       "baba ghanoush",
       "eggplant dip",
       "mutabbal"
-    ]
+    ],
+    "carbs": 10.0
   },
   {
     "name": "dolmades",
@@ -4915,7 +5108,8 @@
       "stuffed grape leaves",
       "dolma",
       "yaprak sarma"
-    ]
+    ],
+    "carbs": 12.0
   },
   {
     "name": "spanakopita",
@@ -4924,7 +5118,8 @@
       "spinach pie",
       "greek spinach pie",
       "spinach feta pie"
-    ]
+    ],
+    "carbs": 23.0
   },
   {
     "name": "souvlaki",
@@ -4934,7 +5129,8 @@
       "pork souvlaki",
       "chicken souvlaki",
       "greek kebab"
-    ]
+    ],
+    "carbs": 2.0
   },
   {
     "name": "yorkshire pudding",
@@ -4942,7 +5138,8 @@
     "aliases": [
       "yorkshire pud",
       "british yorkshire pudding"
-    ]
+    ],
+    "carbs": 29.0
   },
   {
     "name": "colcannon",
@@ -4950,7 +5147,8 @@
     "aliases": [
       "irish mashed potato with cabbage",
       "irish colcannon"
-    ]
+    ],
+    "carbs": 15.0
   },
   {
     "name": "greek salad",
@@ -4959,7 +5157,8 @@
       "horiatiki salad",
       "village salad",
       "mediterranean salad"
-    ]
+    ],
+    "carbs": 5.0
   },
   {
     "name": "nicoise salad",
@@ -4968,14 +5167,16 @@
       "niçoise salad",
       "salade nicoise",
       "french tuna salad"
-    ]
+    ],
+    "carbs": 6.0
   },
   {
     "name": "waldorf salad",
     "gi": 25,
     "aliases": [
       "apple walnut salad"
-    ]
+    ],
+    "carbs": 12.0
   },
   {
     "name": "pasta salad",
@@ -4983,21 +5184,24 @@
     "aliases": [
       "cold pasta salad",
       "italian pasta salad"
-    ]
+    ],
+    "carbs": 20.0
   },
   {
     "name": "chicken caesar salad",
     "gi": 15,
     "aliases": [
       "grilled chicken caesar"
-    ]
+    ],
+    "carbs": 4.0
   },
   {
     "name": "cobb salad",
     "gi": 15,
     "aliases": [
       "california cobb"
-    ]
+    ],
+    "carbs": 4.0
   },
   {
     "name": "beef stir fry",
@@ -5005,7 +5209,8 @@
     "aliases": [
       "stir fry beef",
       "chinese beef stir fry"
-    ]
+    ],
+    "carbs": 5.0
   },
   {
     "name": "chicken stir fry",
@@ -5013,7 +5218,8 @@
     "aliases": [
       "stir fry chicken",
       "teriyaki stir fry"
-    ]
+    ],
+    "carbs": 5.0
   },
   {
     "name": "vegetable stir fry",
@@ -5021,7 +5227,8 @@
     "aliases": [
       "mixed vegetable stir fry",
       "wok vegetables"
-    ]
+    ],
+    "carbs": 6.0
   },
   {
     "name": "polenta coarse",
@@ -5030,7 +5237,8 @@
       "coarse cornmeal",
       "yellow grits",
       "southern grits"
-    ]
+    ],
+    "carbs": 22.0
   },
   {
     "name": "corn tortilla chips",
@@ -5038,7 +5246,8 @@
     "aliases": [
       "nacho chips",
       "tortilla chips baked"
-    ]
+    ],
+    "carbs": 59.0
   },
   {
     "name": "pretzel sticks",
@@ -5047,7 +5256,8 @@
       "hard pretzels",
       "salted pretzels",
       "pretzel rods"
-    ]
+    ],
+    "carbs": 79.0
   },
   {
     "name": "bread sticks",
@@ -5056,7 +5266,8 @@
       "grissini",
       "italian breadsticks",
       "breadstick"
-    ]
+    ],
+    "carbs": 68.0
   },
   {
     "name": "white pita",
@@ -5064,7 +5275,8 @@
     "aliases": [
       "plain pita",
       "pita pocket"
-    ]
+    ],
+    "carbs": 55.0
   },
   {
     "name": "brown rice flour",
@@ -5072,14 +5284,16 @@
     "aliases": [
       "whole grain rice flour",
       "brown rice starch"
-    ]
+    ],
+    "carbs": 76.5
   },
   {
     "name": "prune juice",
     "gi": 43,
     "aliases": [
       "dried plum juice"
-    ]
+    ],
+    "carbs": 17.5
   },
   {
     "name": "apricot juice",
@@ -5087,7 +5301,8 @@
     "aliases": [
       "fresh apricot juice",
       "apricot nectar"
-    ]
+    ],
+    "carbs": 12.0
   },
   {
     "name": "blood orange",
@@ -5096,7 +5311,8 @@
       "blood oranges",
       "moro orange",
       "tarocco"
-    ]
+    ],
+    "carbs": 12.0
   },
   {
     "name": "cara cara orange",
@@ -5104,7 +5320,8 @@
     "aliases": [
       "navel orange",
       "cara cara"
-    ]
+    ],
+    "carbs": 11.8
   },
   {
     "name": "ugli fruit",
@@ -5112,7 +5329,8 @@
     "aliases": [
       "uniq fruit",
       "jamaican tangelo"
-    ]
+    ],
+    "carbs": 9.0
   },
   {
     "name": "feijoa",
@@ -5120,7 +5338,8 @@
     "aliases": [
       "pineapple guava",
       "feijoas"
-    ]
+    ],
+    "carbs": 13.0
   },
   {
     "name": "ackee",
@@ -5128,7 +5347,8 @@
     "aliases": [
       "akee",
       "ackee fruit"
-    ]
+    ],
+    "carbs": 1.0
   },
   {
     "name": "breadnut",
@@ -5136,7 +5356,8 @@
     "aliases": [
       "chataigne",
       "ram breadfruit"
-    ]
+    ],
+    "carbs": 22.0
   },
   {
     "name": "mamey sapote",
@@ -5144,7 +5365,8 @@
     "aliases": [
       "mamey",
       "zapote"
-    ]
+    ],
+    "carbs": 32.0
   },
   {
     "name": "celery root soup",
@@ -5152,7 +5374,8 @@
     "aliases": [
       "celeriac soup",
       "cream of celeriac"
-    ]
+    ],
+    "carbs": 8.0
   },
   {
     "name": "purple cabbage",
@@ -5160,7 +5383,8 @@
     "aliases": [
       "red cabbage",
       "braised red cabbage"
-    ]
+    ],
+    "carbs": 7.4
   },
   {
     "name": "savoy cabbage",
@@ -5168,7 +5392,8 @@
     "aliases": [
       "curly cabbage",
       "milan cabbage"
-    ]
+    ],
+    "carbs": 6.1
   },
   {
     "name": "napa cabbage",
@@ -5176,7 +5401,8 @@
     "aliases": [
       "chinese cabbage napa",
       "wombok"
-    ]
+    ],
+    "carbs": 2.2
   },
   {
     "name": "microgreens",
@@ -5185,7 +5411,8 @@
       "sprout mix",
       "baby greens",
       "micro herbs"
-    ]
+    ],
+    "carbs": 3.0
   },
   {
     "name": "tomatillo",
@@ -5194,7 +5421,8 @@
       "tomatillos",
       "mexican tomato",
       "green tomato husk"
-    ]
+    ],
+    "carbs": 5.8
   },
   {
     "name": "chayote",
@@ -5203,7 +5431,8 @@
       "choko",
       "vegetable pear",
       "mirliton"
-    ]
+    ],
+    "carbs": 4.5
   },
   {
     "name": "bitter melon",
@@ -5212,7 +5441,8 @@
       "bitter gourd",
       "karela",
       "balsam pear"
-    ]
+    ],
+    "carbs": 3.7
   },
   {
     "name": "drumstick vegetable",
@@ -5221,7 +5451,8 @@
       "moringa pods",
       "murungakkai",
       "horseradish tree pods"
-    ]
+    ],
+    "carbs": 8.5
   },
   {
     "name": "lotus seeds",
@@ -5230,7 +5461,8 @@
       "lotus nuts",
       "makhana",
       "fox nuts"
-    ]
+    ],
+    "carbs": 64.0
   },
   {
     "name": "nettles",
@@ -5238,7 +5470,8 @@
     "aliases": [
       "stinging nettles",
       "nettle leaves"
-    ]
+    ],
+    "carbs": 7.5
   },
   {
     "name": "purslane",
@@ -5246,7 +5479,8 @@
     "aliases": [
       "portulaca",
       "verdolaga"
-    ]
+    ],
+    "carbs": 3.4
   },
   {
     "name": "samphire",
@@ -5255,7 +5489,8 @@
       "rock samphire",
       "sea fennel",
       "marsh samphire"
-    ]
+    ],
+    "carbs": 3.0
   },
   {
     "name": "ful medames",
@@ -5264,7 +5499,8 @@
       "fava bean stew",
       "egyptian fava beans",
       "fool mudammas"
-    ]
+    ],
+    "carbs": 19.0
   },
   {
     "name": "mung bean soup",
@@ -5272,7 +5508,8 @@
     "aliases": [
       "green bean soup",
       "ginisang monggo"
-    ]
+    ],
+    "carbs": 15.0
   },
   {
     "name": "soy protein isolate",
@@ -5280,7 +5517,8 @@
     "aliases": [
       "isolated soy protein",
       "soya protein"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "tempeh bacon",
@@ -5288,7 +5526,8 @@
     "aliases": [
       "marinated tempeh",
       "smoked tempeh"
-    ]
+    ],
+    "carbs": 10.0
   },
   {
     "name": "labneh",
@@ -5297,7 +5536,8 @@
       "strained yogurt",
       "yogurt cheese",
       "labne"
-    ]
+    ],
+    "carbs": 4.0
   },
   {
     "name": "paneer tikka",
@@ -5305,7 +5545,8 @@
     "aliases": [
       "grilled paneer",
       "marinated paneer"
-    ]
+    ],
+    "carbs": 5.0
   },
   {
     "name": "fromage blanc",
@@ -5313,7 +5554,8 @@
     "aliases": [
       "white cheese fresh",
       "fromage frais"
-    ]
+    ],
+    "carbs": 4.5
   },
   {
     "name": "halloumi",
@@ -5338,7 +5580,8 @@
     "aliases": [
       "creme fraiche",
       "french sour cream"
-    ]
+    ],
+    "carbs": 3.0
   },
   {
     "name": "double cream",
@@ -5347,7 +5590,8 @@
       "heavy double cream",
       "clotted cream",
       "whipping cream"
-    ]
+    ],
+    "carbs": 2.8
   },
   {
     "name": "ahi tuna",
@@ -5400,7 +5644,8 @@
       "tobiko",
       "masago",
       "ikura"
-    ]
+    ],
+    "carbs": 2.0
   },
   {
     "name": "beef liver",
@@ -5409,7 +5654,8 @@
       "calf liver",
       "chicken liver",
       "organ meat"
-    ]
+    ],
+    "carbs": 3.9
   },
   {
     "name": "bone broth",
@@ -5418,7 +5664,8 @@
       "beef bone broth",
       "chicken bone broth",
       "collagen broth"
-    ]
+    ],
+    "carbs": 0.5
   },
   {
     "name": "duck confit",
@@ -5426,7 +5673,8 @@
     "aliases": [
       "confit de canard",
       "preserved duck"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "lamb chops",
@@ -5469,21 +5717,24 @@
     "aliases": [
       "sunflower butter",
       "sunbutter"
-    ]
+    ],
+    "carbs": 18.0
   },
   {
     "name": "pumpkin seed oil",
     "gi": 0,
     "aliases": [
       "styrian pumpkin seed oil"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "avocado oil",
     "gi": 0,
     "aliases": [
       "cold pressed avocado oil"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "flaxseed oil",
@@ -5491,7 +5742,8 @@
     "aliases": [
       "linseed oil",
       "flax oil"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "sesame oil",
@@ -5500,14 +5752,16 @@
       "toasted sesame oil",
       "dark sesame oil",
       "asian sesame oil"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "walnut oil",
     "gi": 0,
     "aliases": [
       "cold pressed walnut oil"
-    ]
+    ],
+    "carbs": 0.0
   },
   {
     "name": "beef tacos",
@@ -5515,7 +5769,8 @@
     "aliases": [
       "ground beef taco",
       "taco de carne"
-    ]
+    ],
+    "carbs": 15.0
   },
   {
     "name": "fish tacos",
@@ -5523,7 +5778,8 @@
     "aliases": [
       "baja fish tacos",
       "shrimp tacos"
-    ]
+    ],
+    "carbs": 18.0
   },
   {
     "name": "veggie tacos",
@@ -5531,7 +5787,8 @@
     "aliases": [
       "black bean tacos",
       "vegetarian tacos"
-    ]
+    ],
+    "carbs": 18.0
   },
   {
     "name": "breakfast burrito",
@@ -5539,7 +5796,8 @@
     "aliases": [
       "egg burrito",
       "morning burrito"
-    ]
+    ],
+    "carbs": 20.0
   },
   {
     "name": "bean burrito",
@@ -5547,7 +5805,8 @@
     "aliases": [
       "refried bean burrito",
       "veggie burrito"
-    ]
+    ],
+    "carbs": 25.0
   },
   {
     "name": "ceviche",
@@ -5556,7 +5815,8 @@
       "fish ceviche",
       "seafood ceviche",
       "peruvian ceviche"
-    ]
+    ],
+    "carbs": 3.0
   },
   {
     "name": "arroz con pollo",
@@ -5564,7 +5824,8 @@
     "aliases": [
       "chicken with rice",
       "spanish chicken rice"
-    ]
+    ],
+    "carbs": 18.0
   },
   {
     "name": "french onion soup",
@@ -5572,7 +5833,8 @@
     "aliases": [
       "soupe à l'oignon",
       "gratineed onion soup"
-    ]
+    ],
+    "carbs": 5.0
   },
   {
     "name": "lobster bisque",
@@ -5580,7 +5842,8 @@
     "aliases": [
       "cream of lobster",
       "shellfish bisque"
-    ]
+    ],
+    "carbs": 6.0
   },
   {
     "name": "beef bourguignon",
@@ -5588,7 +5851,8 @@
     "aliases": [
       "boeuf bourguignon",
       "french beef stew"
-    ]
+    ],
+    "carbs": 5.0
   },
   {
     "name": "coq au vin",
@@ -5596,7 +5860,8 @@
     "aliases": [
       "chicken in wine",
       "french chicken stew"
-    ]
+    ],
+    "carbs": 3.0
   },
   {
     "name": "ratatouille",
@@ -5612,7 +5877,8 @@
     "aliases": [
       "cold potato leek soup",
       "potato leek soup"
-    ]
+    ],
+    "carbs": 8.0
   },
   {
     "name": "minestrone soup",
@@ -5620,7 +5886,8 @@
     "aliases": [
       "italian vegetable soup",
       "classic minestrone"
-    ]
+    ],
+    "carbs": 9.0
   },
   {
     "name": "lentil stew",
@@ -5628,7 +5895,8 @@
     "aliases": [
       "hearty lentil stew",
       "moroccan lentil soup"
-    ]
+    ],
+    "carbs": 15.0
   },
   {
     "name": "pea soup",
@@ -5637,7 +5905,8 @@
       "split pea soup",
       "pea and ham soup",
       "dutch pea soup"
-    ]
+    ],
+    "carbs": 11.0
   },
   {
     "name": "corn chowder",
@@ -5645,7 +5914,8 @@
     "aliases": [
       "sweet corn chowder",
       "potato corn soup"
-    ]
+    ],
+    "carbs": 12.0
   },
   {
     "name": "gazpacho",
@@ -5654,7 +5924,8 @@
       "cold tomato soup",
       "spanish gazpacho",
       "cold gazpacho"
-    ]
+    ],
+    "carbs": 4.7
   },
   {
     "name": "bouillabaisse",
@@ -5662,7 +5933,8 @@
     "aliases": [
       "french fish stew",
       "provençal fish soup"
-    ]
+    ],
+    "carbs": 4.0
   },
   {
     "name": "osso buco",
@@ -5670,7 +5942,8 @@
     "aliases": [
       "braised veal shanks",
       "veal ossobuco"
-    ]
+    ],
+    "carbs": 3.0
   },
   {
     "name": "beef stroganoff",
@@ -5678,7 +5951,8 @@
     "aliases": [
       "stroganoff",
       "russian beef stew"
-    ]
+    ],
+    "carbs": 8.0
   },
   {
     "name": "chicken marsala",
@@ -5686,7 +5960,8 @@
     "aliases": [
       "veal marsala",
       "marsala chicken"
-    ]
+    ],
+    "carbs": 5.0
   },
   {
     "name": "eggs benedict",
@@ -5694,7 +5969,8 @@
     "aliases": [
       "benedict",
       "poached eggs hollandaise"
-    ]
+    ],
+    "carbs": 18.0
   },
   {
     "name": "frittata",
@@ -5703,7 +5979,8 @@
       "italian egg dish",
       "vegetable frittata",
       "baked omelette"
-    ]
+    ],
+    "carbs": 4.0
   },
   {
     "name": "omelette",
@@ -5712,7 +5989,8 @@
       "omelet",
       "folded eggs",
       "veggie omelet"
-    ]
+    ],
+    "carbs": 1.6
   },
   {
     "name": "quiche",
@@ -5721,7 +5999,8 @@
       "quiche lorraine",
       "savory tart",
       "egg pie"
-    ]
+    ],
+    "carbs": 16.0
   },
   {
     "name": "creamed spinach",
@@ -5729,7 +6008,8 @@
     "aliases": [
       "steakhouse spinach",
       "cream spinach"
-    ]
+    ],
+    "carbs": 5.0
   },
   {
     "name": "macaroni salad",
@@ -5737,7 +6017,8 @@
     "aliases": [
       "american macaroni salad",
       "cold macaroni"
-    ]
+    ],
+    "carbs": 18.0
   },
   {
     "name": "potato soup",
@@ -5746,7 +6027,8 @@
       "cream of potato soup",
       "baked potato soup",
       "loaded potato soup"
-    ]
+    ],
+    "carbs": 12.0
   },
   {
     "name": "corn on the cob",
@@ -5764,7 +6046,8 @@
       "light brown sugar",
       "dark brown sugar",
       "raw sugar"
-    ]
+    ],
+    "carbs": 97.0
   },
   {
     "name": "powdered sugar",
@@ -5773,7 +6056,8 @@
       "icing sugar",
       "confectioners sugar",
       "confectioner's sugar"
-    ]
+    ],
+    "carbs": 100.0
   },
   {
     "name": "date syrup",
@@ -5781,7 +6065,8 @@
     "aliases": [
       "date molasses",
       "dibs al-tamr"
-    ]
+    ],
+    "carbs": 68.0
   },
   {
     "name": "rice malt syrup",
@@ -5790,7 +6075,8 @@
       "brown rice syrup",
       "rice syrup",
       "rice malt"
-    ]
+    ],
+    "carbs": 80.0
   },
   {
     "name": "corn syrup",
@@ -5799,7 +6085,8 @@
       "light corn syrup",
       "glucose syrup",
       "karo syrup"
-    ]
+    ],
+    "carbs": 78.0
   },
   {
     "name": "monk fruit sweetener",
@@ -5808,7 +6095,8 @@
       "luo han guo",
       "monkfruit",
       "monk fruit extract"
-    ]
+    ],
+    "carbs": 99.0
   },
   {
     "name": "whole wheat spaghetti",
@@ -5833,5 +6121,31 @@
       "honey wheat",
       "honey wheat loaf"
     ]
+  },
+  {
+    "name": "bialy",
+    "gi": 69,
+    "aliases": [
+      "biali"
+    ],
+    "carbs": 52.0
+  },
+  {
+    "name": "arepa",
+    "gi": 72,
+    "aliases": [
+      "arepas"
+    ],
+    "carbs": 43.0
+  },
+  {
+    "name": "bread roll",
+    "gi": 71,
+    "aliases": [
+      "bread bun",
+      "dinner roll",
+      "bun"
+    ],
+    "carbs": 50.0
   }
 ]

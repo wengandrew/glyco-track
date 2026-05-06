@@ -63,8 +63,8 @@ glyco-track/
 
 ### Phase 0: Foundation ✅ COMPLETE
 ### Phase 1: Data Layer ✅ COMPLETE
-- `gi_database.json` — **776 entries**
-- `usda_nutrition.json` — **377 entries** ⚠️ stretch target ~7793
+- `gi_database.json` — **782 entries** (288 carry a `carbs` fallback field for GL computation when no USDA match exists)
+- `usda_nutrition.json` — **516 entries** ⚠️ stretch target ~7793
 ### Phase 2: Engines ✅ COMPLETE
 ### Phase 3: Claude API Integration ✅ COMPLETE
 ### Phase 4: Voice + Widget ✅ COMPLETE
@@ -108,7 +108,7 @@ These features are degraded when sideloaded with a free developer account and ca
 ## Known Limitations (post-MVP)
 
 - `NotificationManager.cancelTodayIfSufficientlyLogged` removes the repeating trigger; future-day notifications only resume when the user opens the app. Users who don't open the app the day after cancelling will miss one notification.
-- `usda_nutrition.json` has 377 entries vs DESIGN target of 7,793. Foods without USDA data fall back to GI-only GL calculation with CL=0. Expansion is a post-MVP stretch goal.
+- `usda_nutrition.json` has 516 entries vs DESIGN target of 7,793. Foods without USDA data get CL=0; those without USDA carbs now fall back to the `carbs` field on the GI entry (added in #55). Expansion is a post-MVP stretch goal.
 - Widget shows empty GL data without App Groups (personal team limitation).
 
 ---
@@ -185,6 +185,7 @@ Tracks merged PRs that materially shape the product after the initial MVP deploy
 | #45 | Fix intermittent navigation title rendering on tab switches | Replaced `NavigationView` (deprecated in iOS 16+) with `NavigationStack` in all four primary tab roots. The bug was most visible on Week (3 `@FetchRequest`s + heaviest sub-tree) but the antipattern was in every tab. Sheet-level `NavigationView` instances inside Edit/Add flows are modal and not torn down on tab switch — left for a follow-up. |
 | #46 | Voice transcripts: detect time context, backdate entries | `ParsedFood` gains optional `loggedAt: Date?`. Parser hands Claude a `Current time:` prefix so it can resolve "two hours ago", "yesterday at 5pm", "for breakfast", per-food ("toast at 8am and a banana at 10am"), etc. into absolute ISO-8601 timestamps. `FoodLogProcessor` stamps entries with `food.loggedAt ?? recordedAt` and clamps with `min(…, recordedAt)` against future-time drift. 6 new parser tests pin decoding, prompt rules, and the user-message contract. |
 | #53 | Remove WaterlineView; remove GL×CL from Home tab; enlarge plot on Week/Month | `WaterlineView.swift` deleted entirely (buoyancy CL viz eliminated). `QuadrantPlotSection` removed from `HomeTabView` — Today tab now shows only GL bucket + CL balance scale. Plot height increased 200→320 on Week and Month tabs. Shared types (`SceneKeyCL`, `CLNetLabel`) migrated into `BalanceScaleView.swift`. Dead `selectedEntry` state and sheet wiring removed from `HomeTabView`. |
+| #55 | Fix GL/CL accuracy: fuzzy matching, DB data gaps, missing entries | Voice log audit found 3 systemic issues: (1) fuzzy Levenshtein threshold too permissive — now uses normalized distance `d/max_len ≤ 0.30`; (2) 288/779 GI entries had `carbsPer100g=0` from failed USDA name-merge — added `carbs` fallback field to `gi_database.json` and `usda?.carbs ?? gi.carbs ?? 0` seeding chain; (3) 15 new USDA + 3 new GI entries for commonly-logged foods. 16 regression tests added. |
 
 ---
 
@@ -210,7 +211,7 @@ Tracks merged PRs that materially shape the product after the initial MVP deploy
 
 The "A. Reliability & data quality", "B. UX refinements", and "C. Engineering hygiene" sections from the previous revision have all shipped (PRs #25–#43; see Post-MVP Iterations table above). Status:
 
-- ✅ A.1 USDA expansion (377 → 501) — #28
+- ✅ A.1 USDA expansion (377 → 501 → 516) — #28, #55
 - ✅ A.2 TranscriptParserCoreTests — #25
 - ✅ A.3 CI via GitHub Actions — #30, #32
 - ✅ A.4 Core Data schema-change policy documented — #31 (full migration deferred until paid-team / multi-user, intentionally)

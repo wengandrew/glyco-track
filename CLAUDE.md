@@ -233,10 +233,13 @@ Don't preemptively write any of that — adding it now without a forcing functio
 ### Reference databases
 
 Two JSON files are bundled as app resources and seeded into Core Data at first launch by `PersistenceController.seedNutritionalProfiles()`:
-- `gi_database.json` — 776 foods with GI values and aliases (Sydney GI Database)
-- `usda_nutrition.json` — 377 foods with fat/fiber macros (USDA FoodData Central)
+- `gi_database.json` — 782 foods with GI values, aliases, and optional `carbs` field (Sydney GI Database)
+- `usda_nutrition.json` — 516 foods with fat/fiber macros (USDA FoodData Central)
 
-Foods with no USDA match get CL = 0. Foods with no GI match fall back to GI = 55 (tier 3, confidence 0.35). The USDA set is intentionally small (design target was 7,793) — expansion is a known post-MVP gap.
+The seeding code merges these by exact name: `usda?.carbs ?? gi.carbs ?? 0`. The `carbs` field on GI entries serves as a fallback when no USDA entry matches by name, preventing GL=0 on carb-heavy foods that only exist in the GI database. Foods with no USDA match get CL = 0. Foods with no GI match fall back to GI = 55 (tier 3, confidence 0.35).
+
+**7. Fuzzy matching uses normalized edit distance, not absolute threshold.**
+`fetchFuzzy` in `NutritionalRepository` requires `levenshtein(a, b) / max(len(a), len(b)) <= 0.30` in addition to the absolute `d <= 3` cap. This prevents short food names from matching unrelated words at low absolute distance (e.g., "milk"→"elk" at d=2 is 50% normalized — rejected). The prep-method guard (no fuzzy bridging across grilled/fried/etc.) still applies.
 
 ### Visualizations
 
