@@ -143,14 +143,14 @@ struct HomeTabView: View {
     }
 
     private func insightIcon(totalGL: Double, netCL: Double) -> String {
-        let fraction = totalGL / glBudget
+        let fraction = totalGL / max(glBudget, 1)
         if fraction > 1.0 { return "exclamationmark.triangle" }
         if fraction < 0.5 && netCL < 0 { return "checkmark.circle" }
         return "info.circle"
     }
 
     private func insightColor(totalGL: Double, netCL: Double) -> Color {
-        let fraction = totalGL / glBudget
+        let fraction = totalGL / max(glBudget, 1)
         if fraction > 1.0 { return theme.harmfulColor }
         if fraction < 0.5 && netCL < 0 { return theme.beneficialColor }
         return theme.primaryAccent

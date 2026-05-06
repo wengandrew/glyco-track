@@ -29,6 +29,14 @@ struct FoodEntryDetailSheet: View {
         return ts.formatted(date: .abbreviated, time: .shortened)
     }
 
+    private var glColor: Color {
+        switch glLevel {
+        case .low:    return theme.beneficialColor
+        case .medium: return .orange
+        case .high:   return theme.harmfulColor
+        }
+    }
+
     private var clColor: Color {
         clIsBeneficial ? theme.beneficialColor : (entry.computedCL > 0 ? theme.harmfulColor : .gray)
     }
@@ -44,7 +52,7 @@ struct FoodEntryDetailSheet: View {
                             title: "Glycemic Load",
                             value: String(format: "%.1f", entry.computedGL),
                             subtitle: glLevel.label,
-                            color: theme.glAccent,
+                            color: glColor,
                             icon: "drop.fill"
                         )
                         metricCard(

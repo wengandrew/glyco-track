@@ -57,7 +57,8 @@ struct LogTabView: View {
 
     private func softDelete(at offsets: IndexSet) {
         let repo = FoodLogRepository(context: context)
-        offsets.forEach { repo.softDelete(entries[$0]) }
+        let displayed = filteredEntries
+        offsets.forEach { repo.softDelete(displayed[$0]) }
     }
 }
 

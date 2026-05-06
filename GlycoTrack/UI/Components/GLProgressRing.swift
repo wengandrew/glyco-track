@@ -3,16 +3,18 @@ import SwiftUI
 /// Circular progress ring showing GL total vs budget.
 /// Used by the Clinical theme as the trailing element in the GL MetricSection.
 struct GLProgressRing: View {
+    @Environment(\.appTheme) private var theme
     let total: Double
     let budget: Double
 
-    private var fraction: Double { min(total / max(budget, 1), 1.0) }
-    private var isOver: Bool { total > budget }
+    private var safeBudget: Double { max(budget, 1) }
+    private var fraction: Double { min(total / safeBudget, 1.0) }
+    private var isOver: Bool { total > safeBudget }
 
     private var ringColor: Color {
-        if isOver { return .red }
+        if isOver { return theme.harmfulColor }
         if fraction > 0.8 { return .orange }
-        return Color(red: 0.04, green: 0.52, blue: 1.0)
+        return theme.glAccent
     }
 
     var body: some View {
@@ -32,7 +34,7 @@ struct GLProgressRing: View {
                 .animation(.easeInOut(duration: 0.5), value: fraction)
 
             Text(isOver ? "!" : "\(Int(fraction * 100))%")
-                .font(.system(size: isOver ? 14 : 9, weight: .bold, design: .monospaced))
+                .font(.system(size: isOver ? 14 : 9, weight: .bold, design: theme.metricFontDesign))
                 .foregroundColor(ringColor)
         }
     }

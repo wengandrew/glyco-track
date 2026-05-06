@@ -227,7 +227,9 @@ enum AppTheme: String, CaseIterable, Identifiable {
 
     func dailyInsight(totalGL: Double, budget: Double, netCL: Double, entryCount: Int) -> String? {
         guard entryCount > 0 else { return nil }
-        let fraction = totalGL / budget
+        let safeBudget = max(budget, 1)
+        guard safeBudget.isFinite, totalGL.isFinite else { return nil }
+        let fraction = totalGL / safeBudget
         switch self {
         case .clinical:
             if fraction > 1.0 {
