@@ -3,6 +3,7 @@ import CoreData
 
 struct LogTabView: View {
     @Environment(\.managedObjectContext) private var context
+    @Environment(\.appTheme) private var theme
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: false)],
@@ -13,18 +14,28 @@ struct LogTabView: View {
 
     @State private var selectedEntry: FoodLogEntry?
     @State private var showManualEntry = false
+    @State private var searchText = ""
+
+    private var filteredEntries: [FoodLogEntry] {
+        guard !searchText.isEmpty else { return Array(entries) }
+        return entries.filter { $0.foodDescription.localizedCaseInsensitiveContains(searchText) }
+    }
 
     var body: some View {
         NavigationStack {
             List {
-                ForEach(entries) { entry in
+                ForEach(filteredEntries) { entry in
                     FoodLogRowView(entry: entry)
                         .contentShape(Rectangle())
                         .onTapGesture { selectedEntry = entry }
+                        .listRowBackground(theme == .midnight ? Color(white: 0.10) : nil)
                 }
                 .onDelete(perform: softDelete)
             }
             .listStyle(.plain)
+            .scrollContentBackground(theme == .midnight ? .hidden : .visible)
+            .background(theme.pageBackground)
+            .searchable(text: $searchText, prompt: "Search foods")
             .navigationTitle("Food Log")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {

@@ -1,24 +1,42 @@
 import SwiftUI
 
 struct FoodLogRowView: View {
+    @Environment(\.appTheme) private var theme
     @ObservedObject var entry: FoodLogEntry
 
-    var body: some View {
-        HStack(alignment: .center, spacing: 10) {
-            // Food emoji
-            Text(FoodEmoji.resolve(entry: entry))
-                .font(.system(size: 22))
-                .frame(width: 28, height: 28)
+    private var glColor: Color {
+        let level = GLThresholdLevel.from(gl: entry.computedGL)
+        switch level {
+        case .low:    return theme.beneficialColor
+        case .medium: return .orange
+        case .high:   return theme.harmfulColor
+        }
+    }
 
-            VStack(alignment: .leading, spacing: 2) {
+    private var emojiBackgroundColor: Color {
+        switch theme {
+        case .organic:  return Color(.systemGray6)
+        case .midnight: return Color.white.opacity(0.06)
+        case .clinical: return .clear
+        }
+    }
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 12) {
+            // Food emoji — slightly larger with background for organic/midnight
+            Text(FoodEmoji.resolve(entry: entry))
+                .font(.system(size: theme == .clinical ? 22 : 24))
+                .frame(width: theme == .clinical ? 28 : 36, height: theme == .clinical ? 28 : 36)
+                .background(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .fill(emojiBackgroundColor)
+                )
+
+            VStack(alignment: .leading, spacing: 3) {
                 HStack(alignment: .firstTextBaseline) {
                     Text(entry.foodDescription.capitalized)
-                        .font(.subheadline)
-                        .fontWeight(.medium)
+                        .font(.system(.subheadline, design: theme.fontDesign, weight: .medium))
                     Spacer()
-                    // Date + minute-precision time. Display-only — the
-                    // underlying `entry.timestamp` is preserved at full precision so
-                    // edits, sorts, and predicates work normally.
                     VStack(alignment: .trailing, spacing: 0) {
                         Text(Self.dateLabel(for: entry.timestamp))
                             .font(.caption2)
@@ -35,18 +53,18 @@ struct FoodLogRowView: View {
                         .foregroundColor(.secondary)
 
                     Text("GL \(String(format: "%.1f", entry.computedGL))")
-                        .font(.system(size: 11, weight: .medium, design: .monospaced))
-                        .foregroundColor(GLThresholdLevel.from(gl: entry.computedGL).color)
+                        .font(.system(size: 11, weight: .medium, design: theme.metricFontDesign))
+                        .foregroundColor(glColor)
 
                     Text("CL \(String(format: "%+.2f", entry.computedCL))")
-                        .font(.system(size: 11, weight: .medium, design: .monospaced))
-                        .foregroundColor(entry.computedCL < 0 ? .green : .red)
+                        .font(.system(size: 11, weight: .medium, design: theme.metricFontDesign))
+                        .foregroundColor(entry.computedCL < 0 ? theme.beneficialColor : theme.harmfulColor)
 
                     ConfidenceBadge(confidence: entry.confidenceScore, tier: entry.parsingMethod)
                 }
             }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, theme == .organic ? 6 : 4)
     }
 
     // MARK: - Display formatters

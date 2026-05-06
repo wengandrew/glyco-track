@@ -7,6 +7,7 @@ struct FoodEntryDetailSheet: View {
     @ObservedObject var entry: FoodLogEntry
     @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.appTheme) private var theme
 
     @State private var showEdit: Bool = false
     @State private var showPicker: Bool = false
@@ -28,6 +29,10 @@ struct FoodEntryDetailSheet: View {
         return ts.formatted(date: .abbreviated, time: .shortened)
     }
 
+    private var clColor: Color {
+        clIsBeneficial ? theme.beneficialColor : (entry.computedCL > 0 ? theme.harmfulColor : .gray)
+    }
+
     var body: some View {
         NavigationView {
             ScrollView {
@@ -39,14 +44,14 @@ struct FoodEntryDetailSheet: View {
                             title: "Glycemic Load",
                             value: String(format: "%.1f", entry.computedGL),
                             subtitle: glLevel.label,
-                            color: glLevel.color,
+                            color: theme.glAccent,
                             icon: "drop.fill"
                         )
                         metricCard(
                             title: "Cholesterol Load",
                             value: String(format: "%+.2f", entry.computedCL),
                             subtitle: clIsBeneficial ? "Beneficial" : (entry.computedCL > 0 ? "Harmful" : "Neutral"),
-                            color: clIsBeneficial ? .green : (entry.computedCL > 0 ? .red : .gray),
+                            color: clColor,
                             icon: "heart.fill"
                         )
                     }
@@ -59,6 +64,7 @@ struct FoodEntryDetailSheet: View {
                 }
                 .padding()
             }
+            .background(theme.pageBackground.ignoresSafeArea())
             .navigationTitle("Food Details")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -107,15 +113,15 @@ struct FoodEntryDetailSheet: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 14) {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 16)
-                        .fill(Color(.systemGray6))
+                    RoundedRectangle(cornerRadius: theme.cardCornerRadius * 0.7, style: .continuous)
+                        .fill(theme == .midnight ? Color.white.opacity(0.07) : Color(.systemGray6))
                         .frame(width: 84, height: 84)
                     Text(FoodEmoji.resolve(entry: entry))
-                        .font(.system(size: 56))
+                        .font(.system(size: 52))
                 }
                 VStack(alignment: .leading, spacing: 4) {
                     Text(entry.foodDescription)
-                        .font(.title3.weight(.semibold))
+                        .font(.system(.title3, design: theme.fontDesign, weight: .semibold))
                         .lineLimit(3)
                     if !timestampText.isEmpty {
                         Text(timestampText)
@@ -135,11 +141,11 @@ struct FoodEntryDetailSheet: View {
                     .foregroundColor(color)
                     .font(.caption)
                 Text(title)
-                    .font(.caption)
+                    .font(.system(.caption, design: theme.fontDesign))
                     .foregroundColor(.secondary)
             }
             Text(value)
-                .font(.system(size: 26, weight: .bold, design: .rounded))
+                .font(.system(size: 26, weight: .bold, design: theme.metricFontDesign))
                 .foregroundColor(color)
             Text(subtitle)
                 .font(.caption2)
@@ -148,18 +154,19 @@ struct FoodEntryDetailSheet: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)
         .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(color.opacity(0.08))
+            RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
+                .fill(color.opacity(theme == .midnight ? 0.12 : 0.08))
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
                 .stroke(color.opacity(0.25), lineWidth: 1)
         )
     }
 
     private var detailsSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Details").font(.subheadline.weight(.semibold))
+            Text("Details")
+                .font(.system(.subheadline, design: theme.fontDesign, weight: .semibold))
             detailRow("Quantity", entry.quantity.isEmpty ? "—" : entry.quantity)
             if entry.quantityGrams > 0 {
                 detailRow("Grams", String(format: "%.0f g", entry.quantityGrams))
@@ -170,7 +177,10 @@ struct FoodEntryDetailSheet: View {
             }
         }
         .padding()
-        .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
+        .background(
+            RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
+                .fill(theme == .midnight ? Color.white.opacity(0.06) : Color(.systemGray6))
+        )
     }
 
     private var confidenceLabel: String {
@@ -198,7 +208,8 @@ struct FoodEntryDetailSheet: View {
 
     private var transcriptSection: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("You said").font(.subheadline.weight(.semibold))
+            Text("You said")
+                .font(.system(.subheadline, design: theme.fontDesign, weight: .semibold))
             Text("\u{201C}\(entry.rawTranscript)\u{201D}")
                 .font(.callout)
                 .italic()
@@ -206,6 +217,9 @@ struct FoodEntryDetailSheet: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
-        .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
+        .background(
+            RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
+                .fill(theme == .midnight ? Color.white.opacity(0.06) : Color(.systemGray6))
+        )
     }
 }

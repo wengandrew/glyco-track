@@ -70,7 +70,7 @@ struct WeekComparisonStrip: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 8)
-        .background(Color(.systemGray6))
+        .background(Color(.systemGray6).opacity(0.8))
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .accessibilityElement(children: .combine)
         .accessibilityLabel(accessibilityLabel(label: label, delta: delta, format: format, isFlat: isFlat, isImprovement: isImprovement))

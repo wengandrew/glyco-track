@@ -2,6 +2,7 @@ import SwiftUI
 import CoreData
 
 struct WeekTabView: View {
+    @Environment(\.appTheme) private var theme
     @State private var selectedWeekStart: Date = WeekTabView.mondayWeekStart(for: Date())
     @State private var selectedEntry: FoodLogEntry?
 
@@ -77,6 +78,7 @@ struct WeekTabView: View {
                 }
                 .padding(.bottom, 20)
             }
+            .background(theme.pageBackground.ignoresSafeArea())
             .navigationTitle("Your Week")
             .sheet(item: $selectedEntry) { entry in
                 FoodEntryDetailSheet(entry: entry)
@@ -97,16 +99,16 @@ struct WeekTabView: View {
             } label: {
                 Image(systemName: "chevron.left")
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(isEarliestWeek ? .secondary : .accentColor)
+                    .foregroundColor(isEarliestWeek ? .secondary : theme.primaryAccent)
                     .frame(width: 32, height: 32)
-                    .background(Color(.systemGray6))
+                    .background(theme == .midnight ? Color.white.opacity(0.08) : Color(.systemGray6))
                     .clipShape(Circle())
             }
             .disabled(isEarliestWeek)
 
             VStack(spacing: 0) {
                 Text(weekHeading)
-                    .font(.subheadline.weight(.semibold))
+                    .font(.system(.subheadline, design: theme.fontDesign, weight: .semibold))
                 Text(weekSubheading)
                     .font(.caption2)
                     .foregroundColor(.secondary)
@@ -122,9 +124,9 @@ struct WeekTabView: View {
             } label: {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(isCurrentWeek ? .secondary : .accentColor)
+                    .foregroundColor(isCurrentWeek ? .secondary : theme.primaryAccent)
                     .frame(width: 32, height: 32)
-                    .background(Color(.systemGray6))
+                    .background(theme == .midnight ? Color.white.opacity(0.08) : Color(.systemGray6))
                     .clipShape(Circle())
             }
             .disabled(isCurrentWeek)
