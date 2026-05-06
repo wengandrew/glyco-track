@@ -207,18 +207,20 @@ private struct SceneKey: Hashable {
 }
 
 struct GLStatusLabel: View {
+    @Environment(\.appTheme) private var theme
     let total: Double
     let budget: Double
 
     var body: some View {
-        let over = total > budget
-        let primary: Color = over ? .red : .glAccent
+        let safeBudget = max(budget, 1)
+        let over = total > safeBudget
+        let primary: Color = over ? theme.harmfulColor : theme.glAccent
         return HStack(spacing: 0) {
             Text("\(Int(total))")
-                .font(.system(.title3, design: .rounded, weight: .heavy))
+                .font(.system(.title3, design: theme.metricFontDesign, weight: .heavy))
                 .foregroundColor(primary)
-            Text(" / \(Int(budget))")
-                .font(.system(.subheadline, design: .rounded, weight: .semibold))
+            Text(" / \(Int(safeBudget))")
+                .font(.system(.subheadline, design: theme.metricFontDesign, weight: .semibold))
                 .foregroundColor(.secondary)
         }
         .monospacedDigit()

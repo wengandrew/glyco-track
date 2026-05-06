@@ -3,6 +3,7 @@ import CoreData
 
 struct HomeTabView: View {
     @Environment(\.managedObjectContext) private var context
+    @Environment(\.appTheme) private var theme
 
     // Owned by RootTabView so the floating tab-bar Record button can drive
     // recording. We observe both here for transcript / progress / error UI.
@@ -37,19 +38,29 @@ struct HomeTabView: View {
     }
 
     var body: some View {
+        let entryArray = Array(entries)
+        let totalGL = entryArray.reduce(0) { $0 + $1.computedGL }
+        let netCL = entryArray.reduce(0) { $0 + $1.computedCL }
+
         NavigationStack {
             ScrollView {
-                VStack(spacing: 18) {
-                    let entryArray = Array(entries)
-                    let totalGL = entryArray.reduce(0) { $0 + $1.computedGL }
+                VStack(spacing: theme == .organic ? 22 : 18) {
+                    // ── GREETING / INSIGHT ───────────────────────
+                    greetingHeader(totalGL: totalGL, netCL: netCL, entryCount: entryArray.count)
 
                     // ── GL SECTION ───────────────────────────────
                     MetricSection(
                         title: "Glycemic Load",
-                        subtitle: "Carbs · diabetes risk",
-                        accent: .glAccent,
+                        subtitle: "Carbs \u{00B7} diabetes risk",
+                        accent: theme.glAccent,
                         icon: "drop.fill",
-                        trailing: { GLStatusLabel(total: totalGL, budget: glBudget) }
+                        trailing: {
+                            if theme == .clinical {
+                                GLProgressRing(total: totalGL, budget: glBudget)
+                            } else {
+                                GLStatusLabel(total: totalGL, budget: glBudget)
+                            }
+                        }
                     ) {
                         dateNavigator
                         PhysicsBucketView(
@@ -63,8 +74,8 @@ struct HomeTabView: View {
                     // ── CL SECTION (Balance — primary lens) ─────
                     MetricSection(
                         title: "Cholesterol Load",
-                        subtitle: "Fats & fiber · heart risk",
-                        accent: .clAccent,
+                        subtitle: "Fats & fiber \u{00B7} heart risk",
+                        accent: theme.clAccent,
                         icon: "heart.fill"
                     ) {
                         BalanceScaleView(entries: entryArray, dateKey: selectedDate)
@@ -79,7 +90,8 @@ struct HomeTabView: View {
                 }
                 .padding(.bottom, 24)
             }
-            .navigationTitle("Your Day")
+            .background(theme.pageBackground.ignoresSafeArea())
+            .navigationTitle(theme.greeting(for: Date()))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -106,6 +118,44 @@ struct HomeTabView: View {
         }
     }
 
+    // MARK: - Greeting header
+
+    @ViewBuilder
+    private func greetingHeader(totalGL: Double, netCL: Double, entryCount: Int) -> some View {
+        if let insight = theme.dailyInsight(totalGL: totalGL, budget: glBudget, netCL: netCL, entryCount: entryCount) {
+            HStack(spacing: 10) {
+                Image(systemName: insightIcon(totalGL: totalGL, netCL: netCL))
+                    .font(.system(size: 14, weight: .medium))
+                    .foregroundColor(insightColor(totalGL: totalGL, netCL: netCL))
+                Text(insight)
+                    .font(.system(.subheadline, design: theme.fontDesign, weight: .medium))
+                    .foregroundColor(.secondary)
+                Spacer()
+            }
+            .padding(.horizontal, 18)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
+                    .fill(insightColor(totalGL: totalGL, netCL: netCL).opacity(0.08))
+            )
+            .padding(.horizontal, 12)
+        }
+    }
+
+    private func insightIcon(totalGL: Double, netCL: Double) -> String {
+        let fraction = totalGL / max(glBudget, 1)
+        if fraction > 1.0 { return "exclamationmark.triangle" }
+        if fraction < 0.5 && netCL < 0 { return "checkmark.circle" }
+        return "info.circle"
+    }
+
+    private func insightColor(totalGL: Double, netCL: Double) -> Color {
+        let fraction = totalGL / max(glBudget, 1)
+        if fraction > 1.0 { return theme.harmfulColor }
+        if fraction < 0.5 && netCL < 0 { return theme.beneficialColor }
+        return theme.primaryAccent
+    }
+
     // MARK: - Date navigation
 
     private var dateNavigator: some View {
@@ -115,16 +165,20 @@ struct HomeTabView: View {
             } label: {
                 Image(systemName: "chevron.left")
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(isEarliest ? .secondary : .accentColor)
+                    .foregroundColor(isEarliest ? .secondary : theme.primaryAccent)
                     .frame(width: 32, height: 32)
-                    .background(Color(.systemGray6))
+                    .background(
+                        theme == .midnight
+                            ? Color.white.opacity(0.08)
+                            : Color(.systemGray6)
+                    )
                     .clipShape(Circle())
             }
             .disabled(isEarliest)
 
             VStack(spacing: 0) {
                 Text(dateHeading)
-                    .font(.subheadline.weight(.semibold))
+                    .font(.system(.subheadline, design: theme.fontDesign, weight: .semibold))
                 Text(dateSubheading)
                     .font(.caption2)
                     .foregroundColor(.secondary)
@@ -140,9 +194,13 @@ struct HomeTabView: View {
             } label: {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(isToday ? .secondary : .accentColor)
+                    .foregroundColor(isToday ? .secondary : theme.primaryAccent)
                     .frame(width: 32, height: 32)
-                    .background(Color(.systemGray6))
+                    .background(
+                        theme == .midnight
+                            ? Color.white.opacity(0.08)
+                            : Color(.systemGray6)
+                    )
                     .clipShape(Circle())
             }
             .disabled(isToday)
@@ -225,6 +283,8 @@ struct HomeTabView: View {
 // MARK: - Section chrome
 
 struct MetricSection<Content: View, Trailing: View>: View {
+    @Environment(\.appTheme) private var theme
+
     let title: String
     let subtitle: String
     let accent: Color
@@ -239,17 +299,17 @@ struct MetricSection<Content: View, Trailing: View>: View {
                     Circle()
                         .fill(accent)
                         .frame(width: 36, height: 36)
-                        .shadow(color: accent.opacity(0.25), radius: 4, x: 0, y: 2)
+                        .shadow(color: accent.opacity(theme == .midnight ? 0.4 : 0.25), radius: 4, x: 0, y: 2)
                     Image(systemName: icon)
                         .font(.system(size: 15, weight: .bold))
                         .foregroundColor(.white)
                 }
                 VStack(alignment: .leading, spacing: 1) {
                     Text(title)
-                        .font(.system(.title2, design: .rounded, weight: .bold))
+                        .font(.system(.title2, design: theme.fontDesign, weight: .bold))
                         .foregroundColor(.primary)
                     Text(subtitle.uppercased())
-                        .font(.system(size: 10, weight: .semibold, design: .rounded))
+                        .font(.system(size: 10, weight: .semibold, design: theme.fontDesign))
                         .tracking(0.6)
                         .foregroundColor(.secondary)
                 }
@@ -264,13 +324,38 @@ struct MetricSection<Content: View, Trailing: View>: View {
                 .padding(.bottom, 14)
         }
         .background(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                .fill(Color(.secondarySystemBackground))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 22, style: .continuous)
-                        .stroke(accent.opacity(0.10), lineWidth: 1)
-                )
-                .shadow(color: Color.black.opacity(0.04), radius: 10, x: 0, y: 4)
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: theme.cardCornerRadius, style: .continuous)
+                    .fill(theme.cardBackground)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: theme.cardCornerRadius, style: .continuous)
+                            .fill(theme.surfaceTint)
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: theme.cardCornerRadius, style: .continuous)
+                            .stroke(
+                                theme == .midnight ? theme.cardBorderColor : accent.opacity(0.10),
+                                lineWidth: theme == .midnight ? theme.cardBorderWidth : 1
+                            )
+                    )
+                    .shadow(
+                        color: Color.black.opacity(theme.cardShadowOpacity),
+                        radius: theme.cardShadowRadius,
+                        x: 0,
+                        y: theme == .organic ? 6 : 4
+                    )
+
+                if theme.showsLeftAccent {
+                    UnevenRoundedRectangle(
+                        topLeadingRadius: theme.cardCornerRadius,
+                        bottomLeadingRadius: theme.cardCornerRadius,
+                        bottomTrailingRadius: 0,
+                        topTrailingRadius: 0
+                    )
+                    .fill(accent)
+                    .frame(width: 4)
+                }
+            }
         )
         .padding(.horizontal, 12)
     }
@@ -303,6 +388,7 @@ extension Color {
 // MARK: - Today summary
 
 struct TodayEntrySummary: View {
+    @Environment(\.appTheme) private var theme
     let entries: [FoodLogEntry]
 
     @AppStorage(AppSettings.dailyGLBudgetKey) private var glBudget: Double = AppSettings.defaultDailyGLBudget
@@ -311,17 +397,18 @@ struct TodayEntrySummary: View {
     private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
 
     var body: some View {
-        HStack {
+        HStack(spacing: theme == .organic ? 12 : 8) {
             StatChip(label: "Total GL", value: String(format: "%.1f", totalGL),
                      color: glGradientColor(fraction: totalGL / glBudget))
             StatChip(label: "Net CL", value: String(format: "%+.2f", netCL),
-                     color: netCL < 0 ? .green : .red)
-            StatChip(label: "Foods", value: "\(entries.count)", color: .accentColor)
+                     color: netCL < 0 ? theme.beneficialColor : theme.harmfulColor)
+            StatChip(label: "Foods", value: "\(entries.count)", color: theme.primaryAccent)
         }
     }
 }
 
 struct StatChip: View {
+    @Environment(\.appTheme) private var theme
     let label: String
     let value: String
     let color: Color
@@ -329,21 +416,21 @@ struct StatChip: View {
     var body: some View {
         VStack(spacing: 4) {
             Text(value)
-                .font(.system(size: 22, weight: .heavy, design: .rounded))
+                .font(.system(size: 22, weight: .heavy, design: theme.metricFontDesign))
                 .foregroundColor(color)
             Text(label.uppercased())
-                .font(.system(size: 9, weight: .semibold, design: .rounded))
+                .font(.system(size: 9, weight: .semibold, design: theme.fontDesign))
                 .tracking(0.5)
                 .foregroundColor(.secondary)
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 14)
         .background(
-            RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(color.opacity(0.08))
+            RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
+                .fill(color.opacity(theme == .midnight ? 0.12 : 0.08))
                 .overlay(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .stroke(color.opacity(0.18), lineWidth: 0.8)
+                    RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
+                        .stroke(color.opacity(theme == .midnight ? 0.25 : 0.18), lineWidth: 0.8)
                 )
         )
     }

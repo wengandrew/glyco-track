@@ -3,6 +3,7 @@ import CoreData
 
 struct MonthTabView: View {
     @Environment(\.managedObjectContext) private var context
+    @Environment(\.appTheme) private var theme
 
     @State private var displayedMonth: Date = Calendar.current.startOfMonth(for: Date())
 
@@ -20,20 +21,30 @@ struct MonthTabView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     // Month navigation
-                    HStack {
+                    HStack(spacing: 16) {
                         Button {
                             shiftMonth(by: -1)
                         } label: {
                             Image(systemName: "chevron.left")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(theme.primaryAccent)
+                                .frame(width: 32, height: 32)
+                                .background(theme == .midnight ? Color.white.opacity(0.08) : Color(.systemGray6))
+                                .clipShape(Circle())
                         }
                         Spacer()
                         Text(displayedMonth, format: .dateTime.month(.wide).year())
-                            .font(.headline)
+                            .font(.system(.headline, design: theme.fontDesign))
                         Spacer()
                         Button {
                             shiftMonth(by: 1)
                         } label: {
                             Image(systemName: "chevron.right")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(isCurrentMonth ? .secondary : theme.primaryAccent)
+                                .frame(width: 32, height: 32)
+                                .background(theme == .midnight ? Color.white.opacity(0.08) : Color(.systemGray6))
+                                .clipShape(Circle())
                         }
                         .disabled(isCurrentMonth)
                     }
@@ -61,6 +72,7 @@ struct MonthTabView: View {
                 }
                 .padding(.bottom, 20)
             }
+            .background(theme.pageBackground.ignoresSafeArea())
             .navigationTitle("Your Month")
             .sheet(item: $selectedEntry) { entry in
                 FoodEntryDetailSheet(entry: entry)

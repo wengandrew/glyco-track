@@ -6,6 +6,8 @@ import SwiftUI
 /// warnings — those belonged to period-specific stat views and were
 /// collapsed into this shared card for visual consistency.
 struct PeriodSummaryView: View {
+    @Environment(\.appTheme) private var theme
+
     let title: String
     let entries: [FoodLogEntry]
     /// Number of days spanned by the period (e.g. 7 for a week, 28–31 for a
@@ -26,7 +28,6 @@ struct PeriodSummaryView: View {
 
     private var resolvedDayCount: Int {
         if let d = daysInPeriod, d > 0 { return d }
-        // Infer from spread of entry timestamps.
         let cal = Calendar.current
         let dayStarts = Set(entries.compactMap { entry -> Date? in
             guard let ts = entry.timestamp else { return nil }
@@ -40,9 +41,9 @@ struct PeriodSummaryView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(title)
-                .font(.subheadline).fontWeight(.semibold)
+                .font(.system(.subheadline, design: theme.fontDesign, weight: .semibold))
 
-            HStack {
+            HStack(spacing: theme == .organic ? 12 : 8) {
                 StatChip(
                     label: "Avg Daily GL",
                     value: String(format: "%.0f", avgDailyGL),
@@ -56,14 +57,18 @@ struct PeriodSummaryView: View {
                 StatChip(
                     label: "Net CL",
                     value: String(format: "%+.1f", netCL),
-                    color: netCL < 0 ? .green : .red
+                    color: netCL < 0 ? theme.beneficialColor : theme.harmfulColor
                 )
             }
         }
         .padding()
         .background(
-            RoundedRectangle(cornerRadius: 12)
-                .fill(Color(.systemGray6))
+            RoundedRectangle(cornerRadius: theme.cardCornerRadius, style: .continuous)
+                .fill(theme.cardBackground)
+                .overlay(
+                    RoundedRectangle(cornerRadius: theme.cardCornerRadius, style: .continuous)
+                        .stroke(theme.cardBorderColor, lineWidth: theme.cardBorderWidth)
+                )
         )
     }
 }
