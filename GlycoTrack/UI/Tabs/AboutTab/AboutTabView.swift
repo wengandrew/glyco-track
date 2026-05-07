@@ -144,7 +144,7 @@ Most single-score tools collapse this into one number and hide the trade-off. Gl
                     description: "Nothing matched. GL and CL are set to 0 and the entry is flagged \"Not recognized\" so you know the values aren't trustworthy. Consider re-logging with a more specific name."
                 )
 
-                Text("The \"Refine\" badge appears when confidence is below 70%. Consider editing the entry to a more specific name.")
+                Text("Entries with confidence below 70% may be less accurate. Consider re-logging with a more specific food name to get better GL and CL values.")
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .padding(.top, 4)

@@ -15,6 +15,7 @@ struct LogTabView: View {
     @State private var selectedEntry: FoodLogEntry?
     @State private var showManualEntry = false
     @State private var searchText = ""
+    @FocusState private var searchFocused: Bool
 
     private var filteredEntries: [FoodLogEntry] {
         guard !searchText.isEmpty else { return Array(entries) }
@@ -23,19 +24,19 @@ struct LogTabView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(filteredEntries) { entry in
-                    FoodLogRowView(entry: entry)
-                        .contentShape(Rectangle())
-                        .onTapGesture { selectedEntry = entry }
-                        .listRowBackground(theme == .midnight ? Color(white: 0.10) : nil)
+            VStack(spacing: 0) {
+                searchBar
+                List {
+                    ForEach(filteredEntries) { entry in
+                        FoodLogRowView(entry: entry)
+                            .contentShape(Rectangle())
+                            .onTapGesture { selectedEntry = entry }
+                    }
+                    .onDelete(perform: softDelete)
                 }
-                .onDelete(perform: softDelete)
+                .listStyle(.plain)
             }
-            .listStyle(.plain)
-            .scrollContentBackground(theme == .midnight ? .hidden : .visible)
             .background(theme.pageBackground)
-            .searchable(text: $searchText, prompt: "Search foods")
             .navigationTitle("Food Log")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
@@ -53,6 +54,33 @@ struct LogTabView: View {
                 ManualEntryView()
             }
         }
+    }
+
+    private var searchBar: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.secondary)
+                .font(.system(size: 15))
+            TextField("Search foods", text: $searchText)
+                .font(.system(.body, design: theme.fontDesign))
+                .focused($searchFocused)
+                .submitLabel(.search)
+            if !searchText.isEmpty {
+                Button {
+                    searchText = ""
+                    searchFocused = false
+                } label: {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.secondary)
+                }
+            }
+        }
+        .padding(10)
+        .background(Color(.systemGray5).opacity(0.8))
+        .cornerRadius(12)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .background(theme.pageBackground)
     }
 
     private func softDelete(at offsets: IndexSet) {
@@ -89,8 +117,7 @@ struct EditEntryView: View {
         let tier = MatchTier(rawValue: entry.parsingMethod)
         if tier == .unrecognized { return "Not recognized" }
         let pct = Int((entry.confidenceScore * 100).rounded())
-        let name = tier?.longLabel ?? "Tier \(entry.parsingMethod)"
-        return "\(pct)% · \(name)"
+        return "\(pct)% confidence"
     }
 
     var body: some View {

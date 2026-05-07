@@ -44,7 +44,7 @@ struct HomeTabView: View {
 
         NavigationStack {
             ScrollView {
-                VStack(spacing: theme == .organic ? 22 : 18) {
+                VStack(spacing: 22) {
                     // ── GREETING / INSIGHT ───────────────────────
                     greetingHeader(totalGL: totalGL, netCL: netCL, entryCount: entryArray.count)
 
@@ -55,11 +55,7 @@ struct HomeTabView: View {
                         accent: theme.glAccent,
                         icon: "drop.fill",
                         trailing: {
-                            if theme == .clinical {
-                                GLProgressRing(total: totalGL, budget: glBudget)
-                            } else {
-                                GLStatusLabel(total: totalGL, budget: glBudget)
-                            }
+                            GLStatusLabel(total: totalGL, budget: glBudget)
                         }
                     ) {
                         dateNavigator
@@ -163,11 +159,7 @@ struct HomeTabView: View {
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(isEarliest ? .secondary : theme.primaryAccent)
                     .frame(width: 32, height: 32)
-                    .background(
-                        theme == .midnight
-                            ? Color.white.opacity(0.08)
-                            : Color(.systemGray6)
-                    )
+                    .background(Color(.systemGray6))
                     .clipShape(Circle())
             }
             .disabled(isEarliest)
@@ -192,11 +184,7 @@ struct HomeTabView: View {
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(isToday ? .secondary : theme.primaryAccent)
                     .frame(width: 32, height: 32)
-                    .background(
-                        theme == .midnight
-                            ? Color.white.opacity(0.08)
-                            : Color(.systemGray6)
-                    )
+                    .background(Color(.systemGray6))
                     .clipShape(Circle())
             }
             .disabled(isToday)
@@ -295,7 +283,7 @@ struct MetricSection<Content: View, Trailing: View>: View {
                     Circle()
                         .fill(accent)
                         .frame(width: 36, height: 36)
-                        .shadow(color: accent.opacity(theme == .midnight ? 0.4 : 0.25), radius: 4, x: 0, y: 2)
+                        .shadow(color: accent.opacity(0.25), radius: 4, x: 0, y: 2)
                     Image(systemName: icon)
                         .font(.system(size: 15, weight: .bold))
                         .foregroundColor(.white)
@@ -329,28 +317,14 @@ struct MetricSection<Content: View, Trailing: View>: View {
                     )
                     .overlay(
                         RoundedRectangle(cornerRadius: theme.cardCornerRadius, style: .continuous)
-                            .stroke(
-                                theme == .midnight ? theme.cardBorderColor : accent.opacity(0.10),
-                                lineWidth: theme == .midnight ? theme.cardBorderWidth : 1
-                            )
+                            .stroke(accent.opacity(0.10), lineWidth: 1)
                     )
                     .shadow(
                         color: Color.black.opacity(theme.cardShadowOpacity),
                         radius: theme.cardShadowRadius,
                         x: 0,
-                        y: theme == .organic ? 6 : 4
+                        y: 6
                     )
-
-                if theme.showsLeftAccent {
-                    UnevenRoundedRectangle(
-                        topLeadingRadius: theme.cardCornerRadius,
-                        bottomLeadingRadius: theme.cardCornerRadius,
-                        bottomTrailingRadius: 0,
-                        topTrailingRadius: 0
-                    )
-                    .fill(accent)
-                    .frame(width: 4)
-                }
             }
         )
         .padding(.horizontal, 12)

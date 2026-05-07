@@ -13,23 +13,14 @@ struct FoodLogRowView: View {
         }
     }
 
-    private var emojiBackgroundColor: Color {
-        switch theme {
-        case .organic:  return Color(.systemGray6)
-        case .midnight: return Color.white.opacity(0.06)
-        case .clinical: return .clear
-        }
-    }
-
     var body: some View {
         HStack(alignment: .center, spacing: 12) {
-            // Food emoji — slightly larger with background for organic/midnight
             Text(FoodEmoji.resolve(entry: entry))
-                .font(.system(size: theme == .clinical ? 22 : 24))
-                .frame(width: theme == .clinical ? 28 : 36, height: theme == .clinical ? 28 : 36)
+                .font(.system(size: 24))
+                .frame(width: 36, height: 36)
                 .background(
                     RoundedRectangle(cornerRadius: 10, style: .continuous)
-                        .fill(emojiBackgroundColor)
+                        .fill(Color(.systemGray6))
                 )
 
             VStack(alignment: .leading, spacing: 3) {
@@ -64,7 +55,7 @@ struct FoodLogRowView: View {
                 }
             }
         }
-        .padding(.vertical, theme == .organic ? 6 : 4)
+        .padding(.vertical, 6)
     }
 
     // MARK: - Display formatters

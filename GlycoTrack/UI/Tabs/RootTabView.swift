@@ -3,7 +3,6 @@ import CoreData
 
 struct RootTabView: View {
     @Environment(\.managedObjectContext) private var context
-    @ObservedObject private var themeManager = ThemeManager.shared
 
     // Hoisted from HomeTabView so the floating tab-bar Record button can drive
     // recording from any tab. HomeTabView still observes both objects for its
@@ -36,7 +35,7 @@ struct RootTabView: View {
         }
     }
 
-    private var theme: AppTheme { themeManager.current }
+    private let theme: AppTheme = .organic
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -94,36 +93,18 @@ struct RootTabView: View {
             .padding(.vertical, theme.tabBarUsesLabels ? 10 : 8)
             .background(theme.tabBarMaterial, in: Capsule())
             .overlay(
-                Capsule().stroke(
-                    theme == .midnight ? Color.white.opacity(0.10) : Color.primary.opacity(0.07),
-                    lineWidth: 0.5
-                )
+                Capsule().stroke(Color.primary.opacity(0.07), lineWidth: 0.5)
             )
-            .shadow(
-                color: theme == .midnight
-                    ? theme.primaryAccent.opacity(0.15)
-                    : Color.black.opacity(0.06),
-                radius: theme == .midnight ? 12 : 8,
-                x: 0, y: 3
-            )
+            .shadow(color: Color.black.opacity(0.06), radius: 8, x: 0, y: 3)
 
             // Right pill: record button
             ZStack {
                 Circle()
                     .fill(theme.tabBarMaterial)
                     .overlay(
-                        Circle().stroke(
-                            theme == .midnight ? Color.white.opacity(0.10) : Color.primary.opacity(0.07),
-                            lineWidth: 0.5
-                        )
+                        Circle().stroke(Color.primary.opacity(0.07), lineWidth: 0.5)
                     )
-                    .shadow(
-                        color: theme == .midnight
-                            ? theme.recordButtonColor.opacity(0.35)
-                            : Color.black.opacity(0.06),
-                        radius: theme == .midnight ? 16 : 8,
-                        x: 0, y: 3
-                    )
+                    .shadow(color: Color.black.opacity(0.06), radius: 8, x: 0, y: 3)
 
                 CompactRecordButton(isRecording: voiceCapture.isRecording, theme: theme) {
                     selectedTab = .today
@@ -361,12 +342,6 @@ private struct CompactRecordButton: View {
                         .frame(width: 60, height: 60)
                         .scaleEffect(pulse ? 1.25 : 1.0)
                         .animation(.easeInOut(duration: 0.8).repeatForever(autoreverses: true), value: pulse)
-                } else if theme == .midnight {
-                    // Glow ring for midnight theme
-                    Circle()
-                        .fill(theme.recordButtonColor.opacity(0.20))
-                        .frame(width: 60, height: 60)
-                        .blur(radius: 4)
                 }
 
                 Circle()
