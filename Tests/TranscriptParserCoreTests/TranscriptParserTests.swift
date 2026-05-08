@@ -346,10 +346,9 @@ final class TranscriptParserTests: XCTestCase {
         let data = try JSONEncoder().encode(original)
         let decoded = try JSONDecoder().decode(ParsedFood.self, from: data)
         XCTAssertNotNil(decoded.loggedAt)
-        // Allow 1s tolerance: the serialised string always has whole-second precision
-        // so the reconstructed Date may differ by at most 1 second from floating-point rounding.
-        let drift = abs(decoded.loggedAt!.timeIntervalSince(date))
-        XCTAssertLessThanOrEqual(drift, 1.0, "loggedAt must survive encode/decode within 1s")
+        // ISO8601.string(from:) formats whole seconds; ISO8601.parse recovers the exact
+        // same moment, so the round-trip is lossless and strict equality holds.
+        XCTAssertEqual(decoded.loggedAt!, date, "loggedAt must round-trip exactly through encode/decode")
         XCTAssertEqual(decoded.food, original.food)
         XCTAssertEqual(decoded.grams, original.grams)
     }
