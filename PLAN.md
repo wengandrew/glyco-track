@@ -211,8 +211,8 @@ Goal: submit GlycoTrack 1.0. Splits into engineering work (repo) and deployment 
 | `armv7` capability key removed | #47 | ✅ |
 | `ITSAppUsesNonExemptEncryption = false` | #47 | ✅ |
 | Release build validated on Simulator | #47 | ✅ |
-| Version/build number strategy | — | ⏳ Needs decision: git-tag vs `agvtool` vs xcconfig bump |
-| Widget decision: ship or hide for 1.0 | — | ⏳ Recommendation: hide widget in 1.0, ship in 1.1 after App Groups enabled |
+| Version/build number strategy | — | ✅ Option A: manual bump. `CFBundleShortVersionString` (marketing, e.g. `1.0`) and `CFBundleVersion` (build integer, e.g. `1`) stay in `Info.plist`. Bump `CFBundleVersion` before every TestFlight upload; bump `CFBundleShortVersionString` only for user-facing releases. |
+| Widget decision: ship or hide for 1.0 | — | ✅ Widget dependency removed from `project.yml` for 1.0. App Groups entitlement requires paid team. Re-enable in 1.1 by adding `- target: GlycoTrackWidget` back to main target dependencies. |
 
 #### App Review risk-reducers (1B)
 

@@ -20,7 +20,6 @@
 		21283A13BCE8E22EA1E7764B /* PhysicsBucketView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6F724588282BE7BE79E917 /* PhysicsBucketView.swift */; };
 		2604E20D340C259B8A5722C5 /* FoodGraphic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DFF15FD7B99E00160837027 /* FoodGraphic.swift */; };
 		26A7AE8A79E5F09A08CC7F4B /* FoodLogEntry+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51938CF5F6DF886635DF3426 /* FoodLogEntry+CoreDataClass.swift */; };
-		2AB15550573722F27840C076 /* GlycoTrackWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C70C082CC09B5E60AF485E04 /* GlycoTrackWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		339E69D496292635B3203354 /* MoreSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE0ED91AFA0AD07985CB444 /* MoreSheet.swift */; };
 		414C04B785EC7D63A03EF6BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA893F988E91457F91A4E3BF /* Assets.xcassets */; };
 		45B3A6BC9D188B421C576DE4 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4FABEB16EDEA2EF90880ABC /* AppTheme.swift */; };
@@ -76,13 +75,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		1B43972A4304062E9C00EC40 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6BDBBD800BE9D92D9135AEE3 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 3AFDDF331D8AE8CF1C094262;
-			remoteInfo = GlycoTrackWidget;
-		};
 		9E34D9D9057666FBDADBAE7B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 6BDBBD800BE9D92D9135AEE3 /* Project object */;
@@ -91,20 +83,6 @@
 			remoteInfo = GlycoTrack;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		E4867AD57822E7272D9E4F34 /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				2AB15550573722F27840C076 /* GlycoTrackWidget.appex in Embed Foundation Extensions */,
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		00020267E962B5166BFC7910 /* BalanceScaleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceScaleView.swift; sourceTree = "<group>"; };
@@ -554,12 +532,10 @@
 			buildPhases = (
 				9CBD850BE78C8F09CBD56E84 /* Sources */,
 				C8DC7A5DF5EB92C60E923D8A /* Resources */,
-				E4867AD57822E7272D9E4F34 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				F8D08E0B696605535FC15641 /* PBXTargetDependency */,
 			);
 			name = GlycoTrack;
 			packageProductDependencies = (
@@ -759,11 +735,6 @@
 			isa = PBXTargetDependency;
 			target = 22D9D6957CDDE94324DD1301 /* GlycoTrack */;
 			targetProxy = 9E34D9D9057666FBDADBAE7B /* PBXContainerItemProxy */;
-		};
-		F8D08E0B696605535FC15641 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 3AFDDF331D8AE8CF1C094262 /* GlycoTrackWidget */;
-			targetProxy = 1B43972A4304062E9C00EC40 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
