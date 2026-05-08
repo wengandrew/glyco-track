@@ -83,10 +83,6 @@ struct HomeTabView: View {
                     .contentShape(Rectangle())
                     .gesture(horizontalSwipe)
 
-                    if !entryArray.isEmpty {
-                        TodayEntrySummary(entries: entryArray)
-                            .padding(.horizontal)
-                    }
                 }
                 .padding(.bottom, 24)
             }

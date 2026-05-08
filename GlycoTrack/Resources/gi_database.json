@@ -694,6 +694,12 @@
     "aliases": []
   },
   {
+    "name": "pickle",
+    "gi": 32,
+    "carbs": 1.5,
+    "aliases": ["pickles", "dill pickle", "dill pickles", "gherkin", "gherkins"]
+  },
+  {
     "name": "zucchini",
     "gi": 15,
     "aliases": [

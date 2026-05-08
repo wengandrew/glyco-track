@@ -55,14 +55,6 @@ struct MonthTabView: View {
                     }
                     .padding(.horizontal, 4)
 
-                    // Month summary (unified card)
-                    PeriodSummaryView(
-                        title: "Month Summary",
-                        entries: monthEntries,
-                        daysInPeriod: daysInDisplayedMonth
-                    )
-                    .padding(.horizontal)
-
                     // GL × CL Quadrant — embedded
                     QuadrantPlotSection(
                         entries: monthEntries,
