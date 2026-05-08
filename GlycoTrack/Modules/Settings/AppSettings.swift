@@ -7,6 +7,11 @@ import Foundation
 /// reads through the static accessors below, which clamp out-of-range or
 /// missing values back to the default.
 enum AppSettings {
+    /// Set to `true` after the user completes the first-launch onboarding flow.
+    /// Both `GlycoTrackApp` and `OnboardingView` reference this key — a mismatch
+    /// would cause onboarding to loop forever or never show.
+    static let hasCompletedOnboardingKey = "hasCompletedOnboarding"
+
     /// Daily GL budget — the bucket size, summary chip threshold, and heatmap
     /// scale. Default 100 matches public-health "moderate GL day" guidance;
     /// physicians sometimes prescribe lower (60–80) or higher (120–150)

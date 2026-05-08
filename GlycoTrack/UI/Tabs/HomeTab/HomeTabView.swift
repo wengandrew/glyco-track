@@ -48,6 +48,11 @@ struct HomeTabView: View {
                     // ── GREETING / INSIGHT ───────────────────────
                     greetingHeader(totalGL: totalGL, netCL: netCL, entryCount: entryArray.count)
 
+                    // ── FIRST-LOG HINT (today, no entries) ──────
+                    if entryArray.isEmpty && isToday {
+                        firstLogHint
+                    }
+
                     // ── GL SECTION ───────────────────────────────
                     MetricSection(
                         title: "Glycemic Load",
@@ -108,6 +113,35 @@ struct HomeTabView: View {
                 changeDate(to: Calendar.current.startOfDay(for: Date()))
             }
         }
+    }
+
+    // MARK: - First-log hint
+
+    private var firstLogHint: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "mic.circle.fill")
+                .font(.system(size: 28))
+                .foregroundColor(theme.primaryAccent)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Tap the mic to log your first meal")
+                    .font(.system(.subheadline, design: theme.fontDesign, weight: .semibold))
+                Text("Speak naturally — \"I had oatmeal and black coffee\"")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            Spacer()
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .background(
+            RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
+                .fill(theme.primaryAccent.opacity(0.08))
+                .overlay(
+                    RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
+                        .stroke(theme.primaryAccent.opacity(0.15), lineWidth: 1)
+                )
+        )
+        .padding(.horizontal, 12)
     }
 
     // MARK: - Greeting header

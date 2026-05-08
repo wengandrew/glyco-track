@@ -35,14 +35,23 @@ final class PersistenceController {
 
     var context: NSManagedObjectContext { container.viewContext }
 
+    /// True if a first-launch seed was started. Set synchronously before the
+    /// background task is spawned so `GlycoTrackApp` can read it in `.onAppear`
+    /// without racing against the `glycoTrackSeedingDidComplete` notification.
+    private(set) var isSeedingOnFirstLaunch = false
+
     private func seedDatabaseIfNeeded() {
         let request = NutritionalProfile.fetchRequest()
         request.fetchLimit = 1
         let count = (try? context.count(for: request)) ?? 0
         guard count == 0 else { return }
 
+        isSeedingOnFirstLaunch = true
         Task.detached(priority: .background) {
             await self.seedNutritionalProfiles()
+            await MainActor.run {
+                NotificationCenter.default.post(name: .glycoTrackSeedingDidComplete, object: nil)
+            }
         }
     }
 
@@ -153,6 +162,12 @@ final class PersistenceController {
             Log.coreData.error("Seed batch save failed: \(error.localizedDescription, privacy: .public)")
         }
     }
+}
+
+// MARK: - Notifications
+
+extension Notification.Name {
+    static let glycoTrackSeedingDidComplete = Notification.Name("com.glycotrack.seedingDidComplete")
 }
 
 // MARK: - Seed data models
