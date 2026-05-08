@@ -34,13 +34,13 @@ glyco-track/
 │   │   └── CoreDataIdentifiable.swift
 │   ├── Modules/
 │   │   ├── GIEngine/GIEngine.swift
-│   │   ├── CLEngine/CLEngine.swift + CLWeights.swift
+│   │   ├── CLEngine/CLEngine.swift              # CLWeights.swift lives in Sources/CLEngineCore/
 │   │   ├── TranscriptParser/TranscriptParser.swift
 │   │   ├── ClaudeAPI/ClaudeAPIClient.swift      # extracted from TranscriptParser in #39
 │   │   ├── Matching/
 │   │   │   ├── FoodMatcher.swift
-│   │   │   ├── NutritionalRepository.swift
-│   │   │   └── AliasIndex.swift
+│   │   │   ├── AliasIndex.swift
+│   │   │   └── EntryRefiner.swift
 │   │   ├── VoiceCapture/VoiceCapture.swift
 │   │   ├── LocalStorage/
 │   │   │   ├── PersistenceController.swift
@@ -107,7 +107,7 @@ All phases are complete as of the MVP device launch (2026-04-20).
 
 ## Milestone: MVP Deployed to Device (2026-04-20)
 
-Built and deployed to an iPhone running iOS 26 / Xcode 26.1.1.
+Built and deployed to an iPhone running iOS 26 / Xcode 26.1.1. (`project.yml` declares `xcodeVersion: "15.0"` as the XcodeGen minimum constraint; the actual build toolchain is Xcode 26.)
 
 ### Xcode 26 compatibility fixes
 
@@ -327,4 +327,4 @@ Week 6+  → If approved: schedule release.
 | No raw audio storage | `VoiceCapture` retains transcript string only |
 | iOS 16+ | Core Data (not SwiftData); no `@Observable` macro |
 | API key security | `Info.plist` ← xcconfig injection; never hardcoded |
-| PLAN.md updated with every PR | Enforced by `.claude/hooks/check-plan-updated.sh` pre-tool-use hook |
+| PLAN.md updated with every PR | Enforced for Claude Code `gh pr create` calls by `.claude/hooks/check-plan-updated.sh`; PRs opened via GitHub UI bypass the hook |
