@@ -1449,15 +1449,6 @@
     "mufa": 0.0
   },
   {
-    "name": "pickle",
-    "carbs": 1.5,
-    "sfa": 0.04,
-    "tfa": 0.0,
-    "fiber": 0.7,
-    "pufa": 0.07,
-    "mufa": 0.02
-  },
-  {
     "name": "custard",
     "carbs": 17.0,
     "sfa": 2.42,
@@ -3121,6 +3112,15 @@
     "fiber": 0.1,
     "pufa": 0.22,
     "mufa": 0.32
+  },
+  {
+    "name": "pickle",
+    "carbs": 1.5,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 0.7,
+    "pufa": 0.07,
+    "mufa": 0.02
   },
   {
     "name": "pilaf",

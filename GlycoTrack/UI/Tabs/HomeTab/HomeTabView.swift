@@ -381,56 +381,5 @@ extension Color {
     static let clAccent = Color(red: 0.83, green: 0.22, blue: 0.35)
 }
 
-// MARK: - Today summary
-
-struct TodayEntrySummary: View {
-    @Environment(\.appTheme) private var theme
-    let entries: [FoodLogEntry]
-
-    @AppStorage(AppSettings.dailyGLBudgetKey) private var glBudget: Double = AppSettings.defaultDailyGLBudget
-
-    private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
-    private var netCL: Double { entries.reduce(0) { $0 + $1.computedCL } }
-
-    var body: some View {
-        HStack(spacing: theme == .organic ? 12 : 8) {
-            StatChip(label: "Total GL", value: String(format: "%.1f", totalGL),
-                     color: glGradientColor(fraction: totalGL / glBudget))
-            StatChip(label: "Net CL", value: String(format: "%+.2f", netCL),
-                     color: netCL < 0 ? theme.beneficialColor : theme.harmfulColor)
-            StatChip(label: "Foods", value: "\(entries.count)", color: theme.primaryAccent)
-        }
-    }
-}
-
-struct StatChip: View {
-    @Environment(\.appTheme) private var theme
-    let label: String
-    let value: String
-    let color: Color
-
-    var body: some View {
-        VStack(spacing: 4) {
-            Text(value)
-                .font(.system(size: 22, weight: .heavy, design: theme.metricFontDesign))
-                .foregroundColor(color)
-            Text(label.uppercased())
-                .font(.system(size: 9, weight: .semibold, design: theme.fontDesign))
-                .tracking(0.5)
-                .foregroundColor(.secondary)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 14)
-        .background(
-            RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
-                .fill(color.opacity(theme == .midnight ? 0.12 : 0.08))
-                .overlay(
-                    RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
-                        .stroke(color.opacity(theme == .midnight ? 0.25 : 0.18), lineWidth: 0.8)
-                )
-        )
-    }
-}
-
 // Shared `DateFormatter.short` / `.weekdayMonthDay` live in
 // `UI/Theme/DateFormatters.swift`.
