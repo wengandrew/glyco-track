@@ -325,6 +325,64 @@ final class TranscriptParserTests: XCTestCase {
                       "system prompt must forbid future timestamps")
     }
 
+    // MARK: - ParsedFood Codable round-trip
+
+    func testParsedFoodRoundTripWithoutLoggedAt() throws {
+        // Encoding and decoding a ParsedFood with no loggedAt must preserve all fields exactly.
+        let original = ParsedFood(food: "oatmeal", quantity: "1", unit: "cup", grams: 234.0)
+        let data = try JSONEncoder().encode(original)
+        let decoded = try JSONDecoder().decode(ParsedFood.self, from: data)
+        XCTAssertEqual(decoded, original)
+        XCTAssertNil(decoded.loggedAt, "loggedAt must be nil when not set")
+    }
+
+    func testParsedFoodRoundTripWithLoggedAt() throws {
+        // loggedAt must survive encode → decode. The ISO-8601 round-trip may shift
+        // the timezone offset in the string but must preserve the exact moment in time.
+        let f = ISO8601DateFormatter()
+        f.formatOptions = [.withInternetDateTime]
+        let date = f.date(from: "2026-05-02T14:30:00Z")!
+        let original = ParsedFood(food: "banana", quantity: "1", unit: "piece", grams: 118.0, loggedAt: date)
+        let data = try JSONEncoder().encode(original)
+        let decoded = try JSONDecoder().decode(ParsedFood.self, from: data)
+        XCTAssertNotNil(decoded.loggedAt)
+        // Allow 1s tolerance: the serialised string always has whole-second precision
+        // so the reconstructed Date may differ by at most 1 second from floating-point rounding.
+        let drift = abs(decoded.loggedAt!.timeIntervalSince(date))
+        XCTAssertLessThanOrEqual(drift, 1.0, "loggedAt must survive encode/decode within 1s")
+        XCTAssertEqual(decoded.food, original.food)
+        XCTAssertEqual(decoded.grams, original.grams)
+    }
+
+    // MARK: - ISO8601 fractional-second parsing
+
+    func testISO8601ParsesFractionalSeconds() {
+        // Claude occasionally emits fractional-second timestamps. The parser must accept them.
+        let raw = "2026-05-02T14:30:00.000-07:00"
+        let parsed = ISO8601.parse(raw)
+        XCTAssertNotNil(parsed, "ISO8601.parse must accept fractional-second strings from Claude")
+
+        // Verify the parsed date equals the same moment without fractional seconds.
+        let f = ISO8601DateFormatter()
+        f.formatOptions = [.withInternetDateTime]
+        let expected = f.date(from: "2026-05-02T14:30:00-07:00")!
+        XCTAssertEqual(parsed!, expected)
+    }
+
+    // MARK: - decomposeIngredients gram rounding
+
+    func testDecomposeUserMessageRoundsGramsToInt() async {
+        // totalGrams is passed as Int(rounded()) in the user message — verify the format.
+        let stub = StubClaudeClient(nextResponse: "[]")
+        let parser = TranscriptParser(client: stub)
+
+        _ = await parser.decomposeIngredients(foodName: "pasta", totalGrams: 245.7)
+
+        // 245.7 rounds to 246, so the message must be "pasta (246g)"
+        XCTAssertEqual(stub.lastUserMessage, "pasta (246g)",
+                       "decomposeIngredients must format totalGrams as Int(rounded()) in the user message")
+    }
+
     // MARK: - Headline-carb prompt rule
 
     /// The decomposition system prompt must explicitly require that the

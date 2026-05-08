@@ -276,4 +276,137 @@ final class NutritionalRepositoryRegressionTests: XCTestCase {
         XCTAssertGreaterThan(result!.profile.carbsPer100g, 0,
                              "Laksa must have carbs data so GL is non-zero")
     }
+
+    // MARK: - wordBoundaryContains direct tests
+
+    /// "egg" at the start of a string — left boundary is the string start.
+    func testWordBoundaryContainsMatchAtStart() {
+        XCTAssertTrue(repo.wordBoundaryContains(haystack: "egg whites", needle: "egg"),
+                      "'egg' must match at the start of 'egg whites'")
+    }
+
+    /// "rice" at the end of a string — right boundary is the string end.
+    func testWordBoundaryContainsMatchAtEnd() {
+        XCTAssertTrue(repo.wordBoundaryContains(haystack: "white rice", needle: "rice"),
+                      "'rice' must match at the end of 'white rice'")
+    }
+
+    /// Plural "s" suffix is tolerated so "egg" matches inside "scrambled eggs".
+    func testWordBoundaryContainsPluralS() {
+        XCTAssertTrue(repo.wordBoundaryContains(haystack: "scrambled eggs", needle: "egg"),
+                      "'egg' must match in 'scrambled eggs' (plural-s tolerance)")
+    }
+
+    /// Plural "es" suffix is tolerated so "tomato" matches inside "tomatoes".
+    func testWordBoundaryContainsPluralEs() {
+        XCTAssertTrue(repo.wordBoundaryContains(haystack: "tomatoes", needle: "tomato"),
+                      "'tomato' must match in 'tomatoes' (plural-es tolerance)")
+    }
+
+    /// "ice" must NOT match inside "rice" — the left boundary guard rejects it.
+    func testWordBoundaryContainsRejectsEmbeddedSubstringLeft() {
+        XCTAssertFalse(repo.wordBoundaryContains(haystack: "rice", needle: "ice"),
+                       "'ice' must not match inside 'rice' (fails left-boundary guard)")
+    }
+
+    /// "ale" must NOT match inside "kale" — same left-boundary rejection.
+    func testWordBoundaryContainsRejectsEmbeddedSubstringKale() {
+        XCTAssertFalse(repo.wordBoundaryContains(haystack: "kale salad", needle: "ale"),
+                       "'ale' must not match inside 'kale'")
+    }
+
+    /// "oat" must NOT match inside "bloated".
+    func testWordBoundaryContainsRejectsOatInsideBloated() {
+        XCTAssertFalse(repo.wordBoundaryContains(haystack: "bloated feeling", needle: "oat"),
+                       "'oat' must not match inside 'bloated' — fails both left and right guards")
+    }
+
+    /// Needle not present at all returns false.
+    func testWordBoundaryContainsReturnsFalseWhenAbsent() {
+        XCTAssertFalse(repo.wordBoundaryContains(haystack: "chicken soup", needle: "beef"),
+                       "Absent needle must return false")
+    }
+
+    // MARK: - detectGrainQualifier
+
+    func testDetectGrainQualifierWholeWheat() {
+        let q = NutritionalRepository.detectGrainQualifier(in: "whole wheat bread")
+        XCTAssertTrue(q.hasWholeGrain)
+        XCTAssertFalse(q.hasBrown)
+        XCTAssertTrue(q.hasAny)
+        XCTAssertEqual(q.stripped, "bread")
+    }
+
+    func testDetectGrainQualifierWholemeal() {
+        let q = NutritionalRepository.detectGrainQualifier(in: "wholemeal bread")
+        XCTAssertTrue(q.hasWholeGrain)
+        XCTAssertEqual(q.stripped, "bread")
+    }
+
+    func testDetectGrainQualifierWholeGrainHyphenated() {
+        let q = NutritionalRepository.detectGrainQualifier(in: "whole-grain pasta")
+        XCTAssertTrue(q.hasWholeGrain)
+        XCTAssertEqual(q.stripped, "pasta")
+    }
+
+    func testDetectGrainQualifierBrown() {
+        let q = NutritionalRepository.detectGrainQualifier(in: "brown jasmine rice")
+        XCTAssertTrue(q.hasBrown)
+        XCTAssertFalse(q.hasWholeGrain)
+        XCTAssertEqual(q.stripped, "jasmine rice")
+    }
+
+    /// "white rice" has no qualifier — stripped should equal the original input.
+    func testDetectGrainQualifierNoneReturnsOriginal() {
+        let q = NutritionalRepository.detectGrainQualifier(in: "white rice")
+        XCTAssertFalse(q.hasAny)
+        XCTAssertEqual(q.stripped, "white rice")
+    }
+
+    /// "whole grain brown rice" stacks both qualifiers; the stripped result is just "rice".
+    func testDetectGrainQualifierStackedWholeGrainAndBrown() {
+        let q = NutritionalRepository.detectGrainQualifier(in: "whole grain brown rice")
+        XCTAssertTrue(q.hasWholeGrain, "whole grain prefix must be detected")
+        XCTAssertTrue(q.hasBrown, "brown prefix must be detected after whole grain is stripped")
+        XCTAssertEqual(q.stripped, "rice")
+    }
+
+    // MARK: - coverageFraction
+
+    func testCoverageFractionIsZeroWithNoComponents() {
+        let fraction = repo.coverageFraction(query: "something random", components: [])
+        XCTAssertEqual(fraction, 0.0, accuracy: 0.001,
+                       "Empty component list must produce 0% coverage")
+    }
+
+    func testCoverageFractionIsOneForFullCoverage() {
+        // Build a ComponentMatch whose token equals the entire query — 100% coverage.
+        guard let profile = repo.findBestMatch(for: "white rice")?.profile else {
+            return XCTFail("Need 'white rice' in DB for this coverage test")
+        }
+        let token = "white rice"
+        let match = ComponentMatch(profile: profile, matchedToken: token, coverage: token.count)
+        let fraction = repo.coverageFraction(query: token, components: [match])
+        XCTAssertEqual(fraction, 1.0, accuracy: 0.01,
+                       "A component that spans the whole query must give 100% coverage")
+    }
+
+    // MARK: - findComponents for composite dishes
+
+    /// "white rice and lentils" contains two known DB entries as whole words.
+    func testFindComponentsForCompositeDiscoversKnownIngredients() {
+        let components = repo.findComponents(for: "white rice and lentils")
+        let names = components.map { $0.profile.foodName.lowercased() }
+        XCTAssertTrue(names.contains("white rice"),
+                      "findComponents must surface 'white rice' inside 'white rice and lentils'")
+        XCTAssertTrue(names.contains("lentils"),
+                      "findComponents must surface 'lentils' inside 'white rice and lentils'")
+    }
+
+    /// findComponents must return empty for a very short query (< 3 chars guard).
+    func testFindComponentsReturnsEmptyForShortQuery() {
+        let components = repo.findComponents(for: "ab")
+        XCTAssertTrue(components.isEmpty,
+                      "findComponents must return empty for queries shorter than 3 characters")
+    }
 }
