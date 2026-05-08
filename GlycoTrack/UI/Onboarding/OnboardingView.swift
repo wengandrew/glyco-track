@@ -6,7 +6,7 @@ import AVFoundation
 /// mic/speech permission rationale before the system dialogs appear, and
 /// collects both authorizations before dismissing.
 struct OnboardingView: View {
-    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    @AppStorage(AppSettings.hasCompletedOnboardingKey) private var hasCompletedOnboarding = false
     @State private var isRequesting = false
 
     var body: some View {

@@ -138,11 +138,11 @@ The confidence percentage shown in each entry's detail view reflects how closely
     private var sourcesSection: some View {
         sectionCard(title: "Data sources & weights", icon: "book.fill") {
             Text("""
-•  **GI values** — Sydney University Glycemic Index Database (776 foods).
-•  **Macros** — USDA FoodData Central (fat, fiber, carbs).
+•  **GI values** — Sydney University Glycemic Index Database (1,081 foods).
+•  **Macros** — USDA FoodData Central (813 foods; fat, fiber, carbs).
 •  **CL coefficients** — calibrated from: Clarke et al. (1997) and Mensink et al. (2003) for SFA; Mozaffarian et al. (2006) for TFA (the ~2× multiplier); Brown et al. (1999) for soluble fiber; Mensink & Katan (1992) for PUFA/MUFA.
 
-**Future work:** the ingredient database will be expanded from the current ~776 foods as the AI-decomposition cascade surfaces common composites (pho, pad thai, shakshuka, etc.). For now, the cascade handles unknown composites at runtime.
+**Future work:** the ingredient database will be expanded from the current ~1,081 GI entries as the AI-decomposition cascade surfaces common composites (pho, pad thai, shakshuka, etc.). For now, the cascade handles unknown composites at runtime.
 """)
         }
     }

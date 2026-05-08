@@ -6,10 +6,12 @@ struct GlycoTrackApp: App {
     let persistenceController = PersistenceController.shared
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
-    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    @AppStorage(AppSettings.hasCompletedOnboardingKey) private var hasCompletedOnboarding = false
 
-    /// True only on first launch while the DB seed is running. Cleared by the
-    /// seedingDidComplete notification posted from PersistenceController.
+    /// True only on first launch while the DB seed is running. Set synchronously
+    /// from `persistenceController.isSeedingOnFirstLaunch` in `.onAppear` (by
+    /// which point the `.onReceive` subscription is live), cleared by the
+    /// `glycoTrackSeedingDidComplete` notification from PersistenceController.
     @State private var isSeedingDatabase = false
 
     var body: some Scene {
@@ -30,13 +32,12 @@ struct GlycoTrackApp: App {
             ) { _ in
                 withAnimation { isSeedingDatabase = false }
             }
+            .onAppear {
+                // Read synchronously — isSeedingOnFirstLaunch is set before the
+                // background task is spawned, so no race with the notification.
+                isSeedingDatabase = persistenceController.isSeedingOnFirstLaunch
+            }
             .task {
-                // Detect first-launch seed in progress.
-                let req = NutritionalProfile.fetchRequest()
-                req.fetchLimit = 1
-                let count = (try? persistenceController.context.count(for: req)) ?? 1
-                if count == 0 { isSeedingDatabase = true }
-
                 // Delay notification permission until after onboarding so the
                 // system dialog doesn't interrupt the welcome screen.
                 guard hasCompletedOnboarding else { return }
