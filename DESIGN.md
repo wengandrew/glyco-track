@@ -1,12 +1,24 @@
 # GlycoTrack — Complete Design Document (MVP)
 
-> **Note (2026-04-27, refreshed 2026-05-01):** This is the original MVP spec,
+> **Note (2026-04-27, refreshed 2026-05-07):** This is the original MVP spec,
 > preserved for the "why" record. Several sections have since drifted from
 > what's actually shipped — most notably:
 >
 > - **Food groups + their 6-color palette are removed.** Each food renders as
->   a single emoji via `FoodEmoji.resolve(entry:)`. Tier/confidence still drive
->   the row badge color.
+>   a single emoji via `FoodEmoji.resolve(entry:)`. Tier/confidence badges are
+>   no longer shown in list rows — only the detail view shows confidence as a
+>   plain percentage. PR #56.
+> - **"Refine match" removed.** The affordance that let users manually override
+>   a match is gone (PR #56). The design philosophy is: the algorithm should
+>   handle accuracy; users should never be asked to fix its mistakes.
+> - **Unrecognized entries (T5) are not logged.** `FoodLogProcessor` skips any
+>   food the matcher cannot resolve and surfaces an error message instead. A
+>   GL=0/CL=0 entry would silently corrupt daily totals. PR #56.
+> - **Single theme: Organic.** The three-theme system (Clinical / Organic /
+>   Midnight) added in PR #54 was collapsed to Organic-only in PR #56. No
+>   theme picker; the app uses a serif font and warm earth tones throughout.
+> - **Log tab search bar** is a pinned inline field above the list (not
+>   `.searchable()` in the nav bar). PR #56.
 > - **The GL × CL Quadrant is now a 2-region inline plot** embedded on
 >   Week/Month only — not a 4-region modal sheet and not on Today. (GL is
 >   unsigned so the lower half would always be empty; Today focuses on the

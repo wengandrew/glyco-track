@@ -31,10 +31,13 @@ struct LogTabView: View {
                         FoodLogRowView(entry: entry)
                             .contentShape(Rectangle())
                             .onTapGesture { selectedEntry = entry }
+                            .listRowBackground(theme.pageBackground)
                     }
                     .onDelete(perform: softDelete)
                 }
                 .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .background(theme.pageBackground)
             }
             .background(theme.pageBackground)
             .navigationTitle("Food Log")

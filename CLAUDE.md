@@ -255,7 +255,7 @@ The seeding code merges these by exact name: `usda?.carbs ?? gi.carbs ?? 0`. The
 All visualization views live under `GlycoTrack/UI/Visualizations/`.
 
 - **GL views** (unsigned, budget-based): `PhysicsBucketView` (SpriteKit physics — the only daily GL view), `WeeklyRiverView`, `MonthlyHeatmapView`.
-- **CL views** (signed, ±): `TugOfWarBarView` (SwiftUI stacked bar), `BalanceScaleView` (SpriteKit physics — pinned beam).
+- **CL views** (signed, ±): `BalanceScaleView` (SpriteKit physics — pinned beam). `TugOfWarBarView` was removed in PR #44.
 - **Combined**: `QuadrantPlotSection` (CL on X, GL on Y) — embedded on Week and Month tabs only (not the Home/Today tab). Despite the legacy "Quadrant" name, this is a **two-region** plot: only CL is signed, so the chart splits left/right at CL = 0 (left = beneficial, right = harmful) and grows upward from a GL = 0 baseline. Do not re-introduce a four-quadrant grid — the lower half would be permanently empty and would mislead readers into thinking "negative GL" is meaningful.
 
 `HomeTabView` shows a date navigator (chevrons + swipe left/right on the viz sections) that drives an `@FetchRequest` with a dynamic predicate for the selected day. Forward navigation is capped at today.
@@ -275,7 +275,7 @@ The `.id`-on-child-host pattern dodges both: SwiftUI's view-identity-reset seman
 
 **Replay triggers.** Physics scenes in `PhysicsBucketView` and `BalanceScaleView` rebuild (replaying the drop animation) when (a) the view appears — `.onAppear { replayNonce = UUID() }`, (b) the entry list changes — automatic via `entryIDs` being part of the scene key, (c) the displayed day changes — automatic via `dayKey` being part of the scene key, (d) the user taps Replay — bumps `replayNonce`. The scene key is wired into `.id(key)` on a private host view; the host's `init` constructs the scene from the current `entries` synchronously. See "Date-scoped physics scenes" above for why this pattern is required (other approaches deadlock on async ordering or SwiftUI render-order races).
 
-**Unified entry-interaction flow.** Every tap — visualization item, Log-tab row, river item, quadrant dot — opens `FoodEntryDetailSheet` first. The sheet shows an emoji header, prominent timestamp, GL/CL, tier/confidence, and raw transcript. It has an Edit button in the toolbar that presents `EditEntryView` (defined in `LogTab/LogTabView.swift`). Never open `EditEntryView` directly from a tap — always go through the detail sheet. `FoodEntryDetailSheet` uses `@ObservedObject var entry` so it refreshes after an edit.
+**Unified entry-interaction flow.** Every tap — visualization item, Log-tab row, river item, quadrant dot — opens `FoodEntryDetailSheet` first. The sheet shows an emoji header, prominent timestamp, GL/CL, and raw transcript. The toolbar has two direct buttons: a pencil (Edit) that presents `EditEntryView`, and a trash (Delete) that shows a confirmation dialog and soft-deletes. Never open `EditEntryView` directly from a tap — always go through the detail sheet. `FoodEntryDetailSheet` uses `@ObservedObject var entry` so it refreshes after an edit.
 
 `EditEntryView` includes a timestamp `DatePicker` (rounded to 30-minute intervals on Save, constrained to `...Date()` so users can't log future entries).
 

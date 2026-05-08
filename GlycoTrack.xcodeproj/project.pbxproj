@@ -37,7 +37,6 @@
 		62AA37B27A1E46DBC2EACEF2 /* AliasIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB625239657C5BDAE0A0CA5 /* AliasIndex.swift */; };
 		64A2CFB29B814A7EB74CCB05 /* DateFormatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F001037826FF0A6FEC6CC5 /* DateFormatters.swift */; };
 		667D790349266A31BDCB9006 /* CLPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98285973C6FD6F59B009AB47 /* CLPalette.swift */; };
-		684DC8143E5EE72D2A5F6895 /* ConfidenceBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6A1C047AADFF5FEBE42735D /* ConfidenceBadge.swift */; };
 		7090F21A3809A883F654669C /* GlycoTrack.xcconfig.example in Resources */ = {isa = PBXBuildFile; fileRef = 6A1B66F0A6155C24C35BD9A5 /* GlycoTrack.xcconfig.example */; };
 		719519B850851D9B5DEA8F1C /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D3B3F5C4D80821160E5398 /* PersistenceController.swift */; };
 		7219DEF666B2DE3F9239A100 /* GLProgressRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA9F806906262575EEBE547 /* GLProgressRing.swift */; };
@@ -164,7 +163,6 @@
 		B6A1DA1067A0C7DDF9801DAD /* GlycoTrackApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlycoTrackApp.swift; sourceTree = "<group>"; };
 		BDE0ED91AFA0AD07985CB444 /* MoreSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreSheet.swift; sourceTree = "<group>"; };
 		BF7A560C4BA26D536A7CDCCA /* QuadrantPlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadrantPlotView.swift; sourceTree = "<group>"; };
-		C6A1C047AADFF5FEBE42735D /* ConfidenceBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfidenceBadge.swift; sourceTree = "<group>"; };
 		C70C082CC09B5E60AF485E04 /* GlycoTrackWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = GlycoTrackWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8AADF94EA7AB536744B8B73 /* BundleConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleConfig.swift; sourceTree = "<group>"; };
 		D519279615097BF4BD72FEC6 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -507,7 +505,6 @@
 		CBE2129F1A44220991F320A3 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				C6A1C047AADFF5FEBE42735D /* ConfidenceBadge.swift */,
 				23018FEA9E10DA00AE3A54F0 /* FoodEntryDetailSheet.swift */,
 				4DFF15FD7B99E00160837027 /* FoodGraphic.swift */,
 				EAF4CD9CCE735BCE308CECA4 /* FoodPickerView.swift */,
@@ -699,7 +696,6 @@
 				804D83DA123CD38186D70EE8 /* CLEngine.swift in Sources */,
 				667D790349266A31BDCB9006 /* CLPalette.swift in Sources */,
 				B8750ABB94F82072EC7BD028 /* ClaudeAPIClient.swift in Sources */,
-				684DC8143E5EE72D2A5F6895 /* ConfidenceBadge.swift in Sources */,
 				A36A7351E36BA048DD17325C /* CoreDataIdentifiable.swift in Sources */,
 				64A2CFB29B814A7EB74CCB05 /* DateFormatters.swift in Sources */,
 				1868EC6D468D84FF94BC176B /* DebugTabView.swift in Sources */,

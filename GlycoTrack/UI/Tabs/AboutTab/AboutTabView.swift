@@ -121,34 +121,16 @@ Most single-score tools collapse this into one number and hide the trade-off. Gl
     }
 
     private var tiersSection: some View {
-        sectionCard(title: "Match quality tiers", icon: "checkmark.seal.fill") {
-            VStack(alignment: .leading, spacing: 12) {
-                tierRow(
-                    tier: .direct,
-                    description: "Your food was found directly in the reference database by name (or a close typo). Most reliable."
-                )
-                tierRow(
-                    tier: .componentB,
-                    description: "Your food name contains multiple recognized ingredients (e.g. \"beef noodle soup\" → beef + noodles). The database entries are matched as components of the name and weighted by match length."
-                )
-                tierRow(
-                    tier: .aiDecomposed,
-                    description: "AI broke the dish into weighted ingredients (e.g. beef 60 g + rice noodles 90 g + broth 90 g + bok choy 15 g) and every ingredient was found in the database. Each contributes to GL and CL in proportion to its grams."
-                )
-                tierRow(
-                    tier: .aiBlended,
-                    description: "AI decomposition was used, but some ingredients fell back to partial component matches. Less precise than Tier 3; some of the dish's mass may go uncounted."
-                )
-                tierRow(
-                    tier: .unrecognized,
-                    description: "Nothing matched. The entry is not logged — a zero-GL/CL entry would corrupt your daily totals. You'll see an error message prompting you to try a more specific name."
-                )
+        sectionCard(title: "How GL and CL are calculated", icon: "checkmark.seal.fill") {
+            Text("""
+GlycoTrack looks up every food you log in its reference database and computes GL and CL from the actual macronutrient values.
 
-                Text("Entries with confidence below 70% may be less accurate. Consider re-logging with a more specific food name to get better GL and CL values.")
-                    .font(.footnote)
-                    .foregroundColor(.secondary)
-                    .padding(.top, 4)
-            }
+For simple foods ("white rice", "olive oil"), the database usually has a direct match. For composite dishes ("beef noodle soup", "pad thai"), the app breaks the dish into its ingredients and sums each ingredient's GL and CL contribution proportionally.
+
+If a food can't be identified, the entry is not logged at all — a zero-GL/CL placeholder would silently corrupt your daily totals. You'll see an error message so you can try a more specific name.
+
+The confidence percentage shown in each entry's detail view reflects how closely the logged description matched the database. Entries below 70% confidence may be less accurate.
+""")
         }
     }
 
@@ -213,34 +195,4 @@ Most single-score tools collapse this into one number and hide the trade-off. Gl
             )
     }
 
-    private func tierRow(tier: MatchTier, description: String) -> some View {
-        HStack(alignment: .top, spacing: 10) {
-            tierPill(tier: tier)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(tier.longLabel)
-                    .font(.subheadline.weight(.semibold))
-                Text(description)
-                    .font(.footnote)
-                    .foregroundColor(.secondary)
-            }
-        }
-    }
-
-    private func tierPill(tier: MatchTier) -> some View {
-        let color: Color
-        switch tier {
-        case .direct: color = .green
-        case .componentB: color = .blue
-        case .aiDecomposed: color = .teal
-        case .aiBlended: color = .orange
-        case .unrecognized: color = .red
-        }
-        return Text(tier.shortLabel)
-            .font(.system(size: 11, weight: .bold, design: .monospaced))
-            .foregroundColor(color)
-            .padding(.horizontal, 7)
-            .padding(.vertical, 3)
-            .background(color.opacity(0.12))
-            .cornerRadius(5)
-    }
 }
