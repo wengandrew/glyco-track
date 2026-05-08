@@ -15,8 +15,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 1. Sync with remote before writing any code: `git fetch origin && git rebase origin/develop`
 2. Branch off `develop` (not `main`) at the start
 3. Do all work in the session's worktree on that feature branch
-4. When work is complete, open a PR targeting `develop` (not `main`) — **do not build or deploy locally**
-5. Never merge directly to `develop` or `main` — always via PR
+4. **Update `PLAN.md` (and `CLAUDE.md` if behaviour changed) before opening a PR.** A pre-tool-use hook blocks `gh pr create` if `PLAN.md` is unmodified on the branch — fix the docs, then open the PR.
+5. When work is complete, open a PR targeting `develop` (not `main`) — **do not build or deploy locally**
+6. Never merge directly to `develop` or `main` — always via PR
 
 **Build to verify, but do not deploy.** Claude MAY run `xcodebuild` (or `xcodegen generate && xcodebuild`) with a `build` action for the iOS Simulator destination to verify compilation before opening a PR. Claude MUST NOT run `./scripts/deploy.sh` or any command that installs the app on device — deployment to the user's iPhone is the user's job, after reviewing the PR. Safe verification command:
 
