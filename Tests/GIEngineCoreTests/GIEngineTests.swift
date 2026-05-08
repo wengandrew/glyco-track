@@ -131,4 +131,83 @@ final class GIEngineTests: XCTestCase {
     func testDailyBudget() {
         XCTAssertEqual(dailyGLBudget, 100.0)
     }
+
+    // MARK: - Threshold exact boundaries (CLAUDE.md: Low ≤10, Medium 11–19, High ≥20)
+
+    func testGLThresholdExactlyTenIsLow() {
+        // GI=100 (glucose), carbs=100g/100g, qty=10g → GL = 100*(10)/100 = 10.0 → low
+        let result = engine.computeGL(foodName: "glucose", quantityGrams: 10, carbsPer100g: 100.0)
+        XCTAssertEqual(result.gl, 10.0, accuracy: 0.001)
+        XCTAssertEqual(result.threshold, .low, "GL = 10 must be .low (boundary is ≤10)")
+    }
+
+    func testGLThresholdElevenIsMedium() {
+        // GL = 11.0 → first value above the low threshold
+        let result = engine.computeGL(foodName: "glucose", quantityGrams: 11, carbsPer100g: 100.0)
+        XCTAssertEqual(result.gl, 11.0, accuracy: 0.001)
+        XCTAssertEqual(result.threshold, .medium, "GL = 11 must be .medium")
+    }
+
+    func testGLThresholdNineteenIsMedium() {
+        // GL = 19.0 → last value inside the medium band
+        let result = engine.computeGL(foodName: "glucose", quantityGrams: 19, carbsPer100g: 100.0)
+        XCTAssertEqual(result.gl, 19.0, accuracy: 0.001)
+        XCTAssertEqual(result.threshold, .medium, "GL = 19 must be .medium")
+    }
+
+    func testGLThresholdTwentyIsHigh() {
+        // GL = 20.0 → boundary of the high band (≥20)
+        let result = engine.computeGL(foodName: "glucose", quantityGrams: 20, carbsPer100g: 100.0)
+        XCTAssertEqual(result.gl, 20.0, accuracy: 0.001)
+        XCTAssertEqual(result.threshold, .high, "GL = 20 must be .high (boundary is ≥20)")
+    }
+
+    // MARK: - Case insensitivity and whitespace tolerance
+
+    func testLookupIsCaseInsensitive() {
+        let upper = engine.computeGL(foodName: "WHITE RICE", quantityGrams: 100, carbsPer100g: 28.6)
+        let lower = engine.computeGL(foodName: "white rice", quantityGrams: 100, carbsPer100g: 28.6)
+        XCTAssertEqual(upper.gi, lower.gi, "GI lookup must be case-insensitive")
+        XCTAssertEqual(upper.tier, 1, "Upper-case canonical name must still resolve to tier 1")
+    }
+
+    func testLookupTrimsLeadingTrailingWhitespace() {
+        let padded = engine.computeGL(foodName: "  oatmeal  ", quantityGrams: 100, carbsPer100g: 12.0)
+        XCTAssertEqual(padded.gi, 55, "Lookup must trim leading/trailing whitespace before matching")
+        XCTAssertEqual(padded.tier, 1)
+    }
+
+    // MARK: - GIDatabase fuzzy confidence tiers (d=1 → 0.80, d=2 → 0.70, d=3 → 0.55)
+
+    func testFuzzyMatchD1GivesHighConfidence() {
+        // "oatmeel" is Levenshtein d=1 from "oatmeal" (a→e). Resolves to tier 2, confidence 0.80.
+        let result = engine.computeGL(foodName: "oatmeel", quantityGrams: 100, carbsPer100g: 12.0)
+        XCTAssertEqual(result.tier, 2, "1-char typo must fall to tier 2")
+        XCTAssertEqual(result.confidence, 0.80, accuracy: 0.01, "d=1 must give 0.80 confidence")
+        XCTAssertEqual(result.gi, 55, "Fuzzy must resolve to oatmeal (GI 55)")
+    }
+
+    func testFuzzyMatchD2GivesMediumConfidence() {
+        // "lentilles" is d=2 from "lentils" (insert 'l', insert 'e' before 's'). Confidence 0.70.
+        let result = engine.computeGL(foodName: "lentilles", quantityGrams: 100, carbsPer100g: 20.0)
+        XCTAssertEqual(result.tier, 2, "2-char typo must fall to tier 2")
+        XCTAssertEqual(result.confidence, 0.70, accuracy: 0.01, "d=2 must give 0.70 confidence")
+        XCTAssertEqual(result.gi, 32, "Fuzzy must resolve to lentils (GI 32)")
+    }
+
+    func testFuzzyMatchD3GivesLowConfidence() {
+        // "wwwatermeloon" needs 3 insertions to become "watermelon" (two extra 'w's + one extra 'o')
+        // and is d>3 from every other entry in the test DB. Must resolve at confidence 0.55.
+        let result = engine.computeGL(foodName: "wwwatermeloon", quantityGrams: 120, carbsPer100g: 7.6)
+        XCTAssertEqual(result.tier, 2, "d=3 from nearest entry must still be tier 2 (within the ≤3 cap)")
+        XCTAssertEqual(result.confidence, 0.55, accuracy: 0.01, "d=3 must give 0.55 confidence")
+        XCTAssertEqual(result.gi, 72, "Fuzzy must resolve to watermelon (GI 72)")
+    }
+
+    func testFuzzyMatchBeyondD3FallsToTier3() {
+        // "dragonberry" is more than d=3 from every DB entry → tier 3 fallback.
+        let result = engine.computeGL(foodName: "dragonberry", quantityGrams: 100, carbsPer100g: 15.0)
+        XCTAssertEqual(result.tier, 3, "d>3 from all DB entries must fall to tier 3")
+        XCTAssertLessThan(result.confidence, 0.5)
+    }
 }

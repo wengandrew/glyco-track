@@ -179,6 +179,69 @@ final class CLEngineTests: XCTestCase {
         XCTAssertEqual(result100g.cl, result50g.cl * 2, accuracy: 0.001)
     }
 
+    // MARK: - CLClassification neutral band
+
+    func testClassificationNeutralAtExactPositiveBoundary() {
+        // CL = SFA × 1.0 = 1.0 exactly → not > 1.0 so it is .neutral, not .harmful
+        let nutrition = NutritionInput(
+            saturatedFatPer100g: 1.0, transFatPer100g: 0.0,
+            solubleFiberPer100g: 0.0, pufaPer100g: 0.0, mufaPer100g: 0.0
+        )
+        let result = engine.computeCL(nutrition: nutrition, quantityGrams: 100)
+        XCTAssertEqual(result.cl, 1.0, accuracy: 0.001)
+        XCTAssertEqual(result.classification, .neutral,
+                       "cl = 1.0 is NOT > 1.0, so it must be .neutral (boundary is exclusive)")
+    }
+
+    func testClassificationHarmfulJustAbovePositiveBoundary() {
+        // CL just above 1.0 → .harmful
+        let nutrition = NutritionInput(
+            saturatedFatPer100g: 1.01, transFatPer100g: 0.0,
+            solubleFiberPer100g: 0.0, pufaPer100g: 0.0, mufaPer100g: 0.0
+        )
+        let result = engine.computeCL(nutrition: nutrition, quantityGrams: 100)
+        XCTAssertGreaterThan(result.cl, 1.0)
+        XCTAssertEqual(result.classification, .harmful,
+                       "cl > 1.0 must be .harmful")
+    }
+
+    func testClassificationNeutralAtExactNegativeBoundary() {
+        // MUFA = 2.0 → CL = -(2.0 × 0.5) = -1.0 exactly → .neutral (not < -1.0)
+        let nutrition = NutritionInput(
+            saturatedFatPer100g: 0.0, transFatPer100g: 0.0,
+            solubleFiberPer100g: 0.0, pufaPer100g: 0.0, mufaPer100g: 2.0
+        )
+        let result = engine.computeCL(nutrition: nutrition, quantityGrams: 100)
+        XCTAssertEqual(result.cl, -1.0, accuracy: 0.001)
+        XCTAssertEqual(result.classification, .neutral,
+                       "cl = -1.0 is NOT < -1.0, so it must be .neutral (boundary is exclusive)")
+    }
+
+    func testClassificationBeneficialJustBelowNegativeBoundary() {
+        // MUFA = 2.01 → CL = -(2.01 × 0.5) = -1.005 → .beneficial
+        let nutrition = NutritionInput(
+            saturatedFatPer100g: 0.0, transFatPer100g: 0.0,
+            solubleFiberPer100g: 0.0, pufaPer100g: 0.0, mufaPer100g: 2.01
+        )
+        let result = engine.computeCL(nutrition: nutrition, quantityGrams: 100)
+        XCTAssertLessThan(result.cl, -1.0)
+        XCTAssertEqual(result.classification, .beneficial,
+                       "cl < -1.0 must be .beneficial")
+    }
+
+    func testAllZeroNutritionIsNeutral() {
+        let nutrition = NutritionInput(
+            saturatedFatPer100g: 0.0, transFatPer100g: 0.0,
+            solubleFiberPer100g: 0.0, pufaPer100g: 0.0, mufaPer100g: 0.0
+        )
+        let result = engine.computeCL(nutrition: nutrition, quantityGrams: 100)
+        XCTAssertEqual(result.cl, 0.0, accuracy: 0.001)
+        XCTAssertTrue(result.isNeutral, "All-zero nutrition must produce isNeutral = true")
+        XCTAssertFalse(result.isHarmful)
+        XCTAssertFalse(result.isBeneficial)
+        XCTAssertEqual(result.classification, .neutral)
+    }
+
     // MARK: - Component breakdown validation
 
     func testComponentBreakdown() {
