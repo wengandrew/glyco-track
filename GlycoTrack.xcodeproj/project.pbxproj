@@ -30,7 +30,6 @@
 		4DBC54F5618FC4B59C5C8A10 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 7F42371B1563B54DC2A80E1C /* PrivacyInfo.xcprivacy */; };
 		4DEBE8B1F01F6B2FED02B67F /* EntryRefiner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598246F40ECB3227E460D94B /* EntryRefiner.swift */; };
 		54376F4567B22EA7489FADA9 /* WeekTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C81FF29DB0DB6B3386701CC /* WeekTabView.swift */; };
-		545495522F0ACC99E8F83289 /* PeriodSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E838C1BDD90901F73964B424 /* PeriodSummaryView.swift */; };
 		55862B63557DD894F3273BD0 /* MotionGravityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CEC2EC94C1446A480D2887 /* MotionGravityController.swift */; };
 		5E5ECE4677EFFF862EF50EB9 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 93A9D5283F50E4B8D7100995 /* PrivacyInfo.xcprivacy */; };
 		605851BDE11851A2BB4A67C2 /* FoodLogRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 543CE564CFB84AEB79200F10 /* FoodLogRowView.swift */; };
@@ -44,7 +43,6 @@
 		7219DEF666B2DE3F9239A100 /* GLProgressRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA9F806906262575EEBE547 /* GLProgressRing.swift */; };
 		72E8408FB1D9F7D5769B835E /* food_emoji_map.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C263514B81487DA19F869F3 /* food_emoji_map.json */; };
 		804D83DA123CD38186D70EE8 /* CLEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC319390AA669EE258FAD6F /* CLEngine.swift */; };
-		8244ACA7D299AF86DC32727C /* WeekComparisonStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9712B35616E9A6D0150BEE /* WeekComparisonStrip.swift */; };
 		8D4D572E5D5FF46BE470D20F /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FAFBFFF587D6C5D88FF7C59 /* NotificationManager.swift */; };
 		8DE167AB3585707279F2E20F /* TranscriptParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3473895D984D30A720E75A /* TranscriptParser.swift */; };
 		9491AED8AF3A2B58D9EF3E99 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5C279391B47DE4370E1D1E /* AppSettings.swift */; };
@@ -162,7 +160,6 @@
 		9EE14268BE85E30C9C9AD8E6 /* MonthlyHeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyHeatmapView.swift; sourceTree = "<group>"; };
 		A1D3B3F5C4D80821160E5398 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		A4FABEB16EDEA2EF90880ABC /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
-		AC9712B35616E9A6D0150BEE /* WeekComparisonStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekComparisonStrip.swift; sourceTree = "<group>"; };
 		B3189DE380188C47D779FEAD /* WeeklyRiverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyRiverView.swift; sourceTree = "<group>"; };
 		B6A1DA1067A0C7DDF9801DAD /* GlycoTrackApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlycoTrackApp.swift; sourceTree = "<group>"; };
 		BDE0ED91AFA0AD07985CB444 /* MoreSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreSheet.swift; sourceTree = "<group>"; };
@@ -177,7 +174,6 @@
 		DA893F988E91457F91A4E3BF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DCC319390AA669EE258FAD6F /* CLEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLEngine.swift; sourceTree = "<group>"; };
 		E6C16B19721941F485C06001 /* FoodMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMatcher.swift; sourceTree = "<group>"; };
-		E838C1BDD90901F73964B424 /* PeriodSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodSummaryView.swift; sourceTree = "<group>"; };
 		EAF4CD9CCE735BCE308CECA4 /* FoodPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodPickerView.swift; sourceTree = "<group>"; };
 		F3A6E1677A79798237CFB545 /* gi_database.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = gi_database.json; sourceTree = "<group>"; };
 		FA0635BF8C8072E15E778AD6 /* DebugTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTabView.swift; sourceTree = "<group>"; };
@@ -516,9 +512,7 @@
 				4DFF15FD7B99E00160837027 /* FoodGraphic.swift */,
 				EAF4CD9CCE735BCE308CECA4 /* FoodPickerView.swift */,
 				5EA9F806906262575EEBE547 /* GLProgressRing.swift */,
-				E838C1BDD90901F73964B424 /* PeriodSummaryView.swift */,
 				8B61B27E6D6C9ADE92E928E7 /* RecordButton.swift */,
-				AC9712B35616E9A6D0150BEE /* WeekComparisonStrip.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -736,7 +730,6 @@
 				A9EF6E86BA2596BFE3A1E5DF /* NutritionalProfile+CoreDataClass.swift in Sources */,
 				FDAF173A39DFC255AD53B092 /* NutritionalProfile+CoreDataProperties.swift in Sources */,
 				A73D4CC50EA0050C328B3DFB /* NutritionalRepository.swift in Sources */,
-				545495522F0ACC99E8F83289 /* PeriodSummaryView.swift in Sources */,
 				719519B850851D9B5DEA8F1C /* PersistenceController.swift in Sources */,
 				21283A13BCE8E22EA1E7764B /* PhysicsBucketView.swift in Sources */,
 				0D0BF3101ED86D94884B99DF /* QuadrantPlotView.swift in Sources */,
@@ -746,7 +739,6 @@
 				4B8A74359D0BC603BFE227EE /* SettingsView.swift in Sources */,
 				8DE167AB3585707279F2E20F /* TranscriptParser.swift in Sources */,
 				B076FCA27DDFC7ECFBB6F792 /* VoiceCapture.swift in Sources */,
-				8244ACA7D299AF86DC32727C /* WeekComparisonStrip.swift in Sources */,
 				54376F4567B22EA7489FADA9 /* WeekTabView.swift in Sources */,
 				9C86560AAEE898D9CDD72E79 /* WeeklyRiverView.swift in Sources */,
 			);
