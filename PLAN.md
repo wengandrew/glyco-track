@@ -220,7 +220,7 @@ Goal: submit GlycoTrack 1.0. Splits into engineering work (repo) and deployment 
 
 | Item | Status |
 |---|---|
-| Permissions onboarding flow (mic + speech recognition) before first alert | ✅ `OnboardingView.swift` — fullScreenCover on first launch; requests `SFSpeechRecognizer` auth (triggers mic dialog) before dismissing |
+| Permissions onboarding flow (mic + speech recognition) before first alert | ✅ `OnboardingView.swift` — fullScreenCover on first launch; requests speech recognition (`SFSpeechRecognizer.requestAuthorization`) then microphone (`AVAudioSession.requestRecordPermission`) as two separate calls before dismissing |
 | In-app privacy policy link + support contact in About pane | ✅ "Legal & Support" section added to `AboutPaneView` with `Link` to GitHub privacy policy and issues |
 | Health-claim disclaimers ("informational only, not medical advice") | ✅ Full disclaimer in `OnboardingView` + expanded legal card in About pane |
 | Empty-state hint on Today tab ("Tap the mic to log your first meal") | ✅ `firstLogHint` card shown in `HomeTabView` when `entries.isEmpty && isToday` |

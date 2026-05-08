@@ -1,5 +1,6 @@
 import SwiftUI
 import Speech
+import AVFoundation
 
 /// Shown as a fullScreenCover on first launch. Explains the app, surfaces the
 /// mic/speech permission rationale before the system dialogs appear, and
@@ -102,8 +103,14 @@ struct OnboardingView: View {
             guard !isRequesting else { return }
             isRequesting = true
             Task {
+                // Speech recognition and microphone are two separate permissions.
                 await withCheckedContinuation { continuation in
                     SFSpeechRecognizer.requestAuthorization { _ in continuation.resume() }
+                }
+                await withCheckedContinuation { continuation in
+                    AVAudioSession.sharedInstance().requestRecordPermission { _ in
+                        continuation.resume()
+                    }
                 }
                 hasCompletedOnboarding = true
             }
