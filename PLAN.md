@@ -178,6 +178,8 @@ All PRs target `develop`. Listed in merge order.
 | #57 | Remove stats panels; add pickle | Stats panels removed from Week/Month. Pickle added to `usda_nutrition.json`. |
 | #58 | Expand test suite | 32 new tests: GL threshold boundaries, fuzzy confidence tiers, CL neutral-band edges, `ParsedFood` Codable round-trips, `wordBoundaryContains` edge cases, `detectGrainQualifier`, `coverageFraction`, `findComponents`. |
 | #59 | Expand food databases: global ethnic cuisine + regression suite | `gi_database.json` 782→1081; `usda_nutrition.json` 516→813. ~15 cuisine categories (Chinese/Dim Sum, Japanese, Korean, Thai, Indian, Middle Eastern, Mexican, Filipino, Malaysian, Indonesian, Vietnamese, South American, African, global beverages). 65 existing entries enriched with aliases. `EthnicFoodCoverageTests.swift` (247 tests). Pre-PR hook blocks `gh pr create` if PLAN.md is unmodified. |
+| #61 | 1.0 ship decisions: hide widget, document version strategy | Widget dependency removed from main target (`project.yml`) for 1.0 — App Groups requires paid team. Version strategy: manual `CFBundleVersion` bump in `Info.plist` before each TestFlight upload (Option A). |
+| #62 | 1B App Review risk-reducers | `OnboardingView` (fullScreenCover, first launch, requests speech/mic auth); first-launch seeding overlay (PersistenceController notification → GlycoTrackApp overlay); empty-state mic hint on Today tab; "Legal & Support" section in About pane with privacy policy + disclaimer; URLError-specific network error messages in FoodLogProcessor; `docs/testflight_notes.md` with App Store listing copy and pre-submission checklist. |
 
 ---
 
@@ -214,17 +216,17 @@ Goal: submit GlycoTrack 1.0. Splits into engineering work (repo) and deployment 
 | Version/build number strategy | — | ✅ Option A: manual bump. `CFBundleShortVersionString` (marketing, e.g. `1.0`) and `CFBundleVersion` (build integer, e.g. `1`) stay in `Info.plist`. Bump `CFBundleVersion` before every TestFlight upload; bump `CFBundleShortVersionString` only for user-facing releases. |
 | Widget decision: ship or hide for 1.0 | — | ✅ Widget dependency removed from `project.yml` for 1.0. App Groups entitlement requires paid team. Re-enable in 1.1 by adding `- target: GlycoTrackWidget` back to main target dependencies. |
 
-#### App Review risk-reducers (1B)
+#### App Review risk-reducers (1B) — all complete as of PR #62
 
 | Item | Status |
 |---|---|
-| Permissions onboarding flow (mic + speech recognition) before first alert | ⏳ |
-| In-app privacy policy link + support contact in About pane | ⏳ |
-| Health-claim disclaimers ("informational only, not medical advice") | ⏳ |
-| Empty-state hint on Today tab ("Tap the mic to log your first meal") | ⏳ |
-| Graceful network-failure path (retry or fallback beyond red pill) | ⏳ |
-| First-launch seeding overlay ("Loading nutritional database…") | ⏳ |
-| TestFlight metadata written to `docs/testflight_notes.md` | ⏳ |
+| Permissions onboarding flow (mic + speech recognition) before first alert | ✅ `OnboardingView.swift` — fullScreenCover on first launch; requests `SFSpeechRecognizer` auth (triggers mic dialog) before dismissing |
+| In-app privacy policy link + support contact in About pane | ✅ "Legal & Support" section added to `AboutPaneView` with `Link` to GitHub privacy policy and issues |
+| Health-claim disclaimers ("informational only, not medical advice") | ✅ Full disclaimer in `OnboardingView` + expanded legal card in About pane |
+| Empty-state hint on Today tab ("Tap the mic to log your first meal") | ✅ `firstLogHint` card shown in `HomeTabView` when `entries.isEmpty && isToday` |
+| Graceful network-failure path (retry or fallback beyond red pill) | ✅ `FoodLogProcessor` catches `URLError` specifically; shows "No internet connection — check your network and try again." vs. timeout vs. generic |
+| First-launch seeding overlay ("Loading nutritional database…") | ✅ `PersistenceController` posts `.glycoTrackSeedingDidComplete`; `GlycoTrackApp` shows overlay until notification received |
+| TestFlight metadata written to `docs/testflight_notes.md` | ✅ App Store description, keywords, checklist, build number policy |
 
 #### Optional / 1.1 polish (1C)
 

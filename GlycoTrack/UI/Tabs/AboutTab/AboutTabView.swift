@@ -20,6 +20,7 @@ struct AboutPaneView: View {
                 quadrantSection
                 tiersSection
                 sourcesSection
+                legalSection
                 footnote
             }
             .padding(.horizontal)
@@ -143,6 +144,23 @@ The confidence percentage shown in each entry's detail view reflects how closely
 
 **Future work:** the ingredient database will be expanded from the current ~776 foods as the AI-decomposition cascade surfaces common composites (pho, pad thai, shakshuka, etc.). For now, the cascade handles unknown composites at runtime.
 """)
+        }
+    }
+
+    private var legalSection: some View {
+        sectionCard(title: "Legal & Support", icon: "link") {
+            VStack(alignment: .leading, spacing: 12) {
+                // swiftlint:disable:next force_unwrapping
+                Link("Privacy Policy", destination: URL(string: "https://github.com/wengandrew/glyco-track/blob/main/PRIVACY.md")!)
+                    .font(.callout)
+                // swiftlint:disable:next force_unwrapping
+                Link("Get Help / Report an Issue", destination: URL(string: "https://github.com/wengandrew/glyco-track/issues")!)
+                    .font(.callout)
+                Text("GlycoTrack is for informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified health provider with any questions you may have.")
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
     }
 

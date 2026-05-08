@@ -43,6 +43,9 @@ final class PersistenceController {
 
         Task.detached(priority: .background) {
             await self.seedNutritionalProfiles()
+            await MainActor.run {
+                NotificationCenter.default.post(name: .glycoTrackSeedingDidComplete, object: nil)
+            }
         }
     }
 
@@ -153,6 +156,12 @@ final class PersistenceController {
             Log.coreData.error("Seed batch save failed: \(error.localizedDescription, privacy: .public)")
         }
     }
+}
+
+// MARK: - Notifications
+
+extension Notification.Name {
+    static let glycoTrackSeedingDidComplete = Notification.Name("com.glycotrack.seedingDidComplete")
 }
 
 // MARK: - Seed data models

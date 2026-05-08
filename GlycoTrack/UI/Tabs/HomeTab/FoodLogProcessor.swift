@@ -27,7 +27,18 @@ final class FoodLogProcessor: ObservableObject {
             foods = try await parser.parse(transcript: transcript, currentTime: recordedAt)
         } catch {
             Log.network.error("TranscriptParser.parse failed: \(error.localizedDescription, privacy: .public)")
-            lastError = error.localizedDescription
+            if let urlError = error as? URLError {
+                switch urlError.code {
+                case .notConnectedToInternet, .networkConnectionLost, .dataNotAllowed:
+                    lastError = "No internet connection — check your network and try again."
+                case .timedOut:
+                    lastError = "Request timed out — try again."
+                default:
+                    lastError = "Network error — try again."
+                }
+            } else {
+                lastError = error.localizedDescription
+            }
             return
         }
 
