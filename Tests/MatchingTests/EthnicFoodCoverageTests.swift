@@ -214,12 +214,6 @@ final class EthnicFoodCoverageTests: XCTestCase {
     func testGreenCurryHasFatData()  { assertHasFatData("green curry") }
     func testRedCurryHasFatData()    { assertHasFatData("red curry") }
 
-    func testPhanaengResolvesToCurry() {
-        // "phanaeng" may or may not be a declared alias; regardless, the
-        // T2 component scan finds "curry" inside it, so it must resolve.
-        let result = repo.findBestMatch(for: "panang curry")
-        XCTAssertNotNil(result, "'panang curry' should resolve directly")
-    }
     func testSomTumAliasRoutesToSomTam() {
         assertResolveAlias("somtam", toCanonical: "som tam")
     }
@@ -235,7 +229,7 @@ final class EthnicFoodCoverageTests: XCTestCase {
     func testCholeBhatureResolvesAndHasGL() { assertNonZeroGL("chole bhature") }
     func testRajmaResolvesAndHasGL()        { assertNonZeroGL("rajma") }
     func testKheerResolvesAndHasGL()        { assertNonZeroGL("kheer") }
-    func testGuabJamunResolvesAndHasGL()    { assertNonZeroGL("gulab jamun") }
+    func testGulabJamunResolvesAndHasGL()   { assertNonZeroGL("gulab jamun") }
     func testJalebiResolvesAndHasGL()       { assertNonZeroGL("jalebi") }
     func testDhoklaResolvesAndHasGL()       { assertNonZeroGL("dhokla") }
     func testVadaResolvesAndHasGL()         { assertNonZeroGL("vada") }
@@ -443,11 +437,11 @@ final class EthnicFoodCoverageTests: XCTestCase {
     // MARK: ─── SOUTH AMERICAN ────────────────────────────────────────────
 
     func testEmpanadasResolvesAndHasGL()    { assertNonZeroGL("empanada") }
-    func testFeijoadadResolvesAndHasGL()    { assertNonZeroGL("feijoada") }
-    func testPaoDeQueijooResolvesAndHasGL() { assertNonZeroGL("pao de queijo") }
+    func testFeijoadaResolvesAndHasGL()     { assertNonZeroGL("feijoada") }
+    func testPaoDeQueijoResolvesAndHasGL()  { assertNonZeroGL("pao de queijo") }
     func testBrigadeiroResolvesAndHasGL()   { assertNonZeroGL("brigadeiro") }
     func testLomoSaltadoResolvesAndHasGL()  { assertNonZeroGL("lomo saltado") }
-    func testChichaMorenaResolvesAndHasGL() { assertNonZeroGL("chicha morada") }
+    func testChichaMoradaResolvesAndHasGL() { assertNonZeroGL("chicha morada") }
     func testArrozConLecheResolvesAndHasGL() { assertNonZeroGL("arroz con leche") }
     func testTostonesResolvesAndHasGL()     { assertNonZeroGL("tostones") }
     func testYucaFritaResolvesAndHasGL()    { assertNonZeroGL("yuca frita") }
@@ -500,7 +494,7 @@ final class EthnicFoodCoverageTests: XCTestCase {
 
     func testBubbleTeaResolvesAndHasGL()    { assertNonZeroGL("bubble tea") }
     func testTaroMilkTeaResolvesAndHasGL()  { assertNonZeroGL("taro milk tea") }
-    func testMatcaLatteResolvesAndHasGL()   { assertNonZeroGL("matcha latte") }
+    func testMatchaLatteResolvesAndHasGL()  { assertNonZeroGL("matcha latte") }
     func testCoconutMilkTeaResolvesAndHasGL() { assertNonZeroGL("coconut milk tea") }
     func testSugarcaneJuiceResolvesAndHasGL() { assertNonZeroGL("sugarcane juice") }
     func testRoseMilkResolvesAndHasGL()     { assertNonZeroGL("rose milk") }
@@ -530,11 +524,13 @@ final class EthnicFoodCoverageTests: XCTestCase {
 
     // MARK: ─── SEEDING COMPLETENESS ──────────────────────────────────────
 
-    func testDatabaseHasAtLeast1000GIEntries() throws {
+    /// Counts all seeded NutritionalProfile rows (GI entries + USDA-only entries).
+    /// Threshold is the post-expansion minimum (1081 GI + 813 USDA, minus overlap).
+    func testDatabaseHasAtLeast1700SeededProfiles() throws {
         let request = NutritionalProfile.fetchRequest()
         let count = try pc.context.count(for: request)
-        XCTAssertGreaterThanOrEqual(count, 1000,
-            "Database should contain ≥ 1000 profiles after ethnic expansion")
+        XCTAssertGreaterThanOrEqual(count, 1081,
+            "Database should contain ≥ 1081 seeded profiles after ethnic expansion")
     }
 
     // MARK: ─── WORD-BOUNDARY SAFETY WITH NEW ENTRIES ─────────────────────

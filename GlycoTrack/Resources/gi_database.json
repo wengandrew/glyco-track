@@ -8,7 +8,6 @@
       "steamed rice",
       "plain white rice",
       "long grain rice cooked",
-      "steamed jasmine rice",
       "rice",
       "plain rice",
       "white rice bowl"
@@ -6823,7 +6822,8 @@
       "Chinese pork bun",
       "pork bao",
       "baozi"
-    ]
+    ],
+    "carbs": 32.0
   },
   {
     "name": "chawanmushi",
@@ -7111,7 +7111,8 @@
       "korean soybean paste",
       "fermented soybean paste korean",
       "dwenjang"
-    ]
+    ],
+    "carbs": 8.0
   },
   {
     "name": "doenjang jjigae",
@@ -7236,7 +7237,8 @@
       "empanada pastry",
       "empanada shell",
       "discos para empanadas"
-    ]
+    ],
+    "carbs": 48.0
   },
   {
     "name": "fatayer",
@@ -7486,7 +7488,8 @@
       "shrimp dumpling dim sum",
       "ha gao",
       "crystal shrimp dumpling"
-    ]
+    ],
+    "carbs": 19.0
   },
   {
     "name": "hoddeok",
@@ -8628,7 +8631,8 @@
       "adzuki paste",
       "koshian",
       "tsubuan"
-    ]
+    ],
+    "carbs": 55.0
   },
   {
     "name": "red curry",
@@ -8682,7 +8686,8 @@
       "wholemeal roti",
       "phulka",
       "indian flatbread wheat"
-    ]
+    ],
+    "carbs": 45.0
   },
   {
     "name": "roti canai",
@@ -8998,7 +9003,8 @@
       "tabbouleh",
       "tabouli",
       "bulgur salad"
-    ]
+    ],
+    "carbs": 8.0
   },
   {
     "name": "tagine (Moroccan)",
@@ -9224,7 +9230,8 @@
       "garaetteok",
       "tteokbokki rice cake",
       "rice cake korean"
-    ]
+    ],
+    "carbs": 46.0
   },
   {
     "name": "tteokbokki",
@@ -9336,7 +9343,8 @@
       "bun noodles",
       "rice stick noodles",
       "thin rice noodles"
-    ]
+    ],
+    "carbs": 80.0
   },
   {
     "name": "Vietnamese iced coffee",
@@ -9419,7 +9427,8 @@
       "yuca boiled",
       "manioc boiled",
       "tapioca root cooked"
-    ]
+    ],
+    "carbs": 38.0
   },
   {
     "name": "yuca fries",
