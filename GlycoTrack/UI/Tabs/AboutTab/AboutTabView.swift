@@ -141,7 +141,7 @@ Most single-score tools collapse this into one number and hide the trade-off. Gl
                 )
                 tierRow(
                     tier: .unrecognized,
-                    description: "Nothing matched. GL and CL are set to 0 and the entry is flagged \"Not recognized\" so you know the values aren't trustworthy. Consider re-logging with a more specific name."
+                    description: "Nothing matched. The entry is not logged — a zero-GL/CL entry would corrupt your daily totals. You'll see an error message prompting you to try a more specific name."
                 )
 
                 Text("Entries with confidence below 70% may be less accurate. Consider re-logging with a more specific food name to get better GL and CL values.")

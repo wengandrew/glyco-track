@@ -50,8 +50,6 @@ struct FoodLogRowView: View {
                     Text("CL \(String(format: "%+.2f", entry.computedCL))")
                         .font(.system(size: 11, weight: .medium, design: theme.metricFontDesign))
                         .foregroundColor(entry.computedCL < 0 ? theme.beneficialColor : theme.harmfulColor)
-
-                    ConfidenceBadge(confidence: entry.confidenceScore, tier: entry.parsingMethod)
                 }
             }
         }

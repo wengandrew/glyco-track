@@ -181,8 +181,8 @@ without losing the time context.
 
 Getting these numbers right is the core purpose of the app. Several failure modes have been found and fixed; do not reintroduce them.
 
-**1. Never silently return GL = 0 / CL = 0 for an unrecognized food.**
-If matching fails, return `MatchTier.unrecognized` (T5) with explicit zeros and a red "Not recognized" badge. A false high-confidence match with zeroed values is worse than admitting failure — it silently corrupts daily totals.
+**1. Never log an unrecognized food.**
+If matching fails, `FoodLogProcessor` skips the entry entirely and sets `lastError` to name the unrecognized food(s) so the user can re-try with a more specific description. Logging a GL=0/CL=0 entry would silently corrupt daily totals. The `MatchTier.unrecognized` (T5) case is still returned by `FoodMatcher` as a sentinel; it is `FoodLogProcessor`'s responsibility to filter it out before calling `FoodLogRepository.create`.
 
 **2. USDA-only entries with real carbs must use GI = 55, not GI = 0.**
 `NutritionalProfile.glycemicIndex == 0` means "no Sydney GI entry", not "zero GI". If `carbsPer100g > 3` and `glycemicIndex == 0`, substitute GI = 55 (medium) before computing GL. Noodles and grains without a GI entry would otherwise report GL = 0.
