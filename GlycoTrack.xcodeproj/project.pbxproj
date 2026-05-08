@@ -10,6 +10,7 @@
 		041291D466117085F31C91F8 /* FoodLogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0825161931CF783350FA398E /* FoodLogRepository.swift */; };
 		04EF4D81DCAC57B04B475785 /* GlycoTrackWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D37631E30DEC9D009EB19A /* GlycoTrackWidget.swift */; };
 		08B81E947941B77566AF9767 /* GIEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700B603125BA314A19923286 /* GIEngine.swift */; };
+		0B31A32D301242E6C37A345B /* EthnicFoodCoverageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CF66D45F5F0D4B5683DBD21 /* EthnicFoodCoverageTests.swift */; };
 		0D0BF3101ED86D94884B99DF /* QuadrantPlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7A560C4BA26D536A7CDCCA /* QuadrantPlotView.swift */; };
 		110044A56CED7B5CD2A92F48 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C1D2709199DB48FFDDC1551 /* AppDelegate.swift */; };
 		1868EC6D468D84FF94BC176B /* DebugTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0635BF8C8072E15E778AD6 /* DebugTabView.swift */; };
@@ -156,6 +157,7 @@
 		97313B9C797857A9DBC2F462 /* LogTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogTabView.swift; sourceTree = "<group>"; };
 		98285973C6FD6F59B009AB47 /* CLPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLPalette.swift; sourceTree = "<group>"; };
 		9C49AC2B0AF9614FBD23DF6D /* NutritionalRepositoryRegressionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionalRepositoryRegressionTests.swift; sourceTree = "<group>"; };
+		9CF66D45F5F0D4B5683DBD21 /* EthnicFoodCoverageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EthnicFoodCoverageTests.swift; sourceTree = "<group>"; };
 		9EE14268BE85E30C9C9AD8E6 /* MonthlyHeatmapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyHeatmapView.swift; sourceTree = "<group>"; };
 		A1D3B3F5C4D80821160E5398 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 		A4FABEB16EDEA2EF90880ABC /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 		27D7B4645EE752B7AAED0BF7 /* MatchingTests */ = {
 			isa = PBXGroup;
 			children = (
+				9CF66D45F5F0D4B5683DBD21 /* EthnicFoodCoverageTests.swift */,
 				9C49AC2B0AF9614FBD23DF6D /* NutritionalRepositoryRegressionTests.swift */,
 			);
 			name = MatchingTests;
@@ -744,6 +747,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B31A32D301242E6C37A345B /* EthnicFoodCoverageTests.swift in Sources */,
 				CB15F2A5E2E57901736EBFB8 /* NutritionalRepositoryRegressionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

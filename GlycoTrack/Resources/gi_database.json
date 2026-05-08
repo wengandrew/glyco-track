@@ -3,10 +3,15 @@
     "name": "white rice",
     "gi": 72,
     "aliases": [
-      "rice",
-      "steamed rice",
       "cooked rice",
-      "plain rice"
+      "boiled white rice",
+      "steamed rice",
+      "plain white rice",
+      "long grain rice cooked",
+      "steamed jasmine rice",
+      "rice",
+      "plain rice",
+      "white rice bowl"
     ]
   },
   {
@@ -14,6 +19,9 @@
     "gi": 50,
     "aliases": [
       "wholegrain rice",
+      "brown rice bowl",
+      "brown jasmine rice",
+      "multigrain rice",
       "whole grain rice"
     ]
   },
@@ -21,7 +29,12 @@
     "name": "basmati rice",
     "gi": 57,
     "aliases": [
-      "basmati"
+      "basmati rice cooked",
+      "Indian basmati",
+      "long grain basmati",
+      "Pakistani basmati",
+      "basmati",
+      "fragrant basmati"
     ]
   },
   {
@@ -35,7 +48,11 @@
     "name": "sushi rice",
     "gi": 72,
     "aliases": [
-      "japanese rice"
+      "japanese rice",
+      "vinegared rice",
+      "Japanese seasoned rice",
+      "sumeshi",
+      "sushi vinegar rice"
     ]
   },
   {
@@ -84,8 +101,13 @@
     "name": "pita bread",
     "gi": 68,
     "aliases": [
+      "Arabic bread",
+      "Middle Eastern flatbread",
+      "Lebanese bread",
+      "pitta",
       "pita",
-      "pitta"
+      "pitta bread",
+      "pocket bread"
     ]
   },
   {
@@ -522,7 +544,9 @@
     "name": "tofu",
     "gi": 15,
     "aliases": [
+      "soft tofu",
       "bean curd",
+      "extra firm tofu",
       "silken tofu",
       "firm tofu"
     ]
@@ -620,7 +644,13 @@
   {
     "name": "hummus",
     "gi": 6,
-    "aliases": []
+    "aliases": [
+      "Israeli hummus",
+      "chickpea hummus",
+      "Lebanese hummus",
+      "hummus with pita",
+      "hummus dip"
+    ]
   },
   {
     "name": "butter",
@@ -697,7 +727,13 @@
     "name": "pickle",
     "gi": 32,
     "carbs": 1.5,
-    "aliases": ["pickles", "dill pickle", "dill pickles", "gherkin", "gherkins"]
+    "aliases": [
+      "pickles",
+      "dill pickle",
+      "dill pickles",
+      "gherkin",
+      "gherkins"
+    ]
   },
   {
     "name": "zucchini",
@@ -966,18 +1002,31 @@
     "name": "tacos",
     "gi": 55,
     "aliases": [
-      "taco"
+      "street taco",
+      "Mexican taco",
+      "taco",
+      "taco al pastor",
+      "soft taco"
     ]
   },
   {
     "name": "burrito",
     "gi": 58,
-    "aliases": []
+    "aliases": [
+      "California burrito",
+      "Mexican burrito wrap",
+      "wet burrito"
+    ]
   },
   {
     "name": "fried rice",
     "gi": 72,
-    "aliases": []
+    "aliases": [
+      "Thai fried rice plain",
+      "yangzhou fried rice",
+      "Chinese fried rice",
+      "egg fried rice"
+    ]
   },
   {
     "name": "risotto",
@@ -988,7 +1037,15 @@
   {
     "name": "sushi",
     "gi": 55,
-    "aliases": []
+    "aliases": [
+      "sushi roll",
+      "California roll",
+      "dragon roll",
+      "volcano roll",
+      "maki roll",
+      "rainbow roll",
+      "tempura roll"
+    ]
   },
   {
     "name": "pumpkin",
@@ -1088,12 +1145,21 @@
   {
     "name": "coconut water",
     "gi": 55,
-    "aliases": []
+    "aliases": [
+      "fresh coconut water",
+      "young coconut",
+      "coconut juice"
+    ]
   },
   {
     "name": "coconut milk",
     "gi": 41,
-    "aliases": []
+    "aliases": [
+      "canned coconut milk",
+      "light coconut milk",
+      "Indonesian coconut milk",
+      "Thai coconut milk"
+    ]
   },
   {
     "name": "almond milk",
@@ -1220,7 +1286,11 @@
   {
     "name": "tempeh",
     "gi": 15,
-    "aliases": []
+    "aliases": [
+      "soy tempeh",
+      "Indonesian tempeh",
+      "fermented soy block"
+    ]
   },
   {
     "name": "seitan",
@@ -1428,7 +1498,11 @@
   {
     "name": "guacamole",
     "gi": 10,
-    "aliases": []
+    "aliases": [
+      "avocado dip",
+      "Mexican avocado dip",
+      "guac"
+    ]
   },
   {
     "name": "caesar salad",
@@ -1700,40 +1774,80 @@
     "name": "congee",
     "gi": 78,
     "aliases": [
-      "rice porridge",
-      "jook"
+      "Cantonese congee",
+      "jook",
+      "rice gruel",
+      "Chinese rice porridge",
+      "chao",
+      "Chinese jok",
+      "rice porridge"
     ]
   },
   {
     "name": "pad thai",
     "gi": 55,
-    "aliases": []
+    "aliases": [
+      "Thai stir fried noodles",
+      "Thai rice noodle stir fry",
+      "phad thai",
+      "pad thai noodles"
+    ]
   },
   {
     "name": "ramen",
     "gi": 64,
-    "aliases": []
+    "aliases": [
+      "tonkotsu ramen",
+      "ramen soup",
+      "spicy ramen",
+      "Japanese ramen bowl",
+      "shoyu ramen",
+      "chicken ramen noodles"
+    ]
   },
   {
     "name": "pho",
     "gi": 55,
-    "aliases": []
+    "aliases": [
+      "pho noodles",
+      "Vietnamese noodle soup",
+      "chicken pho",
+      "pho bo",
+      "beef pho",
+      "pho broth",
+      "pho ga"
+    ]
   },
   {
     "name": "bibimbap",
     "gi": 68,
-    "aliases": []
+    "aliases": [
+      "dolsot bibimbap",
+      "stone pot rice Korean",
+      "Korean mixed rice bowl",
+      "mixed vegetables rice Korean"
+    ]
   },
   {
     "name": "falafel",
     "gi": 39,
-    "aliases": []
+    "aliases": [
+      "Lebanese falafel",
+      "fried falafel",
+      "falafel wrap",
+      "falafel ball",
+      "baked falafel"
+    ]
   },
   {
     "name": "shawarma",
     "gi": 52,
     "aliases": [
-      "kebab"
+      "Middle Eastern wrap",
+      "kebab",
+      "lamb shawarma",
+      "shawarma wrap",
+      "chicken shawarma"
     ]
   },
   {
@@ -1744,22 +1858,39 @@
   {
     "name": "samosa",
     "gi": 55,
-    "aliases": []
+    "aliases": [
+      "Indian samosa",
+      "vegetable samosa",
+      "baked samosa",
+      "potato samosa",
+      "fried samosa"
+    ]
   },
   {
     "name": "spring rolls",
     "gi": 52,
     "aliases": [
-      "egg rolls"
+      "Vietnamese spring rolls",
+      "fried spring rolls",
+      "Chinese spring rolls",
+      "egg rolls",
+      "goi cuon",
+      "fresh spring rolls"
     ]
   },
   {
     "name": "dumplings",
     "gi": 52,
     "aliases": [
+      "boiled dumplings",
+      "potstickers",
+      "steamed dumplings",
+      "pan fried dumplings",
+      "wonton dumplings",
+      "jiaozi",
+      "Chinese dumplings",
       "dim sum",
-      "gyoza",
-      "potstickers"
+      "gyoza"
     ]
   },
   {
@@ -1806,23 +1937,41 @@
     "name": "chapati",
     "gi": 52,
     "aliases": [
-      "roti"
+      "roti",
+      "phulka",
+      "Indian flatbread",
+      "whole wheat roti",
+      "chapatti"
     ]
   },
   {
     "name": "paratha",
     "gi": 62,
-    "aliases": []
+    "aliases": [
+      "laccha paratha",
+      "Punjabi paratha",
+      "layered flatbread Indian",
+      "plain paratha"
+    ]
   },
   {
     "name": "idli",
     "gi": 77,
-    "aliases": []
+    "aliases": [
+      "steamed rice cake South Indian",
+      "idly",
+      "rice idli"
+    ]
   },
   {
     "name": "dosa",
     "gi": 77,
-    "aliases": []
+    "aliases": [
+      "rava dosa",
+      "paper dosa",
+      "South Indian crepe",
+      "plain dosa"
+    ]
   },
   {
     "name": "uttapam",
@@ -1837,7 +1986,15 @@
   {
     "name": "biryani",
     "gi": 65,
-    "aliases": []
+    "aliases": [
+      "hyderabadi biryani",
+      "lamb biryani",
+      "biryani rice",
+      "basmati biryani",
+      "vegetable biryani",
+      "chicken biryani",
+      "mutton biryani"
+    ]
   },
   {
     "name": "pilaf",
@@ -2261,8 +2418,13 @@
     "gi": 71,
     "aliases": [
       "naan bread",
+      "garlic naan",
+      "butter naan",
       "indian bread",
-      "garlic naan"
+      "plain naan bread",
+      "whole wheat naan",
+      "keema naan",
+      "peshwari naan"
     ]
   },
   {
@@ -2332,9 +2494,14 @@
     "name": "udon noodles",
     "gi": 55,
     "aliases": [
+      "udon soup",
+      "udon stir fry",
+      "yaki udon",
       "udon",
+      "japanese udon",
+      "nabeyaki udon",
       "thick noodles",
-      "japanese udon"
+      "kake udon"
     ],
     "carbs": 22.0
   },
@@ -2342,9 +2509,13 @@
     "name": "soba noodles",
     "gi": 56,
     "aliases": [
+      "cold soba",
+      "japanese soba",
       "soba",
+      "soba noodle soup",
+      "buckwheat soba",
       "buckwheat noodles",
-      "japanese soba"
+      "zaru soba"
     ],
     "carbs": 21.4
   },
@@ -2520,8 +2691,10 @@
     "gi": 50,
     "aliases": [
       "chinese noodles",
+      "egg noodle stir fry Chinese",
       "stir fried noodles",
-      "chinese lo mein"
+      "chinese lo mein",
+      "soft noodle stir fry"
     ],
     "carbs": 25.0
   },
@@ -2529,7 +2702,10 @@
     "name": "chow mein",
     "gi": 50,
     "aliases": [
+      "Chinese chow mein",
+      "chow mein noodles",
       "fried noodles",
+      "crispy noodle stir fry",
       "crispy noodles"
     ],
     "carbs": 30.0
@@ -2808,9 +2984,11 @@
     "name": "tamarind",
     "gi": 23,
     "aliases": [
+      "Indian tamarind",
+      "imli",
+      "asam jawa",
       "tamarind paste",
-      "tamarind pulp",
-      "imli"
+      "tamarind pulp"
     ]
   },
   {
@@ -3001,9 +3179,13 @@
     "name": "bok choy",
     "gi": 15,
     "aliases": [
-      "pak choi",
+      "Chinese cabbage",
+      "baby bok choy",
+      "Chinese bok choy",
       "bok choi",
-      "chinese white cabbage"
+      "chinese white cabbage",
+      "pak choy",
+      "pak choi"
     ]
   },
   {
@@ -3241,9 +3423,12 @@
     "name": "edamame",
     "gi": 18,
     "aliases": [
+      "Japanese soybeans",
       "edamame beans",
-      "fresh soybeans",
-      "mukimame"
+      "steamed edamame",
+      "mukimame",
+      "boiled edamame",
+      "fresh soybeans"
     ]
   },
   {
@@ -3408,10 +3593,16 @@
     "name": "dal",
     "gi": 35,
     "aliases": [
+      "dal makhani",
       "indian lentil soup",
+      "tarka dal",
+      "lentil curry Indian",
       "lentil dal",
+      "daal",
       "dhal",
-      "daal"
+      "dal tadka",
+      "yellow dal",
+      "red lentil dal"
     ],
     "carbs": 18.0
   },
@@ -4194,10 +4385,12 @@
     "name": "miso paste",
     "gi": 30,
     "aliases": [
-      "white miso",
-      "red miso",
       "miso",
-      "shiro miso"
+      "white miso",
+      "aka miso",
+      "red miso",
+      "shiro miso",
+      "Japanese fermented bean paste"
     ],
     "carbs": 26.0
   },
@@ -4288,9 +4481,12 @@
     "name": "mango chutney",
     "gi": 60,
     "aliases": [
-      "chutney",
+      "fruit chutney",
       "indian chutney",
-      "fruit chutney"
+      "sweet mango chutney",
+      "chutney",
+      "Indian mango chutney",
+      "Major Grey chutney"
     ],
     "carbs": 35.0
   },
@@ -4745,8 +4941,10 @@
     "name": "shakshuka",
     "gi": 35,
     "aliases": [
+      "Middle Eastern egg dish",
       "shakshouka",
       "eggs in tomato sauce",
+      "Israeli shakshuka",
       "menemen"
     ]
   },
@@ -4755,16 +4953,19 @@
     "gi": 36,
     "aliases": [
       "murgh makhani",
+      "indian butter chicken",
       "chicken makhani",
-      "indian butter chicken"
+      "Indian butter chicken curry"
     ]
   },
   {
     "name": "chicken tikka masala",
     "gi": 40,
     "aliases": [
-      "tikka masala",
-      "CTM"
+      "British Indian curry",
+      "CTM",
+      "chicken tikka curry",
+      "tikka masala"
     ]
   },
   {
@@ -4772,8 +4973,11 @@
     "gi": 28,
     "aliases": [
       "chole",
+      "chole masala",
       "chickpea curry",
-      "chole masala"
+      "chickpea masala",
+      "chana curry",
+      "Indian chickpea curry"
     ]
   },
   {
@@ -4781,7 +4985,9 @@
     "gi": 15,
     "aliases": [
       "indian cheese",
-      "fresh paneer"
+      "Indian cottage cheese",
+      "fresh paneer",
+      "paneer cheese"
     ]
   },
   {
@@ -4804,8 +5010,10 @@
     "gi": 33,
     "aliases": [
       "tabouli",
+      "Lebanese parsley salad",
       "tabbouleh salad",
-      "bulgur salad"
+      "bulgur salad",
+      "parsley bulgur salad"
     ],
     "carbs": 18.0
   },
@@ -4862,8 +5070,12 @@
     "name": "rendang",
     "gi": 20,
     "aliases": [
-      "beef rendang",
-      "indonesian rendang"
+      "indonesian rendang",
+      "slow cooked spicy beef",
+      "dry beef curry rendang",
+      "Indonesian beef rendang",
+      "Malaysian beef rendang",
+      "beef rendang"
     ],
     "carbs": 4.0
   },
@@ -4871,6 +5083,7 @@
     "name": "nasi goreng",
     "gi": 52,
     "aliases": [
+      "nasi goreng kampung",
       "indonesian fried rice",
       "malaysian fried rice"
     ],
@@ -4880,9 +5093,14 @@
     "name": "laksa",
     "gi": 46,
     "aliases": [
-      "noodle soup",
+      "Malaysian laksa",
+      "penang laksa",
       "singapore laksa",
-      "penang laksa"
+      "laksa lemak",
+      "Singaporean laksa",
+      "noodle soup",
+      "curry laksa",
+      "coconut curry noodle soup"
     ],
     "carbs": 12.0
   },
@@ -4890,9 +5108,12 @@
     "name": "tom yum",
     "gi": 30,
     "aliases": [
-      "tom yum soup",
       "thai hot and sour soup",
-      "tom yam"
+      "tom yam",
+      "tom yum soup",
+      "Thai shrimp soup",
+      "tom yum goong",
+      "Thai hot sour soup"
     ],
     "carbs": 4.0
   },
@@ -4900,9 +5121,11 @@
     "name": "tom kha",
     "gi": 30,
     "aliases": [
-      "tom kha gai",
+      "Thai coconut milk soup",
+      "Thai coconut chicken soup",
+      "galangal coconut soup",
       "thai coconut soup",
-      "galangal coconut soup"
+      "tom kha gai"
     ],
     "carbs": 5.0
   },
@@ -4911,9 +5134,12 @@
     "gi": 20,
     "aliases": [
       "chicken satay",
+      "Asian skewer peanut",
       "beef satay",
+      "peanut sauce skewer",
+      "saté",
       "peanut satay",
-      "saté"
+      "pork satay"
     ],
     "carbs": 10.0
   },
@@ -4922,8 +5148,11 @@
     "gi": 48,
     "aliases": [
       "massaman",
-      "thai massaman curry",
-      "beef massaman"
+      "beef massaman",
+      "Thai massaman",
+      "massaman beef curry",
+      "Muslim curry Thai",
+      "thai massaman curry"
     ],
     "carbs": 12.0
   },
@@ -4960,8 +5189,11 @@
     "gi": 60,
     "aliases": [
       "tamales",
+      "masa tamale",
+      "pork tamale",
+      "corn husk tamale",
       "corn tamale",
-      "masa tamale"
+      "Mexican tamale"
     ],
     "carbs": 18.0
   },
@@ -4969,7 +5201,11 @@
     "name": "pozole",
     "gi": 40,
     "aliases": [
+      "pozole verde",
+      "Mexican hominy soup",
       "posole",
+      "pozole rojo",
+      "pork hominy soup",
       "mexican hominy stew"
     ],
     "carbs": 8.0
@@ -4978,9 +5214,12 @@
     "name": "enchilada",
     "gi": 55,
     "aliases": [
+      "Mexican enchilada",
+      "enchilada with sauce",
       "enchiladas",
+      "chicken enchilada",
       "cheese enchilada",
-      "chicken enchilada"
+      "beef enchilada"
     ],
     "carbs": 18.0
   },
@@ -5005,9 +5244,12 @@
     "name": "banh mi",
     "gi": 55,
     "aliases": [
-      "vietnamese sandwich",
+      "Vietnamese baguette",
+      "banh mi sandwich",
+      "Vietnamese bread roll",
       "bánh mì",
-      "baguette vietnamese"
+      "baguette vietnamese",
+      "vietnamese sandwich"
     ],
     "carbs": 30.0
   },
@@ -5015,9 +5257,12 @@
     "name": "wonton",
     "gi": 55,
     "aliases": [
-      "wontons",
+      "wonton soup dumpling",
       "wonton soup",
-      "pork dumplings"
+      "pork dumplings",
+      "Chinese wonton",
+      "wontons",
+      "wonton dumpling"
     ],
     "carbs": 28.0
   },
@@ -5026,6 +5271,9 @@
     "gi": 55,
     "aliases": [
       "yum cha",
+      "Chinese dim sum",
+      "Cantonese dim sum",
+      "dim sum assorted",
       "chinese dumplings",
       "har gow"
     ],
@@ -5063,18 +5311,20 @@
     "name": "miso soup",
     "gi": 15,
     "aliases": [
+      "wakame miso soup",
       "japanese miso soup",
-      "tofu miso soup",
-      "wakame miso soup"
+      "dashi miso soup",
+      "tofu miso soup"
     ]
   },
   {
     "name": "beef bulgogi",
     "gi": 30,
     "aliases": [
-      "bulgogi",
+      "marinated Korean beef",
       "korean bbq beef",
-      "korean grilled beef"
+      "korean grilled beef",
+      "bulgogi"
     ],
     "carbs": 8.0
   },
@@ -5082,9 +5332,12 @@
     "name": "japchae",
     "gi": 30,
     "aliases": [
+      "stir fried glass noodles",
       "korean glass noodles",
       "japchae noodles",
-      "stir fried glass noodles"
+      "sweet potato glass noodles",
+      "Korean japchae noodles",
+      "Korean glass noodles stir fry"
     ],
     "carbs": 23.0
   },
@@ -5092,9 +5345,13 @@
     "name": "kimchi",
     "gi": 15,
     "aliases": [
+      "Korean fermented cabbage",
+      "Korean side dish kimchi",
       "baechu kimchi",
+      "napa kimchi",
+      "kimchee",
       "fermented cabbage",
-      "napa kimchi"
+      "napa cabbage kimchi"
     ]
   },
   {
@@ -5103,6 +5360,8 @@
     "aliases": [
       "baba ghanoush",
       "eggplant dip",
+      "roasted eggplant dip",
+      "moutabal",
       "mutabbal"
     ],
     "carbs": 10.0
@@ -6153,5 +6412,3058 @@
       "bun"
     ],
     "carbs": 50.0
+  },
+  {
+    "name": "adobo",
+    "gi": 35,
+    "aliases": [
+      "chicken adobo",
+      "pork adobo",
+      "Philippine adobo"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "agedashi tofu",
+    "gi": 45,
+    "aliases": [
+      "fried tofu in dashi"
+    ],
+    "carbs": 10.0
+  },
+  {
+    "name": "agua fresca",
+    "gi": 48,
+    "aliases": [
+      "Mexican fruit drink",
+      "agua de Jamaica",
+      "hibiscus water"
+    ],
+    "carbs": 15.0
+  },
+  {
+    "name": "aji de gallina",
+    "gi": 50,
+    "aliases": [
+      "Peruvian creamy chicken"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "ajiaco",
+    "gi": 55,
+    "aliases": [
+      "Colombian potato soup",
+      "Bogota chicken soup",
+      "Colombian chicken potato soup",
+      "Andean potato chicken soup"
+    ],
+    "carbs": 22.0
+  },
+  {
+    "name": "aloo gobi",
+    "gi": 55,
+    "aliases": [
+      "potato cauliflower curry",
+      "dry potato cauliflower"
+    ],
+    "carbs": 22.0
+  },
+  {
+    "name": "aloo masala",
+    "gi": 58,
+    "aliases": [
+      "spiced potatoes",
+      "masala potatoes",
+      "aloo sabzi"
+    ],
+    "carbs": 25.0
+  },
+  {
+    "name": "aloo paratha",
+    "gi": 62,
+    "aliases": [
+      "potato stuffed flatbread",
+      "potato paratha",
+      "Punjabi paratha aloo",
+      "stuffed paratha potato"
+    ],
+    "carbs": 34.5
+  },
+  {
+    "name": "anticucho",
+    "gi": 0,
+    "aliases": [
+      "Peruvian beef skewer",
+      "beef heart skewer Peruvian",
+      "Peruvian street food skewer",
+      "anticucho de corazon"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "arroz caldo",
+    "gi": 70,
+    "aliases": [
+      "Filipino chicken congee",
+      "chicken porridge Filipino"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "arroz con leche",
+    "gi": 70,
+    "aliases": [
+      "rice pudding Latin American",
+      "Latin rice pudding",
+      "sweet rice milk Latin",
+      "leche arroz dessert"
+    ],
+    "carbs": 25.0
+  },
+  {
+    "name": "atole",
+    "gi": 68,
+    "aliases": [
+      "atole de masa",
+      "champurrado",
+      "corn atole",
+      "masa harina drink"
+    ],
+    "carbs": 15.0
+  },
+  {
+    "name": "bak kut teh",
+    "gi": 25,
+    "aliases": [
+      "pork rib soup",
+      "pork bone tea"
+    ],
+    "carbs": 2.0
+  },
+  {
+    "name": "bakso",
+    "gi": 50,
+    "aliases": [
+      "Indonesian meatball soup",
+      "Indonesian meatball",
+      "bakso meatballs",
+      "beef ball soup Indonesian",
+      "mie bakso"
+    ],
+    "carbs": 15.0
+  },
+  {
+    "name": "bandeja paisa",
+    "gi": 55,
+    "aliases": [
+      "Colombian platter",
+      "Colombian mixed plate"
+    ],
+    "carbs": 45.0
+  },
+  {
+    "name": "banh cuon",
+    "gi": 60,
+    "aliases": [
+      "Vietnamese steamed rolls",
+      "rolled rice noodle Vietnamese",
+      "steamed rice crepe Vietnamese",
+      "Vietnamese rice roll steamed"
+    ],
+    "carbs": 25.0
+  },
+  {
+    "name": "banh xeo",
+    "gi": 60,
+    "aliases": [
+      "Vietnamese sizzling crepe",
+      "Vietnamese pancake"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "barbacoa",
+    "gi": 0,
+    "aliases": [
+      "Mexican slow cooked beef",
+      "chipotle barbacoa",
+      "beef barbacoa Mexican",
+      "braised beef cheek Mexican"
+    ],
+    "carbs": 1.5
+  },
+  {
+    "name": "besan",
+    "gi": 35,
+    "aliases": [
+      "gram flour",
+      "chickpea flour Indian",
+      "garbanzo flour",
+      "Bengal gram flour",
+      "chana flour"
+    ],
+    "carbs": 53.0
+  },
+  {
+    "name": "bhatura",
+    "gi": 72,
+    "aliases": [
+      "fried leavened bread Indian"
+    ],
+    "carbs": 35.0
+  },
+  {
+    "name": "bibingka",
+    "gi": 68,
+    "aliases": [
+      "Filipino rice cake",
+      "Christmas rice cake Filipino"
+    ],
+    "carbs": 42.0
+  },
+  {
+    "name": "bingsu",
+    "gi": 75,
+    "aliases": [
+      "Korean shaved ice",
+      "patbingsu",
+      "bingsoo",
+      "Korean kakigori",
+      "Korean shaved ice dessert",
+      "red bean shaved ice"
+    ],
+    "carbs": 45.0
+  },
+  {
+    "name": "birria",
+    "gi": 40,
+    "aliases": [
+      "birria tacos",
+      "birria stew",
+      "beef birria"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "braised pork belly",
+    "gi": 35,
+    "aliases": [
+      "hong shao rou",
+      "red braised pork",
+      "dongpo pork"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "brigadeiro",
+    "gi": 75,
+    "aliases": [
+      "Brazilian chocolate truffle"
+    ],
+    "carbs": 55.0
+  },
+  {
+    "name": "brown sugar milk tea",
+    "gi": 72,
+    "aliases": [
+      "tiger milk tea",
+      "tiger boba",
+      "brown sugar boba"
+    ],
+    "carbs": 52.0
+  },
+  {
+    "name": "bubble tea",
+    "gi": 77,
+    "aliases": [
+      "boba tea",
+      "boba milk tea",
+      "pearl milk tea",
+      "tapioca tea",
+      "pearl tea",
+      "tapioca milk tea"
+    ],
+    "carbs": 22.0
+  },
+  {
+    "name": "bun bo hue",
+    "gi": 55,
+    "aliases": [
+      "Hue beef noodle soup",
+      "spicy beef noodle Vietnamese"
+    ],
+    "carbs": 40.0
+  },
+  {
+    "name": "bun cha",
+    "gi": 52,
+    "aliases": [
+      "Vietnamese grilled pork noodles",
+      "vermicelli pork"
+    ],
+    "carbs": 35.0
+  },
+  {
+    "name": "bun rieu",
+    "gi": 55,
+    "aliases": [
+      "Vietnamese crab noodle soup",
+      "tomato crab vermicelli Vietnamese",
+      "Vietnamese vermicelli crab soup"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "butter naan",
+    "gi": 71,
+    "aliases": [
+      "garlic naan",
+      "plain naan"
+    ],
+    "carbs": 48.0
+  },
+  {
+    "name": "california roll",
+    "gi": 62,
+    "aliases": [
+      "cali roll"
+    ],
+    "carbs": 24.0
+  },
+  {
+    "name": "cao lau",
+    "gi": 55,
+    "aliases": [
+      "Hoi An noodles",
+      "Hoi An cao lau noodles",
+      "Vietnamese thick noodles pork",
+      "Hoian noodles"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "carne asada",
+    "gi": 0,
+    "aliases": [
+      "Mexican grilled steak",
+      "asada steak",
+      "grilled skirt steak Mexican",
+      "arrachera",
+      "carne asada tacos"
+    ],
+    "carbs": 0.5
+  },
+  {
+    "name": "carnitas",
+    "gi": 35,
+    "aliases": [
+      "slow cooked pork",
+      "Mexican pulled pork"
+    ],
+    "carbs": 0.0
+  },
+  {
+    "name": "causa",
+    "gi": 65,
+    "aliases": [
+      "Peruvian potato dish",
+      "causa limena"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "chaat",
+    "gi": 60,
+    "aliases": [
+      "pani puri",
+      "bhel puri",
+      "sev puri",
+      "dahi puri"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "champorado",
+    "gi": 65,
+    "aliases": [
+      "Filipino chocolate rice porridge",
+      "chocolate congee Filipino",
+      "tablea rice porridge",
+      "Filipino choco rice"
+    ],
+    "carbs": 35.0
+  },
+  {
+    "name": "char kway teow",
+    "gi": 68,
+    "aliases": [
+      "stir fried flat noodles Malaysian",
+      "fried flat rice noodles"
+    ],
+    "carbs": 40.0
+  },
+  {
+    "name": "char siu",
+    "gi": 40,
+    "aliases": [
+      "chinese bbq pork",
+      "cantonese roast pork",
+      "chinese barbecue pork"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "char siu bao",
+    "gi": 65,
+    "aliases": [
+      "bbq pork bun",
+      "chinese bbq pork bun",
+      "steamed pork bun",
+      "cha siu bao",
+      "bao bun",
+      "Chinese pork bun",
+      "pork bao",
+      "baozi"
+    ]
+  },
+  {
+    "name": "chawanmushi",
+    "gi": 35,
+    "aliases": [
+      "japanese steamed egg",
+      "savory egg custard"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "chendol",
+    "gi": 72,
+    "aliases": [
+      "cendol",
+      "Malaysian dessert",
+      "pandan jelly dessert"
+    ],
+    "carbs": 50.0
+  },
+  {
+    "name": "cheung fun",
+    "gi": 68,
+    "aliases": [
+      "rice noodle roll",
+      "steamed rice roll",
+      "chee cheong fun"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "chicha morada",
+    "gi": 65,
+    "aliases": [
+      "Peruvian purple corn drink",
+      "purple corn chicha",
+      "morada drink Peruvian",
+      "purple corn juice Peruvian"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "chicken adobo",
+    "gi": 0,
+    "aliases": [
+      "Filipino adobo",
+      "adobo Filipino",
+      "pork adobo Filipino",
+      "Filipino chicken vinegar stew"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "chicken katsu",
+    "gi": 60,
+    "aliases": [
+      "chicken cutlet",
+      "crispy chicken cutlet"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "chicken rice",
+    "gi": 60,
+    "aliases": [
+      "Hainanese chicken rice",
+      "Singapore chicken rice"
+    ],
+    "carbs": 42.0
+  },
+  {
+    "name": "chicken tikka",
+    "gi": 0,
+    "aliases": [
+      "tikka chicken",
+      "spiced grilled chicken Indian",
+      "murgh tikka",
+      "Indian chicken tikka skewer"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "chiles rellenos",
+    "gi": 50,
+    "aliases": [
+      "stuffed peppers Mexican",
+      "chile relleno",
+      "stuffed chile pepper",
+      "poblano pepper stuffed"
+    ],
+    "carbs": 12.0
+  },
+  {
+    "name": "chimichurri",
+    "gi": 15,
+    "aliases": [
+      "Argentine herb sauce"
+    ],
+    "carbs": 2.0
+  },
+  {
+    "name": "chole",
+    "gi": 30,
+    "aliases": [
+      "punjabi chole",
+      "chickpea curry Indian"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "chole bhature",
+    "gi": 65,
+    "aliases": [
+      "chickpea fried bread",
+      "chola bhatura",
+      "Punjabi bhature",
+      "chole puri",
+      "bhature with chole"
+    ],
+    "carbs": 40.0
+  },
+  {
+    "name": "chow fun",
+    "gi": 72,
+    "aliases": [
+      "beef ho fun",
+      "stir fried rice noodles",
+      "dry fried beef noodles",
+      "beef chow fun",
+      "ho fun"
+    ],
+    "carbs": 38.0
+  },
+  {
+    "name": "churrasco",
+    "gi": 0,
+    "aliases": [
+      "Brazilian BBQ",
+      "Brazilian grilled meat",
+      "churrasco steak Brazilian",
+      "Brazilian steakhouse meat",
+      "picanha churrasco"
+    ],
+    "carbs": 1.0
+  },
+  {
+    "name": "coconut chutney",
+    "gi": 0,
+    "aliases": [
+      "Indian coconut dip",
+      "South Indian chutney",
+      "nariyal chutney",
+      "coconut coriander chutney"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "coconut cream",
+    "gi": 35,
+    "aliases": [
+      "coconut cream canned",
+      "thick coconut milk",
+      "pati santan"
+    ],
+    "carbs": 6.0
+  },
+  {
+    "name": "coconut milk tea",
+    "gi": 60,
+    "aliases": [
+      "coconut boba",
+      "coconut bubble tea",
+      "Thai coconut tea",
+      "coconut teh tarik",
+      "coconut latte"
+    ],
+    "carbs": 22.0
+  },
+  {
+    "name": "com tam",
+    "gi": 70,
+    "aliases": [
+      "broken rice Vietnamese",
+      "com tam suon"
+    ],
+    "carbs": 42.0
+  },
+  {
+    "name": "coxinha",
+    "gi": 62,
+    "aliases": [
+      "Brazilian chicken croquette"
+    ],
+    "carbs": 22.0
+  },
+  {
+    "name": "curry paste",
+    "gi": 0,
+    "aliases": [
+      "Thai curry paste",
+      "red curry paste",
+      "green curry paste",
+      "yellow curry paste",
+      "massaman paste",
+      "Thai paste"
+    ],
+    "carbs": 6.0
+  },
+  {
+    "name": "curry puff",
+    "gi": 65,
+    "aliases": [
+      "Malaysian curry puff",
+      "karipap",
+      "Singapore curry puff",
+      "fried curry pastry Asian"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "daikon radish",
+    "gi": 0,
+    "aliases": [
+      "mooli",
+      "white radish",
+      "Japanese radish",
+      "Chinese radish",
+      "daikon",
+      "lo bak"
+    ],
+    "carbs": 4.1
+  },
+  {
+    "name": "dakgalbi",
+    "gi": 35,
+    "aliases": [
+      "spicy Korean chicken",
+      "dak galbi stir fry",
+      "Korean chicken dakgalbi",
+      "Korean spicy stir fried chicken"
+    ],
+    "carbs": 10.0
+  },
+  {
+    "name": "dal makhani",
+    "gi": 35,
+    "aliases": [
+      "black lentil curry",
+      "dal makhni",
+      "makhni dal"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "dal tadka",
+    "gi": 32,
+    "aliases": [
+      "yellow dal",
+      "tarka dal",
+      "tempered lentils"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "dan dan noodles",
+    "gi": 55,
+    "aliases": [
+      "dandan noodles",
+      "sesame noodles"
+    ],
+    "carbs": 38.0
+  },
+  {
+    "name": "dhokla",
+    "gi": 35,
+    "aliases": [
+      "steamed chickpea cake"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "doenjang",
+    "gi": 25,
+    "aliases": [
+      "korean soybean paste",
+      "fermented soybean paste korean",
+      "dwenjang"
+    ]
+  },
+  {
+    "name": "doenjang jjigae",
+    "gi": 35,
+    "aliases": [
+      "fermented soybean stew",
+      "Korean soybean paste stew",
+      "miso stew Korean"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "dolma",
+    "gi": 55,
+    "aliases": [
+      "stuffed grape leaves",
+      "warak dawali"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "donburi",
+    "gi": 65,
+    "aliases": [
+      "Japanese rice bowl",
+      "don bowl",
+      "beef donburi",
+      "salmon don",
+      "pork donburi",
+      "gyudon",
+      "tendon"
+    ],
+    "carbs": 38.0
+  },
+  {
+    "name": "doner kebab",
+    "gi": 0,
+    "aliases": [
+      "kebab doner",
+      "Turkish kebab",
+      "doner",
+      "shish kebab",
+      "gyros",
+      "rotating spit kebab",
+      "shawarma style kebab"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "dorayaki",
+    "gi": 65,
+    "aliases": [
+      "Japanese pancake sandwich",
+      "red bean pancake Japanese",
+      "dorayaki sweet",
+      "anko pancake"
+    ],
+    "carbs": 50.0
+  },
+  {
+    "name": "dulce de leche",
+    "gi": 65,
+    "aliases": [
+      "caramel sauce Latin American",
+      "milk caramel"
+    ],
+    "carbs": 55.0
+  },
+  {
+    "name": "egg drop soup",
+    "gi": 35,
+    "aliases": [
+      "egg flower soup"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "egg tart",
+    "gi": 60,
+    "aliases": [
+      "dan tat",
+      "portuguese egg tart",
+      "chinese egg tart"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "egusi soup",
+    "gi": 0,
+    "aliases": [
+      "Nigerian egusi",
+      "melon seed soup West African",
+      "egusi stew",
+      "Nigerian melon soup"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "elote",
+    "gi": 62,
+    "aliases": [
+      "Mexican street corn",
+      "corn on the cob Mexican style",
+      "esquites"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "empanada",
+    "gi": 60,
+    "aliases": [
+      "baked empanada",
+      "fried empanada",
+      "South American pastry"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "empanada dough",
+    "gi": 70,
+    "aliases": [
+      "empanada pastry",
+      "empanada shell",
+      "discos para empanadas"
+    ]
+  },
+  {
+    "name": "fatayer",
+    "gi": 65,
+    "aliases": [
+      "spinach pie",
+      "Lebanese spinach pastry"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "feijoada",
+    "gi": 38,
+    "aliases": [
+      "Brazilian black bean stew",
+      "Brazilian feijoada"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "fesenjan",
+    "gi": 42,
+    "aliases": [
+      "pomegranate walnut stew",
+      "khoresht fesenjan"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "fish cake",
+    "gi": 50,
+    "aliases": [
+      "thai fish cake",
+      "tod mun pla"
+    ],
+    "carbs": 12.0
+  },
+  {
+    "name": "flautas",
+    "gi": 65,
+    "aliases": [
+      "rolled tacos",
+      "taquitos Mexican",
+      "crispy rolled tortilla",
+      "flautitas",
+      "crispy taquitos"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "freekeh",
+    "gi": 43,
+    "aliases": [
+      "freekah",
+      "green wheat freekeh",
+      "roasted green wheat",
+      "farik"
+    ],
+    "carbs": 60.0
+  },
+  {
+    "name": "fried wontons",
+    "gi": 62,
+    "aliases": [],
+    "carbs": 20.0
+  },
+  {
+    "name": "fufu",
+    "gi": 65,
+    "aliases": [
+      "plantain fufu",
+      "cassava fufu",
+      "pounded yam",
+      "West African fufu",
+      "starchy dough African",
+      "eba",
+      "pounded fufu"
+    ],
+    "carbs": 45.0
+  },
+  {
+    "name": "gado gado",
+    "gi": 40,
+    "aliases": [
+      "Indonesian peanut salad",
+      "vegetable salad peanut sauce"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "galangal",
+    "gi": 0,
+    "aliases": [
+      "Thai ginger root",
+      "galangal root",
+      "blue ginger",
+      "laos root",
+      "kha galangal"
+    ],
+    "carbs": 5.5
+  },
+  {
+    "name": "galbi",
+    "gi": 40,
+    "aliases": [
+      "kalbi",
+      "Korean beef short ribs",
+      "grilled short ribs"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "ghormeh sabzi",
+    "gi": 35,
+    "aliases": [
+      "Persian herb stew",
+      "herb and kidney bean stew"
+    ],
+    "carbs": 12.0
+  },
+  {
+    "name": "gimbap",
+    "gi": 65,
+    "aliases": [
+      "kimbap",
+      "Korean sushi roll",
+      "seaweed rice roll"
+    ],
+    "carbs": 38.0
+  },
+  {
+    "name": "glass noodles",
+    "gi": 32,
+    "aliases": [
+      "cellophane noodles",
+      "bean thread noodles",
+      "fensi",
+      "harusame"
+    ],
+    "carbs": 86.0
+  },
+  {
+    "name": "gochujang sauce",
+    "gi": 0,
+    "aliases": [
+      "Korean chili paste sauce",
+      "red pepper sauce Korean",
+      "gochujang glaze",
+      "Korean fermented chili sauce"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "goi cuon",
+    "gi": 40,
+    "aliases": [
+      "fresh spring rolls",
+      "Vietnamese fresh rolls",
+      "summer rolls",
+      "nem cuon"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "green curry",
+    "gi": 40,
+    "aliases": [
+      "thai green curry",
+      "kaeng khiao wan"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "gulab jamun",
+    "gi": 75,
+    "aliases": [
+      "milk solid sweet",
+      "fried milk dumplings"
+    ],
+    "carbs": 55.0
+  },
+  {
+    "name": "gyoza",
+    "gi": 55,
+    "aliases": [
+      "japanese dumplings",
+      "pot stickers",
+      "pan fried dumplings"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "gyudon",
+    "gi": 65,
+    "aliases": [
+      "beef rice bowl",
+      "beef bowl"
+    ],
+    "carbs": 42.0
+  },
+  {
+    "name": "haemul pajeon",
+    "gi": 55,
+    "aliases": [
+      "Korean seafood pancake",
+      "seafood scallion pancake",
+      "pajeon seafood",
+      "Korean green onion seafood pancake"
+    ],
+    "carbs": 25.0
+  },
+  {
+    "name": "hallaca",
+    "gi": 60,
+    "aliases": [
+      "Venezuelan tamale",
+      "Venezuelan corn dough dish",
+      "Venezuelan navidad hallaca",
+      "Venezuelan corn tamale"
+    ],
+    "carbs": 35.0
+  },
+  {
+    "name": "halo halo",
+    "gi": 72,
+    "aliases": [
+      "Filipino shaved ice dessert",
+      "halo-halo"
+    ],
+    "carbs": 55.0
+  },
+  {
+    "name": "halwa",
+    "gi": 72,
+    "aliases": [
+      "semolina halwa",
+      "suji halwa",
+      "atte ka halwa"
+    ],
+    "carbs": 50.0
+  },
+  {
+    "name": "har gow",
+    "gi": 55,
+    "aliases": [
+      "har gau",
+      "shrimp dumpling dim sum",
+      "ha gao",
+      "crystal shrimp dumpling"
+    ]
+  },
+  {
+    "name": "hoddeok",
+    "gi": 70,
+    "aliases": [
+      "Korean sweet pancake",
+      "cinnamon sugar pancake Korean",
+      "Korean street pancake sweet",
+      "brown sugar pancake Korean"
+    ],
+    "carbs": 45.0
+  },
+  {
+    "name": "hokkien mee",
+    "gi": 55,
+    "aliases": [
+      "Singapore Hokkien noodles",
+      "Malaysian Hokkien mee",
+      "prawn noodles Singapore",
+      "Penang Hokkien mee",
+      "Hokkien prawn noodles"
+    ],
+    "carbs": 32.0
+  },
+  {
+    "name": "horchata",
+    "gi": 55,
+    "aliases": [
+      "agua de horchata",
+      "rice horchata",
+      "horchata de arroz"
+    ],
+    "carbs": 12.0
+  },
+  {
+    "name": "hot and sour soup",
+    "gi": 40,
+    "aliases": [
+      "suan la tang"
+    ],
+    "carbs": 10.0
+  },
+  {
+    "name": "hot pot",
+    "gi": 0,
+    "aliases": [
+      "Chinese hot pot",
+      "huoguo",
+      "hotpot",
+      "Chinese fondue",
+      "Mongolian hot pot",
+      "huo guo"
+    ],
+    "carbs": 2.0
+  },
+  {
+    "name": "jajangmyeon",
+    "gi": 60,
+    "aliases": [
+      "black bean noodles",
+      "jjajangmyeon",
+      "Korean Chinese noodles"
+    ],
+    "carbs": 55.0
+  },
+  {
+    "name": "jalebi",
+    "gi": 75,
+    "aliases": [
+      "Indian fried sweet jalebi",
+      "crispy orange sweet Indian",
+      "jilebi",
+      "Indian fried dough syrup sweet"
+    ],
+    "carbs": 55.0
+  },
+  {
+    "name": "japanese curry",
+    "gi": 62,
+    "aliases": [
+      "kare raisu",
+      "curry rice",
+      "japanese curry rice"
+    ],
+    "carbs": 40.0
+  },
+  {
+    "name": "japanese fried rice",
+    "gi": 70,
+    "aliases": [
+      "chahan",
+      "yakimeshi"
+    ],
+    "carbs": 40.0
+  },
+  {
+    "name": "Japanese short grain rice",
+    "gi": 72,
+    "aliases": [
+      "Japanese white rice",
+      "koshihikari rice",
+      "short grain rice",
+      "Japanese rice cooked",
+      "gohan",
+      "shari rice"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "jollof rice",
+    "gi": 70,
+    "aliases": [
+      "West African jollof rice",
+      "Nigerian jollof",
+      "Ghanaian jollof",
+      "African tomato rice",
+      "party jollof rice"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "karaage",
+    "gi": 55,
+    "aliases": [
+      "Japanese fried chicken",
+      "kara age",
+      "Japanese crispy chicken",
+      "tori karaage",
+      "Japanese chicken bites"
+    ],
+    "carbs": 12.0
+  },
+  {
+    "name": "kare kare",
+    "gi": 40,
+    "aliases": [
+      "oxtail peanut stew",
+      "Philippine peanut curry"
+    ],
+    "carbs": 10.0
+  },
+  {
+    "name": "katsu curry",
+    "gi": 70,
+    "aliases": [
+      "katsu rice",
+      "pork katsu curry",
+      "chicken katsu curry"
+    ],
+    "carbs": 55.0
+  },
+  {
+    "name": "katsudon",
+    "gi": 68,
+    "aliases": [
+      "pork cutlet rice bowl"
+    ],
+    "carbs": 48.0
+  },
+  {
+    "name": "kaya toast",
+    "gi": 70,
+    "aliases": [
+      "coconut jam toast",
+      "Singapore kaya toast"
+    ],
+    "carbs": 38.0
+  },
+  {
+    "name": "kebab",
+    "gi": 35,
+    "aliases": [
+      "shish kebab",
+      "kofta kebab",
+      "grilled kebab"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "khao pad",
+    "gi": 72,
+    "aliases": [
+      "Thai fried rice",
+      "khao phat",
+      "jasmine fried rice Thai",
+      "Thai rice stir fried"
+    ],
+    "carbs": 29.0
+  },
+  {
+    "name": "khao tom",
+    "gi": 75,
+    "aliases": [
+      "Thai rice soup",
+      "rice congee Thai",
+      "Thai rice porridge",
+      "Thai jok",
+      "Thai rice gruel"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "kheer",
+    "gi": 65,
+    "aliases": [
+      "rice pudding Indian",
+      "payasam",
+      "firni"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "khichdi",
+    "gi": 55,
+    "aliases": [
+      "rice and lentil dish",
+      "kitchari",
+      "khichri"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "kibbeh",
+    "gi": 50,
+    "aliases": [
+      "kubbeh",
+      "Middle Eastern meatball"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "kimchi jjigae",
+    "gi": 40,
+    "aliases": [
+      "kimchi stew",
+      "kimchi soup"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "knafeh",
+    "gi": 70,
+    "aliases": [
+      "kunafa",
+      "Middle Eastern cheese pastry",
+      "kanafeh"
+    ],
+    "carbs": 55.0
+  },
+  {
+    "name": "kofta",
+    "gi": 0,
+    "aliases": [
+      "kofte",
+      "Middle Eastern meatball",
+      "grilled kofta skewer",
+      "lamb kofta",
+      "beef kofta",
+      "seekh kofta"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "Korean fried chicken",
+    "gi": 62,
+    "aliases": [
+      "dakgangjeong",
+      "Korean crispy chicken",
+      "yangnyeom chicken"
+    ],
+    "carbs": 22.0
+  },
+  {
+    "name": "koshari",
+    "gi": 65,
+    "aliases": [
+      "Egyptian rice and lentils",
+      "kushari"
+    ],
+    "carbs": 45.0
+  },
+  {
+    "name": "larb",
+    "gi": 35,
+    "aliases": [
+      "thai minced meat salad",
+      "laab",
+      "larb gai"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "lassi",
+    "gi": 35,
+    "aliases": [
+      "sweet lassi",
+      "salted lassi",
+      "yogurt drink Indian"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "Lebanese bread",
+    "gi": 68,
+    "aliases": [
+      "Arabic bread",
+      "pita flatbread",
+      "khobz"
+    ],
+    "carbs": 45.0
+  },
+  {
+    "name": "leche flan",
+    "gi": 60,
+    "aliases": [
+      "Filipino custard flan",
+      "Filipino leche flan",
+      "caramel custard Filipino",
+      "steamed custard Filipino"
+    ],
+    "carbs": 28.5
+  },
+  {
+    "name": "lechon",
+    "gi": 0,
+    "aliases": [
+      "Filipino roast pig",
+      "roasted pig Filipino",
+      "lechon baboy",
+      "whole roasted pig Filipino",
+      "crispy lechon"
+    ],
+    "carbs": 1.0
+  },
+  {
+    "name": "lemongrass",
+    "gi": 0,
+    "aliases": [
+      "lemon grass stalk",
+      "citronella grass",
+      "takrai",
+      "sereh",
+      "lemongrass stalk"
+    ],
+    "carbs": 11.5
+  },
+  {
+    "name": "lo mai gai",
+    "gi": 72,
+    "aliases": [
+      "sticky rice in lotus leaf",
+      "lotus leaf rice",
+      "glutinous rice parcel"
+    ],
+    "carbs": 38.0
+  },
+  {
+    "name": "lomo saltado",
+    "gi": 62,
+    "aliases": [
+      "Peruvian stir fry",
+      "Peruvian beef stir fry"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "lontong",
+    "gi": 68,
+    "aliases": [
+      "compressed rice cake",
+      "Indonesian rice log"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "lumpia",
+    "gi": 60,
+    "aliases": [
+      "Filipino spring roll",
+      "lumpiang shanghai"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "lychee juice",
+    "gi": 55,
+    "aliases": [
+      "lychee drink",
+      "lychee tea",
+      "lychee agua fresca",
+      "lychee cooler",
+      "lychee nectar"
+    ],
+    "carbs": 15.5
+  },
+  {
+    "name": "maamoul",
+    "gi": 65,
+    "aliases": [
+      "date stuffed cookie",
+      "semolina date cookie"
+    ],
+    "carbs": 50.0
+  },
+  {
+    "name": "maduros",
+    "gi": 68,
+    "aliases": [
+      "sweet plantain",
+      "fried ripe plantain"
+    ],
+    "carbs": 22.0
+  },
+  {
+    "name": "manakeesh",
+    "gi": 65,
+    "aliases": [
+      "Lebanese flatbread zaatar",
+      "manaqeesh",
+      "mankoushe",
+      "Lebanese pizza",
+      "za'atar flatbread Lebanese"
+    ],
+    "carbs": 35.5
+  },
+  {
+    "name": "manakish",
+    "gi": 65,
+    "aliases": [
+      "manousheh",
+      "Lebanese flatbread",
+      "zaatar flatbread"
+    ],
+    "carbs": 38.0
+  },
+  {
+    "name": "mango lassi",
+    "gi": 45,
+    "aliases": [
+      "mango yogurt drink"
+    ],
+    "carbs": 22.0
+  },
+  {
+    "name": "mango sticky rice",
+    "gi": 72,
+    "aliases": [
+      "khao niao mamuang",
+      "sticky rice mango"
+    ],
+    "carbs": 55.0
+  },
+  {
+    "name": "mapo tofu",
+    "gi": 35,
+    "aliases": [
+      "ma po tofu",
+      "spicy tofu",
+      "sichuan tofu"
+    ],
+    "carbs": 6.0
+  },
+  {
+    "name": "maqluba",
+    "gi": 65,
+    "aliases": [
+      "Palestinian rice dish",
+      "maqlooba",
+      "upside down rice dish Arabic",
+      "Arabic rice meat dish"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "martabak",
+    "gi": 65,
+    "aliases": [
+      "Indonesian stuffed pancake",
+      "murtabak",
+      "martabak manis",
+      "Indonesian thick egg pancake",
+      "Malaysian martabak"
+    ],
+    "carbs": 40.0
+  },
+  {
+    "name": "masa",
+    "gi": 52,
+    "aliases": [
+      "corn dough",
+      "masa harina dough",
+      "nixtamalized corn dough",
+      "masa dough Mexican",
+      "hominy dough",
+      "tamale dough"
+    ],
+    "carbs": 40.0
+  },
+  {
+    "name": "masala chai",
+    "gi": 40,
+    "aliases": [
+      "chai tea",
+      "Indian spiced tea",
+      "chai latte",
+      "spiced milk tea Indian",
+      "ginger chai",
+      "cardamom chai",
+      "masala tea"
+    ],
+    "carbs": 12.5
+  },
+  {
+    "name": "masala dosa",
+    "gi": 55,
+    "aliases": [
+      "stuffed dosa",
+      "potato dosa",
+      "dosa with filling",
+      "masala dosai",
+      "South Indian masala crepe"
+    ],
+    "carbs": 25.0
+  },
+  {
+    "name": "matar paneer",
+    "gi": 40,
+    "aliases": [
+      "peas paneer",
+      "paneer peas curry"
+    ],
+    "carbs": 12.0
+  },
+  {
+    "name": "matcha bubble tea",
+    "gi": 65,
+    "aliases": [
+      "matcha boba",
+      "green tea boba"
+    ],
+    "carbs": 45.0
+  },
+  {
+    "name": "matcha latte",
+    "gi": 42,
+    "aliases": [
+      "green tea latte",
+      "matcha milk"
+    ],
+    "carbs": 15.0
+  },
+  {
+    "name": "mee goreng",
+    "gi": 65,
+    "aliases": [
+      "Malaysian fried noodles",
+      "Indonesian fried noodles",
+      "mie goreng"
+    ],
+    "carbs": 40.0
+  },
+  {
+    "name": "mexican rice",
+    "gi": 68,
+    "aliases": [
+      "spanish rice",
+      "arroz rojo",
+      "red rice Mexican"
+    ],
+    "carbs": 38.0
+  },
+  {
+    "name": "mie goreng",
+    "gi": 55,
+    "aliases": [
+      "Indonesian fried noodles",
+      "Indomie goreng",
+      "instant noodles stir fried",
+      "Indonesian stir fried noodles",
+      "mee goreng Indonesian"
+    ],
+    "carbs": 35.0
+  },
+  {
+    "name": "mirin",
+    "gi": 65,
+    "aliases": [
+      "Japanese cooking wine",
+      "sweet mirin",
+      "mirin seasoning",
+      "hon mirin",
+      "aji mirin"
+    ],
+    "carbs": 32.0
+  },
+  {
+    "name": "miso glazed cod",
+    "gi": 30,
+    "aliases": [
+      "black cod miso",
+      "gindara miso"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "miso glazed eggplant",
+    "gi": 38,
+    "aliases": [
+      "nasu dengaku",
+      "grilled eggplant miso"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "miso ramen",
+    "gi": 56,
+    "aliases": [],
+    "carbs": 50.0
+  },
+  {
+    "name": "mole",
+    "gi": 45,
+    "aliases": [
+      "mole sauce",
+      "chocolate mole",
+      "mole negro"
+    ],
+    "carbs": 12.0
+  },
+  {
+    "name": "mole sauce",
+    "gi": 55,
+    "aliases": [
+      "Mexican mole",
+      "chocolate mole sauce",
+      "mole negro",
+      "mole poblano",
+      "dark mole sauce"
+    ],
+    "carbs": 15.0
+  },
+  {
+    "name": "molokhia",
+    "gi": 0,
+    "aliases": [
+      "Egyptian spinach soup",
+      "jute leaves soup",
+      "mulukhiyah",
+      "molokhiyya soup"
+    ],
+    "carbs": 3.0
+  },
+  {
+    "name": "moong dal",
+    "gi": 31,
+    "aliases": [
+      "mung bean dal",
+      "split mung beans",
+      "green gram dal",
+      "yellow mung lentils",
+      "moong lentils cooked"
+    ],
+    "carbs": 16.0
+  },
+  {
+    "name": "msabbaha",
+    "gi": 30,
+    "aliases": [
+      "whole chickpea hummus",
+      "musabbaha",
+      "warm hummus Israeli",
+      "warm whole chickpea dip"
+    ],
+    "carbs": 15.0
+  },
+  {
+    "name": "muhammara",
+    "gi": 30,
+    "aliases": [
+      "red pepper walnut dip"
+    ],
+    "carbs": 10.0
+  },
+  {
+    "name": "mujaddara",
+    "gi": 30,
+    "aliases": [
+      "lentils and rice Lebanese",
+      "mujadara",
+      "Lebanese lentil rice pilaf",
+      "lentil rice Middle Eastern"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "mung bean noodles",
+    "gi": 28,
+    "aliases": [
+      "mung bean glass noodles",
+      "green bean threads",
+      "soun"
+    ],
+    "carbs": 86.0
+  },
+  {
+    "name": "mung bean pudding",
+    "gi": 38,
+    "aliases": [
+      "green bean dessert",
+      "mung bean dessert soup",
+      "luk dou tong"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "nachos",
+    "gi": 65,
+    "aliases": [
+      "loaded nachos",
+      "cheese nachos"
+    ],
+    "carbs": 38.0
+  },
+  {
+    "name": "naengmyeon",
+    "gi": 45,
+    "aliases": [
+      "Korean cold noodles",
+      "mul naengmyeon",
+      "cold buckwheat noodles Korean",
+      "bibim naengmyeon",
+      "cold Korean noodle soup"
+    ],
+    "carbs": 30.5
+  },
+  {
+    "name": "namul",
+    "gi": 25,
+    "aliases": [
+      "Korean seasoned vegetables",
+      "vegetable banchan"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "nasi lemak",
+    "gi": 55,
+    "aliases": [
+      "coconut milk rice",
+      "Malaysian coconut rice"
+    ],
+    "carbs": 40.0
+  },
+  {
+    "name": "nasi padang",
+    "gi": 70,
+    "aliases": [
+      "Padang rice plate",
+      "Indonesian rice plate",
+      "Minangkabau rice",
+      "West Sumatran rice plate",
+      "mixed rice Padang"
+    ],
+    "carbs": 32.0
+  },
+  {
+    "name": "nasi uduk",
+    "gi": 70,
+    "aliases": [
+      "Indonesian coconut rice",
+      "coconut rice Jakarta",
+      "steamed coconut rice Indonesian",
+      "Jakarta coconut rice"
+    ],
+    "carbs": 32.0
+  },
+  {
+    "name": "natto",
+    "gi": 30,
+    "aliases": [
+      "fermented soybeans",
+      "natto soybeans",
+      "Japanese fermented soy",
+      "sticky fermented soy"
+    ],
+    "carbs": 8.8
+  },
+  {
+    "name": "nigiri",
+    "gi": 65,
+    "aliases": [
+      "nigiri sushi",
+      "fish nigiri",
+      "salmon nigiri",
+      "tuna nigiri",
+      "ebi nigiri",
+      "hand pressed sushi"
+    ],
+    "carbs": 22.0
+  },
+  {
+    "name": "nopales",
+    "gi": 20,
+    "aliases": [
+      "cactus paddle",
+      "prickly pear cactus",
+      "nopal"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "okonomiyaki",
+    "gi": 62,
+    "aliases": [
+      "japanese pancake",
+      "japanese savory pancake"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "onigiri",
+    "gi": 68,
+    "aliases": [
+      "rice ball",
+      "japanese rice ball",
+      "omusubi"
+    ],
+    "carbs": 35.0
+  },
+  {
+    "name": "opor ayam",
+    "gi": 35,
+    "aliases": [
+      "coconut milk chicken Indonesian"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "otak otak",
+    "gi": 0,
+    "aliases": [
+      "grilled fish cake Malaysian",
+      "fish paste Malaysian",
+      "otah otah",
+      "spiced fish cake grilled"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "oyakodon",
+    "gi": 65,
+    "aliases": [
+      "chicken rice bowl",
+      "chicken egg rice bowl"
+    ],
+    "carbs": 42.0
+  },
+  {
+    "name": "pad kra pao",
+    "gi": 45,
+    "aliases": [
+      "basil stir fry",
+      "holy basil chicken",
+      "thai basil chicken",
+      "basil chicken Thai",
+      "pad gaprao",
+      "Thai basil stir fry",
+      "pad kaprao"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "pad see ew",
+    "gi": 65,
+    "aliases": [
+      "stir fried flat noodles",
+      "pad si ew"
+    ],
+    "carbs": 38.0
+  },
+  {
+    "name": "pajeon",
+    "gi": 60,
+    "aliases": [
+      "Korean scallion pancake",
+      "Korean pancake",
+      "haemul pajeon"
+    ],
+    "carbs": 25.0
+  },
+  {
+    "name": "pakora",
+    "gi": 60,
+    "aliases": [
+      "pakoda",
+      "bhaji",
+      "vegetable fritters Indian"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "panang curry",
+    "gi": 45,
+    "aliases": [
+      "Thai panang",
+      "phanaeng curry",
+      "thick Thai curry",
+      "panaeng"
+    ],
+    "carbs": 8.5
+  },
+  {
+    "name": "pancit",
+    "gi": 55,
+    "aliases": [
+      "pancit canton",
+      "Filipino noodles",
+      "pancit bihon"
+    ],
+    "carbs": 35.0
+  },
+  {
+    "name": "pandan cake",
+    "gi": 55,
+    "aliases": [
+      "pandan chiffon cake",
+      "pandan layer cake",
+      "green chiffon cake",
+      "pandan sponge",
+      "Indonesian pandan cake"
+    ],
+    "carbs": 42.0
+  },
+  {
+    "name": "pani puri",
+    "gi": 60,
+    "aliases": [
+      "golgappa",
+      "puchka",
+      "Indian street puri water",
+      "gol gappe",
+      "pani poori",
+      "water puri Indian"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "pao de queijo",
+    "gi": 55,
+    "aliases": [
+      "Brazilian cheese bread",
+      "cheese puff Brazilian"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "patacones",
+    "gi": 70,
+    "aliases": [
+      "tostones",
+      "twice fried plantain",
+      "fried green plantain"
+    ],
+    "carbs": 25.0
+  },
+  {
+    "name": "pav bhaji",
+    "gi": 60,
+    "aliases": [
+      "Mumbai street food pav",
+      "spiced vegetable bread Indian",
+      "pav bhaji Mumbai",
+      "Indian veggie slider"
+    ],
+    "carbs": 28.5
+  },
+  {
+    "name": "peking duck",
+    "gi": 40,
+    "aliases": [
+      "beijing duck",
+      "roast duck with pancake"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "peri peri chicken",
+    "gi": 0,
+    "aliases": [
+      "piri piri chicken",
+      "spicy African chicken",
+      "Mozambique chicken",
+      "Nandos style chicken",
+      "peri-peri grilled chicken"
+    ],
+    "carbs": 3.0
+  },
+  {
+    "name": "Persian rice",
+    "gi": 60,
+    "aliases": [
+      "chelow",
+      "chelo",
+      "saffron rice"
+    ],
+    "carbs": 38.0
+  },
+  {
+    "name": "pho bo",
+    "gi": 52,
+    "aliases": [
+      "beef pho",
+      "Vietnamese beef noodle soup"
+    ],
+    "carbs": 42.0
+  },
+  {
+    "name": "pita wrap",
+    "gi": 68,
+    "aliases": [
+      "pita roll",
+      "pita sandwich",
+      "Arabic wrap",
+      "Lebanese wrap",
+      "stuffed pita",
+      "pita pocket sandwich"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "poha",
+    "gi": 62,
+    "aliases": [
+      "flattened rice",
+      "beaten rice",
+      "pohe",
+      "chivda",
+      "aval"
+    ],
+    "carbs": 76.0
+  },
+  {
+    "name": "popiah",
+    "gi": 52,
+    "aliases": [
+      "fresh spring roll Chinese",
+      "Malaysian spring roll"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "pork katsu",
+    "gi": 58,
+    "aliases": [
+      "tonkatsu",
+      "pork cutlet"
+    ],
+    "carbs": 16.0
+  },
+  {
+    "name": "pulao",
+    "gi": 65,
+    "aliases": [
+      "pilaf Indian",
+      "Indian rice pilaf",
+      "vegetable pulao",
+      "peas pulao",
+      "pulav",
+      "matar pulao",
+      "rice pilaf Indian"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "puri",
+    "gi": 70,
+    "aliases": [
+      "poori",
+      "fried bread Indian"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "puto",
+    "gi": 78,
+    "aliases": [
+      "Filipino steamed rice cake",
+      "white rice cake Filipino"
+    ],
+    "carbs": 38.0
+  },
+  {
+    "name": "quesadilla",
+    "gi": 60,
+    "aliases": [
+      "cheese quesadilla",
+      "chicken quesadilla"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "raita",
+    "gi": 20,
+    "aliases": [
+      "cucumber raita",
+      "yogurt sauce Indian",
+      "boondi raita"
+    ],
+    "carbs": 5.0
+  },
+  {
+    "name": "rajma",
+    "gi": 28,
+    "aliases": [
+      "kidney bean curry",
+      "rajma masala",
+      "red bean curry Indian"
+    ],
+    "carbs": 22.0
+  },
+  {
+    "name": "rava upma",
+    "gi": 65,
+    "aliases": [
+      "semolina upma",
+      "sooji upma",
+      "breakfast upma Indian",
+      "South Indian semolina dish",
+      "rava upma breakfast"
+    ],
+    "carbs": 22.0
+  },
+  {
+    "name": "red bean paste",
+    "gi": 34,
+    "aliases": [
+      "anko",
+      "azuki bean paste",
+      "adzuki paste",
+      "koshian",
+      "tsubuan"
+    ]
+  },
+  {
+    "name": "red curry",
+    "gi": 40,
+    "aliases": [
+      "thai red curry",
+      "kaeng phet"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "rice paper",
+    "gi": 72,
+    "aliases": [
+      "banh trang",
+      "spring roll wrapper",
+      "rice paper wrapper",
+      "vietnamese rice paper"
+    ],
+    "carbs": 87.0
+  },
+  {
+    "name": "rice vermicelli",
+    "gi": 58,
+    "aliases": [
+      "bee hoon",
+      "mai fun",
+      "mi fen",
+      "thin rice noodles"
+    ],
+    "carbs": 25.0
+  },
+  {
+    "name": "rose milk",
+    "gi": 60,
+    "aliases": [
+      "bandung",
+      "rose syrup milk",
+      "falooda",
+      "faluda",
+      "rose sherbet milk drink",
+      "rose milk drink"
+    ],
+    "carbs": 15.0
+  },
+  {
+    "name": "roti",
+    "gi": 52,
+    "aliases": [
+      "whole wheat roti",
+      "wholemeal roti",
+      "phulka",
+      "indian flatbread wheat"
+    ]
+  },
+  {
+    "name": "roti canai",
+    "gi": 62,
+    "aliases": [
+      "roti prata",
+      "Malaysian flatbread",
+      "flaky flatbread"
+    ],
+    "carbs": 35.0
+  },
+  {
+    "name": "saag",
+    "gi": 30,
+    "aliases": [
+      "Indian spinach curry",
+      "sarson da saag",
+      "mustard greens Indian curry",
+      "palak saag",
+      "spinach Indian dish"
+    ],
+    "carbs": 5.5
+  },
+  {
+    "name": "saag paneer",
+    "gi": 35,
+    "aliases": [
+      "spinach paneer curry"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "salmon nigiri",
+    "gi": 60,
+    "aliases": [
+      "sake nigiri"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "salmon sashimi",
+    "gi": 5,
+    "aliases": [
+      "raw salmon slices"
+    ],
+    "carbs": 0.0
+  },
+  {
+    "name": "sambar",
+    "gi": 30,
+    "aliases": [
+      "South Indian lentil soup",
+      "sambhar",
+      "dal soup South Indian",
+      "vegetable lentil soup Indian",
+      "idli sambar"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "samgyeopsal",
+    "gi": 20,
+    "aliases": [
+      "grilled pork belly",
+      "Korean grilled pork belly"
+    ],
+    "carbs": 0.0
+  },
+  {
+    "name": "samgyetang",
+    "gi": 55,
+    "aliases": [
+      "ginseng chicken soup",
+      "stuffed chicken soup"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "sancocho",
+    "gi": 50,
+    "aliases": [
+      "Latin stew Colombian",
+      "Colombian stew",
+      "Caribbean chicken stew",
+      "tropical root vegetable stew",
+      "Dominican sancocho"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "scallion pancake",
+    "gi": 65,
+    "aliases": [
+      "green onion pancake",
+      "cong you bing"
+    ],
+    "carbs": 35.0
+  },
+  {
+    "name": "schnitzel",
+    "gi": 55,
+    "aliases": [
+      "Wiener schnitzel",
+      "German veal cutlet",
+      "Austrian schnitzel",
+      "crumbed cutlet",
+      "breaded veal cutlet"
+    ],
+    "carbs": 12.0
+  },
+  {
+    "name": "seolleongtang",
+    "gi": 25,
+    "aliases": [
+      "ox bone soup",
+      "milky bone broth soup"
+    ],
+    "carbs": 2.0
+  },
+  {
+    "name": "sesame ball",
+    "gi": 65,
+    "aliases": [
+      "jian dui",
+      "jin deui",
+      "fried sesame ball",
+      "glutinous sesame ball",
+      "Chinese sesame dessert ball"
+    ],
+    "carbs": 40.5
+  },
+  {
+    "name": "shabu shabu",
+    "gi": 0,
+    "aliases": [
+      "Japanese hot pot shabu",
+      "shabu",
+      "thinly sliced beef hot pot",
+      "Japanese boiled beef"
+    ],
+    "carbs": 2.0
+  },
+  {
+    "name": "shawarma wrap",
+    "gi": 60,
+    "aliases": [
+      "chicken shawarma wrap",
+      "meat shawarma",
+      "shawarma sandwich"
+    ],
+    "carbs": 35.0
+  },
+  {
+    "name": "shio ramen",
+    "gi": 55,
+    "aliases": [
+      "salt ramen"
+    ],
+    "carbs": 45.0
+  },
+  {
+    "name": "shoyu ramen",
+    "gi": 56,
+    "aliases": [
+      "soy sauce ramen"
+    ],
+    "carbs": 48.0
+  },
+  {
+    "name": "sinigang",
+    "gi": 30,
+    "aliases": [
+      "Filipino sour soup",
+      "tamarind soup Filipino"
+    ],
+    "carbs": 10.0
+  },
+  {
+    "name": "sisig",
+    "gi": 0,
+    "aliases": [
+      "Filipino chopped pork",
+      "sizzling sisig Filipino",
+      "crispy pork sisig",
+      "Filipino pork face dish"
+    ],
+    "carbs": 3.5
+  },
+  {
+    "name": "siu mai",
+    "gi": 55,
+    "aliases": [
+      "pork dumpling",
+      "shao mai",
+      "shumai"
+    ],
+    "carbs": 9.0
+  },
+  {
+    "name": "soba",
+    "gi": 50,
+    "aliases": [
+      "buckwheat noodles",
+      "zaru soba",
+      "cold soba"
+    ],
+    "carbs": 25.0
+  },
+  {
+    "name": "som tam",
+    "gi": 30,
+    "aliases": [
+      "papaya salad Thai",
+      "green papaya salad",
+      "som tum",
+      "somtam",
+      "raw papaya salad"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "som tum",
+    "gi": 30,
+    "aliases": [
+      "papaya salad",
+      "green papaya salad",
+      "thai papaya salad"
+    ],
+    "carbs": 12.0
+  },
+  {
+    "name": "sopes",
+    "gi": 65,
+    "aliases": [
+      "Mexican sope",
+      "corn masa base Mexican",
+      "sope de frijoles",
+      "thick corn cake Mexican",
+      "antojito sope"
+    ],
+    "carbs": 35.0
+  },
+  {
+    "name": "soto ayam",
+    "gi": 48,
+    "aliases": [
+      "Indonesian chicken soup",
+      "turmeric chicken soup"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "spicy tuna roll",
+    "gi": 60,
+    "aliases": [],
+    "carbs": 22.0
+  },
+  {
+    "name": "sticky rice",
+    "gi": 86,
+    "aliases": [
+      "glutinous rice",
+      "sweet rice",
+      "khao niao"
+    ],
+    "carbs": 36.0
+  },
+  {
+    "name": "sugarcane juice",
+    "gi": 43,
+    "aliases": [
+      "cane juice",
+      "guarapo",
+      "raw sugarcane juice"
+    ],
+    "carbs": 13.0
+  },
+  {
+    "name": "sukiyaki",
+    "gi": 0,
+    "aliases": [
+      "Japanese beef hot pot",
+      "sukiyaki hot pot",
+      "beef sukiyaki",
+      "Japanese beef stew sweet"
+    ],
+    "carbs": 8.5
+  },
+  {
+    "name": "sundubu jjigae",
+    "gi": 35,
+    "aliases": [
+      "soft tofu stew",
+      "spicy tofu stew"
+    ],
+    "carbs": 6.0
+  },
+  {
+    "name": "suya",
+    "gi": 0,
+    "aliases": [
+      "Nigerian beef skewer",
+      "West African beef suya",
+      "African spiced beef skewer",
+      "Hausa beef skewer"
+    ],
+    "carbs": 3.0
+  },
+  {
+    "name": "tabouleh",
+    "gi": 40,
+    "aliases": [
+      "tabbouleh",
+      "tabouli",
+      "bulgur salad"
+    ]
+  },
+  {
+    "name": "tagine (Moroccan)",
+    "gi": 40,
+    "aliases": [
+      "Moroccan tagine",
+      "lamb tagine Moroccan",
+      "chicken tagine North African",
+      "Moroccan slow cooked stew",
+      "tagine stew"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "taiyaki",
+    "gi": 65,
+    "aliases": [
+      "fish-shaped cake",
+      "Japanese fish waffle",
+      "bean paste waffle",
+      "red bean fish cake Japanese"
+    ],
+    "carbs": 45.0
+  },
+  {
+    "name": "takoyaki",
+    "gi": 65,
+    "aliases": [
+      "octopus balls",
+      "octopus puffs"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "tamagoyaki",
+    "gi": 35,
+    "aliases": [
+      "japanese rolled omelette",
+      "rolled egg"
+    ],
+    "carbs": 4.0
+  },
+  {
+    "name": "tamarind juice",
+    "gi": 50,
+    "aliases": [
+      "tamarind drink",
+      "agua de tamarindo",
+      "imli pani",
+      "tamarind cooler",
+      "tamarind water"
+    ],
+    "carbs": 12.0
+  },
+  {
+    "name": "tandoori chicken",
+    "gi": 20,
+    "aliases": [
+      "tandoor chicken",
+      "clay oven chicken"
+    ],
+    "carbs": 2.0
+  },
+  {
+    "name": "tapioca pearls",
+    "gi": 65,
+    "aliases": [
+      "sago pearls",
+      "boba pearls",
+      "tapioca balls",
+      "black tapioca pearls",
+      "cassava pearls"
+    ],
+    "carbs": 85.0
+  },
+  {
+    "name": "taro bubble tea",
+    "gi": 68,
+    "aliases": [
+      "taro boba",
+      "taro milk tea"
+    ],
+    "carbs": 48.0
+  },
+  {
+    "name": "taro dumpling",
+    "gi": 58,
+    "aliases": [
+      "wu gok",
+      "taro puff"
+    ],
+    "carbs": 18.0
+  },
+  {
+    "name": "taro milk tea",
+    "gi": 65,
+    "aliases": [
+      "taro boba",
+      "taro bubble tea",
+      "taro tea boba",
+      "purple milk tea",
+      "taro latte"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "teh tarik",
+    "gi": 55,
+    "aliases": [
+      "pulled tea Malaysia",
+      "Malaysian milk tea",
+      "teh ais",
+      "Malaysian sweet tea",
+      "teh tarik hot"
+    ],
+    "carbs": 15.0
+  },
+  {
+    "name": "tempe orek",
+    "gi": 40,
+    "aliases": [
+      "sweet soy tempeh",
+      "Indonesian stir fried tempeh"
+    ],
+    "carbs": 15.0
+  },
+  {
+    "name": "tempura",
+    "gi": 65,
+    "aliases": [
+      "vegetable tempura",
+      "shrimp tempura",
+      "prawn tempura"
+    ],
+    "carbs": 22.0
+  },
+  {
+    "name": "teriyaki chicken",
+    "gi": 45,
+    "aliases": [
+      "chicken teriyaki"
+    ],
+    "carbs": 10.0
+  },
+  {
+    "name": "thai basil fried rice",
+    "gi": 70,
+    "aliases": [
+      "khao pad krapao"
+    ],
+    "carbs": 42.0
+  },
+  {
+    "name": "thai iced tea",
+    "gi": 52,
+    "aliases": [
+      "cha yen",
+      "thai milk tea",
+      "thai tea"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "tlayuda",
+    "gi": 65,
+    "aliases": [
+      "Oaxacan pizza",
+      "Mexican tlayuda flatbread",
+      "Oaxacan flatbread",
+      "Oaxacan tostada large"
+    ],
+    "carbs": 40.0
+  },
+  {
+    "name": "tonkatsu",
+    "gi": 55,
+    "aliases": [
+      "Japanese pork cutlet",
+      "breaded pork cutlet",
+      "katsu pork",
+      "pork schnitzel Japanese",
+      "tonkatsu cutlet"
+    ],
+    "carbs": 12.0
+  },
+  {
+    "name": "tonkotsu ramen",
+    "gi": 58,
+    "aliases": [
+      "pork bone ramen",
+      "hakata ramen"
+    ],
+    "carbs": 55.0
+  },
+  {
+    "name": "torta",
+    "gi": 60,
+    "aliases": [
+      "Mexican sandwich",
+      "Mexican roll sandwich",
+      "cemita",
+      "telera sandwich",
+      "Mexican torta bread"
+    ],
+    "carbs": 35.0
+  },
+  {
+    "name": "tostones",
+    "gi": 55,
+    "aliases": [
+      "fried green plantain",
+      "twice fried plantain",
+      "patacones",
+      "green plantain chips fried twice"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "tteok",
+    "gi": 82,
+    "aliases": [
+      "korean rice cake",
+      "garaetteok",
+      "tteokbokki rice cake",
+      "rice cake korean"
+    ]
+  },
+  {
+    "name": "tteokbokki",
+    "gi": 80,
+    "aliases": [
+      "spicy rice cakes",
+      "dukboki",
+      "Korean rice cakes"
+    ],
+    "carbs": 40.0
+  },
+  {
+    "name": "tuna roll",
+    "gi": 60,
+    "aliases": [
+      "tekka maki",
+      "tuna maki"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "tuna sashimi",
+    "gi": 5,
+    "aliases": [
+      "raw tuna slices"
+    ],
+    "carbs": 0.0
+  },
+  {
+    "name": "Turkish coffee",
+    "gi": 0,
+    "aliases": [
+      "Arabic coffee",
+      "Greek coffee",
+      "Middle Eastern coffee",
+      "finjan coffee",
+      "espresso Turkish style"
+    ],
+    "carbs": 0.5
+  },
+  {
+    "name": "Turkish delight",
+    "gi": 75,
+    "aliases": [
+      "lokum",
+      "rosewater candy"
+    ],
+    "carbs": 80.0
+  },
+  {
+    "name": "turnip cake",
+    "gi": 62,
+    "aliases": [
+      "lo bak go",
+      "radish cake",
+      "daikon cake"
+    ],
+    "carbs": 20.0
+  },
+  {
+    "name": "udon",
+    "gi": 55,
+    "aliases": [
+      "udon soup",
+      "kake udon"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "ugali",
+    "gi": 70,
+    "aliases": [
+      "East African cornmeal",
+      "posho",
+      "ugali maize",
+      "Kenyan ugali",
+      "stiff cornmeal porridge",
+      "nsima"
+    ],
+    "carbs": 42.0
+  },
+  {
+    "name": "vada",
+    "gi": 62,
+    "aliases": [
+      "medu vada",
+      "lentil fritter",
+      "urad dal vada"
+    ],
+    "carbs": 25.0
+  },
+  {
+    "name": "vada pav",
+    "gi": 65,
+    "aliases": [
+      "Mumbai burger Indian",
+      "potato vada bun",
+      "batata vada pav",
+      "Indian street burger",
+      "vada pav Mumbai"
+    ],
+    "carbs": 35.5
+  },
+  {
+    "name": "vermicelli rice noodles",
+    "gi": 58,
+    "aliases": [
+      "rice vermicelli",
+      "bun noodles",
+      "rice stick noodles",
+      "thin rice noodles"
+    ]
+  },
+  {
+    "name": "Vietnamese iced coffee",
+    "gi": 55,
+    "aliases": [
+      "ca phe sua da",
+      "Vietnamese coffee condensed milk",
+      "ca phe da",
+      "cà phê sữa đá",
+      "Vietnamese drip coffee milk"
+    ],
+    "carbs": 15.0
+  },
+  {
+    "name": "water chestnuts",
+    "gi": 60,
+    "aliases": [
+      "Chinese water chestnut",
+      "ma tai",
+      "sliced water chestnuts"
+    ],
+    "carbs": 19.1
+  },
+  {
+    "name": "water spinach",
+    "gi": 0,
+    "aliases": [
+      "morning glory vegetable",
+      "kang kong",
+      "ong choy",
+      "kangkung",
+      "water convolvulus"
+    ],
+    "carbs": 3.1
+  },
+  {
+    "name": "wonton noodle soup",
+    "gi": 55,
+    "aliases": [
+      "wonton soup noodles",
+      "wonton mein"
+    ],
+    "carbs": 28.0
+  },
+  {
+    "name": "xiaolongbao",
+    "gi": 55,
+    "aliases": [
+      "soup dumplings",
+      "xiao long bao",
+      "pork soup dumplings",
+      "shanghainese dumpling",
+      "Shanghai soup dumpling"
+    ],
+    "carbs": 22.0
+  },
+  {
+    "name": "yakitori",
+    "gi": 35,
+    "aliases": [
+      "grilled chicken skewer",
+      "japanese chicken skewer"
+    ],
+    "carbs": 4.0
+  },
+  {
+    "name": "yellow curry",
+    "gi": 42,
+    "aliases": [
+      "thai yellow curry",
+      "kaeng kari"
+    ],
+    "carbs": 10.0
+  },
+  {
+    "name": "yuca",
+    "gi": 46,
+    "aliases": [
+      "cassava boiled",
+      "yuca boiled",
+      "manioc boiled",
+      "tapioca root cooked"
+    ]
+  },
+  {
+    "name": "yuca fries",
+    "gi": 72,
+    "aliases": [
+      "cassava fries",
+      "fried yuca",
+      "yucca fries"
+    ],
+    "carbs": 30.0
+  },
+  {
+    "name": "yuca frita",
+    "gi": 60,
+    "aliases": [
+      "fried cassava",
+      "yuca fries",
+      "cassava fries",
+      "fried yuca",
+      "mandioca frita",
+      "cassava chips fried"
+    ],
+    "carbs": 32.0
+  },
+  {
+    "name": "yukgaejang",
+    "gi": 35,
+    "aliases": [
+      "spicy beef soup",
+      "Korean spicy beef vegetable soup"
+    ],
+    "carbs": 8.0
+  },
+  {
+    "name": "za'atar",
+    "gi": 0,
+    "aliases": [
+      "zaatar spice blend",
+      "thyme oregano spice mix",
+      "Middle Eastern herb blend",
+      "zaatar mix Lebanese"
+    ],
+    "carbs": 20.0
   }
 ]

@@ -4651,5 +4651,2669 @@
     "fiber": 0.4,
     "pufa": 1.78,
     "mufa": 1.64
+  },
+  {
+    "name": "adobo",
+    "carbs": 5.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 1.5,
+    "mufa": 5.0
+  },
+  {
+    "name": "agedashi tofu",
+    "carbs": 10.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 2.0,
+    "mufa": 1.5
+  },
+  {
+    "name": "agua fresca",
+    "carbs": 15.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "aji de gallina",
+    "carbs": 18.0,
+    "sfa": 3.0,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 2.5,
+    "mufa": 4.5
+  },
+  {
+    "name": "ajiaco",
+    "carbs": 22.0,
+    "sfa": 1.0,
+    "tfa": 0,
+    "fiber": 2.0,
+    "pufa": 0.3,
+    "mufa": 1.0
+  },
+  {
+    "name": "aloo gobi",
+    "carbs": 22.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 3.0,
+    "pufa": 1.0,
+    "mufa": 1.5
+  },
+  {
+    "name": "aloo masala",
+    "carbs": 25.0,
+    "sfa": 1.0,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 1.0,
+    "mufa": 2.0
+  },
+  {
+    "name": "aloo paratha",
+    "carbs": 34.5,
+    "sfa": 2.0,
+    "tfa": 0,
+    "fiber": 2.5,
+    "pufa": 1.5,
+    "mufa": 3.0
+  },
+  {
+    "name": "anticucho",
+    "carbs": 5.0,
+    "sfa": 2.5,
+    "tfa": 0,
+    "fiber": 0.3,
+    "pufa": 0.8,
+    "mufa": 2.0
+  },
+  {
+    "name": "arroz caldo",
+    "carbs": 30.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.5,
+    "mufa": 1.5
+  },
+  {
+    "name": "arroz con leche",
+    "carbs": 25.0,
+    "sfa": 2.5,
+    "tfa": 0,
+    "fiber": 0.2,
+    "pufa": 0.1,
+    "mufa": 0.7
+  },
+  {
+    "name": "atole",
+    "carbs": 12.5,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.1,
+    "mufa": 0.2
+  },
+  {
+    "name": "bakso",
+    "carbs": 15.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 0.5,
+    "pufa": 0.5,
+    "mufa": 1.5
+  },
+  {
+    "name": "banh cuon",
+    "carbs": 25.0,
+    "sfa": 0.5,
+    "tfa": 0,
+    "fiber": 0.5,
+    "pufa": 0.3,
+    "mufa": 0.5
+  },
+  {
+    "name": "banh mi",
+    "carbs": 52.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.8,
+    "mufa": 1.0
+  },
+  {
+    "name": "banh xeo",
+    "carbs": 28.0,
+    "sfa": 4.0,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 3.0,
+    "mufa": 4.5
+  },
+  {
+    "name": "barbacoa",
+    "carbs": 1.5,
+    "sfa": 5.0,
+    "tfa": 0,
+    "fiber": 0.2,
+    "pufa": 0.5,
+    "mufa": 4.5
+  },
+  {
+    "name": "besan",
+    "carbs": 53.0,
+    "sfa": 0.6,
+    "tfa": 0,
+    "fiber": 10.8,
+    "pufa": 3.0,
+    "mufa": 1.0
+  },
+  {
+    "name": "bhatura",
+    "carbs": 35.0,
+    "sfa": 3.0,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 2.5,
+    "mufa": 3.0
+  },
+  {
+    "name": "bibingka",
+    "carbs": 42.0,
+    "sfa": 5.0,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.5,
+    "mufa": 2.5
+  },
+  {
+    "name": "bingsu",
+    "carbs": 45.0,
+    "sfa": 0.5,
+    "tfa": 0,
+    "fiber": 0.5,
+    "pufa": 0.2,
+    "mufa": 0.3
+  },
+  {
+    "name": "birria",
+    "carbs": 5.0,
+    "sfa": 4.5,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.8,
+    "mufa": 4.5
+  },
+  {
+    "name": "braised pork belly",
+    "carbs": 8.0,
+    "sfa": 12.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 2.5,
+    "mufa": 9.0
+  },
+  {
+    "name": "brown sugar milk tea",
+    "carbs": 52.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.1,
+    "mufa": 0.5
+  },
+  {
+    "name": "bubble tea",
+    "carbs": 22.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.1,
+    "mufa": 0.1
+  },
+  {
+    "name": "bun cha",
+    "carbs": 35.0,
+    "sfa": 2.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.0,
+    "mufa": 3.0
+  },
+  {
+    "name": "bun rieu",
+    "carbs": 28.0,
+    "sfa": 1.0,
+    "tfa": 0,
+    "fiber": 0.8,
+    "pufa": 0.8,
+    "mufa": 1.0
+  },
+  {
+    "name": "butter naan",
+    "carbs": 48.0,
+    "sfa": 2.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.5,
+    "mufa": 1.0
+  },
+  {
+    "name": "california roll",
+    "carbs": 24.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.5,
+    "mufa": 2.5
+  },
+  {
+    "name": "cao lau",
+    "carbs": 30.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 1.0,
+    "pufa": 1.0,
+    "mufa": 2.0
+  },
+  {
+    "name": "carne asada",
+    "carbs": 0.5,
+    "sfa": 5.5,
+    "tfa": 0.1,
+    "fiber": 0,
+    "pufa": 0.5,
+    "mufa": 5.5
+  },
+  {
+    "name": "carnitas",
+    "carbs": 0.0,
+    "sfa": 7.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 1.5,
+    "mufa": 7.5
+  },
+  {
+    "name": "causa",
+    "carbs": 30.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 1.5,
+    "mufa": 3.5
+  },
+  {
+    "name": "chaat",
+    "carbs": 30.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 3.0,
+    "pufa": 0.5,
+    "mufa": 1.0
+  },
+  {
+    "name": "chai",
+    "carbs": 10.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.1,
+    "mufa": 0.3
+  },
+  {
+    "name": "champorado",
+    "carbs": 35.0,
+    "sfa": 2.0,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 0.5,
+    "mufa": 1.0
+  },
+  {
+    "name": "char kway teow",
+    "carbs": 40.0,
+    "sfa": 2.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 2.5,
+    "mufa": 4.5
+  },
+  {
+    "name": "char siu",
+    "carbs": 8.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 1.0,
+    "mufa": 4.5
+  },
+  {
+    "name": "char siu bao",
+    "carbs": 34.2,
+    "sfa": 1.0,
+    "tfa": 0.0,
+    "fiber": 1.4,
+    "pufa": 0.5,
+    "mufa": 1.0
+  },
+  {
+    "name": "chawanmushi",
+    "carbs": 5.0,
+    "sfa": 1.0,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.5,
+    "mufa": 1.0
+  },
+  {
+    "name": "chendol",
+    "carbs": 50.0,
+    "sfa": 5.0,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.3,
+    "mufa": 1.0
+  },
+  {
+    "name": "cheung fun",
+    "carbs": 20.0,
+    "sfa": 0.2,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.1,
+    "mufa": 0.2
+  },
+  {
+    "name": "chicha morada",
+    "carbs": 20.0,
+    "sfa": 0,
+    "tfa": 0,
+    "fiber": 0.5,
+    "pufa": 0,
+    "mufa": 0
+  },
+  {
+    "name": "chicken adobo",
+    "carbs": 5.0,
+    "sfa": 3.0,
+    "tfa": 0,
+    "fiber": 0.3,
+    "pufa": 1.0,
+    "mufa": 4.0
+  },
+  {
+    "name": "chicken katsu",
+    "carbs": 18.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 2.5,
+    "mufa": 3.5
+  },
+  {
+    "name": "chicken rice",
+    "carbs": 42.0,
+    "sfa": 2.5,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.8,
+    "mufa": 3.5
+  },
+  {
+    "name": "chicken tikka",
+    "carbs": 5.0,
+    "sfa": 2.0,
+    "tfa": 0,
+    "fiber": 0.3,
+    "pufa": 1.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "chiles rellenos",
+    "carbs": 12.0,
+    "sfa": 4.5,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 1.5,
+    "mufa": 4.0
+  },
+  {
+    "name": "chimichurri",
+    "carbs": 2.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 3.0,
+    "mufa": 8.0
+  },
+  {
+    "name": "chole",
+    "carbs": 18.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 5.5,
+    "pufa": 1.0,
+    "mufa": 1.5
+  },
+  {
+    "name": "chole bhature",
+    "carbs": 40.0,
+    "sfa": 3.0,
+    "tfa": 0,
+    "fiber": 4.0,
+    "pufa": 3.5,
+    "mufa": 5.0
+  },
+  {
+    "name": "chow fun",
+    "carbs": 38.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 1.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "churrasco",
+    "carbs": 1.0,
+    "sfa": 5.5,
+    "tfa": 0.1,
+    "fiber": 0,
+    "pufa": 0.5,
+    "mufa": 5.5
+  },
+  {
+    "name": "coconut chutney",
+    "carbs": 5.0,
+    "sfa": 3.5,
+    "tfa": 0,
+    "fiber": 2.0,
+    "pufa": 0.3,
+    "mufa": 0.4
+  },
+  {
+    "name": "coconut cream",
+    "carbs": 2.5,
+    "sfa": 22.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.3,
+    "mufa": 1.0
+  },
+  {
+    "name": "coconut milk tea",
+    "carbs": 22.0,
+    "sfa": 4.5,
+    "tfa": 0,
+    "fiber": 0.3,
+    "pufa": 0.2,
+    "mufa": 0.5
+  },
+  {
+    "name": "com tam",
+    "carbs": 42.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 0.8,
+    "mufa": 2.0
+  },
+  {
+    "name": "coxinha",
+    "carbs": 22.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 2.0,
+    "mufa": 4.0
+  },
+  {
+    "name": "curry paste",
+    "carbs": 6.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 1.0,
+    "pufa": 0.8,
+    "mufa": 1.5
+  },
+  {
+    "name": "curry puff",
+    "carbs": 30.0,
+    "sfa": 5.0,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 2.5,
+    "mufa": 5.5
+  },
+  {
+    "name": "daikon radish",
+    "carbs": 4.1,
+    "sfa": 0.02,
+    "tfa": 0,
+    "fiber": 1.6,
+    "pufa": 0.04,
+    "mufa": 0.03
+  },
+  {
+    "name": "dakgalbi",
+    "carbs": 10.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 1.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "dal makhani",
+    "carbs": 20.0,
+    "sfa": 4.0,
+    "tfa": 0.0,
+    "fiber": 5.0,
+    "pufa": 0.5,
+    "mufa": 2.0
+  },
+  {
+    "name": "dal tadka",
+    "carbs": 18.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 4.5,
+    "pufa": 1.0,
+    "mufa": 1.5
+  },
+  {
+    "name": "dan dan noodles",
+    "carbs": 38.0,
+    "sfa": 2.5,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 3.0,
+    "mufa": 4.0
+  },
+  {
+    "name": "dhokla",
+    "carbs": 20.0,
+    "sfa": 0.3,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.5,
+    "mufa": 0.5
+  },
+  {
+    "name": "doenjang",
+    "carbs": 25.4,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 5.4,
+    "pufa": 2.1,
+    "mufa": 0.8
+  },
+  {
+    "name": "doenjang jjigae",
+    "carbs": 8.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.0,
+    "mufa": 0.8
+  },
+  {
+    "name": "dolma",
+    "carbs": 20.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 0.5,
+    "mufa": 2.0
+  },
+  {
+    "name": "donburi",
+    "carbs": 38.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 0.6,
+    "pufa": 0.8,
+    "mufa": 2.0
+  },
+  {
+    "name": "doner kebab",
+    "carbs": 5.0,
+    "sfa": 5.0,
+    "tfa": 0,
+    "fiber": 0.3,
+    "pufa": 0.8,
+    "mufa": 5.0
+  },
+  {
+    "name": "dorayaki",
+    "carbs": 50.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 1.0,
+    "pufa": 0.8,
+    "mufa": 2.0
+  },
+  {
+    "name": "dulce de leche",
+    "carbs": 55.0,
+    "sfa": 4.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.2,
+    "mufa": 1.5
+  },
+  {
+    "name": "egg drop soup",
+    "carbs": 5.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.5,
+    "mufa": 0.8
+  },
+  {
+    "name": "egg tart",
+    "carbs": 28.0,
+    "sfa": 4.5,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.8,
+    "mufa": 3.2
+  },
+  {
+    "name": "egusi soup",
+    "carbs": 5.0,
+    "sfa": 3.5,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 8.0,
+    "mufa": 5.5
+  },
+  {
+    "name": "elote",
+    "carbs": 20.0,
+    "sfa": 3.0,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 1.0,
+    "mufa": 2.0
+  },
+  {
+    "name": "empanada",
+    "carbs": 28.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.5,
+    "mufa": 3.5
+  },
+  {
+    "name": "empanada dough",
+    "carbs": 40.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.5,
+    "mufa": 1.5
+  },
+  {
+    "name": "fatayer",
+    "carbs": 30.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.5,
+    "mufa": 2.0
+  },
+  {
+    "name": "fattoush",
+    "carbs": 12.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.4,
+    "mufa": 1.5
+  },
+  {
+    "name": "feijoada",
+    "carbs": 18.0,
+    "sfa": 2.5,
+    "tfa": 0.0,
+    "fiber": 7.0,
+    "pufa": 1.0,
+    "mufa": 3.5
+  },
+  {
+    "name": "fesenjan",
+    "carbs": 18.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 8.5,
+    "mufa": 3.0
+  },
+  {
+    "name": "fish cake",
+    "carbs": 12.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 1.0,
+    "mufa": 1.5
+  },
+  {
+    "name": "flautas",
+    "carbs": 30.0,
+    "sfa": 3.5,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 2.5,
+    "mufa": 5.5
+  },
+  {
+    "name": "freekeh",
+    "carbs": 60.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 11.2,
+    "pufa": 0.5,
+    "mufa": 0.3
+  },
+  {
+    "name": "fufu",
+    "carbs": 45.0,
+    "sfa": 0.2,
+    "tfa": 0,
+    "fiber": 2.0,
+    "pufa": 0.1,
+    "mufa": 0.1
+  },
+  {
+    "name": "ful medames",
+    "carbs": 18.0,
+    "sfa": 0.2,
+    "tfa": 0.0,
+    "fiber": 5.5,
+    "pufa": 0.3,
+    "mufa": 0.2
+  },
+  {
+    "name": "gado gado",
+    "carbs": 18.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 4.0,
+    "pufa": 4.5,
+    "mufa": 5.5
+  },
+  {
+    "name": "galangal",
+    "carbs": 5.5,
+    "sfa": 0,
+    "tfa": 0,
+    "fiber": 1.0,
+    "pufa": 0,
+    "mufa": 0
+  },
+  {
+    "name": "galbi",
+    "carbs": 5.0,
+    "sfa": 8.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.8,
+    "mufa": 6.0
+  },
+  {
+    "name": "ghormeh sabzi",
+    "carbs": 12.0,
+    "sfa": 3.0,
+    "tfa": 0.0,
+    "fiber": 5.0,
+    "pufa": 1.0,
+    "mufa": 3.5
+  },
+  {
+    "name": "gimbap",
+    "carbs": 38.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.8,
+    "mufa": 1.5
+  },
+  {
+    "name": "glass noodles",
+    "carbs": 86.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "glutinous rice",
+    "carbs": 21.1,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.07,
+    "mufa": 0.07
+  },
+  {
+    "name": "gochujang sauce",
+    "carbs": 18.0,
+    "sfa": 0.3,
+    "tfa": 0,
+    "fiber": 0.8,
+    "pufa": 0.5,
+    "mufa": 0.4
+  },
+  {
+    "name": "goi cuon",
+    "carbs": 20.0,
+    "sfa": 0.3,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.5,
+    "mufa": 0.5
+  },
+  {
+    "name": "green curry",
+    "carbs": 8.0,
+    "sfa": 8.0,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.5,
+    "mufa": 0.8
+  },
+  {
+    "name": "gulab jamun",
+    "carbs": 55.0,
+    "sfa": 4.0,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.5,
+    "mufa": 2.0
+  },
+  {
+    "name": "gyoza",
+    "carbs": 18.0,
+    "sfa": 1.8,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 1.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "gyudon",
+    "carbs": 42.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.8,
+    "mufa": 3.5
+  },
+  {
+    "name": "haemul pajeon",
+    "carbs": 25.0,
+    "sfa": 1.2,
+    "tfa": 0,
+    "fiber": 0.8,
+    "pufa": 1.5,
+    "mufa": 2.0
+  },
+  {
+    "name": "hallaca",
+    "carbs": 35.0,
+    "sfa": 3.0,
+    "tfa": 0,
+    "fiber": 2.5,
+    "pufa": 1.5,
+    "mufa": 3.5
+  },
+  {
+    "name": "halo halo",
+    "carbs": 55.0,
+    "sfa": 3.0,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 0.3,
+    "mufa": 1.0
+  },
+  {
+    "name": "halwa",
+    "carbs": 50.0,
+    "sfa": 5.0,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.5,
+    "mufa": 4.5
+  },
+  {
+    "name": "har gow",
+    "carbs": 20.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 0.7,
+    "pufa": 0.5,
+    "mufa": 0.8
+  },
+  {
+    "name": "hoddeok",
+    "carbs": 45.0,
+    "sfa": 2.5,
+    "tfa": 0,
+    "fiber": 1.0,
+    "pufa": 2.0,
+    "mufa": 3.5
+  },
+  {
+    "name": "hokkien mee",
+    "carbs": 32.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 1.0,
+    "pufa": 1.5,
+    "mufa": 2.5
+  },
+  {
+    "name": "horchata",
+    "carbs": 11.5,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.2,
+    "mufa": 0.2
+  },
+  {
+    "name": "hot and sour soup",
+    "carbs": 10.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 0.5,
+    "mufa": 0.8
+  },
+  {
+    "name": "hot pot",
+    "carbs": 2.0,
+    "sfa": 0.5,
+    "tfa": 0,
+    "fiber": 0.1,
+    "pufa": 0.2,
+    "mufa": 0.5
+  },
+  {
+    "name": "jajangmyeon",
+    "carbs": 55.0,
+    "sfa": 1.0,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 1.5,
+    "mufa": 2.5
+  },
+  {
+    "name": "jalebi",
+    "carbs": 55.0,
+    "sfa": 5.0,
+    "tfa": 0.3,
+    "fiber": 0.3,
+    "pufa": 3.5,
+    "mufa": 7.5
+  },
+  {
+    "name": "japanese curry",
+    "carbs": 40.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 1.5,
+    "mufa": 4.0
+  },
+  {
+    "name": "japanese fried rice",
+    "carbs": 40.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 1.5,
+    "mufa": 2.5
+  },
+  {
+    "name": "Japanese short grain rice",
+    "carbs": 28.0,
+    "sfa": 0.06,
+    "tfa": 0,
+    "fiber": 0.3,
+    "pufa": 0.07,
+    "mufa": 0.06
+  },
+  {
+    "name": "japchae",
+    "carbs": 12.6,
+    "sfa": 0.6,
+    "tfa": 0.0,
+    "fiber": 1.1,
+    "pufa": 1.0,
+    "mufa": 1.0
+  },
+  {
+    "name": "jollof rice",
+    "carbs": 28.0,
+    "sfa": 1.2,
+    "tfa": 0,
+    "fiber": 0.8,
+    "pufa": 1.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "karaage",
+    "carbs": 12.0,
+    "sfa": 4.0,
+    "tfa": 0,
+    "fiber": 0.3,
+    "pufa": 3.5,
+    "mufa": 5.0
+  },
+  {
+    "name": "kare kare",
+    "carbs": 10.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 3.0,
+    "pufa": 4.5,
+    "mufa": 5.0
+  },
+  {
+    "name": "katsu curry",
+    "carbs": 55.0,
+    "sfa": 4.0,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 3.0,
+    "mufa": 4.5
+  },
+  {
+    "name": "katsudon",
+    "carbs": 48.0,
+    "sfa": 4.0,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 2.5,
+    "mufa": 4.5
+  },
+  {
+    "name": "kebab",
+    "carbs": 5.0,
+    "sfa": 4.5,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.8,
+    "mufa": 4.0
+  },
+  {
+    "name": "khao pad",
+    "carbs": 29.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 0.5,
+    "pufa": 1.5,
+    "mufa": 2.5
+  },
+  {
+    "name": "khao tom",
+    "carbs": 20.0,
+    "sfa": 0.3,
+    "tfa": 0,
+    "fiber": 0.3,
+    "pufa": 0.1,
+    "mufa": 0.2
+  },
+  {
+    "name": "kheer",
+    "carbs": 28.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 0.2,
+    "pufa": 0.1,
+    "mufa": 0.8
+  },
+  {
+    "name": "khichdi",
+    "carbs": 30.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.5,
+    "mufa": 1.0
+  },
+  {
+    "name": "kibbeh",
+    "carbs": 20.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.8,
+    "mufa": 3.5
+  },
+  {
+    "name": "kimchi jjigae",
+    "carbs": 8.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.8,
+    "mufa": 1.5
+  },
+  {
+    "name": "knafeh",
+    "carbs": 55.0,
+    "sfa": 5.5,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.5,
+    "mufa": 1.5
+  },
+  {
+    "name": "kofta",
+    "carbs": 5.0,
+    "sfa": 7.0,
+    "tfa": 0,
+    "fiber": 0.3,
+    "pufa": 0.8,
+    "mufa": 6.5
+  },
+  {
+    "name": "Korean fried chicken",
+    "carbs": 22.0,
+    "sfa": 3.0,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 3.0,
+    "mufa": 4.5
+  },
+  {
+    "name": "koshari",
+    "carbs": 45.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 5.0,
+    "pufa": 0.8,
+    "mufa": 1.5
+  },
+  {
+    "name": "labneh",
+    "carbs": 7.1,
+    "sfa": 7.14,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.25,
+    "mufa": 1.8
+  },
+  {
+    "name": "larb",
+    "carbs": 8.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.8,
+    "mufa": 1.5
+  },
+  {
+    "name": "lassi",
+    "carbs": 18.0,
+    "sfa": 1.2,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.1,
+    "mufa": 0.4
+  },
+  {
+    "name": "Lebanese bread",
+    "carbs": 45.0,
+    "sfa": 0.2,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.3,
+    "mufa": 0.2
+  },
+  {
+    "name": "leche flan",
+    "carbs": 28.5,
+    "sfa": 5.0,
+    "tfa": 0,
+    "fiber": 0,
+    "pufa": 0.5,
+    "mufa": 3.0
+  },
+  {
+    "name": "lechon",
+    "carbs": 1.0,
+    "sfa": 8.5,
+    "tfa": 0,
+    "fiber": 0,
+    "pufa": 2.5,
+    "mufa": 8.0
+  },
+  {
+    "name": "lemongrass",
+    "carbs": 11.5,
+    "sfa": 0,
+    "tfa": 0,
+    "fiber": 0.5,
+    "pufa": 0,
+    "mufa": 0
+  },
+  {
+    "name": "lo mai gai",
+    "carbs": 38.0,
+    "sfa": 1.8,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.6,
+    "mufa": 1.2
+  },
+  {
+    "name": "lomo saltado",
+    "carbs": 30.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 1.0,
+    "mufa": 4.5
+  },
+  {
+    "name": "lontong",
+    "carbs": 28.0,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.1,
+    "mufa": 0.1
+  },
+  {
+    "name": "lotus root",
+    "carbs": 17.2,
+    "sfa": 0.03,
+    "tfa": 0.0,
+    "fiber": 4.9,
+    "pufa": 0.02,
+    "mufa": 0.02
+  },
+  {
+    "name": "lumpia",
+    "carbs": 20.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 2.0,
+    "mufa": 3.0
+  },
+  {
+    "name": "lychee juice",
+    "carbs": 15.5,
+    "sfa": 0,
+    "tfa": 0,
+    "fiber": 0.2,
+    "pufa": 0,
+    "mufa": 0
+  },
+  {
+    "name": "maamoul",
+    "carbs": 50.0,
+    "sfa": 4.0,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 0.5,
+    "mufa": 1.5
+  },
+  {
+    "name": "maduros",
+    "carbs": 22.0,
+    "sfa": 1.0,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.5,
+    "mufa": 3.0
+  },
+  {
+    "name": "manakeesh",
+    "carbs": 35.5,
+    "sfa": 3.0,
+    "tfa": 0,
+    "fiber": 2.0,
+    "pufa": 2.5,
+    "mufa": 6.0
+  },
+  {
+    "name": "manakish",
+    "carbs": 38.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 1.0,
+    "mufa": 3.0
+  },
+  {
+    "name": "mango lassi",
+    "carbs": 14.0,
+    "sfa": 1.0,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.1,
+    "mufa": 0.3
+  },
+  {
+    "name": "mango sticky rice",
+    "carbs": 55.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 0.2,
+    "mufa": 0.5
+  },
+  {
+    "name": "mapo tofu",
+    "carbs": 6.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 2.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "maqluba",
+    "carbs": 30.0,
+    "sfa": 3.0,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 1.5,
+    "mufa": 4.5
+  },
+  {
+    "name": "martabak",
+    "carbs": 40.0,
+    "sfa": 6.5,
+    "tfa": 0,
+    "fiber": 1.0,
+    "pufa": 2.0,
+    "mufa": 5.0
+  },
+  {
+    "name": "masa",
+    "carbs": 40.0,
+    "sfa": 0.3,
+    "tfa": 0,
+    "fiber": 3.5,
+    "pufa": 0.4,
+    "mufa": 0.4
+  },
+  {
+    "name": "masala chai",
+    "carbs": 12.5,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 0,
+    "pufa": 0.1,
+    "mufa": 0.5
+  },
+  {
+    "name": "masala dosa",
+    "carbs": 25.0,
+    "sfa": 1.2,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 0.8,
+    "mufa": 2.0
+  },
+  {
+    "name": "matar paneer",
+    "carbs": 12.0,
+    "sfa": 5.0,
+    "tfa": 0.0,
+    "fiber": 3.0,
+    "pufa": 0.5,
+    "mufa": 2.5
+  },
+  {
+    "name": "matcha bubble tea",
+    "carbs": 45.0,
+    "sfa": 1.2,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.1,
+    "mufa": 0.4
+  },
+  {
+    "name": "matcha latte",
+    "carbs": 15.0,
+    "sfa": 1.2,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.1,
+    "mufa": 0.4
+  },
+  {
+    "name": "mee goreng",
+    "carbs": 40.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 2.0,
+    "mufa": 4.0
+  },
+  {
+    "name": "mexican rice",
+    "carbs": 38.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.0,
+    "mufa": 1.5
+  },
+  {
+    "name": "mie goreng",
+    "carbs": 35.0,
+    "sfa": 2.0,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 2.0,
+    "mufa": 3.5
+  },
+  {
+    "name": "mirin",
+    "carbs": 32.0,
+    "sfa": 0,
+    "tfa": 0,
+    "fiber": 0,
+    "pufa": 0,
+    "mufa": 0
+  },
+  {
+    "name": "miso glazed eggplant",
+    "carbs": 8.0,
+    "sfa": 0.3,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 0.5,
+    "mufa": 0.8
+  },
+  {
+    "name": "miso ramen",
+    "carbs": 50.0,
+    "sfa": 4.0,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 2.0,
+    "mufa": 4.5
+  },
+  {
+    "name": "mole",
+    "carbs": 12.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 3.0,
+    "pufa": 2.5,
+    "mufa": 3.5
+  },
+  {
+    "name": "mole sauce",
+    "carbs": 15.0,
+    "sfa": 2.5,
+    "tfa": 0,
+    "fiber": 2.5,
+    "pufa": 2.0,
+    "mufa": 4.0
+  },
+  {
+    "name": "molokhia",
+    "carbs": 3.0,
+    "sfa": 0.1,
+    "tfa": 0,
+    "fiber": 2.0,
+    "pufa": 0.5,
+    "mufa": 0.1
+  },
+  {
+    "name": "moong dal",
+    "carbs": 16.0,
+    "sfa": 0.1,
+    "tfa": 0,
+    "fiber": 4.0,
+    "pufa": 0.3,
+    "mufa": 0.1
+  },
+  {
+    "name": "msabbaha",
+    "carbs": 15.0,
+    "sfa": 0.5,
+    "tfa": 0,
+    "fiber": 5.0,
+    "pufa": 1.5,
+    "mufa": 2.5
+  },
+  {
+    "name": "muhammara",
+    "carbs": 10.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 8.0,
+    "mufa": 3.0
+  },
+  {
+    "name": "mujaddara",
+    "carbs": 20.0,
+    "sfa": 0.5,
+    "tfa": 0,
+    "fiber": 4.5,
+    "pufa": 0.8,
+    "mufa": 2.5
+  },
+  {
+    "name": "mung bean noodles",
+    "carbs": 86.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "mung bean pudding",
+    "carbs": 18.0,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.1,
+    "mufa": 0.1
+  },
+  {
+    "name": "nachos",
+    "carbs": 38.0,
+    "sfa": 6.0,
+    "tfa": 0.0,
+    "fiber": 3.0,
+    "pufa": 2.0,
+    "mufa": 3.5
+  },
+  {
+    "name": "naengmyeon",
+    "carbs": 30.5,
+    "sfa": 0.3,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 0.4,
+    "mufa": 0.5
+  },
+  {
+    "name": "namul",
+    "carbs": 8.0,
+    "sfa": 0.2,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 0.5,
+    "mufa": 0.8
+  },
+  {
+    "name": "nasi goreng",
+    "carbs": 42.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.5,
+    "mufa": 3.5
+  },
+  {
+    "name": "nasi lemak",
+    "carbs": 40.0,
+    "sfa": 7.0,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.0,
+    "mufa": 1.5
+  },
+  {
+    "name": "nasi padang",
+    "carbs": 32.0,
+    "sfa": 4.0,
+    "tfa": 0,
+    "fiber": 0.8,
+    "pufa": 1.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "nasi uduk",
+    "carbs": 32.0,
+    "sfa": 6.5,
+    "tfa": 0,
+    "fiber": 0.5,
+    "pufa": 0.5,
+    "mufa": 1.0
+  },
+  {
+    "name": "natto",
+    "carbs": 8.8,
+    "sfa": 1.3,
+    "tfa": 0,
+    "fiber": 4.9,
+    "pufa": 3.5,
+    "mufa": 1.7
+  },
+  {
+    "name": "nigiri",
+    "carbs": 22.0,
+    "sfa": 0.5,
+    "tfa": 0,
+    "fiber": 0.3,
+    "pufa": 0.8,
+    "mufa": 1.0
+  },
+  {
+    "name": "nopales",
+    "carbs": 5.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 3.5,
+    "pufa": 0.1,
+    "mufa": 0.0
+  },
+  {
+    "name": "okonomiyaki",
+    "carbs": 30.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "onigiri",
+    "carbs": 35.0,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.1,
+    "mufa": 0.2
+  },
+  {
+    "name": "otak otak",
+    "carbs": 5.0,
+    "sfa": 3.5,
+    "tfa": 0,
+    "fiber": 0.5,
+    "pufa": 1.5,
+    "mufa": 2.5
+  },
+  {
+    "name": "oyakodon",
+    "carbs": 42.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.8,
+    "mufa": 2.0
+  },
+  {
+    "name": "pad kra pao",
+    "carbs": 8.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 1.5,
+    "mufa": 3.0
+  },
+  {
+    "name": "pad see ew",
+    "carbs": 38.0,
+    "sfa": 1.0,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.5,
+    "mufa": 3.5
+  },
+  {
+    "name": "pajeon",
+    "carbs": 25.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.8,
+    "mufa": 1.5
+  },
+  {
+    "name": "pakora",
+    "carbs": 20.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 3.0,
+    "mufa": 4.0
+  },
+  {
+    "name": "panang curry",
+    "carbs": 8.5,
+    "sfa": 9.0,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 1.0,
+    "mufa": 2.0
+  },
+  {
+    "name": "pancit",
+    "carbs": 35.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 1.0,
+    "mufa": 2.0
+  },
+  {
+    "name": "pandan cake",
+    "carbs": 42.0,
+    "sfa": 2.5,
+    "tfa": 0,
+    "fiber": 0.5,
+    "pufa": 1.5,
+    "mufa": 3.5
+  },
+  {
+    "name": "pani puri",
+    "carbs": 30.0,
+    "sfa": 2.0,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 3.0,
+    "mufa": 4.5
+  },
+  {
+    "name": "pao de queijo",
+    "carbs": 28.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.5,
+    "mufa": 1.5
+  },
+  {
+    "name": "patacones",
+    "carbs": 25.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 2.0,
+    "mufa": 3.5
+  },
+  {
+    "name": "pav bhaji",
+    "carbs": 28.5,
+    "sfa": 3.5,
+    "tfa": 0,
+    "fiber": 3.0,
+    "pufa": 1.5,
+    "mufa": 4.5
+  },
+  {
+    "name": "peking duck",
+    "carbs": 5.0,
+    "sfa": 9.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 2.5,
+    "mufa": 6.5
+  },
+  {
+    "name": "peri peri chicken",
+    "carbs": 3.0,
+    "sfa": 2.5,
+    "tfa": 0,
+    "fiber": 0.5,
+    "pufa": 1.5,
+    "mufa": 3.5
+  },
+  {
+    "name": "Persian rice",
+    "carbs": 38.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.3,
+    "mufa": 1.0
+  },
+  {
+    "name": "pho bo",
+    "carbs": 42.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.8,
+    "mufa": 2.5
+  },
+  {
+    "name": "pita wrap",
+    "carbs": 30.0,
+    "sfa": 0.5,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 0.4,
+    "mufa": 0.4
+  },
+  {
+    "name": "poha",
+    "carbs": 76.0,
+    "sfa": 0.15,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 0.2,
+    "mufa": 0.1
+  },
+  {
+    "name": "popiah",
+    "carbs": 18.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 1.0,
+    "mufa": 1.5
+  },
+  {
+    "name": "pork katsu",
+    "carbs": 16.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 2.0,
+    "mufa": 4.0
+  },
+  {
+    "name": "pulao",
+    "carbs": 30.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 1.0,
+    "pufa": 0.8,
+    "mufa": 2.5
+  },
+  {
+    "name": "puri",
+    "carbs": 28.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 2.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "quesadilla",
+    "carbs": 28.0,
+    "sfa": 5.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.8,
+    "mufa": 2.5
+  },
+  {
+    "name": "raita",
+    "carbs": 5.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 0.3,
+    "pufa": 0.1,
+    "mufa": 0.2
+  },
+  {
+    "name": "rajma",
+    "carbs": 22.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 6.5,
+    "pufa": 0.5,
+    "mufa": 0.8
+  },
+  {
+    "name": "rava upma",
+    "carbs": 22.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 1.0,
+    "pufa": 0.8,
+    "mufa": 2.5
+  },
+  {
+    "name": "red bean paste",
+    "carbs": 45.0,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.1,
+    "mufa": 0.05
+  },
+  {
+    "name": "red curry",
+    "carbs": 8.0,
+    "sfa": 7.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.5,
+    "mufa": 0.8
+  },
+  {
+    "name": "rendang",
+    "carbs": 5.0,
+    "sfa": 12.0,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 1.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "rice paper",
+    "carbs": 87.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.02,
+    "mufa": 0.02
+  },
+  {
+    "name": "rice vermicelli",
+    "carbs": 25.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.1,
+    "mufa": 0.1
+  },
+  {
+    "name": "rose milk",
+    "carbs": 15.0,
+    "sfa": 0.8,
+    "tfa": 0,
+    "fiber": 0,
+    "pufa": 0.1,
+    "mufa": 0.3
+  },
+  {
+    "name": "roti",
+    "carbs": 47.0,
+    "sfa": 1.34,
+    "tfa": 0.0,
+    "fiber": 2.4,
+    "pufa": 0.98,
+    "mufa": 0.78
+  },
+  {
+    "name": "roti canai",
+    "carbs": 35.0,
+    "sfa": 5.0,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.8,
+    "mufa": 2.5
+  },
+  {
+    "name": "saag",
+    "carbs": 5.5,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 2.5,
+    "pufa": 0.5,
+    "mufa": 2.0
+  },
+  {
+    "name": "saag paneer",
+    "carbs": 8.0,
+    "sfa": 5.5,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.5,
+    "mufa": 2.5
+  },
+  {
+    "name": "salmon nigiri",
+    "carbs": 18.0,
+    "sfa": 1.2,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 2.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "salmon sashimi",
+    "carbs": 0.0,
+    "sfa": 2.5,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 4.0,
+    "mufa": 4.5
+  },
+  {
+    "name": "sambar",
+    "carbs": 8.0,
+    "sfa": 0.3,
+    "tfa": 0,
+    "fiber": 3.0,
+    "pufa": 0.5,
+    "mufa": 0.5
+  },
+  {
+    "name": "samgyeopsal",
+    "carbs": 0.0,
+    "sfa": 9.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 2.0,
+    "mufa": 7.0
+  },
+  {
+    "name": "sancocho",
+    "carbs": 20.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 2.0,
+    "pufa": 0.5,
+    "mufa": 1.5
+  },
+  {
+    "name": "scallion pancake",
+    "carbs": 35.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.5,
+    "mufa": 3.5
+  },
+  {
+    "name": "schnitzel",
+    "carbs": 12.0,
+    "sfa": 4.5,
+    "tfa": 0.1,
+    "fiber": 0.5,
+    "pufa": 3.0,
+    "mufa": 5.5
+  },
+  {
+    "name": "sesame ball",
+    "carbs": 40.5,
+    "sfa": 1.8,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 3.0,
+    "mufa": 3.5
+  },
+  {
+    "name": "shabu shabu",
+    "carbs": 2.0,
+    "sfa": 3.0,
+    "tfa": 0,
+    "fiber": 0.3,
+    "pufa": 0.5,
+    "mufa": 2.5
+  },
+  {
+    "name": "shawarma wrap",
+    "carbs": 35.0,
+    "sfa": 3.5,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 1.5,
+    "mufa": 4.5
+  },
+  {
+    "name": "shoyu ramen",
+    "carbs": 48.0,
+    "sfa": 2.5,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 1.5,
+    "mufa": 3.0
+  },
+  {
+    "name": "sinigang",
+    "carbs": 10.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.8,
+    "mufa": 2.0
+  },
+  {
+    "name": "sisig",
+    "carbs": 3.5,
+    "sfa": 7.5,
+    "tfa": 0,
+    "fiber": 0.3,
+    "pufa": 2.0,
+    "mufa": 8.0
+  },
+  {
+    "name": "siu mai",
+    "carbs": 9.0,
+    "sfa": 1.2,
+    "tfa": 0.0,
+    "fiber": 0.4,
+    "pufa": 0.8,
+    "mufa": 1.8
+  },
+  {
+    "name": "soba",
+    "carbs": 25.0,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 0.2,
+    "mufa": 0.2
+  },
+  {
+    "name": "som tam",
+    "carbs": 8.0,
+    "sfa": 0.2,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 0.8,
+    "mufa": 0.4
+  },
+  {
+    "name": "som tum",
+    "carbs": 12.0,
+    "sfa": 0.2,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 0.5,
+    "mufa": 0.2
+  },
+  {
+    "name": "sopes",
+    "carbs": 35.0,
+    "sfa": 1.0,
+    "tfa": 0,
+    "fiber": 2.0,
+    "pufa": 1.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "soto ayam",
+    "carbs": 20.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 1.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "spicy tuna roll",
+    "carbs": 22.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 1.5,
+    "mufa": 1.5
+  },
+  {
+    "name": "sticky rice",
+    "carbs": 21.1,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.07,
+    "mufa": 0.07
+  },
+  {
+    "name": "sugarcane juice",
+    "carbs": 13.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "sukiyaki",
+    "carbs": 8.5,
+    "sfa": 4.5,
+    "tfa": 0,
+    "fiber": 0.8,
+    "pufa": 1.0,
+    "mufa": 4.0
+  },
+  {
+    "name": "sundubu jjigae",
+    "carbs": 6.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 1.5,
+    "mufa": 1.0
+  },
+  {
+    "name": "suya",
+    "carbs": 3.0,
+    "sfa": 3.0,
+    "tfa": 0,
+    "fiber": 0.5,
+    "pufa": 1.0,
+    "mufa": 3.0
+  },
+  {
+    "name": "tabbouleh",
+    "carbs": 15.0,
+    "sfa": 0.3,
+    "tfa": 0.0,
+    "fiber": 3.5,
+    "pufa": 1.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "tabouleh",
+    "carbs": 9.7,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 1.8,
+    "pufa": 1.0,
+    "mufa": 6.5
+  },
+  {
+    "name": "tagine (Moroccan)",
+    "carbs": 18.0,
+    "sfa": 3.0,
+    "tfa": 0,
+    "fiber": 3.0,
+    "pufa": 0.8,
+    "mufa": 4.0
+  },
+  {
+    "name": "taiyaki",
+    "carbs": 45.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 1.2,
+    "pufa": 1.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "takoyaki",
+    "carbs": 28.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.8,
+    "mufa": 2.0
+  },
+  {
+    "name": "tamagoyaki",
+    "carbs": 4.0,
+    "sfa": 1.8,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.8,
+    "mufa": 2.0
+  },
+  {
+    "name": "tamarind juice",
+    "carbs": 12.0,
+    "sfa": 0,
+    "tfa": 0,
+    "fiber": 0.3,
+    "pufa": 0.1,
+    "mufa": 0.1
+  },
+  {
+    "name": "tandoori chicken",
+    "carbs": 2.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 1.5,
+    "mufa": 2.5
+  },
+  {
+    "name": "tapioca pearls",
+    "carbs": 85.0,
+    "sfa": 0,
+    "tfa": 0,
+    "fiber": 0.1,
+    "pufa": 0,
+    "mufa": 0
+  },
+  {
+    "name": "taro bubble tea",
+    "carbs": 48.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.1,
+    "mufa": 0.5
+  },
+  {
+    "name": "taro dumpling",
+    "carbs": 18.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 1.8,
+    "pufa": 1.0,
+    "mufa": 2.5
+  },
+  {
+    "name": "taro milk tea",
+    "carbs": 30.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 0.5,
+    "pufa": 0.2,
+    "mufa": 0.5
+  },
+  {
+    "name": "teh tarik",
+    "carbs": 15.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 0,
+    "pufa": 0.1,
+    "mufa": 0.4
+  },
+  {
+    "name": "tempe orek",
+    "carbs": 15.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 3.0,
+    "pufa": 4.5,
+    "mufa": 3.5
+  },
+  {
+    "name": "tempura",
+    "carbs": 22.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 3.0,
+    "mufa": 3.5
+  },
+  {
+    "name": "teriyaki chicken",
+    "carbs": 10.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.8,
+    "mufa": 2.0
+  },
+  {
+    "name": "thai basil fried rice",
+    "carbs": 42.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 1.5,
+    "mufa": 3.0
+  },
+  {
+    "name": "thai iced tea",
+    "carbs": 28.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.1,
+    "mufa": 0.5
+  },
+  {
+    "name": "tlayuda",
+    "carbs": 40.0,
+    "sfa": 2.5,
+    "tfa": 0,
+    "fiber": 3.0,
+    "pufa": 1.5,
+    "mufa": 3.5
+  },
+  {
+    "name": "tonkatsu",
+    "carbs": 12.0,
+    "sfa": 5.5,
+    "tfa": 0.1,
+    "fiber": 0.5,
+    "pufa": 4.0,
+    "mufa": 6.5
+  },
+  {
+    "name": "tonkotsu ramen",
+    "carbs": 55.0,
+    "sfa": 6.0,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 2.5,
+    "mufa": 6.0
+  },
+  {
+    "name": "torta",
+    "carbs": 35.0,
+    "sfa": 4.5,
+    "tfa": 0,
+    "fiber": 2.0,
+    "pufa": 2.0,
+    "mufa": 5.5
+  },
+  {
+    "name": "tostones",
+    "carbs": 30.0,
+    "sfa": 0.8,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 0.5,
+    "mufa": 1.5
+  },
+  {
+    "name": "tteok",
+    "carbs": 48.8,
+    "sfa": 0.16,
+    "tfa": 0.0,
+    "fiber": 0.7,
+    "pufa": 0.13,
+    "mufa": 0.07
+  },
+  {
+    "name": "tteokbokki",
+    "carbs": 40.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 0.5,
+    "pufa": 0.5,
+    "mufa": 0.5
+  },
+  {
+    "name": "tuna sashimi",
+    "carbs": 0.0,
+    "sfa": 0.3,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 1.5,
+    "mufa": 0.8
+  },
+  {
+    "name": "Turkish coffee",
+    "carbs": 0.5,
+    "sfa": 0,
+    "tfa": 0,
+    "fiber": 0,
+    "pufa": 0,
+    "mufa": 0
+  },
+  {
+    "name": "Turkish delight",
+    "carbs": 80.0,
+    "sfa": 0.0,
+    "tfa": 0.0,
+    "fiber": 0.1,
+    "pufa": 0.0,
+    "mufa": 0.0
+  },
+  {
+    "name": "turnip cake",
+    "carbs": 20.0,
+    "sfa": 0.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 0.4,
+    "mufa": 0.8
+  },
+  {
+    "name": "udon",
+    "carbs": 30.0,
+    "sfa": 0.1,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.1,
+    "mufa": 0.1
+  },
+  {
+    "name": "ugali",
+    "carbs": 42.0,
+    "sfa": 0.3,
+    "tfa": 0,
+    "fiber": 2.5,
+    "pufa": 0.3,
+    "mufa": 0.3
+  },
+  {
+    "name": "vada",
+    "carbs": 25.0,
+    "sfa": 1.8,
+    "tfa": 0.0,
+    "fiber": 2.5,
+    "pufa": 2.5,
+    "mufa": 3.5
+  },
+  {
+    "name": "vada pav",
+    "carbs": 35.5,
+    "sfa": 2.5,
+    "tfa": 0,
+    "fiber": 2.0,
+    "pufa": 3.0,
+    "mufa": 5.0
+  },
+  {
+    "name": "vermicelli rice noodles",
+    "carbs": 24.0,
+    "sfa": 0.04,
+    "tfa": 0.0,
+    "fiber": 1.0,
+    "pufa": 0.05,
+    "mufa": 0.03
+  },
+  {
+    "name": "Vietnamese iced coffee",
+    "carbs": 15.0,
+    "sfa": 1.5,
+    "tfa": 0,
+    "fiber": 0,
+    "pufa": 0.1,
+    "mufa": 0.4
+  },
+  {
+    "name": "water chestnuts",
+    "carbs": 19.1,
+    "sfa": 0.01,
+    "tfa": 0,
+    "fiber": 2.0,
+    "pufa": 0.05,
+    "mufa": 0.01
+  },
+  {
+    "name": "water spinach",
+    "carbs": 3.1,
+    "sfa": 0.04,
+    "tfa": 0,
+    "fiber": 2.1,
+    "pufa": 0.1,
+    "mufa": 0.01
+  },
+  {
+    "name": "wonton noodle soup",
+    "carbs": 28.0,
+    "sfa": 0.8,
+    "tfa": 0.0,
+    "fiber": 0.8,
+    "pufa": 0.6,
+    "mufa": 1.2
+  },
+  {
+    "name": "xiaolongbao",
+    "carbs": 22.0,
+    "sfa": 2.4,
+    "tfa": 0,
+    "fiber": 0.8,
+    "pufa": 1.0,
+    "mufa": 2.6
+  },
+  {
+    "name": "yakitori",
+    "carbs": 4.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 0.0,
+    "pufa": 0.5,
+    "mufa": 1.5
+  },
+  {
+    "name": "yellow curry",
+    "carbs": 10.0,
+    "sfa": 7.0,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 0.5,
+    "mufa": 0.8
+  },
+  {
+    "name": "yuca",
+    "carbs": 39.6,
+    "sfa": 0.79,
+    "tfa": 0.0,
+    "fiber": 1.9,
+    "pufa": 0.84,
+    "mufa": 1.05
+  },
+  {
+    "name": "yuca fries",
+    "carbs": 30.0,
+    "sfa": 1.5,
+    "tfa": 0.0,
+    "fiber": 1.5,
+    "pufa": 2.0,
+    "mufa": 3.0
+  },
+  {
+    "name": "yuca frita",
+    "carbs": 32.0,
+    "sfa": 0.8,
+    "tfa": 0,
+    "fiber": 1.5,
+    "pufa": 0.5,
+    "mufa": 1.5
+  },
+  {
+    "name": "yukgaejang",
+    "carbs": 8.0,
+    "sfa": 2.0,
+    "tfa": 0.0,
+    "fiber": 2.0,
+    "pufa": 0.8,
+    "mufa": 2.5
+  },
+  {
+    "name": "za'atar",
+    "carbs": 20.0,
+    "sfa": 0.5,
+    "tfa": 0,
+    "fiber": 5.0,
+    "pufa": 0.5,
+    "mufa": 0.5
   }
 ]
