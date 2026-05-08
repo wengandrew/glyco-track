@@ -75,7 +75,7 @@ struct WeekTabView: View {
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(isEarliestWeek ? .secondary : theme.primaryAccent)
                     .frame(width: 32, height: 32)
-                    .background(theme == .midnight ? Color.white.opacity(0.08) : Color(.systemGray6))
+                    .background(Color(.systemGray6))
                     .clipShape(Circle())
             }
             .disabled(isEarliestWeek)
@@ -100,7 +100,7 @@ struct WeekTabView: View {
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundColor(isCurrentWeek ? .secondary : theme.primaryAccent)
                     .frame(width: 32, height: 32)
-                    .background(theme == .midnight ? Color.white.opacity(0.08) : Color(.systemGray6))
+                    .background(Color(.systemGray6))
                     .clipShape(Circle())
             }
             .disabled(isCurrentWeek)

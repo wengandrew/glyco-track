@@ -40,8 +40,18 @@ final class FoodLogProcessor: ObservableObject {
         let logRepo = FoodLogRepository(context: context)
         let matcher = FoodMatcher(repo: nutritionalRepo, parser: parser)
 
+        var unrecognizedNames: [String] = []
+
         for food in foods {
             let resolution = await matcher.resolve(food: food)
+
+            // Don't log entries we couldn't match — GL=0/CL=0 would silently
+            // corrupt daily totals. Collect names and surface them as an error
+            // so the user can re-try with a more specific description.
+            if resolution.tier == .unrecognized {
+                unrecognizedNames.append(food.food)
+                continue
+            }
 
             // `food.loggedAt` is set when Claude detected a time phrase in the
             // transcript ("two hours ago", "yesterday at 5pm", …). Otherwise
@@ -63,6 +73,11 @@ final class FoodLogProcessor: ObservableObject {
                 computedCL: resolution.totalCL,
                 nutritionalProfile: resolution.primaryProfile
             )
+        }
+
+        if !unrecognizedNames.isEmpty {
+            let names = unrecognizedNames.map { "\"\($0)\"" }.joined(separator: ", ")
+            lastError = "Couldn't recognize \(names) — try a more specific name."
         }
 
         NotificationManager.shared.cancelTodayIfSufficientlyLogged(

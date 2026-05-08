@@ -41,6 +41,15 @@ git rebase origin/develop
 ```
 Worktrees do not auto-track their base branch. If new PRs land on `develop` after the worktree was created, the worktree branch stays frozen at its creation point. Failing to rebase means you build and test against stale code for the entire session, and only discover the drift at PR time. Rebase early, not just before opening the PR.
 
+## Design Philosophy
+
+**This is an app for users, not engineers.**
+
+- **Never surface algorithm internals.** Users should not see tier labels (T1, T2, etc.), match method names, or confidence scores in the main UI. These are implementation details. If an entry's confidence is low, that's the algorithm's problem to solve, not the user's — flag it quietly in a details view if at all.
+- **Never make the user fix the algorithm's mistakes.** Do not add "Refine match," "Override," or similar escape hatches that ask the user to do what the matching engine should have done automatically. If the algorithm gets it wrong, improve the algorithm.
+- **Reduce, don't expose.** When a feature exists to compensate for a technical limitation, remove the feature and fix the limitation instead.
+- **Fewer options, more confidence.** A well-designed app makes the right choice obvious, not the user's responsibility. Prefer single clear actions over menus with multiple paths.
+
 ## Behavior
 
 - **Ask before assuming.** When a task has multiple reasonable approaches (e.g. a new visualization style, a data model change, a refactor), ask a clarifying question first. Don't assume the user knows the tradeoffs — explain the options briefly and ask which direction they prefer.
@@ -172,8 +181,8 @@ without losing the time context.
 
 Getting these numbers right is the core purpose of the app. Several failure modes have been found and fixed; do not reintroduce them.
 
-**1. Never silently return GL = 0 / CL = 0 for an unrecognized food.**
-If matching fails, return `MatchTier.unrecognized` (T5) with explicit zeros and a red "Not recognized" badge. A false high-confidence match with zeroed values is worse than admitting failure — it silently corrupts daily totals.
+**1. Never log an unrecognized food.**
+If matching fails, `FoodLogProcessor` skips the entry entirely and sets `lastError` to name the unrecognized food(s) so the user can re-try with a more specific description. Logging a GL=0/CL=0 entry would silently corrupt daily totals. The `MatchTier.unrecognized` (T5) case is still returned by `FoodMatcher` as a sentinel; it is `FoodLogProcessor`'s responsibility to filter it out before calling `FoodLogRepository.create`.
 
 **2. USDA-only entries with real carbs must use GI = 55, not GI = 0.**
 `NutritionalProfile.glycemicIndex == 0` means "no Sydney GI entry", not "zero GI". If `carbsPer100g > 3` and `glycemicIndex == 0`, substitute GI = 55 (medium) before computing GL. Noodles and grains without a GI entry would otherwise report GL = 0.
@@ -246,7 +255,7 @@ The seeding code merges these by exact name: `usda?.carbs ?? gi.carbs ?? 0`. The
 All visualization views live under `GlycoTrack/UI/Visualizations/`.
 
 - **GL views** (unsigned, budget-based): `PhysicsBucketView` (SpriteKit physics — the only daily GL view), `WeeklyRiverView`, `MonthlyHeatmapView`.
-- **CL views** (signed, ±): `TugOfWarBarView` (SwiftUI stacked bar), `BalanceScaleView` (SpriteKit physics — pinned beam).
+- **CL views** (signed, ±): `BalanceScaleView` (SpriteKit physics — pinned beam). `TugOfWarBarView` was removed in PR #44.
 - **Combined**: `QuadrantPlotSection` (CL on X, GL on Y) — embedded on Week and Month tabs only (not the Home/Today tab). Despite the legacy "Quadrant" name, this is a **two-region** plot: only CL is signed, so the chart splits left/right at CL = 0 (left = beneficial, right = harmful) and grows upward from a GL = 0 baseline. Do not re-introduce a four-quadrant grid — the lower half would be permanently empty and would mislead readers into thinking "negative GL" is meaningful.
 
 `HomeTabView` shows a date navigator (chevrons + swipe left/right on the viz sections) that drives an `@FetchRequest` with a dynamic predicate for the selected day. Forward navigation is capped at today.
@@ -266,7 +275,7 @@ The `.id`-on-child-host pattern dodges both: SwiftUI's view-identity-reset seman
 
 **Replay triggers.** Physics scenes in `PhysicsBucketView` and `BalanceScaleView` rebuild (replaying the drop animation) when (a) the view appears — `.onAppear { replayNonce = UUID() }`, (b) the entry list changes — automatic via `entryIDs` being part of the scene key, (c) the displayed day changes — automatic via `dayKey` being part of the scene key, (d) the user taps Replay — bumps `replayNonce`. The scene key is wired into `.id(key)` on a private host view; the host's `init` constructs the scene from the current `entries` synchronously. See "Date-scoped physics scenes" above for why this pattern is required (other approaches deadlock on async ordering or SwiftUI render-order races).
 
-**Unified entry-interaction flow.** Every tap — visualization item, Log-tab row, river item, quadrant dot — opens `FoodEntryDetailSheet` first. The sheet shows an emoji header, prominent timestamp, GL/CL, tier/confidence, and raw transcript. It has an Edit button in the toolbar that presents `EditEntryView` (defined in `LogTab/LogTabView.swift`). Never open `EditEntryView` directly from a tap — always go through the detail sheet. `FoodEntryDetailSheet` uses `@ObservedObject var entry` so it refreshes after an edit.
+**Unified entry-interaction flow.** Every tap — visualization item, Log-tab row, river item, quadrant dot — opens `FoodEntryDetailSheet` first. The sheet shows an emoji header, prominent timestamp, GL/CL, and raw transcript. The toolbar has two direct buttons: a pencil (Edit) that presents `EditEntryView`, and a trash (Delete) that shows a confirmation dialog and soft-deletes. Never open `EditEntryView` directly from a tap — always go through the detail sheet. `FoodEntryDetailSheet` uses `@ObservedObject var entry` so it refreshes after an edit.
 
 `EditEntryView` includes a timestamp `DatePicker` (rounded to 30-minute intervals on Save, constrained to `...Date()` so users can't log future entries).
 

@@ -10,19 +10,10 @@ struct FoodEntryDetailSheet: View {
     @Environment(\.appTheme) private var theme
 
     @State private var showEdit: Bool = false
-    @State private var showPicker: Bool = false
+    @State private var showDeleteConfirmation: Bool = false
 
     private var glLevel: GLThresholdLevel { GLThresholdLevel.from(gl: entry.computedGL) }
     private var clIsBeneficial: Bool { entry.computedCL < 0 }
-
-    /// True for any entry whose match the matcher itself flagged as imperfect:
-    /// unrecognized (T5) or any tier with confidence below 0.70. Drives the
-    /// "Refine" toolbar button so high-confidence direct hits don't clutter
-    /// the toolbar with an option that almost no user would reach for.
-    private var canRefine: Bool {
-        entry.parsingMethod == MatchTier.unrecognized.rawValue
-            || entry.confidenceScore < 0.70
-    }
 
     private var timestampText: String {
         guard let ts = entry.timestamp else { return "" }
@@ -80,39 +71,38 @@ struct FoodEntryDetailSheet: View {
                     Button("Done") { dismiss() }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
-                    Menu {
-                        Button {
-                            showEdit = true
-                        } label: {
-                            Label("Edit details", systemImage: "pencil")
-                        }
-                        if canRefine {
-                            Button {
-                                showPicker = true
-                            } label: {
-                                Label("Refine match", systemImage: "wand.and.stars")
-                            }
-                        }
+                    Button {
+                        showEdit = true
                     } label: {
-                        // Single trailing button collapses Edit + Refine when
-                        // both are available, so the toolbar stays calm on a
-                        // narrow detail sheet. Falls back to a plain Edit
-                        // glyph + tap-to-menu for high-confidence rows.
-                        Image(systemName: "ellipsis.circle")
-                            .accessibilityLabel("More actions")
+                        Image(systemName: "pencil")
+                            .accessibilityLabel("Edit")
                     }
                 }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(role: .destructive) {
+                        showDeleteConfirmation = true
+                    } label: {
+                        Image(systemName: "trash")
+                            .accessibilityLabel("Delete")
+                    }
+                }
+            }
+            .confirmationDialog(
+                "Delete this entry?",
+                isPresented: $showDeleteConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Delete", role: .destructive) {
+                    FoodLogRepository(context: context).softDelete(entry)
+                    dismiss()
+                }
+            } message: {
+                Text("This entry will be removed from your log.")
             }
             .sheet(isPresented: $showEdit) {
                 NavigationStack {
                     EditEntryView(entry: entry, onDelete: { dismiss() })
                 }
-            }
-            .sheet(isPresented: $showPicker) {
-                FoodPickerView { profile in
-                    EntryRefiner.refine(entry: entry, to: profile, context: context)
-                }
-                .environment(\.managedObjectContext, context)
             }
         }
     }
@@ -122,7 +112,7 @@ struct FoodEntryDetailSheet: View {
             HStack(spacing: 14) {
                 ZStack {
                     RoundedRectangle(cornerRadius: theme.cardCornerRadius * 0.7, style: .continuous)
-                        .fill(theme == .midnight ? Color.white.opacity(0.07) : Color(.systemGray6))
+                        .fill(Color(.systemGray6))
                         .frame(width: 84, height: 84)
                     Text(FoodEmoji.resolve(entry: entry))
                         .font(.system(size: 52))
@@ -163,7 +153,7 @@ struct FoodEntryDetailSheet: View {
         .padding(14)
         .background(
             RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
-                .fill(color.opacity(theme == .midnight ? 0.12 : 0.08))
+                .fill(color.opacity(0.08))
         )
         .overlay(
             RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
@@ -187,7 +177,7 @@ struct FoodEntryDetailSheet: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
-                .fill(theme == .midnight ? Color.white.opacity(0.06) : Color(.systemGray6))
+                .fill(Color(.systemGray6))
         )
     }
 
@@ -197,8 +187,7 @@ struct FoodEntryDetailSheet: View {
             return "Not recognized — GL and CL set to 0"
         }
         let pct = Int((entry.confidenceScore * 100).rounded())
-        let tierName = tier?.longLabel ?? "Unknown"
-        return "\(pct)% · \(tierName) (T\(entry.parsingMethod))"
+        return "\(pct)% confidence"
     }
 
     private func detailRow(_ label: String, _ value: String) -> some View {
@@ -227,7 +216,7 @@ struct FoodEntryDetailSheet: View {
         .padding()
         .background(
             RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
-                .fill(theme == .midnight ? Color.white.opacity(0.06) : Color(.systemGray6))
+                .fill(Color(.systemGray6))
         )
     }
 }
