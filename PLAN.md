@@ -63,8 +63,8 @@ glyco-track/
 
 ### Phase 0: Foundation ✅ COMPLETE
 ### Phase 1: Data Layer ✅ COMPLETE
-- `gi_database.json` — **782 entries** (288 carry a `carbs` fallback field for GL computation when no USDA match exists)
-- `usda_nutrition.json` — **516 entries** ⚠️ stretch target ~7793
+- `gi_database.json` — **1081 entries** (all carry a `carbs` fallback field for GL computation when no USDA match exists)
+- `usda_nutrition.json` — **813 entries** ⚠️ stretch target ~7793
 ### Phase 2: Engines ✅ COMPLETE
 ### Phase 3: Claude API Integration ✅ COMPLETE
 ### Phase 4: Voice + Widget ✅ COMPLETE
@@ -108,7 +108,7 @@ These features are degraded when sideloaded with a free developer account and ca
 ## Known Limitations (post-MVP)
 
 - `NotificationManager.cancelTodayIfSufficientlyLogged` removes the repeating trigger; future-day notifications only resume when the user opens the app. Users who don't open the app the day after cancelling will miss one notification.
-- `usda_nutrition.json` has 516 entries vs DESIGN target of 7,793. Foods without USDA data get CL=0; those without USDA carbs now fall back to the `carbs` field on the GI entry (added in #55). Expansion is a post-MVP stretch goal.
+- `usda_nutrition.json` has 813 entries vs DESIGN target of 7,793. Foods without USDA data get CL=0; those without USDA carbs fall back to the `carbs` field on the GI entry (added in #55). Further expansion remains a post-MVP stretch goal.
 - Widget shows empty GL data without App Groups (personal team limitation).
 
 ---
@@ -188,6 +188,9 @@ Tracks merged PRs that materially shape the product after the initial MVP deploy
 | #55 | Fix GL/CL accuracy: fuzzy matching, DB data gaps, missing entries | Voice log audit found 3 systemic issues: (1) fuzzy Levenshtein threshold too permissive — now uses normalized distance `d/max_len ≤ 0.30`; (2) 288/779 GI entries had `carbsPer100g=0` from failed USDA name-merge — added `carbs` fallback field to `gi_database.json` and `usda?.carbs ?? gi.carbs ?? 0` seeding chain; (3) 15 new USDA + 3 new GI entries for commonly-logged foods. 16 regression tests added. |
 | #54 | Add three-theme UI system: Clinical, Organic, Midnight | Three selectable app themes with distinct color palettes, typography, spacing, and tab-bar styling. Persisted via `ThemeManager` + `UserDefaults`. Subsequently collapsed to Organic-only in PR #56. |
 | #56 | UI polish: inline search, Organic-only theme, direct delete, cleaner log rows | (1) Search bar moved to a pinned inline field above the log list. (2) Clinical and Midnight themes removed; app is Organic-only with a serif font; `ThemeManager` deleted. (3) `FoodEntryDetailSheet` toolbar gains direct Edit (pencil) and Delete (trash) buttons — no more `…` menu. (4) "Refine match" removed — algorithm should handle accuracy, not the user. (5) T1/T2 tier labels and "Refine" chip removed from log rows; only "Not recognized" badge remained, then also removed (see below). (6) Unrecognized entries (T5) are now silently dropped by `FoodLogProcessor` and surfaced as a user-facing error rather than logged as GL=0/CL=0. Design philosophy added to `CLAUDE.md`. |
+| #57 | Remove stats panels; add pickle to nutrition DB | Stats panels removed from Week/Month tabs. Pickle entry added to `usda_nutrition.json`. |
+| #58 | Expand test suite: threshold boundaries, fuzzy confidence, Codable, word-boundary | 32 new tests across all four test files pinning documented invariants: GL threshold boundaries (10/11/19/20), case-insensitive lookup, fuzzy confidence tiers (d=1→0.80, d=2→0.70, d=3→0.55, d>3→T3 fallback), CL neutral-band boundaries, `ParsedFood` Codable round-trips, `decomposeIngredients` gram rounding, `wordBoundaryContains` edge cases, `detectGrainQualifier`, `coverageFraction`, and `findComponents`. |
+| #59 | Expand food databases: global ethnic cuisine coverage + regression test suite | `gi_database.json` 782→1081 entries; `usda_nutrition.json` 516→813 entries. ~15 cuisine categories added: Chinese/Dim Sum, Japanese, Korean, Thai, Indian, Middle Eastern, Mexican/TexMex, Filipino, Malaysian/Singaporean, Indonesian, Vietnamese, South American, African, and global beverages. 65 existing entries enriched with variant aliases. Every new entry carries a `carbs` inline field and a matching USDA macro record for full GL+CL computation. Accuracy fix: removed "bubble tea"/"boba tea" aliases from "milk tea" (GI 38, 8.5g carbs) — boba/bubble tea (GI 77, 22g carbs) is a distinct higher-GL drink. Adds `EthnicFoodCoverageTests.swift` (248 tests): GL/CL non-zero assertions, alias routing checks, word-boundary safety (mirin≠miso, kofta≠tofu, etc.), seeding completeness guard (≥1080 profiles). |
 
 ---
 
