@@ -38,8 +38,9 @@ targets:
     entitlements:
       path: GlycoTrack/GlycoTrack.entitlements
       properties: {}
-    dependencies:
-      - target: GlycoTrackWidget
+    dependencies: []
+    # Widget dependency removed for 1.0 — App Groups entitlement requires paid team.
+    # Re-add `- target: GlycoTrackWidget` here when enabling for 1.1.
 
   GlycoTrackWidget:
     type: app-extension
