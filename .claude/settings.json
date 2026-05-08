@@ -9,6 +9,39 @@
             "command": ".claude/hooks/check-plan-updated.sh"
           }
         ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/check-engine-sync.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/regen-build-info.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/run-tests-on-engine-edit.sh"
+          },
+          {
+            "type": "command",
+            "command": ".claude/hooks/remind-claudemd-on-arch-edit.sh"
+          }
+        ]
       }
     ]
   }
