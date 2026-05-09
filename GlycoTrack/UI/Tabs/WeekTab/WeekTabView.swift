@@ -6,6 +6,10 @@ struct WeekTabView: View {
     @State private var selectedWeekStart: Date = WeekTabView.mondayWeekStart(for: Date())
     @State private var selectedEntry: FoodLogEntry?
 
+    /// Called when the user taps an empty day column in the river view.
+    /// RootTabView uses this to jump to the Today tab at that date.
+    let onDayTapped: (Date) -> Void
+
     @FetchRequest private var weekEntries: FetchedResults<FoodLogEntry>
 
     /// Earliest logged entry — used to clamp backward week navigation.
@@ -18,7 +22,8 @@ struct WeekTabView: View {
     )
     private var allEntriesAsc: FetchedResults<FoodLogEntry>
 
-    init() {
+    init(onDayTapped: @escaping (Date) -> Void = { _ in }) {
+        self.onDayTapped = onDayTapped
         let weekStart = Self.mondayWeekStart(for: Date())
         _weekEntries = FetchRequest<FoodLogEntry>(
             sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
@@ -28,10 +33,6 @@ struct WeekTabView: View {
     }
 
     var body: some View {
-        // `NavigationStack` (iOS 16+) replaces the deprecated `NavigationView`.
-        // The old container intermittently dropped the large title on tab
-        // switch — most visibly on this tab because of its three @FetchRequest
-        // instances + heavy sub-tree (river + period + comparison + quadrant).
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
@@ -41,7 +42,8 @@ struct WeekTabView: View {
                     WeeklyRiverView(
                         entries: Array(weekEntries),
                         weekStart: selectedWeekStart,
-                        onTap: { selectedEntry = $0 }
+                        onTap: { selectedEntry = $0 },
+                        onDayTap: { date in onDayTapped(date) }
                     )
                     .padding(.horizontal, 4)
 
@@ -55,6 +57,7 @@ struct WeekTabView: View {
             }
             .background(theme.pageBackground.ignoresSafeArea())
             .navigationTitle("Your Week")
+            .gesture(weekSwipe)
             .sheet(item: $selectedEntry) { entry in
                 FoodEntryDetailSheet(entry: entry)
             }
@@ -111,6 +114,20 @@ struct WeekTabView: View {
                 Color.clear.frame(width: 32, height: 32)
             }
         }
+    }
+
+    private var weekSwipe: some Gesture {
+        DragGesture(minimumDistance: 20)
+            .onEnded { value in
+                let dx = value.translation.width
+                let dy = value.translation.height
+                guard abs(dx) > 60, abs(dx) > abs(dy) * 1.5 else { return }
+                if dx < 0 {
+                    changeWeek(by: 1)
+                } else {
+                    changeWeek(by: -1)
+                }
+            }
     }
 
     private var isCurrentWeek: Bool {

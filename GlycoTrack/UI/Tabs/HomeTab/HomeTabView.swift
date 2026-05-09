@@ -20,19 +20,21 @@ struct HomeTabView: View {
     )
     private var allEntriesAsc: FetchedResults<FoodLogEntry>
 
-    @State private var selectedDate: Date = Calendar.current.startOfDay(for: Date())
+    /// Hoisted to RootTabView so the Week tab can jump to a specific day.
+    @Binding var selectedDate: Date
     @State private var showMore: Bool = false
 
     /// Reactive binding to the user's GL budget so the bucket / status chip
     /// re-render when the value changes in Settings.
     @AppStorage(AppSettings.dailyGLBudgetKey) private var glBudget: Double = AppSettings.defaultDailyGLBudget
 
-    init(voiceCapture: VoiceCapture, logProcessor: FoodLogProcessor) {
+    init(voiceCapture: VoiceCapture, logProcessor: FoodLogProcessor, selectedDate: Binding<Date>) {
         self.voiceCapture = voiceCapture
         self.logProcessor = logProcessor
+        _selectedDate = selectedDate
         _entries = FetchRequest<FoodLogEntry>(
             sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: false)],
-            predicate: Self.predicate(for: Date()),
+            predicate: Self.predicate(for: selectedDate.wrappedValue),
             animation: .default
         )
     }

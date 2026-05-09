@@ -73,6 +73,7 @@ struct MonthTabView: View {
             }
             .background(theme.pageBackground.ignoresSafeArea())
             .navigationTitle("Your Month")
+            .gesture(monthSwipe)
             .sheet(item: $selectedEntry) { entry in
                 FoodEntryDetailSheet(entry: entry)
             }
@@ -115,6 +116,20 @@ struct MonthTabView: View {
     private func entries(for date: Date) -> [FoodLogEntry] {
         let cal = Calendar.current
         return allEntries.filter { cal.isDate($0.timestamp ?? Date(), inSameDayAs: date) }
+    }
+
+    private var monthSwipe: some Gesture {
+        DragGesture(minimumDistance: 20)
+            .onEnded { value in
+                let dx = value.translation.width
+                let dy = value.translation.height
+                guard abs(dx) > 60, abs(dx) > abs(dy) * 1.5 else { return }
+                if dx < 0, !isCurrentMonth {
+                    shiftMonth(by: 1)
+                } else if dx > 0, !isEarliestMonth {
+                    shiftMonth(by: -1)
+                }
+            }
     }
 
     private func shiftMonth(by delta: Int) {
