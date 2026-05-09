@@ -27,4 +27,18 @@ enum AppSettings {
         guard stored.isFinite, stored > 0 else { return defaultDailyGLBudget }
         return min(max(stored, dailyGLBudgetRange.lowerBound), dailyGLBudgetRange.upperBound)
     }
+
+    // MARK: - Physics sandbox
+
+    /// Gravity magnitude applied to both the GL bucket and CL balance scenes.
+    /// Higher = objects accelerate faster and roll more aggressively when you
+    /// tilt the phone. Lower = slow, floaty movement.
+    static let physicsGravityKey = "physicsGravity"
+    static let defaultPhysicsGravity: Double = 9.0
+    static let physicsGravityRange: ClosedRange<Double> = 1...20
+
+    /// Haptic intensity on item collisions (0 = silent, 1 = full impact).
+    static let physicsHapticsKey = "physicsHaptics"
+    static let defaultPhysicsHaptics: Double = 0.8
+    static let physicsHapticsRange: ClosedRange<Double> = 0...1
 }

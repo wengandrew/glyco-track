@@ -19,6 +19,8 @@ struct PhysicsBucketView: View {
     /// geometry — `areaPerUnit` and the "78% fill at full budget" rule —
     /// re-derives to match.
     @AppStorage(AppSettings.dailyGLBudgetKey) private var budget: Double = AppSettings.defaultDailyGLBudget
+    @AppStorage(AppSettings.physicsGravityKey) private var physicsGravity: Double = AppSettings.defaultPhysicsGravity
+    @AppStorage(AppSettings.physicsHapticsKey) private var physicsHaptics: Double = AppSettings.defaultPhysicsHaptics
 
     @State private var selectedEntry: FoodLogEntry?
     /// Bumped to force a rebuild without an input change (Replay button, tab
@@ -63,13 +65,17 @@ struct PhysicsBucketView: View {
                 entryIDs: entryIDs,
                 width: geo.size.width,
                 height: geo.size.height,
-                budget: budget
+                budget: budget,
+                gravity: physicsGravity,
+                haptics: physicsHaptics
             )
             ZStack {
                 BucketSceneHost(
                     entries: entries,
                     size: geo.size,
                     budget: budget,
+                    gravity: physicsGravity,
+                    haptics: physicsHaptics,
                     onTap: { selectedEntry = $0 }
                 )
                 .id(key)
@@ -111,8 +117,8 @@ private struct BucketSceneHost: View {
     let entries: [FoodLogEntry]
     let budget: Double
 
-    init(entries: [FoodLogEntry], size: CGSize, budget: Double, onTap: @escaping (FoodLogEntry) -> Void) {
-        let s = BucketScene(size: size, entries: entries, budget: budget)
+    init(entries: [FoodLogEntry], size: CGSize, budget: Double, gravity: Double, haptics: Double, onTap: @escaping (FoodLogEntry) -> Void) {
+        let s = BucketScene(size: size, entries: entries, budget: budget, gravity: gravity, haptics: haptics)
         s.scaleMode = .resizeFill
         s.onBubbleTapped = onTap
         _scene = State(initialValue: s)
@@ -171,6 +177,8 @@ private struct SceneKey: Hashable {
     let width: CGFloat
     let height: CGFloat
     let budget: Double
+    let gravity: Double
+    let haptics: Double
 }
 
 struct GLStatusLabel: View {
@@ -201,12 +209,12 @@ final class BucketScene: SKScene, SKPhysicsContactDelegate {
     private let budget: Double
     var onBubbleTapped: ((FoodLogEntry) -> Void)?
 
-    private let haptics = SceneHaptics()
+    private let haptics: SceneHaptics
     /// Magnitude of the gravity vector applied to the world (points / s²
     /// in SpriteKit's odd unit system). The accelerometer-driven direction
     /// is multiplied by this each frame so the bucket items roll toward
     /// real-world gravity as the user tilts the device.
-    private let gravityMagnitude: CGFloat = 9.0
+    private let gravityMagnitude: CGFloat
     private var motionRetained: Bool = false
 
     // Bucket geometry as fractions of scene size.
@@ -226,9 +234,11 @@ final class BucketScene: SKScene, SKPhysicsContactDelegate {
 
     private var nodeToEntry: [ObjectIdentifier: FoodLogEntry] = [:]
 
-    init(size: CGSize, entries: [FoodLogEntry], budget: Double) {
+    init(size: CGSize, entries: [FoodLogEntry], budget: Double, gravity: Double = AppSettings.defaultPhysicsGravity, haptics: Double = AppSettings.defaultPhysicsHaptics) {
         self.entries = entries.sorted { $0.computedGL > $1.computedGL } // heavy first → small ones pack on top
         self.budget = budget
+        self.gravityMagnitude = CGFloat(gravity)
+        self.haptics = SceneHaptics(intensity: haptics)
 
         let bucketArea = size.width * bucketWidthFrac * size.height * bucketHeightFrac
         self.areaPerUnit = (bucketArea * packingFactor) / CGFloat(max(budget, 1))

@@ -8,6 +8,8 @@ struct SceneKeyCL: Hashable {
     let entryIDs: [UUID]
     let width: CGFloat
     let height: CGFloat
+    let gravity: Double
+    let haptics: Double
 }
 
 struct CLNetLabel: View {
@@ -38,6 +40,9 @@ struct BalanceScaleView: View {
     /// mirrors the fix in PhysicsBucketView for the swipe-back-to-today stale
     /// bubbles bug.
     let dateKey: Date?
+
+    @AppStorage(AppSettings.physicsGravityKey) private var physicsGravity: Double = AppSettings.defaultPhysicsGravity
+    @AppStorage(AppSettings.physicsHapticsKey) private var physicsHaptics: Double = AppSettings.defaultPhysicsHaptics
 
     @State private var selectedEntry: FoodLogEntry?
     /// Bumped to force a scene rebuild on tab re-appearance. Day/entries changes
@@ -75,12 +80,16 @@ struct BalanceScaleView: View {
                     dayKey: dayKey,
                     entryIDs: entryIDs,
                     width: geo.size.width,
-                    height: geo.size.height
+                    height: geo.size.height,
+                    gravity: physicsGravity,
+                    haptics: physicsHaptics
                 )
                 ZStack {
                     BalanceSceneHost(
                         entries: entries,
                         size: geo.size,
+                        gravity: physicsGravity,
+                        haptics: physicsHaptics,
                         onTap: { selectedEntry = $0 }
                     )
                     .id(key)
@@ -112,8 +121,8 @@ private struct BalanceSceneHost: View {
     @State private var scene: BalanceScene
     let entries: [FoodLogEntry]
 
-    init(entries: [FoodLogEntry], size: CGSize, onTap: @escaping (FoodLogEntry) -> Void) {
-        let s = BalanceScene(size: size, entries: entries)
+    init(entries: [FoodLogEntry], size: CGSize, gravity: Double, haptics: Double, onTap: @escaping (FoodLogEntry) -> Void) {
+        let s = BalanceScene(size: size, entries: entries, gravity: gravity, haptics: haptics)
         s.scaleMode = .resizeFill
         s.onItemTapped = onTap
         _scene = State(initialValue: s)
@@ -163,7 +172,8 @@ final class BalanceScene: SKScene, SKPhysicsContactDelegate {
 
     private var beamNode: SKNode?
     private var nodeToEntry: [ObjectIdentifier: FoodLogEntry] = [:]
-    private let haptics = SceneHaptics()
+    private let haptics: SceneHaptics
+    private let gravityMagnitude: CGFloat
 
     // Tuning
     private let areaPerCLUnit: CGFloat = 220
@@ -175,8 +185,10 @@ final class BalanceScene: SKScene, SKPhysicsContactDelegate {
     private var lockJoint: SKPhysicsJointFixed?
     private var pinJoint: SKPhysicsJointPin?
 
-    init(size: CGSize, entries: [FoodLogEntry]) {
+    init(size: CGSize, entries: [FoodLogEntry], gravity: Double = AppSettings.defaultPhysicsGravity, haptics: Double = AppSettings.defaultPhysicsHaptics) {
         self.entries = entries
+        self.gravityMagnitude = CGFloat(gravity)
+        self.haptics = SceneHaptics(intensity: haptics)
         super.init(size: size)
     }
 
@@ -186,7 +198,7 @@ final class BalanceScene: SKScene, SKPhysicsContactDelegate {
         backgroundColor = .clear
         view.allowsTransparency = true
 
-        physicsWorld.gravity = CGVector(dx: 0, dy: -8.0)
+        physicsWorld.gravity = CGVector(dx: 0, dy: -gravityMagnitude)
         physicsWorld.speed = 1.0
         physicsWorld.contactDelegate = self
 

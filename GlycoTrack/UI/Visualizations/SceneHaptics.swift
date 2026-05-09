@@ -17,8 +17,10 @@ import UIKit
 final class SceneHaptics {
     private let generator = UIImpactFeedbackGenerator(style: .light)
     private var firedNodes: Set<ObjectIdentifier> = []
+    private let intensity: CGFloat
 
-    init() {
+    init(intensity: Double = 1.0) {
+        self.intensity = CGFloat(max(0, min(1, intensity)))
         // Pre-warm the engine so the first impact isn't delayed while the
         // taptic engine spins up. Cheap; ARC-safe to leave alive for the
         // scene's lifetime.
@@ -36,7 +38,9 @@ final class SceneHaptics {
             guard let node = body.node else { continue }
             guard node.name == "item" || node.name == "bubble" else { continue }
             if firedNodes.insert(ObjectIdentifier(node)).inserted {
-                generator.impactOccurred()
+                if intensity > 0 {
+                    generator.impactOccurred(intensity: intensity)
+                }
                 return
             }
         }

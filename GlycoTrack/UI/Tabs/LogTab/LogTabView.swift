@@ -297,7 +297,7 @@ struct ManualEntryView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section("What did you eat?") {
+                Section("Type what you ate (manual entry)") {
                     TextEditor(text: $foodText)
                         .frame(height: 80)
                 }
