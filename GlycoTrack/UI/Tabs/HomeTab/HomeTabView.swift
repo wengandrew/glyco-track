@@ -306,12 +306,6 @@ extension MetricSection where Trailing == EmptyView {
     }
 }
 
-extension Color {
-    /// Shared GL accent: deep blue (carbs / water drop).
-    static let glAccent = Color(red: 0.16, green: 0.42, blue: 0.82)
-    /// Shared CL accent: crimson (heart).
-    static let clAccent = Color(red: 0.83, green: 0.22, blue: 0.35)
-}
 
 // Shared `DateFormatter.short` / `.weekdayMonthDay` live in
 // `UI/Theme/DateFormatters.swift`.

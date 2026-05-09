@@ -11,10 +11,11 @@ struct SceneKeyCL: Hashable {
 }
 
 struct CLNetLabel: View {
+    @Environment(\.appTheme) private var theme
     let netCL: Double
 
     var body: some View {
-        let color: Color = netCL > 0 ? .clAccent : .green
+        let color: Color = netCL > 0 ? theme.clAccent : theme.beneficialColor
         return HStack(spacing: 5) {
             Image(systemName: netCL > 0 ? "arrow.up.circle.fill" : "arrow.down.circle.fill")
                 .foregroundColor(color)

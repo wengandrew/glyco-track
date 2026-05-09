@@ -26,8 +26,6 @@ enum AppTheme: String {
 
     // MARK: - Card Style
 
-    var cardBorderWidth: CGFloat { 0 }
-    var cardBorderColor: Color { .clear }
     var cardShadowRadius: CGFloat { 12 }
     var cardShadowOpacity: Double { 0.08 }
 

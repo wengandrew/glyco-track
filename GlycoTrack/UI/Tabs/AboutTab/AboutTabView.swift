@@ -10,6 +10,8 @@ import SwiftUI
 /// About pane content. Hosted inside `MoreSheet`'s segmented control — no
 /// `NavigationView` wrapper here.
 struct AboutPaneView: View {
+    @Environment(\.appTheme) private var theme
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
@@ -55,7 +57,7 @@ The two don't always agree. White rice is high-GL but nearly-zero-CL. Olive oil 
     }
 
     private var glMathSection: some View {
-        sectionCard(title: "The GL formula", icon: "drop.fill", accent: .glAccent) {
+        sectionCard(title: "The GL formula", icon: "drop.fill", accent: theme.glAccent) {
             VStack(alignment: .leading, spacing: 10) {
                 formula("GL = (GI × carbs_in_serving) / 100")
 
@@ -76,7 +78,7 @@ Daily GL budget defaults to **100**. A single food over 20 GL is considered *hig
     }
 
     private var clMathSection: some View {
-        sectionCard(title: "The CL formula", icon: "heart.fill", accent: .clAccent) {
+        sectionCard(title: "The CL formula", icon: "heart.fill", accent: theme.clAccent) {
             VStack(alignment: .leading, spacing: 10) {
                 formula("""
 CL = (SFA × 1.0) + (TFA × 2.0)
