@@ -40,11 +40,11 @@ struct QuadrantPlotSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("GL × CL")
+            Text("Food Impact Map")
                 .font(.headline)
                 .padding(.horizontal)
 
-            Text("Goal: keep your foods low and to the left.")
+            Text("Low and left = best. Right = heart risk. Up = blood sugar impact.")
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .padding(.horizontal)
