@@ -15,7 +15,7 @@ struct HomeTabView: View {
     // Earliest logged entry ever — used to clamp backward date navigation.
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
-        predicate: NSPredicate(format: "isSoftDeleted == NO"),
+        predicate: NSPredicate(format: "isSoftDeleted == NO AND timestamp != nil"),
         animation: .default
     )
     private var allEntriesAsc: FetchedResults<FoodLogEntry>

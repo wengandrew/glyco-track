@@ -11,17 +11,10 @@ struct MonthTabView: View {
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
-        predicate: NSPredicate(format: "isSoftDeleted == NO"),
-        animation: .default
-    )
-    private var allEntries: FetchedResults<FoodLogEntry>
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
         predicate: NSPredicate(format: "isSoftDeleted == NO AND timestamp != nil"),
         animation: .default
     )
-    private var allEntriesAsc: FetchedResults<FoodLogEntry>
+    private var allEntries: FetchedResults<FoodLogEntry>
 
     var body: some View {
         NavigationStack {
@@ -87,7 +80,7 @@ struct MonthTabView: View {
     }
 
     private var earliestLoggedMonth: Date? {
-        guard let first = allEntriesAsc.first, let ts = first.timestamp else { return nil }
+        guard let first = allEntries.first, let ts = first.timestamp else { return nil }
         return Calendar.current.startOfMonth(for: ts)
     }
 
