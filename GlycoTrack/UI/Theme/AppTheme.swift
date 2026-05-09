@@ -16,7 +16,7 @@ enum AppTheme: String {
 
     // MARK: - Typography
 
-    var fontDesign: Font.Design { .serif }
+    var fontDesign: Font.Design { .default }
     var metricFontDesign: Font.Design { .rounded }
 
     // MARK: - Geometry
@@ -26,8 +26,6 @@ enum AppTheme: String {
 
     // MARK: - Card Style
 
-    var cardBorderWidth: CGFloat { 0 }
-    var cardBorderColor: Color { .clear }
     var cardShadowRadius: CGFloat { 12 }
     var cardShadowOpacity: Double { 0.08 }
 
@@ -50,22 +48,6 @@ enum AppTheme: String {
         return "Good evening"
     }
 
-    // MARK: - Daily insight
-
-    func dailyInsight(totalGL: Double, budget: Double, netCL: Double, entryCount: Int) -> String? {
-        guard entryCount > 0 else { return nil }
-        let safeBudget = max(budget, 1)
-        guard safeBudget.isFinite, totalGL.isFinite else { return nil }
-        let fraction = totalGL / safeBudget
-        if fraction < 0.5 && netCL < 0 {
-            return "Great balance today! Keep it up."
-        } else if fraction > 1.0 {
-            return "You've gone over your GL target. Consider lighter options."
-        } else if netCL > 2 {
-            return "CL is running high. Try adding some fiber."
-        }
-        return "You're doing well. \(Int((1.0 - fraction) * 100))% GL budget remaining."
-    }
 }
 
 // MARK: - Environment Key

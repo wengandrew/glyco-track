@@ -40,19 +40,27 @@ struct MoreSheet: View {
 
                 content
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            .navigationTitle(pane.label)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Done") { dismiss() }
-                        .fontWeight(.semibold)
-                }
-                if pane == .debug {
-                    ToolbarItem(placement: .primaryAction) {
+
+                VStack(spacing: 8) {
+                    if pane == .debug {
                         Button("Export JSON") { debugExportRequested = true }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(Color(.systemGray5))
+                            .cornerRadius(10)
+                    }
+                    Button(action: { dismiss() }) {
+                        Text("Done")
+                            .fontWeight(.semibold)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                            .background(Color.accentColor)
+                            .foregroundColor(.white)
+                            .cornerRadius(12)
                     }
                 }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
             }
         }
     }

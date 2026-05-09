@@ -11,10 +11,11 @@ struct SceneKeyCL: Hashable {
 }
 
 struct CLNetLabel: View {
+    @Environment(\.appTheme) private var theme
     let netCL: Double
 
     var body: some View {
-        let color: Color = netCL > 0 ? .clAccent : .green
+        let color: Color = netCL > 0 ? theme.clAccent : theme.beneficialColor
         return HStack(spacing: 5) {
             Image(systemName: netCL > 0 ? "arrow.up.circle.fill" : "arrow.down.circle.fill")
                 .foregroundColor(color)
@@ -39,9 +40,8 @@ struct BalanceScaleView: View {
     let dateKey: Date?
 
     @State private var selectedEntry: FoodLogEntry?
-    /// Bumped to force a rebuild without an input change (Replay button, tab
-    /// re-appearance). Day/entries changes force a rebuild automatically via the
-    /// scene key — this nonce only covers the "same inputs, replay anyway" cases.
+    /// Bumped to force a scene rebuild on tab re-appearance. Day/entries changes
+    /// force a rebuild automatically via the scene key.
     @State private var replayNonce = UUID()
 
     init(entries: [FoodLogEntry], dateKey: Date? = nil) {
@@ -94,14 +94,6 @@ struct BalanceScaleView: View {
             HStack {
                 Label("Beneficial", systemImage: "leaf.fill")
                     .font(.caption2).foregroundColor(.green.opacity(0.8))
-                Spacer()
-                Button {
-                    replayNonce = UUID()
-                } label: {
-                    Label("Replay", systemImage: "arrow.clockwise")
-                        .font(.caption2)
-                        .foregroundColor(.accentColor)
-                }
                 Spacer()
                 Label("Harmful", systemImage: "exclamationmark.triangle.fill")
                     .font(.caption2).foregroundColor(.red.opacity(0.8))
