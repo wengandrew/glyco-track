@@ -95,14 +95,6 @@ struct BalanceScaleView: View {
                 Label("Beneficial", systemImage: "leaf.fill")
                     .font(.caption2).foregroundColor(.green.opacity(0.8))
                 Spacer()
-                Button {
-                    replayNonce = UUID()
-                } label: {
-                    Label("Replay", systemImage: "arrow.clockwise")
-                        .font(.caption2)
-                        .foregroundColor(.accentColor)
-                }
-                Spacer()
                 Label("Harmful", systemImage: "exclamationmark.triangle.fill")
                     .font(.caption2).foregroundColor(.red.opacity(0.8))
             }

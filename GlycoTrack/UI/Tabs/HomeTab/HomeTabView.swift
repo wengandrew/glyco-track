@@ -45,9 +45,6 @@ struct HomeTabView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 22) {
-                    // ── GREETING / INSIGHT ───────────────────────
-                    greetingHeader(totalGL: totalGL, netCL: netCL, entryCount: entryArray.count)
-
                     // ── GL SECTION ───────────────────────────────
                     MetricSection(
                         title: "Glycemic Load",
@@ -108,44 +105,6 @@ struct HomeTabView: View {
                 changeDate(to: Calendar.current.startOfDay(for: Date()))
             }
         }
-    }
-
-    // MARK: - Greeting header
-
-    @ViewBuilder
-    private func greetingHeader(totalGL: Double, netCL: Double, entryCount: Int) -> some View {
-        if let insight = theme.dailyInsight(totalGL: totalGL, budget: glBudget, netCL: netCL, entryCount: entryCount) {
-            HStack(spacing: 10) {
-                Image(systemName: insightIcon(totalGL: totalGL, netCL: netCL))
-                    .font(.system(size: 14, weight: .medium))
-                    .foregroundColor(insightColor(totalGL: totalGL, netCL: netCL))
-                Text(insight)
-                    .font(.system(.subheadline, design: theme.fontDesign, weight: .medium))
-                    .foregroundColor(.secondary)
-                Spacer()
-            }
-            .padding(.horizontal, 18)
-            .padding(.vertical, 10)
-            .background(
-                RoundedRectangle(cornerRadius: theme.chipCornerRadius, style: .continuous)
-                    .fill(insightColor(totalGL: totalGL, netCL: netCL).opacity(0.08))
-            )
-            .padding(.horizontal, 12)
-        }
-    }
-
-    private func insightIcon(totalGL: Double, netCL: Double) -> String {
-        let fraction = totalGL / max(glBudget, 1)
-        if fraction > 1.0 { return "exclamationmark.triangle" }
-        if fraction < 0.5 && netCL < 0 { return "checkmark.circle" }
-        return "info.circle"
-    }
-
-    private func insightColor(totalGL: Double, netCL: Double) -> Color {
-        let fraction = totalGL / max(glBudget, 1)
-        if fraction > 1.0 { return theme.harmfulColor }
-        if fraction < 0.5 && netCL < 0 { return theme.beneficialColor }
-        return theme.primaryAccent
     }
 
     // MARK: - Date navigation

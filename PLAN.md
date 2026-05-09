@@ -178,6 +178,7 @@ All PRs target `develop`. Listed in merge order.
 | #57 | Remove stats panels; add pickle | Stats panels removed from Week/Month. Pickle added to `usda_nutrition.json`. |
 | #58 | Expand test suite | 32 new tests: GL threshold boundaries, fuzzy confidence tiers, CL neutral-band edges, `ParsedFood` Codable round-trips, `wordBoundaryContains` edge cases, `detectGrainQualifier`, `coverageFraction`, `findComponents`. |
 | #59 | Expand food databases: global ethnic cuisine + regression suite | `gi_database.json` 782→1081; `usda_nutrition.json` 516→813. ~15 cuisine categories (Chinese/Dim Sum, Japanese, Korean, Thai, Indian, Middle Eastern, Mexican, Filipino, Malaysian, Indonesian, Vietnamese, South American, African, global beverages). 65 existing entries enriched with aliases. `EthnicFoodCoverageTests.swift` (247 tests). Pre-PR hook blocks `gh pr create` if PLAN.md is unmodified. |
+| #62 | UI/UX cleanup | Removed: daily insight banner ("Great balance today!"), progress bar + Replay buttons from bucket/balance views, "100 GL" label inside bucket, redundant Settings sheet title. Font changed from serif → system default (SF) throughout; `metricFontDesign` stays `.rounded`. Week timeline redesigned: unified warm background, thin vertical separators, today-column highlight, rounded grid corners. Done/Export buttons moved to bottom of Settings sheet. |
 
 ---
 

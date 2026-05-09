@@ -32,7 +32,6 @@ struct PhysicsBucketView: View {
     }
 
     private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
-    private var fillFraction: Double { min(totalGL / budget, 1.0) }
     private var entryIDs: [UUID] { entries.compactMap { $0.id } }
     /// Day-bucket of `dateKey` (or distantPast if unset). Intra-day time changes
     /// don't force extra rebuilds, but day-to-day navigation does.
@@ -42,80 +41,49 @@ struct PhysicsBucketView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            GeometryReader { geo in
-                // The scene key is a pure function of the reactive inputs.
-                //
-                // Why we use `.id(key)` on a child view + `@State` scene built at init,
-                // instead of `.task(id: key)` writing to the parent's `@State scene`:
-                //
-                //   `.task(id:)` cancels-and-restarts when id changes, but with a
-                //   synchronous body (no awaits / cancellation checks), BOTH the stale
-                //   and fresh tasks run to completion. Their finish order is undefined,
-                //   so the stale one can land last and overwrite the fresh scene. The
-                //   user-visible bug was "always one day behind on swipe".
-                //
-                //   `.id(key)` on a child view forces SwiftUI to tear down and re-init
-                //   that child whenever the key changes. The child's `@State` is reset,
-                //   its `init` is what creates the SKScene from `entries`, and the scene
-                //   construction happens synchronously on the main thread inside body
-                //   evaluation. No cross-task ordering, no race.
-                let key = SceneKey(
-                    replay: replayNonce,
-                    dayKey: dayKey,
-                    entryIDs: entryIDs,
-                    width: geo.size.width,
-                    height: geo.size.height,
-                    budget: budget
+        GeometryReader { geo in
+            // The scene key is a pure function of the reactive inputs.
+            //
+            // Why we use `.id(key)` on a child view + `@State` scene built at init,
+            // instead of `.task(id: key)` writing to the parent's `@State scene`:
+            //
+            //   `.task(id:)` cancels-and-restarts when id changes, but with a
+            //   synchronous body (no awaits / cancellation checks), BOTH the stale
+            //   and fresh tasks run to completion. Their finish order is undefined,
+            //   so the stale one can land last and overwrite the fresh scene. The
+            //   user-visible bug was "always one day behind on swipe".
+            //
+            //   `.id(key)` on a child view forces SwiftUI to tear down and re-init
+            //   that child whenever the key changes. The child's `@State` is reset,
+            //   its `init` is what creates the SKScene from `entries`, and the scene
+            //   construction happens synchronously on the main thread inside body
+            //   evaluation. No cross-task ordering, no race.
+            let key = SceneKey(
+                replay: replayNonce,
+                dayKey: dayKey,
+                entryIDs: entryIDs,
+                width: geo.size.width,
+                height: geo.size.height,
+                budget: budget
+            )
+            ZStack {
+                BucketSceneHost(
+                    entries: entries,
+                    size: geo.size,
+                    budget: budget,
+                    onTap: { selectedEntry = $0 }
                 )
-                ZStack {
-                    BucketSceneHost(
-                        entries: entries,
-                        size: geo.size,
-                        budget: budget,
-                        onTap: { selectedEntry = $0 }
-                    )
-                    .id(key)
+                .id(key)
 
-                    if entries.isEmpty {
-                        emptyStateOverlay
-                    }
-                }
-            }
-            .aspectRatio(0.78, contentMode: .fit)
-            // Replay when the view reappears (e.g. user switches back to Today).
-            // Day/entries changes trigger replay automatically via the key above.
-            .onAppear { replayNonce = UUID() }
-
-            // Fill bar + replay
-            VStack(spacing: 4) {
-                GeometryReader { geo in
-                    ZStack(alignment: .leading) {
-                        Capsule().fill(Color(.systemGray5)).frame(height: 8)
-                        Capsule()
-                            .fill(glGradientColor(fraction: fillFraction))
-                            .frame(width: geo.size.width * fillFraction, height: 8)
-                    }
-                }
-                .frame(height: 8)
-
-                HStack {
-                    Text("0").font(.caption2).foregroundColor(.secondary)
-                    Spacer()
-                    Button {
-                        replayNonce = UUID()
-                    } label: {
-                        Label("Replay", systemImage: "arrow.clockwise")
-                            .font(.caption2)
-                            .foregroundColor(.accentColor)
-                    }
-                    Spacer()
-                    Text("\(Int(budget)) GL budget")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
+                if entries.isEmpty {
+                    emptyStateOverlay
                 }
             }
         }
+        .aspectRatio(0.78, contentMode: .fit)
+        // Replay when the view reappears (e.g. user switches back to Today).
+        // Day/entries changes trigger replay automatically via the key above.
+        .onAppear { replayNonce = UUID() }
         .padding()
         .sheet(item: $selectedEntry) { entry in
             FoodEntryDetailSheet(entry: entry)
@@ -325,15 +293,6 @@ final class BucketScene: SKScene, SKPhysicsContactDelegate {
         container.fillColor = SKColor(white: 0.96, alpha: 1.0)
         container.zPosition = -1
         addChild(container)
-
-        // Budget label in the top-right corner of the bucket.
-        let topHint = SKLabelNode(text: "\(Int(budget)) GL")
-        topHint.fontName = "SFProRounded-Semibold"
-        topHint.fontSize = 10
-        topHint.fontColor = SKColor(white: 0.5, alpha: 1.0)
-        topHint.position = CGPoint(x: bucketRight - 20, y: bucketTop - 14)
-        topHint.horizontalAlignmentMode = .right
-        addChild(topHint)
 
         // Bucket walls + floor
         addChild(makeWall(from: CGPoint(x: bucketLeft, y: bucketBottomY),

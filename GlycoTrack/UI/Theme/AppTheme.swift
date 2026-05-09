@@ -16,7 +16,7 @@ enum AppTheme: String {
 
     // MARK: - Typography
 
-    var fontDesign: Font.Design { .serif }
+    var fontDesign: Font.Design { .default }
     var metricFontDesign: Font.Design { .rounded }
 
     // MARK: - Geometry
