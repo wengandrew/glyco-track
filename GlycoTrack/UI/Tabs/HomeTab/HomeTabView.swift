@@ -15,7 +15,7 @@ struct HomeTabView: View {
     // Earliest logged entry ever — used to clamp backward date navigation.
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
-        predicate: NSPredicate(format: "isSoftDeleted == NO"),
+        predicate: NSPredicate(format: "isSoftDeleted == NO AND timestamp != nil"),
         animation: .default
     )
     private var allEntriesAsc: FetchedResults<FoodLogEntry>
@@ -110,17 +110,20 @@ struct HomeTabView: View {
 
     private var dateNavigator: some View {
         HStack(spacing: 16) {
-            Button {
-                changeDate(byDays: -1)
-            } label: {
-                Image(systemName: "chevron.left")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(isEarliest ? .secondary : theme.primaryAccent)
-                    .frame(width: 32, height: 32)
-                    .background(Color(.systemGray6))
-                    .clipShape(Circle())
+            if !isEarliest {
+                Button {
+                    changeDate(byDays: -1)
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(theme.primaryAccent)
+                        .frame(width: 32, height: 32)
+                        .background(Color(.systemGray6))
+                        .clipShape(Circle())
+                }
+            } else {
+                Color.clear.frame(width: 32, height: 32)
             }
-            .disabled(isEarliest)
 
             VStack(spacing: 0) {
                 Text(dateHeading)
@@ -135,17 +138,20 @@ struct HomeTabView: View {
                 changeDate(to: Calendar.current.startOfDay(for: Date()))
             }
 
-            Button {
-                changeDate(byDays: 1)
-            } label: {
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(isToday ? .secondary : theme.primaryAccent)
-                    .frame(width: 32, height: 32)
-                    .background(Color(.systemGray6))
-                    .clipShape(Circle())
+            if !isToday {
+                Button {
+                    changeDate(byDays: 1)
+                } label: {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(theme.primaryAccent)
+                        .frame(width: 32, height: 32)
+                        .background(Color(.systemGray6))
+                        .clipShape(Circle())
+                }
+            } else {
+                Color.clear.frame(width: 32, height: 32)
             }
-            .disabled(isToday)
         }
     }
 

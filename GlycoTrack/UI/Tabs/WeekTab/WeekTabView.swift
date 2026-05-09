@@ -68,17 +68,20 @@ struct WeekTabView: View {
 
     private var weekNavigator: some View {
         HStack(spacing: 16) {
-            Button {
-                changeWeek(by: -1)
-            } label: {
-                Image(systemName: "chevron.left")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(isEarliestWeek ? .secondary : theme.primaryAccent)
-                    .frame(width: 32, height: 32)
-                    .background(Color(.systemGray6))
-                    .clipShape(Circle())
+            if !isEarliestWeek {
+                Button {
+                    changeWeek(by: -1)
+                } label: {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(theme.primaryAccent)
+                        .frame(width: 32, height: 32)
+                        .background(Color(.systemGray6))
+                        .clipShape(Circle())
+                }
+            } else {
+                Color.clear.frame(width: 32, height: 32)
             }
-            .disabled(isEarliestWeek)
 
             VStack(spacing: 0) {
                 Text(weekHeading)
@@ -93,17 +96,20 @@ struct WeekTabView: View {
                 changeWeek(to: Self.mondayWeekStart(for: Date()))
             }
 
-            Button {
-                changeWeek(by: 1)
-            } label: {
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(isCurrentWeek ? .secondary : theme.primaryAccent)
-                    .frame(width: 32, height: 32)
-                    .background(Color(.systemGray6))
-                    .clipShape(Circle())
+            if !isCurrentWeek {
+                Button {
+                    changeWeek(by: 1)
+                } label: {
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundColor(theme.primaryAccent)
+                        .frame(width: 32, height: 32)
+                        .background(Color(.systemGray6))
+                        .clipShape(Circle())
+                }
+            } else {
+                Color.clear.frame(width: 32, height: 32)
             }
-            .disabled(isCurrentWeek)
         }
     }
 

@@ -85,7 +85,6 @@ struct BalanceScaleView: View {
                     )
                     .id(key)
 
-                    if entries.isEmpty { emptyOverlay }
                 }
             }
             .aspectRatio(1.3, contentMode: .fit)
@@ -98,28 +97,10 @@ struct BalanceScaleView: View {
                 Label("Harmful", systemImage: "exclamationmark.triangle.fill")
                     .font(.caption2).foregroundColor(.red.opacity(0.8))
             }
-
-            Text(netCL < -0.5 ? "Your choices are net beneficial for heart health." :
-                 netCL > 0.5 ? "Your choices are net harmful for heart health." :
-                 "Your cholesterol impact is roughly neutral.")
-                .font(.caption2)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity)
         }
         .padding()
         .sheet(item: $selectedEntry) { entry in
             FoodEntryDetailSheet(entry: entry)
-        }
-    }
-
-    private var emptyOverlay: some View {
-        VStack(spacing: 6) {
-            Image(systemName: "scalemass")
-                .font(.system(size: 30))
-                .foregroundColor(.secondary)
-            Text("No CL logged yet")
-                .font(.caption).foregroundColor(.secondary)
         }
     }
 }

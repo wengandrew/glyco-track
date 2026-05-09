@@ -11,7 +11,7 @@ struct MonthTabView: View {
 
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(key: "timestamp", ascending: true)],
-        predicate: NSPredicate(format: "isSoftDeleted == NO"),
+        predicate: NSPredicate(format: "isSoftDeleted == NO AND timestamp != nil"),
         animation: .default
     )
     private var allEntries: FetchedResults<FoodLogEntry>
@@ -22,31 +22,38 @@ struct MonthTabView: View {
                 VStack(spacing: 20) {
                     // Month navigation
                     HStack(spacing: 16) {
-                        Button {
-                            shiftMonth(by: -1)
-                        } label: {
-                            Image(systemName: "chevron.left")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundColor(theme.primaryAccent)
-                                .frame(width: 32, height: 32)
-                                .background(Color(.systemGray6))
-                                .clipShape(Circle())
+                        if !isEarliestMonth {
+                            Button {
+                                shiftMonth(by: -1)
+                            } label: {
+                                Image(systemName: "chevron.left")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundColor(theme.primaryAccent)
+                                    .frame(width: 32, height: 32)
+                                    .background(Color(.systemGray6))
+                                    .clipShape(Circle())
+                            }
+                        } else {
+                            Color.clear.frame(width: 32, height: 32)
                         }
                         Spacer()
                         Text(displayedMonth, format: .dateTime.month(.wide).year())
                             .font(.system(.headline, design: theme.fontDesign))
                         Spacer()
-                        Button {
-                            shiftMonth(by: 1)
-                        } label: {
-                            Image(systemName: "chevron.right")
-                                .font(.system(size: 14, weight: .semibold))
-                                .foregroundColor(isCurrentMonth ? .secondary : theme.primaryAccent)
-                                .frame(width: 32, height: 32)
-                                .background(Color(.systemGray6))
-                                .clipShape(Circle())
+                        if !isCurrentMonth {
+                            Button {
+                                shiftMonth(by: 1)
+                            } label: {
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundColor(theme.primaryAccent)
+                                    .frame(width: 32, height: 32)
+                                    .background(Color(.systemGray6))
+                                    .clipShape(Circle())
+                            }
+                        } else {
+                            Color.clear.frame(width: 32, height: 32)
                         }
-                        .disabled(isCurrentMonth)
                     }
                     .padding(.horizontal)
 
@@ -55,7 +62,7 @@ struct MonthTabView: View {
                     }
                     .padding(.horizontal, 4)
 
-                    // GL × CL Quadrant — embedded
+                    // Food Impact Map — embedded
                     QuadrantPlotSection(
                         entries: monthEntries,
                         onTap: { selectedEntry = $0 }
@@ -70,6 +77,18 @@ struct MonthTabView: View {
                 FoodEntryDetailSheet(entry: entry)
             }
         }
+    }
+
+    private var earliestLoggedMonth: Date? {
+        guard let first = allEntries.first, let ts = first.timestamp else { return nil }
+        return Calendar.current.startOfMonth(for: ts)
+    }
+
+    private var isEarliestMonth: Bool {
+        guard let earliest = earliestLoggedMonth else { return true }
+        let cal = Calendar.current
+        return cal.component(.year, from: displayedMonth) == cal.component(.year, from: earliest)
+            && cal.component(.month, from: displayedMonth) == cal.component(.month, from: earliest)
     }
 
     private var isCurrentMonth: Bool {

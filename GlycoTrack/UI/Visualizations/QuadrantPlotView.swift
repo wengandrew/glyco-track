@@ -1,18 +1,20 @@
 import SwiftUI
 
-/// GL × CL Two-Region Plot — embeddable section.
+/// Food Impact Map — embeddable two-region scatter plot.
 ///
-/// **Why two regions, not four quadrants?** GL is always ≥ 0 (it's a load, not a balance);
-/// only CL is signed. A four-quadrant grid would always leave the bottom two quadrants
-/// empty, wasting vertical space and confusing readers into thinking "negative GL"
-/// means something. Splitting only by the CL = 0 axis gives:
+/// User-facing label: "Food Impact Map". Internal name kept as `QuadrantPlotSection`
+/// for historical reasons; do not rename the type without auditing all call sites.
+///
+/// **Why two regions, not four quadrants?** Glycemic Load (GL) is always ≥ 0;
+/// only Cholesterol Load (CL) is signed. A four-quadrant grid leaves the bottom
+/// half permanently empty and implies "negative GL" is meaningful. Splitting only
+/// on the CL = 0 axis gives:
 ///
 ///   • Left  half — Beneficial CL (negative): fiber, PUFA, MUFA dominant
-///   • Right half — Harmful CL (positive): SFA, TFA dominant
+///   • Right half — Harmful CL (positive): saturated/trans fat dominant
 ///
-/// The Y-axis is GL going UP from a baseline at the bottom (GL = 0). Within each half,
-/// items higher in the chart contribute more glycemic load. The cluster ideal is
-/// "low and to the left": low GL, beneficial CL.
+/// Y-axis is GL going UP from the bottom (GL = 0). Items higher in the chart have
+/// more blood-sugar impact. Ideal cluster: low and to the left.
 ///
 /// Embeddable — no sheet, no navigation. Host views own tap routing via `onTap`.
 struct QuadrantPlotSection: View {
@@ -40,11 +42,11 @@ struct QuadrantPlotSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("GL × CL")
+            Text("Food Impact Map")
                 .font(.headline)
                 .padding(.horizontal)
 
-            Text("Goal: keep your foods low and to the left.")
+            Text("Low and left = best. Right = heart risk. Up = blood sugar impact.")
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .padding(.horizontal)
