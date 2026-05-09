@@ -40,7 +40,6 @@ struct HomeTabView: View {
     var body: some View {
         let entryArray = Array(entries)
         let totalGL = entryArray.reduce(0) { $0 + $1.computedGL }
-        let netCL = entryArray.reduce(0) { $0 + $1.computedCL }
 
         NavigationStack {
             ScrollView {

@@ -36,7 +36,9 @@ struct WeeklyRiverView: View {
 
     private var todayColumnIndex: Int? {
         let cal = Calendar.current
-        guard cal.isDate(Date(), equalTo: weekStart, toGranularity: .weekOfYear) else { return nil }
+        let today = cal.startOfDay(for: Date())
+        let weekEnd = cal.date(byAdding: .day, value: 7, to: cal.startOfDay(for: weekStart)) ?? weekStart
+        guard today >= cal.startOfDay(for: weekStart), today < weekEnd else { return nil }
         return dayIndex(for: Date())
     }
 

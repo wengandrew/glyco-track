@@ -39,9 +39,8 @@ struct BalanceScaleView: View {
     let dateKey: Date?
 
     @State private var selectedEntry: FoodLogEntry?
-    /// Bumped to force a rebuild without an input change (Replay button, tab
-    /// re-appearance). Day/entries changes force a rebuild automatically via the
-    /// scene key — this nonce only covers the "same inputs, replay anyway" cases.
+    /// Bumped to force a scene rebuild on tab re-appearance. Day/entries changes
+    /// force a rebuild automatically via the scene key.
     @State private var replayNonce = UUID()
 
     init(entries: [FoodLogEntry], dateKey: Date? = nil) {

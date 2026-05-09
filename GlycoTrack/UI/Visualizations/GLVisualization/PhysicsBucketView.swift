@@ -31,7 +31,6 @@ struct PhysicsBucketView: View {
         self.dateKey = dateKey
     }
 
-    private var totalGL: Double { entries.reduce(0) { $0 + $1.computedGL } }
     private var entryIDs: [UUID] { entries.compactMap { $0.id } }
     /// Day-bucket of `dateKey` (or distantPast if unset). Intra-day time changes
     /// don't force extra rebuilds, but day-to-day navigation does.
