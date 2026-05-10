@@ -116,8 +116,8 @@ struct EditEntryView: View {
 
         // Route through the full cascade so composite dishes ("beef noodle
         // soup") recompute correctly on edit too. Decomposition may hit the
-        // Claude API — the Save button remains enabled; the sheet dismisses
-        // once the recompute is done.
+        // Claude API — the toolbar shows a ProgressView while saving; the
+        // sheet dismisses once the recompute is done.
         let client = ClaudeAPIClient(apiKey: APIKey.claude)
         let parser = TranscriptParser(client: client)
         let matcher = FoodMatcher(repo: NutritionalRepository(context: context), parser: parser)

@@ -328,6 +328,8 @@ final class NutritionalRepository {
         return Set(tokens).intersection(prepMethodWords)
     }
 
+    // MARK: - Internal helpers (used by FoodMatcher)
+
     /// Word-boundary-aware contains. Ensures "ice" doesn't match inside "rice"
     /// while still allowing "beef" to match inside "beef noodle soup". Plural
     /// "s"/"es" suffixes on the needle are tolerated on the right edge so

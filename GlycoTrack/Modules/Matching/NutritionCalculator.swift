@@ -5,6 +5,9 @@ import Foundation
 /// ensures that a correction to the GI=0 fallback or CL formula applies in
 /// both places automatically.
 enum NutritionCalculator {
+    // CLEngine is stateless; one shared instance avoids a heap allocation per call.
+    private static let clEngine = CLEngine()
+
     /// Returns (gl, cl) for a single nutritional profile at a given serving size.
     ///
     /// GL rule: `glycemicIndex == 0` means "no Sydney GI entry", not zero GI.
@@ -24,7 +27,7 @@ enum NutritionCalculator {
             pufaPer100g: profile.pufaPer100g,
             mufaPer100g: profile.mufaPer100g
         )
-        let cl = CLEngine().computeCL(nutrition: nutrition, quantityGrams: grams).cl
+        let cl = clEngine.computeCL(nutrition: nutrition, quantityGrams: grams).cl
         return (gl, cl)
     }
 }
