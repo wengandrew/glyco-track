@@ -35,16 +35,18 @@ final class FoodLogProcessor: ObservableObject {
         do {
             foods = try await parser.parse(transcript: transcript, currentTime: recordedAt)
         } catch {
-            Log.network.error("TranscriptParser.parse failed: \(error.localizedDescription, privacy: .public)")
             // Set isNetworkError before lastError so the onChange(of: lastError)
             // in ListeningPill reads the correct value when scheduling auto-dismiss.
             if let urlError = error as? URLError, Self.isConnectivityError(urlError) {
+                Log.network.error("TranscriptParser.parse — connectivity: \(error.localizedDescription, privacy: .public)")
                 isNetworkError = true
                 lastError = "Network unavailable — check your connection."
             } else if error is URLError {
+                Log.network.error("TranscriptParser.parse — server error: \(error.localizedDescription, privacy: .public)")
                 isNetworkError = false
                 lastError = "Server error — please try again later."
             } else {
+                Log.app.error("TranscriptParser.parse — parse error: \(error.localizedDescription, privacy: .public)")
                 isNetworkError = false
                 lastError = error.localizedDescription
             }

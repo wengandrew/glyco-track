@@ -38,7 +38,7 @@ struct GlycoTrackApp: App {
                 showSeedingOverlay = false
             }
             .onChange(of: hasCompletedOnboarding) { completed in
-                if completed { showOnboarding = false }
+                showOnboarding = !completed
             }
             .fullScreenCover(isPresented: $showOnboarding) {
                 OnboardingView()

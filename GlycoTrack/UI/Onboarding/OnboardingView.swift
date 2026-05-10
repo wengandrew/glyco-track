@@ -5,6 +5,7 @@ import AVFoundation
 struct OnboardingView: View {
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
     @State private var requestingPermissions = false
+    @State private var showDeniedAlert = false
 
     var body: some View {
         ZStack {
@@ -84,6 +85,16 @@ struct OnboardingView: View {
                 .padding(.bottom, 48)
             }
         }
+        .alert("Permissions Required", isPresented: $showDeniedAlert) {
+            Button("Open Settings") {
+                if let url = URL(string: UIApplication.openSettingsURLString) {
+                    UIApplication.shared.open(url)
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("GlycoTrack needs microphone and speech recognition access to log meals by voice. Please enable both in Settings → Privacy & Security.")
+        }
     }
 
     private func permissionCard(icon: String, color: Color, title: String, detail: String) -> some View {
@@ -112,19 +123,19 @@ struct OnboardingView: View {
     @MainActor
     private func requestPermissionsAndContinue() async {
         requestingPermissions = true
+        defer { requestingPermissions = false }
 
-        // Speech recognition (also implicitly covers mic on many iOS versions).
-        await withCheckedContinuation { continuation in
-            SFSpeechRecognizer.requestAuthorization { _ in
-                continuation.resume()
-            }
+        let speechStatus = await withCheckedContinuation { continuation in
+            SFSpeechRecognizer.requestAuthorization { continuation.resume(returning: $0) }
         }
 
-        // Explicit mic permission so iOS shows its own dialog if not already granted.
-        await withCheckedContinuation { continuation in
-            AVAudioSession.sharedInstance().requestRecordPermission { _ in
-                continuation.resume()
-            }
+        let micGranted = await withCheckedContinuation { continuation in
+            AVAudioSession.sharedInstance().requestRecordPermission { continuation.resume(returning: $0) }
+        }
+
+        guard speechStatus == .authorized, micGranted else {
+            showDeniedAlert = true
+            return
         }
 
         hasCompletedOnboarding = true
