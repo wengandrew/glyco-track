@@ -61,6 +61,9 @@ struct HomeTabView: View {
                             entries: entryArray,
                             dateKey: selectedDate
                         )
+                        if allEntriesAsc.isEmpty && isToday {
+                            firstMealHint
+                        }
                     }
                     .contentShape(Rectangle())
                     .gesture(horizontalSwipe)
@@ -106,6 +109,25 @@ struct HomeTabView: View {
                 changeDate(to: Calendar.current.startOfDay(for: Date()))
             }
         }
+    }
+
+    // MARK: - Empty state
+
+    private var firstMealHint: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "mic.circle.fill")
+                .font(.system(size: 28))
+                .foregroundColor(theme.primaryAccent.opacity(0.7))
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Tap the mic to log your first meal")
+                    .font(.system(.subheadline, design: theme.fontDesign, weight: .medium))
+                Text("Say what you ate and we'll calculate GL & CL.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+        }
+        .padding(.vertical, 12)
+        .padding(.horizontal, 4)
     }
 
     // MARK: - Date navigation

@@ -28,10 +28,13 @@ struct DebugPaneView: View {
         self._exportRequested = exportRequested
     }
 
+    @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+
     var body: some View {
         List {
             buildInfoSection
             statsSection
+            developerActionsSection
             foodLogSection
             nutritionalProfileSection
         }
@@ -114,6 +117,15 @@ struct DebugPaneView: View {
                         .font(.caption)
                 }
             }
+        }
+    }
+
+    private var developerActionsSection: some View {
+        Section("Developer Actions") {
+            Button("Reset Onboarding") {
+                hasCompletedOnboarding = false
+            }
+            .foregroundColor(.orange)
         }
     }
 

@@ -16,13 +16,14 @@ struct AboutPaneView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 22) {
                 heroSection
+                disclaimerBanner
                 whatItTracksSection
                 glMathSection
                 clMathSection
                 quadrantSection
                 tiersSection
                 sourcesSection
-                footnote
+                linksSection
             }
             .padding(.horizontal)
             .padding(.vertical, 16)
@@ -148,11 +149,63 @@ The confidence percentage shown in each entry's detail view reflects how closely
         }
     }
 
-    private var footnote: some View {
-        Text("GlycoTrack is a tracking tool, not medical advice. Talk to your doctor about specific targets for you.")
-            .font(.footnote)
-            .foregroundColor(.secondary)
-            .padding(.top, 8)
+    private var disclaimerBanner: some View {
+        HStack(alignment: .top, spacing: 10) {
+            Image(systemName: "cross.circle.fill")
+                .foregroundColor(.orange)
+                .font(.system(size: 18))
+                .padding(.top, 1)
+            Text("GlycoTrack is a personal tracking tool, **not medical advice**. The GL and CL numbers it calculates are informational estimates. Consult your doctor or a registered dietitian for personalised dietary guidance.")
+                .font(.footnote)
+                .foregroundColor(.secondary)
+        }
+        .padding(14)
+        .background(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .fill(Color.orange.opacity(0.08))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                .stroke(Color.orange.opacity(0.20), lineWidth: 1)
+        )
+    }
+
+    private var linksSection: some View {
+        VStack(spacing: 10) {
+            linkRow(
+                icon: "lock.shield.fill",
+                color: .blue,
+                label: "Privacy Policy",
+                // Update this URL once you publish to GitHub Pages or similar.
+                url: URL(string: "https://wengandrew.github.io/glyco-track/privacy")!
+            )
+            linkRow(
+                icon: "questionmark.circle.fill",
+                color: .green,
+                label: "Support & Feedback",
+                url: URL(string: "https://github.com/wengandrew/glyco-track/issues")!
+            )
+        }
+    }
+
+    private func linkRow(icon: String, color: Color, label: String, url: URL) -> some View {
+        Link(destination: url) {
+            HStack(spacing: 12) {
+                Image(systemName: icon)
+                    .foregroundColor(color)
+                    .font(.system(size: 18))
+                    .frame(width: 28)
+                Text(label)
+                    .font(.system(.subheadline, weight: .medium))
+                    .foregroundColor(.primary)
+                Spacer()
+                Image(systemName: "arrow.up.right")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            .padding(14)
+            .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        }
     }
 
     // MARK: - Reusable pieces

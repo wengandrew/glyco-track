@@ -6,11 +6,20 @@ import CoreData
 final class FoodLogProcessor: ObservableObject {
     @Published var isProcessing: Bool = false
     @Published var lastError: String?
+    /// True when the last error came from the network call (Claude API),
+    /// enabling the UI to offer a retry without re-recording.
+    @Published var isNetworkError: Bool = false
+
+    private var pendingTranscript: String?
+    private var pendingContext: NSManagedObjectContext?
 
     func process(transcript: String, context: NSManagedObjectContext) async {
         guard !isProcessing else { return }
         isProcessing = true
         lastError = nil
+        isNetworkError = false
+        pendingTranscript = transcript
+        pendingContext = context
         defer { isProcessing = false }
 
         let client = ClaudeAPIClient(apiKey: APIKey.claude)
@@ -26,8 +35,21 @@ final class FoodLogProcessor: ObservableObject {
         do {
             foods = try await parser.parse(transcript: transcript, currentTime: recordedAt)
         } catch {
-            Log.network.error("TranscriptParser.parse failed: \(error.localizedDescription, privacy: .public)")
-            lastError = error.localizedDescription
+            // Set isNetworkError before lastError so the onChange(of: lastError)
+            // in ListeningPill reads the correct value when scheduling auto-dismiss.
+            if let urlError = error as? URLError, Self.isConnectivityError(urlError) {
+                Log.network.error("TranscriptParser.parse — connectivity: \(error.localizedDescription, privacy: .public)")
+                isNetworkError = true
+                lastError = "Network unavailable — check your connection."
+            } else if error is URLError {
+                Log.network.error("TranscriptParser.parse — server error: \(error.localizedDescription, privacy: .public)")
+                isNetworkError = false
+                lastError = "Server error — please try again later."
+            } else {
+                Log.app.error("TranscriptParser.parse — parse error: \(error.localizedDescription, privacy: .public)")
+                isNetworkError = false
+                lastError = error.localizedDescription
+            }
             return
         }
 
@@ -83,5 +105,20 @@ final class FoodLogProcessor: ObservableObject {
         NotificationManager.shared.cancelTodayIfSufficientlyLogged(
             entryCount: logRepo.countToday()
         )
+    }
+
+    func retry() async {
+        guard let transcript = pendingTranscript, let context = pendingContext else { return }
+        await process(transcript: transcript, context: context)
+    }
+
+    private static func isConnectivityError(_ error: URLError) -> Bool {
+        switch error.code {
+        case .notConnectedToInternet, .timedOut, .cannotConnectToHost,
+             .networkConnectionLost, .dnsLookupFailed, .cannotFindHost:
+            return true
+        default:
+            return false
+        }
     }
 }

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy – GlycoTrack</title>
+  <style>
+    :root {
+      --accent: #007AFF;
+      --bg: #ffffff;
+      --surface: #f2f2f7;
+      --text: #1c1c1e;
+      --secondary: #6c6c70;
+      --border: #e5e5ea;
+      color-scheme: light dark;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --surface: #1c1c1e;
+        --text: #f2f2f7;
+        --secondary: #8e8e93;
+        --border: #38383a;
+      }
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 0 1rem 4rem;
+    }
+    header {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 3rem 0 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .app-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .meta {
+      font-size: 0.875rem;
+      color: var(--secondary);
+    }
+    main {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    section { padding: 2rem 0; border-bottom: 1px solid var(--border); }
+    section:last-child { border-bottom: none; }
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    p { margin-bottom: 0.875rem; color: var(--text); }
+    p:last-child { margin-bottom: 0; }
+    ul {
+      padding-left: 1.25rem;
+      margin-bottom: 0.875rem;
+    }
+    li { margin-bottom: 0.4rem; }
+    .callout {
+      background: var(--surface);
+      border-left: 3px solid var(--accent);
+      border-radius: 6px;
+      padding: 0.875rem 1rem;
+      font-size: 0.9rem;
+      margin: 0.75rem 0;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    footer {
+      max-width: 680px;
+      margin: 2rem auto 0;
+      font-size: 0.8rem;
+      color: var(--secondary);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="app-name">GlycoTrack</div>
+    <h1>Privacy Policy</h1>
+    <p class="meta">Effective date: May 10, 2026 &nbsp;·&nbsp; Last updated: May 10, 2026</p>
+  </header>
+
+  <main>
+
+    <section>
+      <div class="callout">
+        GlycoTrack does not create accounts, does not share your data with advertisers, and does not sell your information. Your food log lives on your device.
+      </div>
+    </section>
+
+    <section>
+      <h2>What GlycoTrack collects</h2>
+      <p>GlycoTrack stores the following data <strong>on your device only</strong>, in Apple's Core Data framework:</p>
+      <ul>
+        <li>Food descriptions you speak or type</li>
+        <li>Timestamps of logged meals</li>
+        <li>Computed GL (Glycemic Load) and CL (Cholesterol Load) values</li>
+        <li>App settings (daily GL budget, physics preferences)</li>
+      </ul>
+      <p>This data never leaves your device to GlycoTrack's servers. There are no GlycoTrack servers.</p>
+    </section>
+
+    <section>
+      <h2>Voice and speech recognition</h2>
+      <p>When you tap the microphone button:</p>
+      <ul>
+        <li>Your voice is transcribed <strong>on-device</strong> by Apple's Speech framework (<code>SFSpeechRecognizer</code>). Audio is never stored by GlycoTrack.</li>
+        <li>The resulting <strong>text transcript</strong> (not audio) is sent to the <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic Claude API</a> to identify food items and resolve timestamps. Anthropic's privacy policy governs how that text is handled on their end.</li>
+      </ul>
+      <p>Apple's Speech framework may transmit audio to Apple's servers for recognition when on-device recognition is unavailable. See <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple's Privacy Policy</a> for details.</p>
+    </section>
+
+    <section>
+      <h2>Third-party services</h2>
+      <p>GlycoTrack uses one external API:</p>
+      <ul>
+        <li><strong>Anthropic Claude API</strong> — receives the text of your voice transcript to parse food names and timestamps. No audio, no personal identifiers, no account information is sent. See <a href="https://www.anthropic.com/legal/privacy" target="_blank" rel="noopener">Anthropic's Privacy Policy</a>.</li>
+      </ul>
+      <p>The nutritional reference databases (Sydney GI Database, USDA FoodData Central) are bundled inside the app and do not make network requests.</p>
+    </section>
+
+    <section>
+      <h2>Permissions</h2>
+      <ul>
+        <li><strong>Microphone</strong> — required to record your voice for meal logging. Only active while you are recording.</li>
+        <li><strong>Speech Recognition</strong> — required to transcribe speech to text on-device. No audio leaves your device unless Apple's server-side fallback is triggered (see above).</li>
+        <li><strong>Notifications</strong> — optional. Used for a daily reminder to log your meals. No notification content is uploaded anywhere.</li>
+      </ul>
+      <p>You can revoke any permission at any time in iOS Settings → Privacy &amp; Security.</p>
+    </section>
+
+    <section>
+      <h2>Data retention and deletion</h2>
+      <p>All food log data is stored locally on your device and is deleted when you delete the app. There is no remote backup.</p>
+      <p>You can soft-delete individual entries from within the app. To wipe all data immediately, delete and reinstall GlycoTrack.</p>
+    </section>
+
+    <section>
+      <h2>Children's privacy</h2>
+      <p>GlycoTrack is not directed at children under 13. We do not knowingly collect any information from children under 13.</p>
+    </section>
+
+    <section>
+      <h2>Changes to this policy</h2>
+      <p>If this policy changes materially, the "Last updated" date at the top will reflect that. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p>Questions or concerns? Open an issue at <a href="https://github.com/wengandrew/glyco-track/issues" target="_blank" rel="noopener">github.com/wengandrew/glyco-track/issues</a>.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>© 2026 GlycoTrack. This policy applies to the GlycoTrack iOS app.</p>
+  </footer>
+</body>
+</html>

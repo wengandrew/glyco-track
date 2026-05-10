@@ -35,14 +35,23 @@ final class PersistenceController {
 
     var context: NSManagedObjectContext { container.viewContext }
 
+    /// True while the first-launch seed is running. Set synchronously before
+    /// the background task starts so `GlycoTrackApp` can read it at body-eval time.
+    private(set) var isSeeding: Bool = false
+
     private func seedDatabaseIfNeeded() {
         let request = NutritionalProfile.fetchRequest()
         request.fetchLimit = 1
         let count = (try? context.count(for: request)) ?? 0
         guard count == 0 else { return }
 
+        isSeeding = true
         Task.detached(priority: .background) {
             await self.seedNutritionalProfiles()
+            await MainActor.run {
+                self.isSeeding = false
+                NotificationCenter.default.post(name: .didFinishSeeding, object: nil)
+            }
         }
     }
 
