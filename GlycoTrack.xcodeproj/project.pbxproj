@@ -46,6 +46,7 @@
 		7219DEF666B2DE3F9239A100 /* GLProgressRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EA9F806906262575EEBE547 /* GLProgressRing.swift */; };
 		72E8408FB1D9F7D5769B835E /* food_emoji_map.json in Resources */ = {isa = PBXBuildFile; fileRef = 4C263514B81487DA19F869F3 /* food_emoji_map.json */; };
 		804D83DA123CD38186D70EE8 /* CLEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCC319390AA669EE258FAD6F /* CLEngine.swift */; };
+		85111F70373C330EF3C9DEE2 /* CompactRecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48FB5FD1687E1EBF5F598F92 /* CompactRecordButton.swift */; };
 		8D4D572E5D5FF46BE470D20F /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FAFBFFF587D6C5D88FF7C59 /* NotificationManager.swift */; };
 		8DE167AB3585707279F2E20F /* TranscriptParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3473895D984D30A720E75A /* TranscriptParser.swift */; };
 		9491AED8AF3A2B58D9EF3E99 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5C279391B47DE4370E1D1E /* AppSettings.swift */; };
@@ -69,6 +70,7 @@
 		CBD927A2BB34C614106D5634 /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B61B27E6D6C9ADE92E928E7 /* RecordButton.swift */; };
 		D10934C56FD689EEBD17732B /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = D519279615097BF4BD72FEC6 /* Log.swift */; };
 		DA63E52FA18B99E8347E4BFD /* FoodLogProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3327A014C9B87AE78FAF29B4 /* FoodLogProcessor.swift */; };
+		DADA0B5345B3D625919D879B /* ListeningPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29FD819368064EFEAEB2A9FF /* ListeningPill.swift */; };
 		DF7D2A9B939803522A97A911 /* FoodLogEntry+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17D923FFC3F1352123547E74 /* FoodLogEntry+CoreDataProperties.swift */; };
 		ED6BA4F58307142A70E8CC9F /* FoodPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAF4CD9CCE735BCE308CECA4 /* FoodPickerView.swift */; };
 		F0EFA312B13AFE888D07FC06 /* gi_database.json in Resources */ = {isa = PBXBuildFile; fileRef = F3A6E1677A79798237CFB545 /* gi_database.json */; };
@@ -104,12 +106,14 @@
 		23018FEA9E10DA00AE3A54F0 /* FoodEntryDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodEntryDetailSheet.swift; sourceTree = "<group>"; };
 		25F3D5632A1067440926BF4B /* AboutTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTabView.swift; sourceTree = "<group>"; };
 		265A6B3FA867E54B8F4E4868 /* NutritionCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionCalculator.swift; sourceTree = "<group>"; };
+		29FD819368064EFEAEB2A9FF /* ListeningPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeningPill.swift; sourceTree = "<group>"; };
 		2A08955505DB5680BD34ED5F /* GlycoTrackTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = GlycoTrackTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A10769B1466E35CD89B88F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2B5C279391B47DE4370E1D1E /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		3327A014C9B87AE78FAF29B4 /* FoodLogProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodLogProcessor.swift; sourceTree = "<group>"; };
 		3EFFE9E12E7B018C5B61AD03 /* CoreDataIdentifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataIdentifiable.swift; sourceTree = "<group>"; };
 		47EAAE4B7B8B8DFA9849BD23 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		48FB5FD1687E1EBF5F598F92 /* CompactRecordButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompactRecordButton.swift; sourceTree = "<group>"; };
 		4C263514B81487DA19F869F3 /* food_emoji_map.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = food_emoji_map.json; sourceTree = "<group>"; };
 		4C5D15EC2928FF45556CD303 /* NutritionalRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionalRepository.swift; sourceTree = "<group>"; };
 		4C81FF29DB0DB6B3386701CC /* WeekTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekTabView.swift; sourceTree = "<group>"; };
@@ -507,10 +511,12 @@
 		CBE2129F1A44220991F320A3 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				48FB5FD1687E1EBF5F598F92 /* CompactRecordButton.swift */,
 				23018FEA9E10DA00AE3A54F0 /* FoodEntryDetailSheet.swift */,
 				4DFF15FD7B99E00160837027 /* FoodGraphic.swift */,
 				EAF4CD9CCE735BCE308CECA4 /* FoodPickerView.swift */,
 				5EA9F806906262575EEBE547 /* GLProgressRing.swift */,
+				29FD819368064EFEAEB2A9FF /* ListeningPill.swift */,
 				660500B0520D877BE8A2C2BD /* MetricSection.swift */,
 				8B61B27E6D6C9ADE92E928E7 /* RecordButton.swift */,
 			);
@@ -698,6 +704,7 @@
 				804D83DA123CD38186D70EE8 /* CLEngine.swift in Sources */,
 				667D790349266A31BDCB9006 /* CLPalette.swift in Sources */,
 				B8750ABB94F82072EC7BD028 /* ClaudeAPIClient.swift in Sources */,
+				85111F70373C330EF3C9DEE2 /* CompactRecordButton.swift in Sources */,
 				A36A7351E36BA048DD17325C /* CoreDataIdentifiable.swift in Sources */,
 				64A2CFB29B814A7EB74CCB05 /* DateFormatters.swift in Sources */,
 				1868EC6D468D84FF94BC176B /* DebugTabView.swift in Sources */,
@@ -719,6 +726,7 @@
 				6218DF6B76FCABF02538AFC0 /* GlycoTrackApp.swift in Sources */,
 				FFB06BADA9A57D4B77A32E83 /* GlycoTrackManagedObjectModel.swift in Sources */,
 				A97DBA1B9D41A7BADAA1E037 /* HomeTabView.swift in Sources */,
+				DADA0B5345B3D625919D879B /* ListeningPill.swift in Sources */,
 				D10934C56FD689EEBD17732B /* Log.swift in Sources */,
 				AF6E60B55D052923B8D08A9E /* LogTabView.swift in Sources */,
 				58AD63243EE41570FA3FB434 /* ManualEntryView.swift in Sources */,
