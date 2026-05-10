@@ -40,7 +40,8 @@ glyco-track/
 │   │   ├── Matching/
 │   │   │   ├── FoodMatcher.swift
 │   │   │   ├── AliasIndex.swift
-│   │   │   └── EntryRefiner.swift
+│   │   │   ├── EntryRefiner.swift
+│   │   │   └── NutritionCalculator.swift    # shared per-profile GL/CL computation
 │   │   ├── VoiceCapture/VoiceCapture.swift
 │   │   ├── LocalStorage/
 │   │   │   ├── PersistenceController.swift
@@ -183,6 +184,7 @@ All PRs target `develop`. Listed in merge order.
 | #65 | Swipe nav, native color scheme, week-day tap to Today | Week and Month tabs now swipe left/right to navigate (matching Day tab). Color scheme switched to native iOS system colors (systemBlue/Orange/Green/Red accents, systemGroupedBackground cards, dark-mode support, no more warm organic palette). `selectedDate` hoisted from HomeTabView to RootTabView as a Binding. Tapping an empty day column in the Week river view jumps to the Today tab with that day selected. |
 | #66 | Week GL totals, physics sandbox settings, manual entry text | Week river view shows per-day GL totals under each day label. Settings gains a Physics Sandbox section with gravity (1–20) and vibration (0–100%) sliders. `SceneHaptics` now accepts intensity, `BucketScene` and `BalanceScene` both read AppStorage for gravity and haptics — changes rebuild scenes via SceneKey. Manual entry section header updated to "Type what you ate (manual entry)". |
 | #67 | App Review 1B: onboarding, seeding overlay, empty state, disclaimer, retry | `OnboardingView` gates first launch behind mic + speech permission request. `PersistenceController.isSeeding` flag + `SeedingOverlayView` shows "Loading nutritional database…" on first install. `firstMealHint` in Today tab for new users. `disclaimerBanner` card in About pane. `FoodLogProcessor.isNetworkError` + `retry()` + "Retry" button in `ListeningPill`. Privacy policy + support links in About pane. `docs/testflight_notes.md` added. |
+| #68 | Codebase cleanup: dedup GL/CL logic, split large files, remove dead code | `NutritionCalculator.swift` extracts shared per-profile GL/CL computation; `FoodMatcher` and `EntryRefiner` both delegate to it. `EditEntryView` and `ManualEntryView` moved from `LogTabView.swift` into their own files. `MetricSection` moved from `HomeTabView.swift` to `UI/Components/MetricSection.swift`. `_wordBoundaryContains` wrapper method removed; single `wordBoundaryContains` func used throughout `NutritionalRepository`. `FoodMatcher.clEngine` property removed (no longer needed after delegation). |
 | #69 | Extract `ListeningPill` + `CompactRecordButton` from `RootTabView` | Both components were `private struct` at the bottom of `RootTabView.swift` (391 lines total). Moved to `UI/Components/ListeningPill.swift` and `UI/Components/CompactRecordButton.swift`; `RootTabView.swift` drops to 217 lines. |
 
 ---
