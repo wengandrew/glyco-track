@@ -182,10 +182,11 @@ All PRs target `develop`. Listed in merge order.
 | #64 | Nav chevrons, CL panel cleanup, Impact Map rename | Day/Week/Month chevrons now hide (not grey-out) at boundary dates. CL panel: removed "No CL logged yet" empty state and summary text. Quadrant plot renamed "Food Impact Map" with plain-language subtitle. Month tab gains earliest-month guard so back-chevron hides at first logged month. |
 | #65 | Swipe nav, native color scheme, week-day tap to Today | Week and Month tabs now swipe left/right to navigate (matching Day tab). Color scheme switched to native iOS system colors (systemBlue/Orange/Green/Red accents, systemGroupedBackground cards, dark-mode support, no more warm organic palette). `selectedDate` hoisted from HomeTabView to RootTabView as a Binding. Tapping an empty day column in the Week river view jumps to the Today tab with that day selected. |
 | #66 | Week GL totals, physics sandbox settings, manual entry text | Week river view shows per-day GL totals under each day label. Settings gains a Physics Sandbox section with gravity (1–20) and vibration (0–100%) sliders. `SceneHaptics` now accepts intensity, `BucketScene` and `BalanceScene` both read AppStorage for gravity and haptics — changes rebuild scenes via SceneKey. Manual entry section header updated to "Type what you ate (manual entry)". |
+| #67 | App Review 1B: onboarding, seeding overlay, empty state, disclaimer, retry | `OnboardingView` gates first launch behind mic + speech permission request. `PersistenceController.isSeeding` flag + `SeedingOverlayView` shows "Loading nutritional database…" on first install. `firstMealHint` in Today tab for new users. `disclaimerBanner` card in About pane. `FoodLogProcessor.isNetworkError` + `retry()` + "Retry" button in `ListeningPill`. Privacy policy + support links in About pane. `docs/testflight_notes.md` added. |
 
 ---
 
-## Current State of the App (2026-05-08)
+## Current State of the App (2026-05-10)
 
 **What's working well:**
 - Voice → GL/CL pipeline reliable for common Western, Asian, and Middle Eastern foods
@@ -218,17 +219,17 @@ Goal: submit GlycoTrack 1.0. Splits into engineering work (repo) and deployment 
 | Version/build number strategy | — | ✅ Option A: manual bump. `CFBundleShortVersionString` (marketing, e.g. `1.0`) and `CFBundleVersion` (build integer, e.g. `1`) stay in `Info.plist`. Bump `CFBundleVersion` before every TestFlight upload; bump `CFBundleShortVersionString` only for user-facing releases. |
 | Widget decision: ship or hide for 1.0 | — | ✅ Widget dependency removed from `project.yml` for 1.0. App Groups entitlement requires paid team. Re-enable in 1.1 by adding `- target: GlycoTrackWidget` back to main target dependencies. |
 
-#### App Review risk-reducers (1B)
+#### App Review risk-reducers (1B) — all complete as of PR #67
 
-| Item | Status |
-|---|---|
-| Permissions onboarding flow (mic + speech recognition) before first alert | ⏳ |
-| In-app privacy policy link + support contact in About pane | ⏳ |
-| Health-claim disclaimers ("informational only, not medical advice") | ⏳ |
-| Empty-state hint on Today tab ("Tap the mic to log your first meal") | ⏳ |
-| Graceful network-failure path (retry or fallback beyond red pill) | ⏳ |
-| First-launch seeding overlay ("Loading nutritional database…") | ⏳ |
-| TestFlight metadata written to `docs/testflight_notes.md` | ⏳ |
+| Item | PR | Status |
+|---|---|---|
+| Permissions onboarding flow (mic + speech recognition) before first alert | #67 | ✅ `OnboardingView.swift` — `@AppStorage("hasCompletedOnboarding")` gates a `.fullScreenCover`; "Get Started" calls `SFSpeechRecognizer.requestAuthorization` + `AVAudioSession.requestRecordPermission`. |
+| In-app privacy policy link + support contact in About pane | #67 | ✅ `linksSection` in `AboutPaneView` — two tappable link rows (Privacy Policy → GitHub Pages, Support → GitHub Issues). |
+| Health-claim disclaimers ("informational only, not medical advice") | #67 | ✅ Promoted to orange `disclaimerBanner` card at top of About pane, replacing the old small footnote. |
+| Empty-state hint on Today tab ("Tap the mic to log your first meal") | #67 | ✅ `firstMealHint` in `HomeTabView` — appears inside GL section when `allEntriesAsc.isEmpty && isToday`. |
+| Graceful network-failure path (retry or fallback beyond red pill) | #67 | ✅ `FoodLogProcessor` detects `NSURLErrorDomain` errors, sets `isNetworkError = true` and stores `pendingTranscript`. `ListeningPill` shows "Retry" button for network errors (no auto-dismiss); calls `logProcessor.retry()`. |
+| First-launch seeding overlay ("Loading nutritional database…") | #67 | ✅ `PersistenceController.isSeeding` flag + `Notification.Name.didFinishSeeding`. `GlycoTrackApp` overlays `SeedingOverlayView` until notification fires. |
+| TestFlight metadata written to `docs/testflight_notes.md` | #67 | ✅ Covers what to test, known limitations, specific scenarios (network failure, time phrases, unrecognized foods). |
 
 #### Optional / 1.1 polish (1C)
 

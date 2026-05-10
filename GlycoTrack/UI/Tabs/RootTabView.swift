@@ -49,7 +49,9 @@ struct RootTabView: View {
                 }
 
             VStack(spacing: 8) {
-                ListeningPill(voiceCapture: voiceCapture, logProcessor: logProcessor)
+                ListeningPill(voiceCapture: voiceCapture, logProcessor: logProcessor) {
+                    await logProcessor.retry()
+                }
                 customTabBar
             }
             .padding(.horizontal, 12)
@@ -220,6 +222,7 @@ struct RootTabView: View {
 private struct ListeningPill: View {
     @ObservedObject var voiceCapture: VoiceCapture
     @ObservedObject var logProcessor: FoodLogProcessor
+    let retryAction: () async -> Void
 
     @State private var dotPulse: Bool = false
     @State private var errorDismissTask: Task<Void, Never>? = nil
@@ -247,6 +250,9 @@ private struct ListeningPill: View {
                         }
                     }
                     Spacer(minLength: 0)
+                    if logProcessor.isNetworkError && !logProcessor.isProcessing {
+                        retryButton
+                    }
                 }
                 .padding(.horizontal, 14)
                 .padding(.vertical, 10)
@@ -261,6 +267,7 @@ private struct ListeningPill: View {
                     errorDismissTask = nil
                 }
                 .onTapGesture {
+                    guard !logProcessor.isNetworkError else { return }
                     if logProcessor.lastError != nil {
                         errorDismissTask?.cancel()
                         errorDismissTask = nil
@@ -270,7 +277,8 @@ private struct ListeningPill: View {
                 .onChange(of: logProcessor.lastError) { newError in
                     errorDismissTask?.cancel()
                     errorDismissTask = nil
-                    if newError != nil {
+                    // Don't auto-dismiss network errors — the retry button keeps it visible.
+                    if newError != nil && !logProcessor.isNetworkError {
                         errorDismissTask = Task { @MainActor in
                             try? await Task.sleep(for: .seconds(4))
                             if !Task.isCancelled {
@@ -282,6 +290,21 @@ private struct ListeningPill: View {
             }
         }
         .animation(.spring(response: 0.32, dampingFraction: 0.85), value: isVisible)
+    }
+
+    private var retryButton: some View {
+        Button {
+            Task { await retryAction() }
+        } label: {
+            Text("Retry")
+                .font(.system(.caption, weight: .semibold))
+                .padding(.horizontal, 10)
+                .padding(.vertical, 5)
+                .background(Color.accentColor)
+                .foregroundColor(.white)
+                .clipShape(Capsule())
+        }
+        .buttonStyle(.plain)
     }
 
     @ViewBuilder
