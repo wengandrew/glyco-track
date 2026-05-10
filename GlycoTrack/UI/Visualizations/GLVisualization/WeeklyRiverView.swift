@@ -43,8 +43,17 @@ struct WeeklyRiverView: View {
     }
 
     private let plotHeight: CGFloat = 300
-    private let dayHeaderHeight: CGFloat = 20
+    private let dayHeaderHeight: CGFloat = 36
     private let timeAxisWidth: CGFloat = 32
+
+    private var dailyGLTotals: [Int: Double] {
+        var totals: [Int: Double] = [:]
+        for entry in entries {
+            let col = dayIndex(for: entry.timestamp ?? Date())
+            totals[col, default: 0] += entry.computedGL
+        }
+        return totals
+    }
 
     // Warm neutral matching the app's card background palette.
     private let gridBackground = Color(red: 0.97, green: 0.95, blue: 0.91)
@@ -63,14 +72,25 @@ struct WeeklyRiverView: View {
                 // Day headers
                 GeometryReader { geo in
                     let colWidth = geo.size.width / 7
+                    let glTotals = dailyGLTotals
                     ZStack(alignment: .topLeading) {
                         ForEach(0..<7, id: \.self) { i in
                             let isToday = todayColumnIndex == i
-                            Text(dayLabels[i])
-                                .font(.system(size: 11, weight: isToday ? .bold : .medium))
-                                .foregroundColor(isToday ? Color(red: 0.55, green: 0.63, blue: 0.32) : .secondary)
-                                .frame(width: colWidth)
-                                .offset(x: colWidth * Double(i))
+                            VStack(spacing: 1) {
+                                Text(dayLabels[i])
+                                    .font(.system(size: 11, weight: isToday ? .bold : .medium))
+                                    .foregroundColor(isToday ? Color(red: 0.55, green: 0.63, blue: 0.32) : .secondary)
+                                if let gl = glTotals[i], gl > 0 {
+                                    Text("\(Int(gl.rounded()))")
+                                        .font(.system(size: 9, weight: .regular))
+                                        .foregroundColor(.secondary)
+                                } else {
+                                    Text("")
+                                        .font(.system(size: 9))
+                                }
+                            }
+                            .frame(width: colWidth)
+                            .offset(x: colWidth * Double(i))
                         }
                     }
                 }
