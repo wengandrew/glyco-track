@@ -250,7 +250,10 @@ private struct ListeningPill: View {
                         }
                     }
                     Spacer(minLength: 0)
-                    if logProcessor.isNetworkError && !logProcessor.isProcessing {
+                    if logProcessor.isNetworkError
+                        && logProcessor.lastError != nil
+                        && !logProcessor.isProcessing
+                        && !voiceCapture.isRecording {
                         retryButton
                     }
                 }

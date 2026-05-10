@@ -91,4 +91,4 @@ Please pay particular attention to:
 
 Please report bugs and feedback via GitHub Issues: https://github.com/wengandrew/glyco-track/issues
 
-Or email directly — see the support link in the app's **About** pane (gear icon → About → Support & Feedback).
+The same link is accessible in-app at gear icon → **About** → Support & Feedback.

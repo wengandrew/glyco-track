@@ -109,6 +109,7 @@ struct OnboardingView: View {
         .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
     }
 
+    @MainActor
     private func requestPermissionsAndContinue() async {
         requestingPermissions = true
 

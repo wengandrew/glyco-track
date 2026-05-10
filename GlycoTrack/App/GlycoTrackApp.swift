@@ -6,7 +6,11 @@ struct GlycoTrackApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
-    @State private var showSeedingOverlay = PersistenceController.shared.isSeeding
+    // Separate @State drives the sheet so SwiftUI has a writable Binding and
+    // can manage presentation lifecycle. Synced from hasCompletedOnboarding via
+    // onAppear and onChange below.
+    @State private var showOnboarding = false
+    @State private var showSeedingOverlay = false
 
     var body: some Scene {
         WindowGroup {
@@ -24,11 +28,21 @@ struct GlycoTrackApp: App {
                 }
             }
             .animation(.easeOut(duration: 0.4), value: showSeedingOverlay)
+            .onAppear {
+                showOnboarding = !hasCompletedOnboarding
+                // Guard against the notification arriving before subscription —
+                // re-read the flag synchronously on appear.
+                showSeedingOverlay = persistenceController.isSeeding
+            }
             .onReceive(NotificationCenter.default.publisher(for: .didFinishSeeding)) { _ in
                 showSeedingOverlay = false
             }
-            .fullScreenCover(isPresented: .constant(!hasCompletedOnboarding)) {
+            .onChange(of: hasCompletedOnboarding) { completed in
+                if completed { showOnboarding = false }
+            }
+            .fullScreenCover(isPresented: $showOnboarding) {
                 OnboardingView()
+                    .interactiveDismissDisabled()
             }
         }
     }
