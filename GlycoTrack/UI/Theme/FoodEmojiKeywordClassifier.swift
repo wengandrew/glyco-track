@@ -19,7 +19,9 @@ import Foundation
 enum FoodEmojiKeywordClassifier {
     /// Returns the emoji for the first matching rule, or `nil` if nothing matched.
     static func classify(_ text: String) -> String? {
-        for rule in rules where wordBoundaryContains(haystack: text, needle: rule.needle) {
+        // Convert once; wordBoundaryContains re-uses the array across all rule checks.
+        let h = Array(text)
+        for rule in rules where wordBoundaryContains(h: h, needle: rule.needle) {
             return rule.emoji
         }
         return nil
@@ -27,7 +29,7 @@ enum FoodEmojiKeywordClassifier {
 
     // MARK: - Rules
 
-    static let rules: [(needle: String, emoji: String)] = [
+    private static let rules: [(needle: String, emoji: String)] = [
         // 1. Compound dish forms — most specific first
         ("fruit snack", "🍬"),
         ("rice noodle", "🍜"), ("egg noodle", "🍜"), ("ramen", "🍜"), ("noodle", "🍜"),
@@ -146,11 +148,13 @@ enum FoodEmojiKeywordClassifier {
     ///   - `es`  → "potato" matches "potatoes"
     ///   - `y`   → "anchov" matches "anchovy"
     ///   - `ies` → "cherr" matches "cherries", "berr" matches "berries"
-    static func wordBoundaryContains(haystack: String, needle: String) -> Bool {
-        guard !needle.isEmpty, needle.count <= haystack.count else { return false }
-        let h = Array(haystack)
+    ///
+    /// The haystack is pre-converted to `[Character]` by the caller (`classify`)
+    /// so the allocation is paid once across all rule checks rather than once per rule.
+    private static func wordBoundaryContains(h: [Character], needle: String) -> Bool {
         let n = Array(needle)
         let hLen = h.count, nLen = n.count
+        guard !needle.isEmpty, nLen <= hLen else { return false }
         var i = 0
         while i <= hLen - nLen {
             var match = true
