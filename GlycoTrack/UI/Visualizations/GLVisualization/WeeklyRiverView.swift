@@ -5,14 +5,20 @@ struct WeeklyRiverView: View {
     let entries: [FoodLogEntry]
     /// Start of the week (Monday 00:00) being displayed.
     let weekStart: Date
+    /// Fired when a food bubble is tapped — routes to detail sheet.
     var onTap: (FoodLogEntry) -> Void = { _ in }
+    /// Fired when the user taps an empty area inside a day column — routes
+    /// to the Today tab with that day selected.
+    var onDayTap: (Date) -> Void = { _ in }
 
     init(entries: [FoodLogEntry],
          weekStart: Date,
-         onTap: @escaping (FoodLogEntry) -> Void = { _ in }) {
+         onTap: @escaping (FoodLogEntry) -> Void = { _ in },
+         onDayTap: @escaping (Date) -> Void = { _ in }) {
         self.entries = entries
         self.weekStart = weekStart
         self.onTap = onTap
+        self.onDayTap = onDayTap
     }
 
     private let dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -25,6 +31,10 @@ struct WeeklyRiverView: View {
             to: cal.startOfDay(for: date)
         ).day ?? 0
         return min(max(days, 0), 6)
+    }
+
+    private func date(forColumn col: Int) -> Date {
+        Calendar.current.date(byAdding: .day, value: col, to: Calendar.current.startOfDay(for: weekStart)) ?? weekStart
     }
 
     private func timeOfDayFraction(for date: Date) -> Double {
@@ -55,11 +65,6 @@ struct WeeklyRiverView: View {
         return totals
     }
 
-    // Warm neutral matching the app's card background palette.
-    private let gridBackground = Color(red: 0.97, green: 0.95, blue: 0.91)
-    private let todayTint = Color(red: 0.55, green: 0.63, blue: 0.32).opacity(0.10)
-    private let separatorColor = Color(red: 0.85, green: 0.82, blue: 0.76)
-    private let guidelineColor = Color(red: 0.80, green: 0.77, blue: 0.72)
 
     var body: some View {
         HStack(alignment: .top, spacing: 0) {
@@ -79,7 +84,7 @@ struct WeeklyRiverView: View {
                             VStack(spacing: 1) {
                                 Text(dayLabels[i])
                                     .font(.system(size: 11, weight: isToday ? .bold : .medium))
-                                    .foregroundColor(isToday ? Color(red: 0.55, green: 0.63, blue: 0.32) : .secondary)
+                                    .foregroundColor(isToday ? Color(.systemBlue) : .secondary)
                                 if let gl = glTotals[i], gl > 0 {
                                     Text("\(Int(gl.rounded()))")
                                         .font(.system(size: 9, weight: .regular))
@@ -99,36 +104,44 @@ struct WeeklyRiverView: View {
                 GeometryReader { geo in
                     let colWidth = geo.size.width / 7
                     ZStack(alignment: .topLeading) {
-                        // Unified warm background
-                        Rectangle()
-                            .fill(gridBackground)
+                        // Background
+                        Color(.secondarySystemGroupedBackground)
                             .frame(width: geo.size.width, height: geo.size.height)
 
                         // Today column highlight
                         if let todayIdx = todayColumnIndex {
-                            Rectangle()
-                                .fill(todayTint)
+                            Color(.systemBlue).opacity(0.07)
                                 .frame(width: colWidth, height: geo.size.height)
                                 .offset(x: colWidth * Double(todayIdx))
                         }
 
                         // Vertical separators between days
                         ForEach(1..<7, id: \.self) { i in
-                            Rectangle()
-                                .fill(separatorColor)
+                            Color(.separator)
                                 .frame(width: 0.5, height: geo.size.height)
                                 .offset(x: colWidth * Double(i))
                         }
 
                         // Time guidelines (6am, 12pm, 6pm)
                         ForEach([0.25, 0.5, 0.75], id: \.self) { fraction in
-                            Rectangle()
-                                .fill(guidelineColor)
+                            Color(.systemGray4)
                                 .frame(width: geo.size.width, height: 0.5)
                                 .offset(y: geo.size.height * fraction)
                         }
 
-                        // Food graphics
+                        // Column tap targets — below food graphics so food taps
+                        // take priority in the ZStack. Tapping empty column area
+                        // navigates to that day in the Today tab.
+                        ForEach(0..<7, id: \.self) { i in
+                            let colDate = date(forColumn: i)
+                            Color.clear
+                                .contentShape(Rectangle())
+                                .frame(width: colWidth, height: geo.size.height)
+                                .offset(x: colWidth * Double(i))
+                                .onTapGesture { onDayTap(colDate) }
+                        }
+
+                        // Food graphics — on top, capturing taps before column backgrounds
                         ForEach(entries, id: \.id) { entry in
                             let col = dayIndex(for: entry.timestamp ?? Date())
                             let yFrac = timeOfDayFraction(for: entry.timestamp ?? Date())
@@ -168,7 +181,7 @@ struct WeeklyRiverView: View {
             Text("12a")
         }
         .font(.system(size: 9, weight: .medium))
-        .foregroundColor(Color(red: 0.60, green: 0.57, blue: 0.52))
+        .foregroundColor(.secondary)
         .padding(.trailing, 4)
     }
 }

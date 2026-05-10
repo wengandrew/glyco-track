@@ -5,14 +5,14 @@ enum AppTheme: String {
 
     // MARK: - Colors
 
-    var glAccent: Color { Color(red: 0.55, green: 0.63, blue: 0.32) }
-    var clAccent: Color { Color(red: 0.82, green: 0.50, blue: 0.25) }
-    var primaryAccent: Color { Color(red: 0.55, green: 0.63, blue: 0.32) }
-    var cardBackground: Color { Color(red: 0.98, green: 0.96, blue: 0.92) }
-    var pageBackground: Color { Color(red: 0.96, green: 0.94, blue: 0.89) }
-    var surfaceTint: Color { Color(red: 0.95, green: 0.90, blue: 0.80).opacity(0.15) }
-    var beneficialColor: Color { Color(red: 0.40, green: 0.65, blue: 0.35) }
-    var harmfulColor: Color { Color(red: 0.82, green: 0.40, blue: 0.30) }
+    var glAccent: Color { Color(.systemBlue) }
+    var clAccent: Color { Color(.systemOrange) }
+    var primaryAccent: Color { Color(.systemBlue) }
+    var cardBackground: Color { Color(.secondarySystemGroupedBackground) }
+    var pageBackground: Color { Color(.systemGroupedBackground) }
+    var surfaceTint: Color { .clear }
+    var beneficialColor: Color { Color(.systemGreen) }
+    var harmfulColor: Color { Color(.systemRed) }
 
     // MARK: - Typography
 
@@ -21,23 +21,23 @@ enum AppTheme: String {
 
     // MARK: - Geometry
 
-    var cardCornerRadius: CGFloat { 28 }
-    var chipCornerRadius: CGFloat { 16 }
+    var cardCornerRadius: CGFloat { 16 }
+    var chipCornerRadius: CGFloat { 10 }
 
     // MARK: - Card Style
 
-    var cardShadowRadius: CGFloat { 12 }
-    var cardShadowOpacity: Double { 0.08 }
+    var cardShadowRadius: CGFloat { 6 }
+    var cardShadowOpacity: Double { 0.06 }
 
     // MARK: - Tab Bar
 
     var tabBarUsesLabels: Bool { true }
     var tabBarMaterial: Material { .ultraThinMaterial }
-    var recordButtonColor: Color { Color(red: 0.55, green: 0.63, blue: 0.32) }
+    var recordButtonColor: Color { Color(.systemBlue) }
 
     // MARK: - Preferred color scheme
 
-    var preferredColorScheme: ColorScheme? { .light }
+    var preferredColorScheme: ColorScheme? { nil }
 
     // MARK: - Greeting
 

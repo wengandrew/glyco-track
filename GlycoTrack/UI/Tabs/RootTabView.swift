@@ -11,6 +11,7 @@ struct RootTabView: View {
     @StateObject private var logProcessor = FoodLogProcessor()
 
     @State private var selectedTab: Tab = .today
+    @State private var homeSelectedDate: Date = Calendar.current.startOfDay(for: Date())
 
     enum Tab: Int, CaseIterable, Identifiable {
         case today, week, month, log
@@ -69,9 +70,12 @@ struct RootTabView: View {
     private var content: some View {
         switch selectedTab {
         case .today:
-            HomeTabView(voiceCapture: voiceCapture, logProcessor: logProcessor)
+            HomeTabView(voiceCapture: voiceCapture, logProcessor: logProcessor, selectedDate: $homeSelectedDate)
         case .week:
-            WeekTabView()
+            WeekTabView(onDayTapped: { date in
+                homeSelectedDate = Calendar.current.startOfDay(for: date)
+                withAnimation { selectedTab = .today }
+            })
         case .month:
             MonthTabView()
         case .log:
