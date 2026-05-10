@@ -59,6 +59,7 @@
 		B076FCA27DDFC7ECFBB6F792 /* VoiceCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA784CDE9FCC292E4B80263 /* VoiceCapture.swift */; };
 		B740094208801A93DAF88D70 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EAAE4B7B8B8DFA9849BD23 /* OnboardingView.swift */; };
 		B8750ABB94F82072EC7BD028 /* ClaudeAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AD332E63555F5AA1137AAF /* ClaudeAPIClient.swift */; };
+		BB5992E78E3DE53DA986E97A /* FoodMatcherCascadeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778C9A6F6E20F91B4A1A88FE /* FoodMatcherCascadeTests.swift */; };
 		C6ABC4E02105C1E68D1FB675 /* FoodEmoji.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615CCD25037FC347FCF34DD6 /* FoodEmoji.swift */; };
 		C822130303E9CA3483908361 /* BundleConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8AADF94EA7AB536744B8B73 /* BundleConfig.swift */; };
 		CB15F2A5E2E57901736EBFB8 /* NutritionalRepositoryRegressionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C49AC2B0AF9614FBD23DF6D /* NutritionalRepositoryRegressionTests.swift */; };
@@ -122,6 +123,7 @@
 		700B603125BA314A19923286 /* GIEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIEngine.swift; sourceTree = "<group>"; };
 		70F001037826FF0A6FEC6CC5 /* DateFormatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatters.swift; sourceTree = "<group>"; };
 		73D37631E30DEC9D009EB19A /* GlycoTrackWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlycoTrackWidget.swift; sourceTree = "<group>"; };
+		778C9A6F6E20F91B4A1A88FE /* FoodMatcherCascadeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodMatcherCascadeTests.swift; sourceTree = "<group>"; };
 		781609117D8A1D76D625FCF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7967B02D3586B1A48FCB7F6A /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		7CA784CDE9FCC292E4B80263 /* VoiceCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCapture.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				9CF66D45F5F0D4B5683DBD21 /* EthnicFoodCoverageTests.swift */,
+				778C9A6F6E20F91B4A1A88FE /* FoodMatcherCascadeTests.swift */,
 				9C49AC2B0AF9614FBD23DF6D /* NutritionalRepositoryRegressionTests.swift */,
 			);
 			name = MatchingTests;
@@ -736,6 +739,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0B31A32D301242E6C37A345B /* EthnicFoodCoverageTests.swift in Sources */,
+				BB5992E78E3DE53DA986E97A /* FoodMatcherCascadeTests.swift in Sources */,
 				CB15F2A5E2E57901736EBFB8 /* NutritionalRepositoryRegressionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
