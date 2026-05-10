@@ -5,10 +5,25 @@ import XCTest
 /// Tests for the FoodMatcher cascade (T1/T2/T5 dispatch) and EntryRefiner
 /// re-linking logic.
 ///
-/// Claude API calls are bypassed by providing an invalid API key — `decomposeIngredients`
-/// catches the network error and returns `[]`, keeping these tests fully offline.
-/// Tier 3/4 is therefore never reached; this file focuses on T1, T2 (when T2
-/// is strong enough to avoid the API), and T5.
+/// Tier 3/4 (Claude API) is stubbed out by `NoNetworkProtocol`, which intercepts
+/// all URLSession.shared requests and fails them immediately — no sockets opened,
+/// no auth tokens needed. `decomposeIngredients` catches the error and returns `[]`,
+/// keeping the suite fully offline and deterministic. This file focuses on T1,
+/// T2 (when T2 is strong enough to avoid the API), and T5.
+
+// MARK: - Test support
+
+/// URLProtocol that immediately fails every request without opening a socket.
+/// Registered on URLSession.shared for the duration of each test.
+private final class NoNetworkProtocol: URLProtocol {
+    override class func canInit(with request: URLRequest) -> Bool { true }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override func startLoading() {
+        client?.urlProtocol(self, didFailWithError: URLError(.notConnectedToInternet))
+    }
+    override func stopLoading() {}
+}
+
 @MainActor
 final class FoodMatcherCascadeTests: XCTestCase {
     private var pc: PersistenceController!
@@ -17,16 +32,18 @@ final class FoodMatcherCascadeTests: XCTestCase {
 
     override func setUp() async throws {
         try await super.setUp()
+        URLProtocol.registerClass(NoNetworkProtocol.self)
         pc = PersistenceController(inMemory: true)
         await pc.seedNutritionalProfiles()
         AliasIndex.shared.reload()
         repo = NutritionalRepository(context: pc.context, aliasIndex: .shared)
-        let client = ClaudeAPIClient(apiKey: "test-no-api-key")
+        let client = ClaudeAPIClient(apiKey: "unused-in-tests")
         let parser = TranscriptParser(client: client)
         matcher = FoodMatcher(repo: repo, parser: parser)
     }
 
     override func tearDown() async throws {
+        URLProtocol.unregisterClass(NoNetworkProtocol.self)
         matcher = nil
         repo = nil
         pc = nil
@@ -84,7 +101,7 @@ final class FoodMatcherCascadeTests: XCTestCase {
         // Butter has no carbs — GL should be negligible regardless of serving size.
         let food = ParsedFood(food: "butter", quantity: "1 tbsp", unit: "tbsp", grams: 14)
         let result = await matcher.resolve(food: food)
-        guard result.isRecognized else { return }
+        XCTAssertTrue(result.isRecognized, "butter must be recognized in seed data")
         XCTAssertLessThan(result.totalGL, 1.0,
             "Butter has no significant carbs; GL must be near 0")
     }
@@ -95,7 +112,8 @@ final class FoodMatcherCascadeTests: XCTestCase {
         let large = ParsedFood(food: "white rice", quantity: "2 cups", unit: "", grams: 372)
         let smallResult = await matcher.resolve(food: small)
         let largeResult = await matcher.resolve(food: large)
-        guard smallResult.isRecognized, largeResult.isRecognized else { return }
+        XCTAssertTrue(smallResult.isRecognized, "white rice (small) must be recognized")
+        XCTAssertTrue(largeResult.isRecognized, "white rice (large) must be recognized")
         XCTAssertGreaterThan(largeResult.totalGL, smallResult.totalGL,
             "Larger serving must yield higher GL")
     }
@@ -114,8 +132,9 @@ final class FoodMatcherCascadeTests: XCTestCase {
     func testComponentMatchHasMultipleContributors() async {
         let food = ParsedFood(food: "chicken and broccoli", quantity: "1 bowl", unit: "", grams: 300)
         let result = await matcher.resolve(food: food)
-        guard result.isRecognized else { return }
-        XCTAssertGreaterThanOrEqual(result.contributingComponents.count, 1)
+        XCTAssertTrue(result.isRecognized, "chicken and broccoli must be recognized")
+        XCTAssertGreaterThanOrEqual(result.contributingComponents.count, 2,
+            "both chicken and broccoli should be present as distinct components")
     }
 
     // MARK: - Tier 5: unrecognized
@@ -205,21 +224,21 @@ final class EntryRefinerTests: XCTestCase {
     }
 
     func testRefineSetsTierToDirect() {
-        guard let profile = profile(named: "apple") else { return }
+        guard let profile = profile(named: "apple") else { XCTFail("apple not found in seed DB"); return }
         let entry = makeEntry()
         EntryRefiner.refine(entry: entry, to: profile, context: pc.context)
         XCTAssertEqual(entry.parsingMethod, MatchTier.direct.rawValue)
     }
 
     func testRefineSetsPerfectConfidence() {
-        guard let profile = profile(named: "apple") else { return }
+        guard let profile = profile(named: "apple") else { XCTFail("apple not found in seed DB"); return }
         let entry = makeEntry()
         EntryRefiner.refine(entry: entry, to: profile, context: pc.context)
         XCTAssertEqual(entry.confidenceScore, 1.0, accuracy: 0.001)
     }
 
     func testRefineMarksEntryAsEdited() {
-        guard let profile = profile(named: "apple") else { return }
+        guard let profile = profile(named: "apple") else { XCTFail("apple not found in seed DB"); return }
         let entry = makeEntry()
         XCTAssertFalse(entry.isEdited)
         EntryRefiner.refine(entry: entry, to: profile, context: pc.context)
@@ -227,14 +246,14 @@ final class EntryRefinerTests: XCTestCase {
     }
 
     func testRefineUpdatesReferenceFood() {
-        guard let profile = profile(named: "white rice") else { return }
+        guard let profile = profile(named: "white rice") else { XCTFail("white rice not found in seed DB"); return }
         let entry = makeEntry()
         EntryRefiner.refine(entry: entry, to: profile, context: pc.context)
         XCTAssertEqual(entry.referenceFood, profile.foodName)
     }
 
     func testRefinePreservesTimestamp() {
-        guard let profile = profile(named: "apple") else { return }
+        guard let profile = profile(named: "apple") else { XCTFail("apple not found in seed DB"); return }
         let original = Date(timeIntervalSinceReferenceDate: 1_000_000)
         let entry = makeEntry()
         entry.timestamp = original
@@ -244,7 +263,7 @@ final class EntryRefinerTests: XCTestCase {
     }
 
     func testRefinePreservesRawTranscript() {
-        guard let profile = profile(named: "apple") else { return }
+        guard let profile = profile(named: "apple") else { XCTFail("apple not found in seed DB"); return }
         let entry = makeEntry()
         EntryRefiner.refine(entry: entry, to: profile, context: pc.context)
         XCTAssertEqual(entry.rawTranscript, "test transcript",
@@ -254,7 +273,7 @@ final class EntryRefinerTests: XCTestCase {
     // MARK: - GL recomputation
 
     func testRefineComputesPositiveGLForCarbFood() {
-        guard let profile = profile(named: "white rice") else { return }
+        guard let profile = profile(named: "white rice") else { XCTFail("white rice not found in seed DB"); return }
         let entry = makeEntry(gl: 0, grams: 150)
         EntryRefiner.refine(entry: entry, to: profile, context: pc.context)
         XCTAssertGreaterThan(entry.computedGL, 0,
@@ -262,7 +281,7 @@ final class EntryRefinerTests: XCTestCase {
     }
 
     func testRefineGLIsNearZeroForFatOnlyFood() {
-        guard let profile = profile(named: "butter") else { return }
+        guard let profile = profile(named: "butter") else { XCTFail("butter not found in seed DB"); return }
         let entry = makeEntry(gl: 99, grams: 14)
         EntryRefiner.refine(entry: entry, to: profile, context: pc.context)
         XCTAssertLessThan(entry.computedGL, 1.0,
@@ -270,7 +289,7 @@ final class EntryRefinerTests: XCTestCase {
     }
 
     func testRefineGLUsesActualGramsNotDefault() {
-        guard let profile = profile(named: "white rice") else { return }
+        guard let profile = profile(named: "white rice") else { XCTFail("white rice not found in seed DB"); return }
         let entry50  = makeEntry(gl: 0, grams: 50)
         let entry200 = makeEntry(gl: 0, grams: 200)
         EntryRefiner.refine(entry: entry50,  to: profile, context: pc.context)
@@ -283,7 +302,7 @@ final class EntryRefinerTests: XCTestCase {
 
     func testRefineCLIsPositiveForSatFatFood() {
         // Bacon has significant saturated fat → positive CL (harmful direction).
-        guard let profile = profile(named: "bacon") else { return }
+        guard let profile = profile(named: "bacon") else { XCTFail("bacon not found in seed DB"); return }
         let entry = makeEntry(cl: 0, grams: 100)
         EntryRefiner.refine(entry: entry, to: profile, context: pc.context)
         XCTAssertGreaterThan(entry.computedCL, 0,
@@ -292,7 +311,7 @@ final class EntryRefinerTests: XCTestCase {
 
     func testRefineCLIsNegativeForHighFiberFood() {
         // Avocado has significant fiber and MUFA → net CL should be negative (beneficial).
-        guard let profile = profile(named: "avocado") else { return }
+        guard let profile = profile(named: "avocado") else { XCTFail("avocado not found in seed DB"); return }
         let entry = makeEntry(cl: 0, grams: 100)
         EntryRefiner.refine(entry: entry, to: profile, context: pc.context)
         XCTAssertLessThan(entry.computedCL, 0,
