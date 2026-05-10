@@ -253,10 +253,6 @@ final class NutritionalRepository {
 
     // MARK: - Private helpers
 
-    func wordBoundaryContains(haystack: String, needle: String) -> Bool {
-        _wordBoundaryContains(haystack: haystack, needle: needle)
-    }
-
     private func fetchExact(_ name: String) -> NutritionalProfile? {
         let request = NutritionalProfile.fetchRequest()
         request.predicate = NSPredicate(format: "foodName ==[cd] %@", name)
@@ -284,7 +280,7 @@ final class NutritionalRepository {
             .filter { profile in
                 let dbWords = profile.foodName.split(separator: " ").count
                 return Double(queryWords) / Double(dbWords) > 0.5
-                    && _wordBoundaryContains(haystack: profile.foodName.lowercased(), needle: query)
+                    && wordBoundaryContains(haystack: profile.foodName.lowercased(), needle: query)
             }
             .min(by: { $0.foodName.count < $1.foodName.count })
     }
@@ -336,7 +332,7 @@ final class NutritionalRepository {
     /// while still allowing "beef" to match inside "beef noodle soup". Plural
     /// "s"/"es" suffixes on the needle are tolerated on the right edge so
     /// "egg" matches "scrambled eggs" but NOT "eggplant".
-    private func _wordBoundaryContains(haystack: String, needle: String) -> Bool {
+    func wordBoundaryContains(haystack: String, needle: String) -> Bool {
         guard !needle.isEmpty, needle.count <= haystack.count else { return false }
         let h = Array(haystack)
         let n = Array(needle)

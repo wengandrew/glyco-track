@@ -81,12 +81,10 @@ enum MatchTier: Int16, CaseIterable {
 final class FoodMatcher {
     private let repo: NutritionalRepository
     private let parser: TranscriptParser
-    private let clEngine: CLEngine
 
-    init(repo: NutritionalRepository, parser: TranscriptParser, clEngine: CLEngine = CLEngine()) {
+    init(repo: NutritionalRepository, parser: TranscriptParser) {
         self.repo = repo
         self.parser = parser
-        self.clEngine = clEngine
     }
 
     /// Resolve a single ParsedFood into a fully-computed FoodResolution.
@@ -244,37 +242,12 @@ final class FoodMatcher {
 
     // MARK: - Math
 
-    /// Per-ingredient GL and CL, summed. GL uses each ingredient's own GI and
-    /// carbs; CL uses each ingredient's own fat/fiber macros. This is the
-    /// correct way to handle composite dishes: sum the parts.
+    /// Per-ingredient GL and CL, summed across all components.
     private func compute(components: [ResolvedComponent]) -> (gl: Double, cl: Double) {
-        var totalGL: Double = 0
-        var totalCL: Double = 0
-        for comp in components {
-            let p = comp.profile
-            let carbsInServing = p.carbsPer100g * comp.grams / 100.0
-
-            // USDA-only entries (no Sydney GI match) store glycemicIndex = 0.
-            // For actually-carby ingredients that lands at GL = 0 spuriously
-            // — e.g. a noodle variant without a Sydney entry would contribute
-            // no GL despite being all carbs. Fall back to medium GI (55) when
-            // carbs are present but GI is missing; leave fat/meat/oil alone.
-            let effectiveGI: Int = (p.glycemicIndex == 0 && p.carbsPer100g > 3)
-                ? 55
-                : Int(p.glycemicIndex)
-            totalGL += GIEngine.computeGL(gi: effectiveGI, carbsGrams: carbsInServing)
-
-            let nutrition = NutritionInput(
-                saturatedFatPer100g: p.saturatedFatPer100g,
-                transFatPer100g: p.transFatPer100g,
-                solubleFiberPer100g: p.solubleFiberPer100g,
-                pufaPer100g: p.pufaPer100g,
-                mufaPer100g: p.mufaPer100g
-            )
-            let clResult = clEngine.computeCL(nutrition: nutrition, quantityGrams: comp.grams)
-            totalCL += clResult.cl
+        components.reduce((0, 0)) { acc, comp in
+            let (gl, cl) = NutritionCalculator.compute(profile: comp.profile, grams: comp.grams)
+            return (acc.0 + gl, acc.1 + cl)
         }
-        return (totalGL, totalCL)
     }
 
     /// For Tier 2 (no AI weights) — split the query's total grams across the
