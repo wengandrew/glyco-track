@@ -61,26 +61,38 @@ struct LogTabView: View {
 
     private var searchBar: some View {
         HStack(spacing: 8) {
-            Image(systemName: "magnifyingglass")
-                .foregroundColor(.secondary)
-                .font(.system(size: 15))
-            TextField("Search foods", text: $searchText)
-                .font(.system(.body, design: theme.fontDesign))
-                .focused($searchFocused)
-                .submitLabel(.search)
-            if !searchText.isEmpty {
-                Button {
-                    searchText = ""
-                    searchFocused = false
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.secondary)
+            HStack(spacing: 8) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.secondary)
+                    .font(.system(size: 15))
+                TextField("Search foods", text: $searchText)
+                    .font(.system(.body, design: theme.fontDesign))
+                    .focused($searchFocused)
+                    .submitLabel(.search)
+                if !searchText.isEmpty {
+                    Button {
+                        searchText = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.secondary)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
+            .padding(10)
+            .background(Color(.systemGray5).opacity(0.8))
+            .cornerRadius(12)
+
+            if searchFocused {
+                Button("Cancel") {
+                    searchText = ""
+                    searchFocused = false
+                }
+                .font(.system(.body, design: theme.fontDesign))
+                .transition(.move(edge: .trailing).combined(with: .opacity))
+            }
         }
-        .padding(10)
-        .background(Color(.systemGray5).opacity(0.8))
-        .cornerRadius(12)
+        .animation(.easeInOut(duration: 0.2), value: searchFocused)
         .padding(.horizontal, 16)
         .padding(.vertical, 8)
         .background(theme.pageBackground)
