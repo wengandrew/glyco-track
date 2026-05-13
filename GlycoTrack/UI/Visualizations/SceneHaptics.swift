@@ -1,13 +1,18 @@
 import SpriteKit
 import UIKit
+import CoreHaptics
 
 /// Per-scene haptic feedback for SpriteKit physics scenes.
 ///
-/// Wired into `SKPhysicsContactDelegate.didBegin` so a light impact fires the
+/// Wired into `SKPhysicsContactDelegate.didBegin` so a haptic fires the
 /// first time each item node touches anything (a wall, the floor, another
 /// item). Subsequent contacts from the same node — settling, rolling, resting
 /// against a wall — are suppressed so a single drop produces one tick rather
 /// than a vibrating buzz.
+///
+/// Uses CoreHaptics when available (iOS 13+, supported hardware) for
+/// configurable intensity and duration. Falls back to
+/// `UIImpactFeedbackGenerator` on devices without a Taptic Engine.
 ///
 /// Why per-scene rather than a singleton: the firing set is keyed by
 /// `ObjectIdentifier`, which becomes stale once SwiftUI tears the scene host
@@ -15,16 +20,30 @@ import UIKit
 /// scene gets its own helper that's discarded with the scene.
 @MainActor
 final class SceneHaptics {
-    private let generator = UIImpactFeedbackGenerator(style: .light)
-    private var firedNodes: Set<ObjectIdentifier> = []
     private let intensity: CGFloat
+    private let duration: TimeInterval
 
-    init(intensity: Double = 1.0) {
+    // CoreHaptics path
+    private var engine: CHHapticEngine?
+    // Fallback path
+    private let generator = UIImpactFeedbackGenerator(style: .light)
+
+    private var firedNodes: Set<ObjectIdentifier> = []
+
+    init(intensity: Double = 1.0, duration: Double = AppSettings.defaultPhysicsHapticDuration) {
         self.intensity = CGFloat(max(0, min(1, intensity)))
-        // Pre-warm the engine so the first impact isn't delayed while the
-        // taptic engine spins up. Cheap; ARC-safe to leave alive for the
-        // scene's lifetime.
+        self.duration = max(0.02, min(0.5, duration))
+
+        // Always prepare the fallback generator — it serves as a backup if
+        // CoreHaptics setup fails (init throws or start() fails), and prepareing
+        // it unconditionally avoids first-tap latency on that code path.
         generator.prepare()
+
+        if CHHapticEngine.capabilitiesForHardware().supportsHaptics {
+            let newEngine = try? CHHapticEngine()
+            try? newEngine?.start()
+            engine = newEngine  // remains nil if either step threw
+        }
     }
 
     /// Fires an impact for the first contact involving each item node. The
@@ -39,10 +58,29 @@ final class SceneHaptics {
             guard node.name == "item" || node.name == "bubble" else { continue }
             if firedNodes.insert(ObjectIdentifier(node)).inserted {
                 if intensity > 0 {
-                    generator.impactOccurred(intensity: intensity)
+                    fire()
                 }
                 return
             }
+        }
+    }
+
+    private func fire() {
+        if let engine {
+            let intensityParam = CHHapticEventParameter(parameterID: .hapticIntensity, value: Float(intensity))
+            let sharpnessParam = CHHapticEventParameter(parameterID: .hapticSharpness, value: 0.5)
+            let event = CHHapticEvent(
+                eventType: .hapticContinuous,
+                parameters: [intensityParam, sharpnessParam],
+                relativeTime: 0,
+                duration: duration
+            )
+            if let pattern = try? CHHapticPattern(events: [event], parameters: []),
+               let player = try? engine.makePlayer(with: pattern) {
+                try? player.start(atTime: CHHapticTimeImmediate)
+            }
+        } else {
+            generator.impactOccurred(intensity: intensity)
         }
     }
 }

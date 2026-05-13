@@ -21,6 +21,7 @@ struct PhysicsBucketView: View {
     @AppStorage(AppSettings.dailyGLBudgetKey) private var budget: Double = AppSettings.defaultDailyGLBudget
     @AppStorage(AppSettings.physicsGravityKey) private var physicsGravity: Double = AppSettings.defaultPhysicsGravity
     @AppStorage(AppSettings.physicsHapticsKey) private var physicsHaptics: Double = AppSettings.defaultPhysicsHaptics
+    @AppStorage(AppSettings.physicsHapticDurationKey) private var physicsHapticDuration: Double = AppSettings.defaultPhysicsHapticDuration
 
     @State private var selectedEntry: FoodLogEntry?
     /// Bumped to force a rebuild without an input change (Replay button, tab
@@ -67,7 +68,8 @@ struct PhysicsBucketView: View {
                 height: geo.size.height,
                 budget: budget,
                 gravity: physicsGravity,
-                haptics: physicsHaptics
+                haptics: physicsHaptics,
+                hapticDuration: physicsHapticDuration
             )
             ZStack {
                 BucketSceneHost(
@@ -76,6 +78,7 @@ struct PhysicsBucketView: View {
                     budget: budget,
                     gravity: physicsGravity,
                     haptics: physicsHaptics,
+                    hapticDuration: physicsHapticDuration,
                     onTap: { selectedEntry = $0 }
                 )
                 .id(key)
@@ -117,8 +120,8 @@ private struct BucketSceneHost: View {
     let entries: [FoodLogEntry]
     let budget: Double
 
-    init(entries: [FoodLogEntry], size: CGSize, budget: Double, gravity: Double, haptics: Double, onTap: @escaping (FoodLogEntry) -> Void) {
-        let s = BucketScene(size: size, entries: entries, budget: budget, gravity: gravity, haptics: haptics)
+    init(entries: [FoodLogEntry], size: CGSize, budget: Double, gravity: Double, haptics: Double, hapticDuration: Double, onTap: @escaping (FoodLogEntry) -> Void) {
+        let s = BucketScene(size: size, entries: entries, budget: budget, gravity: gravity, haptics: haptics, hapticDuration: hapticDuration)
         s.scaleMode = .resizeFill
         s.onBubbleTapped = onTap
         _scene = State(initialValue: s)
@@ -179,6 +182,7 @@ private struct SceneKey: Hashable {
     let budget: Double
     let gravity: Double
     let haptics: Double
+    let hapticDuration: Double
 }
 
 struct GLStatusLabel: View {
@@ -234,11 +238,11 @@ final class BucketScene: SKScene, SKPhysicsContactDelegate {
 
     private var nodeToEntry: [ObjectIdentifier: FoodLogEntry] = [:]
 
-    init(size: CGSize, entries: [FoodLogEntry], budget: Double, gravity: Double = AppSettings.defaultPhysicsGravity, haptics: Double = AppSettings.defaultPhysicsHaptics) {
+    init(size: CGSize, entries: [FoodLogEntry], budget: Double, gravity: Double = AppSettings.defaultPhysicsGravity, haptics: Double = AppSettings.defaultPhysicsHaptics, hapticDuration: Double = AppSettings.defaultPhysicsHapticDuration) {
         self.entries = entries.sorted { $0.computedGL > $1.computedGL } // heavy first → small ones pack on top
         self.budget = budget
         self.gravityMagnitude = CGFloat(gravity)
-        self.haptics = SceneHaptics(intensity: haptics)
+        self.haptics = SceneHaptics(intensity: haptics, duration: hapticDuration)
 
         let bucketArea = size.width * bucketWidthFrac * size.height * bucketHeightFrac
         self.areaPerUnit = (bucketArea * packingFactor) / CGFloat(max(budget, 1))

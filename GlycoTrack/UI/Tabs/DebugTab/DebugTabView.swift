@@ -29,12 +29,18 @@ struct DebugPaneView: View {
     }
 
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding = false
+    @Environment(\.dismiss) private var dismiss
+
+    @AppStorage(AppSettings.physicsGravityKey) private var physicsGravity: Double = AppSettings.defaultPhysicsGravity
+    @AppStorage(AppSettings.physicsHapticsKey) private var physicsHaptics: Double = AppSettings.defaultPhysicsHaptics
+    @AppStorage(AppSettings.physicsHapticDurationKey) private var physicsHapticDuration: Double = AppSettings.defaultPhysicsHapticDuration
 
     var body: some View {
         List {
             buildInfoSection
             statsSection
             developerActionsSection
+            physicsSandboxSection
             foodLogSection
             nutritionalProfileSection
         }
@@ -120,10 +126,67 @@ struct DebugPaneView: View {
         }
     }
 
+    private var physicsSandboxSection: some View {
+        Section {
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    Text("Gravity")
+                    Spacer()
+                    Text(String(format: "%.1f", physicsGravity))
+                        .font(.body.monospacedDigit())
+                        .foregroundColor(.secondary)
+                }
+                Slider(value: $physicsGravity, in: AppSettings.physicsGravityRange, step: 0.5)
+                    .accessibilityLabel("Gravity strength")
+                    .accessibilityValue(String(format: "%.1f", physicsGravity))
+            }
+
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    Text("Vibration Intensity")
+                    Spacer()
+                    Text(physicsHaptics == 0 ? "Off" : String(format: "%.0f%%", physicsHaptics * 100))
+                        .font(.body.monospacedDigit())
+                        .foregroundColor(.secondary)
+                }
+                Slider(value: $physicsHaptics, in: AppSettings.physicsHapticsRange, step: 0.1)
+                    .accessibilityLabel("Vibration intensity")
+                    .accessibilityValue(physicsHaptics == 0 ? "Off" : String(format: "%.0f%%", physicsHaptics * 100))
+            }
+
+            VStack(alignment: .leading, spacing: 4) {
+                HStack {
+                    Text("Vibration Duration")
+                    Spacer()
+                    Text(String(format: "%.2f s", physicsHapticDuration))
+                        .font(.body.monospacedDigit())
+                        .foregroundColor(.secondary)
+                }
+                Slider(value: $physicsHapticDuration, in: AppSettings.physicsHapticDurationRange, step: 0.02)
+                    .accessibilityLabel("Vibration duration")
+                    .accessibilityValue(String(format: "%.2f seconds", physicsHapticDuration))
+            }
+        } header: {
+            Text("Physics Sandbox")
+        } footer: {
+            Text("Controls how food items behave in the bucket and balance scale. Higher gravity = faster fall. Vibration fires on first collision; intensity and duration tune the feel. Uses CoreHaptics when available.")
+                .font(.footnote)
+        }
+    }
+
     private var developerActionsSection: some View {
         Section("Developer Actions") {
             Button("Reset Onboarding") {
-                hasCompletedOnboarding = false
+                // Dismiss the containing sheet first — SwiftUI can't present a
+                // fullScreenCover while a .sheet is already active. The 400 ms
+                // delay lets the dismissal animation complete before the
+                // hasCompletedOnboarding change triggers the cover.
+                // @MainActor ensures the AppStorage write stays on the main thread.
+                dismiss()
+                Task { @MainActor in
+                    try? await Task.sleep(for: .milliseconds(400))
+                    hasCompletedOnboarding = false
+                }
             }
             .foregroundColor(.orange)
         }

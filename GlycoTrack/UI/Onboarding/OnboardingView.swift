@@ -14,23 +14,28 @@ struct OnboardingView: View {
             VStack(spacing: 0) {
                 Spacer()
 
-                // Logo
-                ZStack {
-                    Circle()
-                        .fill(Color.accentColor.opacity(0.12))
-                        .frame(width: 100, height: 100)
-                    Image(systemName: "waveform.circle.fill")
-                        .font(.system(size: 56))
-                        .foregroundColor(.accentColor)
-                }
-                .padding(.bottom, 28)
+                // Logo — dedicated imageset so Image("AppLogoImage") works reliably.
+                // AppIcon.appiconset is not exposed as a named asset at runtime.
+                Image("AppLogoImage")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 100, height: 100)
+                    .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                    .shadow(color: .black.opacity(0.12), radius: 8, x: 0, y: 4)
+                    .padding(.bottom, 28)
 
                 Text("GlycoTrack")
                     .font(.system(.largeTitle, design: .rounded, weight: .bold))
                     .padding(.bottom, 8)
 
-                Text("Voice-first food logging.\nTwo numbers. One honest picture.")
+                Text("Just say what you ate — or what you had yesterday — and GlycoTrack handles the rest.")
                     .font(.body)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.bottom, 12)
+
+                Text("Your food log lives on your device. AI identifies what you ate from your words — no audio is stored.")
+                    .font(.callout)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 48)
@@ -113,6 +118,7 @@ struct OnboardingView: View {
                 Text(detail)
                     .font(.caption)
                     .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             Spacer()
         }

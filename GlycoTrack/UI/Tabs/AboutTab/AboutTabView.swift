@@ -36,7 +36,7 @@ struct AboutPaneView: View {
         VStack(alignment: .leading, spacing: 6) {
             Text("GlycoTrack")
                 .font(.system(.largeTitle, design: .rounded, weight: .bold))
-            Text("Two numbers. Two kinds of risk. One honest picture of what you ate.")
+            Text("Voice-first food logging. Two numbers — GL and CL — that together give you an honest picture of what you ate.")
                 .font(.callout)
                 .foregroundColor(.secondary)
         }
