@@ -34,11 +34,15 @@ final class SceneHaptics {
         self.intensity = CGFloat(max(0, min(1, intensity)))
         self.duration = max(0.02, min(0.5, duration))
 
+        // Always prepare the fallback generator — it serves as a backup if
+        // CoreHaptics setup fails (init throws or start() fails), and prepareing
+        // it unconditionally avoids first-tap latency on that code path.
+        generator.prepare()
+
         if CHHapticEngine.capabilitiesForHardware().supportsHaptics {
-            engine = try? CHHapticEngine()
-            try? engine?.start()
-        } else {
-            generator.prepare()
+            let newEngine = try? CHHapticEngine()
+            try? newEngine?.start()
+            engine = newEngine  // remains nil if either step threw
         }
     }
 

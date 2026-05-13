@@ -181,8 +181,9 @@ struct DebugPaneView: View {
                 // fullScreenCover while a .sheet is already active. The 400 ms
                 // delay lets the dismissal animation complete before the
                 // hasCompletedOnboarding change triggers the cover.
+                // @MainActor ensures the AppStorage write stays on the main thread.
                 dismiss()
-                Task {
+                Task { @MainActor in
                     try? await Task.sleep(for: .milliseconds(400))
                     hasCompletedOnboarding = false
                 }

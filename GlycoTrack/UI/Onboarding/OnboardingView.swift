@@ -14,8 +14,9 @@ struct OnboardingView: View {
             VStack(spacing: 0) {
                 Spacer()
 
-                // Logo — app icon loaded from the asset catalog
-                Image(uiImage: UIImage(named: "AppIcon") ?? UIImage())
+                // Logo — dedicated imageset so Image("AppLogoImage") works reliably.
+                // AppIcon.appiconset is not exposed as a named asset at runtime.
+                Image("AppLogoImage")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 100, height: 100)
@@ -33,7 +34,7 @@ struct OnboardingView: View {
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 12)
 
-                Text("Everything stays on your device. AI-powered voice recognition categorizes your meals accurately in seconds.")
+                Text("Your food log lives on your device. AI identifies what you ate from your words — no audio is stored.")
                     .font(.callout)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
