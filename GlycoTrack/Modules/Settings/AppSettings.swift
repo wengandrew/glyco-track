@@ -41,4 +41,11 @@ enum AppSettings {
     static let physicsHapticsKey = "physicsHaptics"
     static let defaultPhysicsHaptics: Double = 0.8
     static let physicsHapticsRange: ClosedRange<Double> = 0...1
+
+    /// Duration (seconds) of each haptic pulse on collision.
+    /// Only used when CoreHaptics is available; UIImpactFeedbackGenerator
+    /// ignores this and fires a single fixed-length pulse.
+    static let physicsHapticDurationKey = "physicsHapticDuration"
+    static let defaultPhysicsHapticDuration: Double = 0.1
+    static let physicsHapticDurationRange: ClosedRange<Double> = 0.02...0.5
 }

@@ -5,10 +5,6 @@ import SwiftUI
 struct SettingsPaneView: View {
     @AppStorage(AppSettings.dailyGLBudgetKey)
     private var glBudget: Double = AppSettings.defaultDailyGLBudget
-    @AppStorage(AppSettings.physicsGravityKey)
-    private var physicsGravity: Double = AppSettings.defaultPhysicsGravity
-    @AppStorage(AppSettings.physicsHapticsKey)
-    private var physicsHaptics: Double = AppSettings.defaultPhysicsHaptics
 
     var body: some View {
         Form {
@@ -53,47 +49,6 @@ The bucket on the Today tab fills at \(Int(glBudget)) GL — anything above spil
                 }
             }
 
-            // MARK: Physics Sandbox
-            Section {
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack {
-                        Text("Gravity")
-                        Spacer()
-                        Text(String(format: "%.1f", physicsGravity))
-                            .font(.body.monospacedDigit())
-                            .foregroundColor(.secondary)
-                    }
-                    Slider(
-                        value: $physicsGravity,
-                        in: AppSettings.physicsGravityRange,
-                        step: 0.5
-                    )
-                    .accessibilityLabel("Gravity strength")
-                    .accessibilityValue(String(format: "%.1f", physicsGravity))
-                }
-
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack {
-                        Text("Vibration")
-                        Spacer()
-                        Text(physicsHaptics == 0 ? "Off" : String(format: "%.0f%%", physicsHaptics * 100))
-                            .font(.body.monospacedDigit())
-                            .foregroundColor(.secondary)
-                    }
-                    Slider(
-                        value: $physicsHaptics,
-                        in: AppSettings.physicsHapticsRange,
-                        step: 0.1
-                    )
-                    .accessibilityLabel("Vibration intensity")
-                    .accessibilityValue(physicsHaptics == 0 ? "Off" : String(format: "%.0f%%", physicsHaptics * 100))
-                }
-            } header: {
-                Text("Physics Sandbox")
-            } footer: {
-                Text("Controls how the food items behave in the bucket and balance scale. Higher gravity makes objects fall and roll faster. Vibration triggers a haptic tap when items land.")
-                    .font(.footnote)
-            }
         }
     }
 }

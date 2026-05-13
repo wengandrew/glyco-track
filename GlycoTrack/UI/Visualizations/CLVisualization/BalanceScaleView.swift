@@ -10,6 +10,7 @@ struct SceneKeyCL: Hashable {
     let height: CGFloat
     let gravity: Double
     let haptics: Double
+    let hapticDuration: Double
 }
 
 struct CLNetLabel: View {
@@ -43,6 +44,7 @@ struct BalanceScaleView: View {
 
     @AppStorage(AppSettings.physicsGravityKey) private var physicsGravity: Double = AppSettings.defaultPhysicsGravity
     @AppStorage(AppSettings.physicsHapticsKey) private var physicsHaptics: Double = AppSettings.defaultPhysicsHaptics
+    @AppStorage(AppSettings.physicsHapticDurationKey) private var physicsHapticDuration: Double = AppSettings.defaultPhysicsHapticDuration
 
     @State private var selectedEntry: FoodLogEntry?
     /// Bumped to force a scene rebuild on tab re-appearance. Day/entries changes
@@ -82,7 +84,8 @@ struct BalanceScaleView: View {
                     width: geo.size.width,
                     height: geo.size.height,
                     gravity: physicsGravity,
-                    haptics: physicsHaptics
+                    haptics: physicsHaptics,
+                    hapticDuration: physicsHapticDuration
                 )
                 ZStack {
                     BalanceSceneHost(
@@ -90,6 +93,7 @@ struct BalanceScaleView: View {
                         size: geo.size,
                         gravity: physicsGravity,
                         haptics: physicsHaptics,
+                        hapticDuration: physicsHapticDuration,
                         onTap: { selectedEntry = $0 }
                     )
                     .id(key)
@@ -121,8 +125,8 @@ private struct BalanceSceneHost: View {
     @State private var scene: BalanceScene
     let entries: [FoodLogEntry]
 
-    init(entries: [FoodLogEntry], size: CGSize, gravity: Double, haptics: Double, onTap: @escaping (FoodLogEntry) -> Void) {
-        let s = BalanceScene(size: size, entries: entries, gravity: gravity, haptics: haptics)
+    init(entries: [FoodLogEntry], size: CGSize, gravity: Double, haptics: Double, hapticDuration: Double, onTap: @escaping (FoodLogEntry) -> Void) {
+        let s = BalanceScene(size: size, entries: entries, gravity: gravity, haptics: haptics, hapticDuration: hapticDuration)
         s.scaleMode = .resizeFill
         s.onItemTapped = onTap
         _scene = State(initialValue: s)
@@ -185,10 +189,10 @@ final class BalanceScene: SKScene, SKPhysicsContactDelegate {
     private var lockJoint: SKPhysicsJointFixed?
     private var pinJoint: SKPhysicsJointPin?
 
-    init(size: CGSize, entries: [FoodLogEntry], gravity: Double = AppSettings.defaultPhysicsGravity, haptics: Double = AppSettings.defaultPhysicsHaptics) {
+    init(size: CGSize, entries: [FoodLogEntry], gravity: Double = AppSettings.defaultPhysicsGravity, haptics: Double = AppSettings.defaultPhysicsHaptics, hapticDuration: Double = AppSettings.defaultPhysicsHapticDuration) {
         self.entries = entries
         self.gravityMagnitude = CGFloat(gravity)
-        self.haptics = SceneHaptics(intensity: haptics)
+        self.haptics = SceneHaptics(intensity: haptics, duration: hapticDuration)
         super.init(size: size)
     }
 
